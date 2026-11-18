@@ -56,7 +56,7 @@ function InputGroupAddon({
   return (
     // A click beside the field focuses it, for the mouse only: the
     // keyboard reaches the field itself.
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <div
       role="group"
       data-slot="input-group-addon"

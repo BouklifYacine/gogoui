@@ -11,7 +11,7 @@
     "build-storybook": "bun run --cwd packages/ui build-storybook",
     "typecheck": "bun run --cwd packages/ui typecheck",
     "test": "bun run --cwd packages/tokens test && bun run --cwd packages/ui test",
-    "lint": "oxlint",
+    "lint": "oxlint --deny-warnings",
     "format": "bun fmt . && oxlint --fix",
     "format:check": "bun fmt --check .",
     "changeset": "changeset",

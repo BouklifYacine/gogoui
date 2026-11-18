@@ -17,7 +17,8 @@ jobs:
         with:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile
-      - run: bun run lint
+      - name: Lint (oxlint, any warning fails)
+        run: bun run lint
       - run: bun run format:check
       - run: bun run typecheck
       - run: bun run test
