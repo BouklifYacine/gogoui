@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { calendarDay } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 import type { DayButton, Locale } from 'react-day-picker'
@@ -26,9 +28,12 @@ function Calendar({
   locale,
   formatters,
   components,
+  color,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>['variant']
+  /** The chosen day's colour, and a range's; the primary by default. */
+  color?: Color
 }) {
   const defaultClassNames = getDefaultClassNames()
 
@@ -180,7 +185,7 @@ function Calendar({
           )
         },
         DayButton: ({ ...props }) => (
-          <CalendarDayButton locale={locale} {...props} />
+          <CalendarDayButton locale={locale} dayColor={color} {...props} />
         ),
         WeekNumber: ({ children, ...props }) => {
           return (
@@ -205,8 +210,13 @@ function CalendarDayButton({
   locale,
   // The HTML colour attribute: Button's `color` is its own palette.
   color: _htmlColor,
+  dayColor,
   ...props
-}: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
+}: React.ComponentProps<typeof DayButton> & {
+  locale?: Partial<Locale>
+  /** The chosen day's colour, from the calendar's `color`. */
+  dayColor?: Color
+}) {
   const defaultClassNames = getDefaultClassNames()
 
   const ref = React.useRef<HTMLButtonElement>(null)
@@ -230,6 +240,7 @@ function CalendarDayButton({
       data-range-middle={modifiers.range_middle}
       className={cn(
         'relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70',
+        dayColor && calendarDay[dayColor],
         defaultClassNames.day,
         className,
       )}

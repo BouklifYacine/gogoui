@@ -243,6 +243,15 @@ export type GoGoUIMessages = {
   themeLight: string
   themeDark: string
   themeSystem: string
+  /** A period's shortcuts. */
+  presetToday: string
+  presetLast7Days: string
+  presetLast30Days: string
+  presetThisMonth: string
+  presetLastMonth: string
+  presetNext30Days: string
+  /** The shortcuts' group, for a screen reader. */
+  presets: string
 }
 
 export type GoGoUILocale = 'fr' | 'en'
@@ -394,6 +403,13 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     themeLight: 'Clair',
     themeDark: 'Sombre',
     themeSystem: 'Système',
+    presetToday: 'Aujourd’hui',
+    presetLast7Days: '7 derniers jours',
+    presetLast30Days: '30 derniers jours',
+    presetThisMonth: 'Ce mois-ci',
+    presetLastMonth: 'Le mois dernier',
+    presetNext30Days: '30 prochains jours',
+    presets: 'Raccourcis',
   },
   en: {
     close: 'Close',
@@ -539,5 +555,12 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     themeLight: 'Light',
     themeDark: 'Dark',
     themeSystem: 'System',
+    presetToday: 'Today',
+    presetLast7Days: 'Last 7 days',
+    presetLast30Days: 'Last 30 days',
+    presetThisMonth: 'This month',
+    presetLastMonth: 'Last month',
+    presetNext30Days: 'Next 30 days',
+    presets: 'Shortcuts',
   },
 }
