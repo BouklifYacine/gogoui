@@ -49,10 +49,13 @@ function SheetContent({
   children,
   side = 'right',
   showCloseButton = true,
+  size = 'default',
   ...props
 }: SheetPrimitive.Popup.Props & {
   side?: 'top' | 'right' | 'bottom' | 'left'
   showCloseButton?: boolean
+  /** A side panel's width: sm 384 px, default 448 px, lg 672 px, xl 896 px, full the screen. */
+  size?: 'sm' | 'default' | 'lg' | 'xl' | 'full'
 }) {
   const { close } = useGoGoUIMessages()
   return (
@@ -64,7 +67,15 @@ function SheetContent({
         className={cn(
           // A floating panel: its shadow draws the edge, no border. From a
           // tablet up it stands 8px off the window's edge, rounded.
-          'fixed z-50 flex flex-col gap-4 bg-floating text-sm text-fg shadow-lg transition duration-200 ease-tactile data-ending-style:opacity-0 data-starting-style:opacity-0 data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:rounded-t-3xl data-[side=bottom]:data-ending-style:translate-y-10 data-[side=bottom]:data-starting-style:translate-y-10 data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-full data-[side=left]:data-ending-style:-translate-x-10 data-[side=left]:data-starting-style:-translate-x-10 data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-full data-[side=right]:data-ending-style:translate-x-10 data-[side=right]:data-starting-style:translate-x-10 data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:rounded-b-3xl data-[side=top]:data-ending-style:-translate-y-10 data-[side=top]:data-starting-style:-translate-y-10 data-[side=left]:sm:inset-y-2 data-[side=left]:sm:left-2 data-[side=left]:sm:h-auto data-[side=left]:sm:max-w-md data-[side=left]:sm:rounded-3xl data-[side=right]:sm:inset-y-2 data-[side=right]:sm:right-2 data-[side=right]:sm:h-auto data-[side=right]:sm:max-w-md data-[side=right]:sm:rounded-3xl',
+          'fixed z-50 flex flex-col gap-4 bg-floating text-sm text-fg shadow-lg transition duration-200 ease-tactile data-ending-style:opacity-0 data-starting-style:opacity-0 data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:rounded-t-3xl data-[side=bottom]:data-ending-style:translate-y-10 data-[side=bottom]:data-starting-style:translate-y-10 data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-full data-[side=left]:data-ending-style:-translate-x-10 data-[side=left]:data-starting-style:-translate-x-10 data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-full data-[side=right]:data-ending-style:translate-x-10 data-[side=right]:data-starting-style:translate-x-10 data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:rounded-b-3xl data-[side=top]:data-ending-style:-translate-y-10 data-[side=top]:data-starting-style:-translate-y-10 data-[side=left]:sm:inset-y-2 data-[side=left]:sm:left-2 data-[side=left]:sm:h-auto data-[side=left]:sm:rounded-3xl data-[side=right]:sm:inset-y-2 data-[side=right]:sm:right-2 data-[side=right]:sm:h-auto data-[side=right]:sm:rounded-3xl',
+          (side === 'left' || side === 'right') &&
+            {
+              sm: 'sm:max-w-sm',
+              default: 'sm:max-w-md',
+              lg: 'sm:max-w-2xl',
+              xl: 'sm:max-w-4xl',
+              full: 'sm:max-w-none sm:inset-x-2',
+            }[size],
           className,
         )}
         {...props}

@@ -65,3 +65,42 @@ export const WithUndo = meta.story({
     )
   },
 })
+
+/**
+ * Work that takes time: « Envoi… » with a turning circle, then
+ * « Devis envoyé », or the reason it failed (`toast.promise`).
+ *
+ * @summary A toast that follows a promise.
+ */
+export const Promise_ = meta.story({
+  name: 'Promise',
+  render: () => (
+    <div className="flex gap-2">
+      <Toaster />
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast.promise(new Promise((resolve) => setTimeout(resolve, 1500)), {
+            loading: 'Envoi du devis…',
+            success: 'Devis envoyé',
+            error: 'L’envoi a échoué',
+          })
+        }
+      >
+        Envoyer (réussit)
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast.promise(new Promise((_, reject) => setTimeout(reject, 1500)), {
+            loading: 'Envoi du devis…',
+            success: 'Devis envoyé',
+            error: 'L’envoi a échoué, réessayez',
+          })
+        }
+      >
+        Envoyer (échoue)
+      </Button>
+    </div>
+  ),
+})

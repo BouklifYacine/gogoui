@@ -107,3 +107,32 @@ export const InformationOnly = meta.story({
     </Dialog>
   ),
 })
+
+/**
+ * The widths: sm for a question, default for a short form, lg and xl for
+ * a long one, full for a whole page.
+ *
+ * @summary A dialog in each width.
+ */
+export const Sizes = meta.story({
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      {(['sm', 'default', 'lg', 'xl', 'full'] as const).map((size) => (
+        <Dialog key={size}>
+          <DialogTrigger render={<Button variant="outline" />}>
+            {size}
+          </DialogTrigger>
+          <DialogContent size={size}>
+            <DialogHeader>
+              <DialogTitle>Taille {size}</DialogTitle>
+              <DialogDescription>
+                La même fenêtre, plus ou moins large.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter showCloseButton />
+          </DialogContent>
+        </Dialog>
+      ))}
+    </div>
+  ),
+})

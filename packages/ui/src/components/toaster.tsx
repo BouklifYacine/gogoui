@@ -52,6 +52,12 @@ function Toaster(props: ToasterProps) {
         info: (
           <GoGoIcon name="info" weight="fill" className="size-4.5 text-info" />
         ),
+        loading: (
+          <GoGoIcon
+            name="loading"
+            className="size-4.5 animate-spin text-fg-muted motion-reduce:animate-none"
+          />
+        ),
         close: <GoGoIcon name="close" className="size-3.5" />,
       }}
       toastOptions={{

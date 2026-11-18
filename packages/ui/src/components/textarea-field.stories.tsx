@@ -22,6 +22,7 @@ export const Basic = meta.story({
     description: 'Visibles par votre équipe seulement.',
     error: '',
     rows: 4,
+    maxLength: 280,
     disabled: false,
     value: '',
     onValueChange: () => {},

@@ -64,6 +64,8 @@ function DialogOverlay({
 type DialogContentProps = DialogPrimitive.Popup.Props & {
   /** The round × in the corner. Hide it only when the footer has a way out. */
   showCloseButton?: boolean
+  /** Its width: sm 384 px, default 440 px, lg 672 px, xl 896 px, full the screen. */
+  size?: 'sm' | 'default' | 'lg' | 'xl' | 'full'
 }
 
 /**
@@ -75,6 +77,7 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  size = 'default',
   ...props
 }: DialogContentProps) {
   const { close } = useGoGoUIMessages()
@@ -83,7 +86,9 @@ function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Popup
         data-slot="dialog-content"
+        data-size={size}
         className={cn(
+          'data-[size=sm]:sm:max-w-sm data-[size=lg]:sm:max-w-2xl data-[size=xl]:sm:max-w-4xl data-[size=full]:max-h-[calc(100dvh-2rem)] data-[size=full]:overflow-y-auto data-[size=full]:sm:h-[calc(100dvh-2rem)] data-[size=full]:sm:max-w-[calc(100%-2rem)]',
           'fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-floating p-6 text-sm text-fg shadow-lg duration-150 ease-tactile outline-none sm:max-w-[440px] data-open:animate-in data-open:fade-in-0 data-open:slide-in-from-bottom-1 data-open:zoom-in-[0.98] data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-[0.98]',
           className,
         )}

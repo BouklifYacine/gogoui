@@ -252,6 +252,8 @@ export type GoGoUIMessages = {
   presetNext30Days: string
   /** The shortcuts' group, for a screen reader. */
   presets: string
+  /** Read aloud near a text's limit. */
+  charactersLeft: (count: number) => string
 }
 
 export type GoGoUILocale = 'fr' | 'en'
@@ -410,6 +412,10 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     presetLastMonth: 'Le mois dernier',
     presetNext30Days: '30 prochains jours',
     presets: 'Raccourcis',
+    charactersLeft: (count) =>
+      count > 0
+        ? `Encore ${count} caractère${count > 1 ? 's' : ''}`
+        : 'Limite atteinte',
   },
   en: {
     close: 'Close',
@@ -562,5 +568,9 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     presetLastMonth: 'Last month',
     presetNext30Days: 'Next 30 days',
     presets: 'Shortcuts',
+    charactersLeft: (count) =>
+      count > 0
+        ? `${count} character${count > 1 ? 's' : ''} left`
+        : 'Limit reached',
   },
 }
