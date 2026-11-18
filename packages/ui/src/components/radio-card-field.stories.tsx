@@ -23,13 +23,23 @@ const kinds = [
  * @summary One choice among cards.
  */
 export const Cards = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState<(typeof kinds)[number]['value'] | ''>('')
+  args: {
+    name: 'kind',
+    legend: 'Type de lieu',
+    error: '',
+    hideLegend: false,
+    inline: false,
+    list: false,
+    options: kinds,
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <RadioCardField
-        name="kind"
-        legend="Type de lieu"
-        options={kinds}
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

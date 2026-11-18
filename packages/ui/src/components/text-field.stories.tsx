@@ -18,13 +18,24 @@ const meta = preview.meta({
  * @summary A labelled text field.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('')
+  args: {
+    name: 'venue',
+    label: 'Nom du lieu',
+    description: '',
+    error: '',
+    placeholder: '',
+    disabled: false,
+    autoComplete: 'organization',
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <TextField
-        name="venue"
-        label="Nom du lieu"
-        autoComplete="organization"
+        {...args}
+        description={args.description || undefined}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

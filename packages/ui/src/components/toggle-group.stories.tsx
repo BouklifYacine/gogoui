@@ -3,6 +3,8 @@ import { ListBulletsIcon, SquaresFourIcon } from '@phosphor-icons/react'
 
 import preview from '#.storybook/preview'
 
+import { COLORS } from '../internal/colors.ts'
+
 import { ToggleGroup, ToggleGroupItem } from './toggle-group.tsx'
 
 const meta = preview.meta({
@@ -33,6 +35,28 @@ export const Basic = meta.story({
       </ToggleGroup>
     )
   },
+})
+
+/**
+ * The pressed item in each colour of the palette (`color` on the item).
+ *
+ * @summary A pressed item in every colour.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="flex flex-col gap-2">
+      {COLORS.map((color) => (
+        <ToggleGroup key={color} aria-label={color} defaultValue={['b']}>
+          <ToggleGroupItem value="a" color={color}>
+            Jour
+          </ToggleGroupItem>
+          <ToggleGroupItem value="b" color={color}>
+            {color}
+          </ToggleGroupItem>
+        </ToggleGroup>
+      ))}
+    </div>
+  ),
 })
 
 /**

@@ -15,6 +15,25 @@ const meta = preview.meta({
 })
 
 /**
+ * One figure: change its words, its change and its colour in the
+ * controls.
+ *
+ * @summary A key figure.
+ */
+export const Basic = meta.story({
+  args: {
+    label: 'Demandes ce mois-ci',
+    value: '24',
+    change: 0.2,
+    changeLabel: 'vs octobre',
+    lowerIsBetter: false,
+    color: 'info',
+    icon: <CalendarCheckIcon />,
+  },
+  decorators: [(Story) => <div className="w-64">{Story()}</div>],
+})
+
+/**
  * Three figures of a month, each against the month before. Fewer
  * cancellations is good news: it shows in green.
  *

@@ -18,12 +18,12 @@ const meta = preview.meta({
  * @summary A titled part of a page.
  */
 export const Basic = meta.story({
-  render: () => (
-    <TitledSection
-      id="event"
-      title="Événement"
-      aside={<InfoTip text="Ce que le couple a demandé dans son message." />}
-    >
+  args: {
+    id: 'event',
+    title: 'Événement',
+    compact: false,
+    aside: <InfoTip text="Ce que le couple a demandé dans son message." />,
+    children: (
       <DetailsList
         rows={[
           ['Date souhaitée', 'samedi 12 juin 2027'],
@@ -31,8 +31,8 @@ export const Basic = meta.story({
           ['E-mail', 'marie.durand@exemple.fr'],
         ]}
       />
-    </TitledSection>
-  ),
+    ),
+  },
 })
 
 /**

@@ -16,12 +16,21 @@ const meta = preview.meta({
  * @summary A labelled time.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('14:30')
+  args: {
+    name: 'start',
+    label: 'Début de la cérémonie',
+    description: '',
+    error: '',
+    value: '14:30',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <TimeField
-        name="start"
-        label="Début de la cérémonie"
+        {...args}
+        description={args.description || undefined}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

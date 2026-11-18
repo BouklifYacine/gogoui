@@ -23,20 +23,27 @@ const meta = preview.meta({
  * @summary One icon among tiles.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('champagne')
+  args: {
+    name: 'icon',
+    legend: 'Icône',
+    error: '',
+    options: [
+      { value: 'champagne', label: 'Champagne', icon: ChampagneIcon },
+      { value: 'beer', label: 'Bière', icon: BeerBottleIcon },
+      { value: 'cake', label: 'Gâteau', icon: CakeIcon },
+      { value: 'flowers', label: 'Fleurs', icon: FlowerIcon },
+      { value: 'music', label: 'Musique', icon: MusicNotesIcon },
+      { value: 'photo', label: 'Photo', icon: CameraIcon },
+    ],
+    value: 'champagne',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <IconField
-        name="icon"
-        legend="Icône"
-        options={[
-          { value: 'champagne', label: 'Champagne', icon: ChampagneIcon },
-          { value: 'beer', label: 'Bière', icon: BeerBottleIcon },
-          { value: 'cake', label: 'Gâteau', icon: CakeIcon },
-          { value: 'flowers', label: 'Fleurs', icon: FlowerIcon },
-          { value: 'music', label: 'Musique', icon: MusicNotesIcon },
-          { value: 'photo', label: 'Photo', icon: CameraIcon },
-        ]}
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

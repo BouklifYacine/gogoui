@@ -17,17 +17,17 @@ const meta = preview.meta({
  * @summary A search field with its magnifier.
  */
 export const Search = meta.story({
-  render: () => (
+  args: {
+    icon: MagnifyingGlassIcon,
+    placeholder: 'Rechercher un client',
+    disabled: false,
+  },
+  render: (args) => (
     <div className="w-72">
       <Label htmlFor="search" className="sr-only">
         Rechercher un client
       </Label>
-      <InputWithIcon
-        id="search"
-        type="search"
-        icon={MagnifyingGlassIcon}
-        placeholder="Rechercher un client"
-      />
+      <InputWithIcon {...args} id="search" type="search" />
     </div>
   ),
 })

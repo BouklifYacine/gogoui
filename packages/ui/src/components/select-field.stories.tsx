@@ -23,15 +23,24 @@ const sources = [
  * @summary A labelled list to pick from.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState<(typeof sources)[number]['value'] | ''>(
-      '',
-    )
+  args: {
+    name: 'source',
+    label: 'Comment vous ont-ils connu ?',
+    description: '',
+    error: '',
+    placeholder: 'Choisir',
+    required: false,
+    options: sources,
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <SelectField
-        name="source"
-        label="Comment vous ont-ils connu ?"
-        options={sources}
+        {...args}
+        description={args.description || undefined}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

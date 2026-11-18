@@ -13,10 +13,11 @@ const meta = preview.meta({
  * @summary A horizontal hairline.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: { orientation: 'horizontal' },
+  render: (args) => (
     <div className="w-72 text-sm">
       <p>Acompte : 1 500 €</p>
-      <Separator className="my-3" />
+      <Separator {...args} className="my-3" />
       <p>Solde : 3 500 €</p>
     </div>
   ),

@@ -16,19 +16,26 @@ const meta = preview.meta({
  * @summary Several choices among cards.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState<string[]>(['ceremony'])
+  args: {
+    name: 'spaces',
+    legend: 'Espaces souhaités',
+    description: 'Plusieurs réponses possibles',
+    error: '',
+    options: [
+      { value: 'ceremony', label: 'Cérémonie laïque' },
+      { value: 'cocktail', label: 'Vin d’honneur' },
+      { value: 'dinner', label: 'Dîner' },
+      { value: 'brunch', label: 'Brunch du lendemain' },
+    ],
+    value: ['ceremony'],
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <CheckboxCardField
-        name="spaces"
-        legend="Espaces souhaités"
-        description="Plusieurs réponses possibles"
-        options={[
-          { value: 'ceremony', label: 'Cérémonie laïque' },
-          { value: 'cocktail', label: 'Vin d’honneur' },
-          { value: 'dinner', label: 'Dîner' },
-          { value: 'brunch', label: 'Brunch du lendemain' },
-        ]}
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

@@ -16,13 +16,22 @@ const meta = preview.meta({
  * @summary A labelled text of several lines.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('')
+  args: {
+    name: 'notes',
+    label: 'Notes',
+    description: 'Visibles par votre équipe seulement.',
+    error: '',
+    rows: 4,
+    disabled: false,
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <TextareaField
-        name="notes"
-        label="Notes"
-        description="Visibles par votre équipe seulement."
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

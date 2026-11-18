@@ -19,11 +19,12 @@ const steps = ['Fichier', 'Colonnes', 'Vérification', 'Import']
  * @summary Numbered steps on a line.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [current, setCurrent] = useState(2)
+  args: { steps, current: 2 },
+  render: function Render(args) {
+    const [current, setCurrent] = useState(args.current)
     return (
       <div className="flex flex-col gap-6">
-        <StepProgress steps={steps} current={current} />
+        <StepProgress {...args} current={current} />
         <div className="flex gap-2">
           <Button
             variant="outline"

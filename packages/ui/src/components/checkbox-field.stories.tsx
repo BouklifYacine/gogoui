@@ -16,20 +16,28 @@ const meta = preview.meta({
  * @summary Accepting the terms.
  */
 export const Consent = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState(false)
+  args: {
+    name: 'terms',
+    label: (
+      <>
+        J'accepte les{' '}
+        <a href="#cgu" className="underline underline-offset-4">
+          conditions d'utilisation
+        </a>
+      </>
+    ),
+    description: '',
+    error: 'Cochez la case pour créer votre compte.',
+    value: false,
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <CheckboxField
-        name="terms"
-        label={
-          <>
-            J'accepte les{' '}
-            <a href="#cgu" className="underline underline-offset-4">
-              conditions d'utilisation
-            </a>
-          </>
-        }
-        error={value ? undefined : 'Cochez la case pour créer votre compte.'}
+        {...args}
+        description={args.description || undefined}
+        error={value ? undefined : args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

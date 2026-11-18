@@ -15,10 +15,16 @@ const meta = preview.meta({
  * @summary A password field with its eye.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: {
+    id: 'password',
+    autoComplete: 'current-password',
+    placeholder: '',
+    disabled: false,
+  },
+  render: (args) => (
     <div className="grid w-72 gap-2">
       <Label htmlFor="password">Mot de passe</Label>
-      <PasswordInput id="password" autoComplete="current-password" />
+      <PasswordInput {...args} />
     </div>
   ),
 })

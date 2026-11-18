@@ -23,18 +23,26 @@ const euros = new Intl.NumberFormat('fr-FR', {
  * @summary A range on a track.
  */
 export const Basic = meta.story({
-  render: function Render() {
+  args: {
+    label: 'Budget',
+    max: 50_000,
+    step: 500,
+    low: 10_000,
+    high: undefined,
+    color: 'primary',
+    format: (value: number) => euros.format(value),
+    onCommit: () => {},
+  },
+  render: function Render(args) {
     const [range, setRange] = useState<{ min?: number; max?: number }>({
-      min: 10_000,
+      min: args.low,
+      max: args.high,
     })
     return (
       <RangeSlider
-        label="Budget"
-        max={50_000}
-        step={500}
+        {...args}
         low={range.min}
         high={range.max}
-        format={(value) => euros.format(value)}
         onCommit={setRange}
       />
     )

@@ -14,10 +14,11 @@ const meta = preview.meta({
  * @summary An explanation beside a title.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: { text: 'La somme versée à la signature, déduite du solde.' },
+  render: (args) => (
     <h2 className="flex items-center gap-1 text-base font-semibold text-fg">
       Acompte
-      <InfoTip text="La somme versée à la signature, déduite du solde." />
+      <InfoTip {...args} />
     </h2>
   ),
 })

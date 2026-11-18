@@ -16,20 +16,29 @@ const meta = preview.meta({
  * @summary One colour among tiles.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('#2563eb')
+  args: {
+    name: 'color',
+    legend: 'Couleur dans le calendrier',
+    description: '',
+    error: '',
+    options: [
+      { value: '#2563eb', label: 'Bleu' },
+      { value: '#059669', label: 'Vert' },
+      { value: '#d97706', label: 'Ambre' },
+      { value: '#dc2626', label: 'Rouge' },
+      { value: '#7c3aed', label: 'Violet' },
+      { value: '#475569', label: 'Ardoise' },
+    ],
+    value: '#2563eb',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <ColorField
-        name="color"
-        legend="Couleur dans le calendrier"
-        options={[
-          { value: '#2563eb', label: 'Bleu' },
-          { value: '#059669', label: 'Vert' },
-          { value: '#d97706', label: 'Ambre' },
-          { value: '#dc2626', label: 'Rouge' },
-          { value: '#7c3aed', label: 'Violet' },
-          { value: '#475569', label: 'Ardoise' },
-        ]}
+        {...args}
+        description={args.description || undefined}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

@@ -16,14 +16,17 @@ const meta = preview.meta({
  * @summary An information in the page.
  */
 export const Info = meta.story({
-  render: () => (
-    <Alert color="info">
-      <AlertTitle>Votre essai finit dans 5 jours</AlertTitle>
-      <AlertDescription>
-        Ajoutez une carte pour garder vos demandes et vos devis.
-      </AlertDescription>
-    </Alert>
-  ),
+  args: {
+    color: 'info',
+    children: (
+      <>
+        <AlertTitle>Votre essai finit dans 5 jours</AlertTitle>
+        <AlertDescription>
+          Ajoutez une carte pour garder vos demandes et vos devis.
+        </AlertDescription>
+      </>
+    ),
+  },
 })
 
 /**

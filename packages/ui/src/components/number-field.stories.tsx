@@ -14,10 +14,11 @@ const meta = preview.meta({
  * @summary A number with − and +.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: { defaultValue: 120, min: 1, max: 300, step: 10, disabled: false },
+  render: (args) => (
     <div className="grid gap-2">
       <Label htmlFor="guests">Invités</Label>
-      <NumberField id="guests" defaultValue={120} min={1} max={300} step={10} />
+      <NumberField {...args} id="guests" />
     </div>
   ),
 })

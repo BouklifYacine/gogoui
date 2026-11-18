@@ -15,10 +15,16 @@ const meta = preview.meta({
  * @summary A multi-line field with its label.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: {
+    placeholder: 'Bonjour Léa, bonjour Hugo…',
+    rows: 3,
+    disabled: false,
+    'aria-invalid': false,
+  },
+  render: (args) => (
     <div className="grid w-80 gap-2">
       <Label htmlFor="message">Message au couple</Label>
-      <Textarea id="message" placeholder="Bonjour Léa, bonjour Hugo…" />
+      <Textarea {...args} id="message" />
     </div>
   ),
 })

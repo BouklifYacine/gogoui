@@ -15,12 +15,21 @@ const meta = preview.meta({
  * @summary A sign-in code.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('')
+  args: {
+    name: 'code',
+    label: 'Code reçu par e-mail',
+    length: 6,
+    status: undefined,
+    error: '',
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <CodeField
-        name="code"
-        label="Code reçu par e-mail"
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

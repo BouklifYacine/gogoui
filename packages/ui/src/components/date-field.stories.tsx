@@ -16,12 +16,23 @@ const meta = preview.meta({
  * @summary A labelled day.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState<string | null>('2027-06-12')
+  args: {
+    name: 'date',
+    label: "Date de l'événement",
+    description: '',
+    error: '',
+    disabled: false,
+    required: false,
+    value: '2027-06-12',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <DateField
-        name="date"
-        label="Date de l'événement"
+        {...args}
+        description={args.description || undefined}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

@@ -16,13 +16,21 @@ const meta = preview.meta({
  * @summary A new password with its strength.
  */
 export const NewPassword = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('')
+  args: {
+    name: 'password',
+    label: 'Mot de passe',
+    autoComplete: 'new-password',
+    minLength: 10,
+    error: '',
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <PasswordField
-        name="password"
-        label="Mot de passe"
-        autoComplete="new-password"
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

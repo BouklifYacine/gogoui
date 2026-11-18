@@ -16,13 +16,20 @@ const meta = preview.meta({
  * @summary A setting turned on or off.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState(true)
+  args: {
+    name: 'reminders',
+    label: 'Rappels automatiques',
+    description: 'Un e-mail au couple 7 jours avant chaque échéance.',
+    error: '',
+    value: true,
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <SwitchField
-        name="reminders"
-        label="Rappels automatiques"
-        description="Un e-mail au couple 7 jours avant chaque échéance."
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

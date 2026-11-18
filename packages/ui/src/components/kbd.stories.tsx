@@ -13,12 +13,13 @@ const meta = preview.meta({
  * @summary A keyboard shortcut in a text.
  */
 export const Basic = meta.story({
-  render: () => (
+  args: { children: 'K' },
+  render: (args) => (
     <p className="text-sm text-fg-muted">
       Ouvrez la recherche avec{' '}
       <KbdGroup>
         <Kbd>Ctrl</Kbd>
-        <Kbd>K</Kbd>
+        <Kbd {...args} />
       </KbdGroup>
     </p>
   ),

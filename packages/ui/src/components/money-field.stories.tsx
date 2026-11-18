@@ -16,13 +16,21 @@ const meta = preview.meta({
  * @summary A labelled amount.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('')
+  args: {
+    name: 'deposit',
+    label: 'Acompte',
+    description: 'Par exemple 1 500,00',
+    error: '',
+    required: false,
+    value: '',
+    onValueChange: () => {},
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <MoneyField
-        name="deposit"
-        label="Acompte"
-        description="Par exemple 1 500,00"
+        {...args}
+        error={args.error || undefined}
         value={value}
         onValueChange={setValue}
       />

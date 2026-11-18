@@ -17,25 +17,23 @@ const meta = preview.meta({
  * @summary Tabs with a sliding pill.
  */
 export const Basic = meta.story({
-  render: function Render() {
-    const [value, setValue] = useState('all')
+  args: {
+    label: 'Demandes à afficher',
+    value: 'all',
+    color: undefined,
+    slides: true,
+    tabs: [
+      { value: 'all', label: 'Toutes', count: 24 },
+      { value: 'unread', label: 'Non lues', count: 3, countLabel: 'non lues' },
+      { value: 'won', label: 'Gagnées', count: 8, countTone: 'success' },
+      { value: 'archived', label: 'Archivées' },
+    ],
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
     return (
       <Tabs value={value} onValueChange={(next) => setValue(String(next))}>
-        <PillTabsList
-          label="Demandes à afficher"
-          value={value}
-          tabs={[
-            { value: 'all', label: 'Toutes', count: 24 },
-            {
-              value: 'unread',
-              label: 'Non lues',
-              count: 3,
-              countLabel: 'non lues',
-            },
-            { value: 'won', label: 'Gagnées', count: 8, countTone: 'success' },
-            { value: 'archived', label: 'Archivées' },
-          ]}
-        />
+        <PillTabsList {...args} value={value} />
       </Tabs>
     )
   },
