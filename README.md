@@ -7,7 +7,7 @@ default, English included.
 | Package                             | What it holds                                                                      |
 | ----------------------------------- | ---------------------------------------------------------------------------------- |
 | [`@gogoui/tokens`](packages/tokens) | The design tokens as CSS variables (light and dark) and their Tailwind CSS 4 theme |
-| [`@gogoui/ui`](packages/ui)         | About 110 React components, one import each                                        |
+| [`@gogoui/ui`](packages/ui)         | About 120 React components, one import each                                        |
 
 ## Requirements
 

@@ -227,6 +227,22 @@ export type GoGoUIMessages = {
   guideDecline: string
   /** Stops it. */
   guideStop: string
+  /** A number field's − button. */
+  decrease: string
+  /** A number field's + button. */
+  increase: string
+  /** A figure that went up, for a screen reader. */
+  trendUp: (change: string) => string
+  /** A figure that went down. */
+  trendDown: (change: string) => string
+  /** A figure that did not move. */
+  trendFlat: string
+  /** The theme switch's name. */
+  theme: string
+  /** The themes. */
+  themeLight: string
+  themeDark: string
+  themeSystem: string
 }
 
 export type GoGoUILocale = 'fr' | 'en'
@@ -369,6 +385,15 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     guideStart: 'Me guider',
     guideDecline: 'Non merci',
     guideStop: 'Arrêter le guide',
+    decrease: 'Diminuer',
+    increase: 'Augmenter',
+    trendUp: (change) => `en hausse de ${change}`,
+    trendDown: (change) => `en baisse de ${change}`,
+    trendFlat: 'stable',
+    theme: 'Thème',
+    themeLight: 'Clair',
+    themeDark: 'Sombre',
+    themeSystem: 'Système',
   },
   en: {
     close: 'Close',
@@ -505,5 +530,14 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     guideStart: 'Guide me',
     guideDecline: 'No thanks',
     guideStop: 'Stop the guide',
+    decrease: 'Decrease',
+    increase: 'Increase',
+    trendUp: (change) => `up ${change}`,
+    trendDown: (change) => `down ${change}`,
+    trendFlat: 'unchanged',
+    theme: 'Theme',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    themeSystem: 'System',
   },
 }
