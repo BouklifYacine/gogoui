@@ -44,8 +44,8 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 }
 
 type SelectTriggerProps = SelectPrimitive.Trigger.Props & {
-  /** `sm` for a toolbar; 44px on a phone either way. */
-  size?: 'sm' | 'default'
+  /** `sm` for a toolbar, `lg` for a big form; 44px on a phone either way. */
+  size?: 'sm' | 'default' | 'lg'
 }
 
 /**
@@ -65,7 +65,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "group/select-trigger flex w-fit items-center justify-between gap-2 rounded-lg bg-control px-3 text-sm text-fg whitespace-nowrap shadow-button transition-[color,background-color,box-shadow,scale] duration-150 ease-tactile outline-none select-none hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus active:scale-[0.97] data-popup-open:bg-control-hover disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:ring-1 aria-invalid:ring-danger data-placeholder:text-fg-subtle data-[size=default]:h-9 data-[size=default]:max-md:h-11 data-[size=sm]:h-8 data-[size=sm]:rounded-md max-md:text-[16px] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+        "group/select-trigger flex w-fit items-center justify-between gap-2 rounded-lg bg-control px-3 text-sm text-fg whitespace-nowrap shadow-button transition-[color,background-color,box-shadow,scale] duration-150 ease-tactile outline-none select-none hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus active:scale-[0.97] data-popup-open:bg-control-hover disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:ring-1 aria-invalid:ring-danger data-placeholder:text-fg-subtle data-[size=default]:h-9 data-[size=default]:max-md:h-11 data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=lg]:h-11 data-[size=lg]:text-base max-md:text-[16px] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
         className,
       )}
       {...props}

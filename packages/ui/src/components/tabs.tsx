@@ -50,13 +50,24 @@ const tabsListVariants = cva(
 function TabsList({
   className,
   variant = 'default',
+  size = 'default',
   ...props
-}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+}: TabsPrimitive.List.Props &
+  VariantProps<typeof tabsListVariants> & {
+    /** The tray's height: sm 32 px, default 36 px, lg 44 px. */
+    size?: 'sm' | 'default' | 'lg'
+  }) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
       data-variant={variant}
-      className={cn(tabsListVariants({ variant }), className)}
+      data-size={size}
+      className={cn(
+        tabsListVariants({ variant }),
+        variant === 'default' &&
+          'data-[size=sm]:group-data-horizontal/tabs:h-8 data-[size=lg]:group-data-horizontal/tabs:h-11 data-[size=lg]:text-base',
+        className,
+      )}
       {...props}
     />
   )

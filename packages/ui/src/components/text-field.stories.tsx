@@ -25,6 +25,7 @@ export const Basic = meta.story({
     error: '',
     placeholder: '',
     disabled: false,
+    size: 'default',
     autoComplete: 'organization',
     value: '',
     onValueChange: () => {},

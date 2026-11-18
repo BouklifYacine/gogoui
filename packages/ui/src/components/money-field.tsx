@@ -11,6 +11,8 @@ type MoneyFieldProps = FieldValueProps<string> & {
   required?: boolean
   /** The currency's icon, the euro by default. */
   icon?: Icon
+  /** The field's height: sm, default or lg. */
+  size?: 'sm' | 'default' | 'lg'
 }
 
 /**
@@ -34,6 +36,7 @@ function MoneyField({
   placeholder,
   required,
   icon = CurrencyEurIcon,
+  size,
 }: MoneyFieldProps) {
   return (
     <FieldShell
@@ -46,6 +49,7 @@ function MoneyField({
       {(control) => (
         <InputWithIcon
           icon={icon}
+          size={size}
           {...control}
           name={name}
           // type="number" would refuse « 3 000 » and lose the comma.

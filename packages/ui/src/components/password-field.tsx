@@ -9,6 +9,8 @@ type PasswordFieldProps = FieldValueProps<string> & {
   autoComplete: 'current-password' | 'new-password'
   /** A new password's minimum, for its strength bars. */
   minLength?: number
+  /** The field's height: sm, default or lg. */
+  size?: 'sm' | 'default' | 'lg'
   className?: string
 }
 
@@ -29,6 +31,7 @@ function PasswordField({
   onBlur,
   autoComplete,
   minLength,
+  size,
   className,
 }: PasswordFieldProps) {
   return (
@@ -45,6 +48,7 @@ function PasswordField({
             {...control}
             name={name}
             autoComplete={autoComplete}
+            size={size}
             className={className}
             required
             value={value}

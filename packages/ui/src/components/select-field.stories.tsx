@@ -30,6 +30,7 @@ export const Basic = meta.story({
     error: '',
     placeholder: 'Choisir',
     required: false,
+    size: 'default',
     options: sources,
     value: '',
     onValueChange: () => {},

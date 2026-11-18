@@ -30,6 +30,8 @@ type DateFieldProps = FieldValueProps<string | null> & {
   disabledDates?: Matcher | Matcher[]
   /** The calendar's month and day names; follows GoGoUIProvider by default. */
   calendarLocale?: Partial<CalendarLocale>
+  /** The field's height: sm, default or lg. */
+  size?: 'sm' | 'default' | 'lg'
   className?: string
 }
 
@@ -56,6 +58,7 @@ function DateField({
   required = false,
   disabledDates,
   calendarLocale,
+  size,
   className,
 }: DateFieldProps) {
   const messages = useGoGoUIMessages()
@@ -113,6 +116,7 @@ function DateField({
         <Input
           id={ids.id}
           name={name}
+          size={size}
           inputMode="numeric"
           autoComplete="off"
           placeholder={placeholder ?? messages.datePlaceholder}

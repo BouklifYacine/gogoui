@@ -16,6 +16,8 @@ type SelectFieldProps<TValue extends string> = FieldValueProps<TValue | ''> & {
   placeholder?: string
   /** Said to screen readers; the look stays the same. */
   required?: boolean
+  /** The list's height: sm, default or lg. */
+  size?: 'sm' | 'default' | 'lg'
 }
 
 /**
@@ -37,6 +39,7 @@ function SelectField<TValue extends string>({
   options,
   placeholder,
   required,
+  size,
 }: SelectFieldProps<TValue>) {
   const { choose } = useGoGoUIMessages()
 
@@ -57,7 +60,12 @@ function SelectField<TValue extends string>({
           onValueChange={(next) => onValueChange((next as TValue | null) ?? '')}
           required={required}
         >
-          <SelectTrigger {...control} onBlur={onBlur} className="w-full">
+          <SelectTrigger
+            {...control}
+            size={size}
+            onBlur={onBlur}
+            className="w-full"
+          >
             <SelectValue placeholder={placeholder ?? choose} />
           </SelectTrigger>
           <SelectContent>
