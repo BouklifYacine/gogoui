@@ -1,0 +1,216 @@
+/*
+ * GoGoUI tokens taught to Tailwind CSS 4: `bg-canvas`, `text-fg-muted`,
+ * `shadow-button`, `rounded-button`, `text-sm`… all read the variables of
+ * tokens.css, so a theme or a brand changes them without a rebuild.
+ *
+ * `dark:` applies under `.dark`, but never inside a `.light` subtree.
+ */
+@custom-variant dark (&:where(.dark, .dark *):not(:where(.light, .light *)));
+
+@theme inline {
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+  --tracking-title: -0.02em;
+  --tracking-heading: -0.015em;
+  --ease-tactile: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /*
+   * The type scale, each size with its own tracking: xs 12 a detail (badge,
+   * table head, hint), sm 13 the default UI text, base 15 long text and card
+   * titles, lg 17 a prominent label, xl 18 a section's title, 2xl 22 a
+   * page's title, 3xl 28, 4xl 36, 5xl 44 heroes. sm and base grow a notch on
+   * a phone (tokens.css). Fields stay at 16 px on a phone: below it, iOS
+   * zooms in on the focus.
+   */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-xs--letter-spacing: -0.003em;
+  --text-sm: var(--type-sm);
+  --text-sm--line-height: 1.25rem;
+  --text-sm--letter-spacing: -0.012em;
+  --text-base: var(--type-base);
+  --text-base--line-height: var(--type-base-leading);
+  --text-base--letter-spacing: -0.017em;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.5rem;
+  --text-lg--letter-spacing: -0.02em;
+  --text-xl: 1.125rem;
+  --text-xl--line-height: 1.625rem;
+  --text-xl--letter-spacing: -0.015em;
+  --text-2xl: 1.375rem;
+  --text-2xl--line-height: 1.75rem;
+  --text-2xl--letter-spacing: -0.02em;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-3xl--letter-spacing: -0.022em;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.75rem;
+  --text-4xl--letter-spacing: -0.025em;
+  --text-5xl: 2.75rem;
+  --text-5xl--line-height: 3.25rem;
+  --text-5xl--letter-spacing: -0.025em;
+
+  /* ---------- colour ---------- */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-floating: var(--floating);
+  --color-subtle: var(--subtle);
+  --color-tray: var(--tray);
+  --color-table-head: var(--table-head);
+  --color-field: var(--field);
+  --color-control: var(--control);
+  --color-control-hover: var(--control-hover);
+  --color-inverse: var(--inverse);
+  --color-inverse-hover: var(--inverse-hover);
+  --color-track: var(--track);
+  --color-track-strong: var(--track-strong);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-overlay: var(--overlay);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-fg-disabled: var(--fg-disabled);
+  --color-fg-inverse: var(--fg-inverse);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-line-focus: var(--line-focus);
+  --color-line-inverse: var(--line-inverse);
+  --color-field-line: var(--field-line);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-subtle-strong: var(--primary-subtle-strong);
+  --color-primary-subtle-stronger: var(--primary-subtle-stronger);
+  --color-switch-on: var(--switch-on);
+
+  --color-danger: var(--danger);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-line: var(--danger-line);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-warning: var(--warning);
+  --color-warning-fg: var(--warning-fg);
+  --color-warning-line: var(--warning-line);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-success: var(--success);
+  --color-success-fg: var(--success-fg);
+  --color-success-line: var(--success-line);
+  --color-success-subtle: var(--success-subtle);
+  --color-info: var(--info);
+  --color-info-fg: var(--info-fg);
+  --color-info-line: var(--info-line);
+  --color-info-subtle: var(--info-subtle);
+  --color-highlight: var(--highlight);
+  --color-highlight-fg: var(--highlight-fg);
+  --color-highlight-line: var(--highlight-line);
+  --color-highlight-subtle: var(--highlight-subtle);
+  --color-caution: var(--caution);
+  --color-caution-fg: var(--caution-fg);
+  --color-caution-line: var(--caution-line);
+  --color-caution-subtle: var(--caution-subtle);
+  --color-neutral: var(--neutral);
+  --color-neutral-fg: var(--neutral-fg);
+  --color-neutral-line: var(--neutral-line);
+  --color-neutral-subtle: var(--neutral-subtle);
+
+  /* shadcn names */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ---------- radius: one base, scaled ---------- */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: var(--radius);
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-button: var(--radius);
+  --radius-button-sm: 0.5rem;
+
+  /* ---------- elevation ---------- */
+  --shadow-xs: var(--ds-shadow-xs);
+  --shadow-sm: var(--ds-shadow-sm);
+  --shadow-md: var(--ds-shadow-md);
+  --shadow-lg: var(--ds-shadow-lg);
+  --shadow-field: var(--ds-shadow-field);
+  --shadow-control: var(--ds-shadow-control);
+  --shadow-button: var(--ds-shadow-button);
+  --shadow-primary: var(--ds-shadow-primary);
+  --shadow-inverse: var(--ds-shadow-inverse);
+  --shadow-danger: var(--ds-shadow-danger);
+  --shadow-badge: var(--ds-shadow-badge);
+  --shadow-menu: var(--ds-shadow-menu);
+  --shadow-focus: 0 0 0 2px var(--surface), 0 0 0 4px rgb(115 115 115 / 0.4);
+  --shadow-focus-primary:
+    0 0 0 2px var(--surface), 0 0 0 4px var(--primary-subtle-stronger);
+  --shadow-focus-danger:
+    0 0 0 2px var(--surface), 0 0 0 4px rgb(231 0 11 / 0.3);
+}
+
+/*
+ * Concentric radius: inner radius = outer radius − the padding between them.
+ *   parent: rounded-parent-{size}  (sets its radius and exposes it as --radius-parent)
+ *   child:  rounded-concentric-{n} (n = parent padding in spacing steps, p-2 → 2)
+ * Clamped at 0 so tight paddings never go negative.
+ */
+@utility rounded-parent-* {
+  border-radius: --value(--radius-*);
+  --radius-parent: --value(--radius-*);
+}
+@utility rounded-concentric-* {
+  border-radius: max(
+    0px,
+    calc(var(--radius-parent, 0px) - var(--spacing) * --value(integer))
+  );
+}
+
+/*
+ * A text link alone on its line: its words stay small, the finger gets
+ * 44px. An invisible box over it grows the tap area without moving the
+ * layout, mostly downwards.
+ */
+@utility tap-area {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.5rem -0.25rem -1.25rem;
+  }
+}

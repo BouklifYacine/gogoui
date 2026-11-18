@@ -1,0 +1,65 @@
+import preview from '#.storybook/preview'
+
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from './field.tsx'
+import { Input } from './input.tsx'
+
+const meta = preview.meta({
+  title: 'Composants/Field',
+  component: Field,
+})
+
+/**
+ * A field with its label above and a hint under it, linked for a screen
+ * reader.
+ *
+ * @summary A labelled field with a hint.
+ */
+export const Basic = meta.story({
+  render: () => (
+    <FieldGroup className="w-80">
+      <Field>
+        <FieldLabel htmlFor="guests">Nombre d'invités</FieldLabel>
+        <Input
+          id="guests"
+          inputMode="numeric"
+          placeholder="120"
+          aria-describedby="guests-hint"
+        />
+        <FieldDescription id="guests-hint">
+          Une estimation suffit, elle se change plus tard.
+        </FieldDescription>
+      </Field>
+    </FieldGroup>
+  ),
+})
+
+/**
+ * An error: `data-invalid` on the field, `aria-invalid` on the control, and
+ * the message that says how to fix it.
+ *
+ * @summary A field in error with its message.
+ */
+export const Invalid = meta.story({
+  render: () => (
+    <FieldGroup className="w-80">
+      <Field data-invalid>
+        <FieldLabel htmlFor="phone">Téléphone</FieldLabel>
+        <Input
+          id="phone"
+          defaultValue="06 12"
+          aria-invalid
+          aria-describedby="phone-error"
+        />
+        <FieldError id="phone-error">
+          Il manque des chiffres : 10 en tout, comme 06 12 34 56 78.
+        </FieldError>
+      </Field>
+    </FieldGroup>
+  ),
+})

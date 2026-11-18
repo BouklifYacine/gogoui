@@ -1,0 +1,26 @@
+{
+  "name": "gogoui-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "bun run --cwd packages/tokens build && bun run --cwd packages/ui build",
+    "storybook": "bun run --cwd packages/ui storybook",
+    "build-storybook": "bun run --cwd packages/ui build-storybook",
+    "typecheck": "bun run --cwd packages/ui typecheck",
+    "test": "bun run --cwd packages/tokens test && bun run --cwd packages/ui test",
+    "lint": "oxlint",
+    "format": "bun fmt . && oxlint --fix",
+    "format:check": "bun fmt --check .",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "bun run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "oxlint": "^1.94.0",
+    "typescript": "^6.0.3"
+  }
+}

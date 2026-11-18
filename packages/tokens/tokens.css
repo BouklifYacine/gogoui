@@ -1,0 +1,303 @@
+/*
+ * GoGoUI design tokens: CSS variables only, readable by any stylesheet.
+ *
+ * A very light grey canvas, content grouped in white cards, hairline
+ * strokes, one small crisp shadow scaled into a ladder, one radius scaled.
+ * Colour only means something: the main action, a state, the focus.
+ *
+ * The primary is neutral (near black by day, near white at night). A
+ * project gives GoGoUI its brand by redefining the primary in both themes,
+ * after importing GoGoUI:
+ *
+ *   :root, :where(.light) {
+ *     --primary: #1a66fe; --primary-hover: #1557db;
+ *     --primary-active: #1249b8; --primary-foreground: #ffffff;
+ *   }
+ *   .dark {
+ *     --primary: #1a66fe; --primary-hover: #3b7cff;
+ *     --primary-active: #1557db; --primary-foreground: #ffffff;
+ *   }
+ *
+ * Every tint, ring and shadow of the primary is derived from them.
+ *
+ * Contrast (WCAG AA), checked by tokens.test.ts:
+ * - fg-subtle (placeholders, meta, icons) 5.3:1 on white;
+ * - field-line (the edge of a field, a checkbox, an off switch) 3.4:1;
+ * - the solid red takes white text at 4.8:1.
+ *
+ * Dark mode: the `.dark` class on <html>. A subtree that must stay light
+ * whatever the theme (a public page, an e-mail preview) takes `.light`.
+ */
+:root,
+:where(.light) {
+  /* ---------- surfaces by height ---------- */
+  --canvas: #f5f5f5;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --floating: #ffffff;
+  --subtle: #fafafa;
+  --tray: #e5e5e5;
+  --table-head: #fafafa;
+  --field: #ffffff;
+  --control: #ffffff;
+  --control-hover: #fafafa;
+  --inverse: #0a0a0a;
+  --inverse-hover: #1b1b1b;
+  --track: #8c8c8c;
+  --track-strong: #737373;
+  --hover: rgb(10 10 10 / 0.04);
+  --selected: rgb(10 10 10 / 0.08);
+  --overlay: rgb(10 10 10 / 0.24);
+
+  /* ---------- text ---------- */
+  --fg: #0a0a0a;
+  --fg-muted: #525252; /* 7.8:1 on white */
+  --fg-subtle: #6b6b6b; /* 5.3:1 on white, 4.9:1 on the canvas */
+  --fg-disabled: #a1a1a1;
+  --fg-inverse: #ffffff;
+
+  /* ---------- lines ---------- */
+  --line: #e5e5e5;
+  --line-strong: #d4d4d4;
+  --line-focus: #0a0a0a;
+  --line-inverse: #ffffff;
+  --field-line: #8c8c8c; /* 3.4:1 on white, 3.1:1 on the canvas */
+
+  /* ---------- primary: neutral, the brand is the project's ---------- */
+  --primary: #171717;
+  --primary-hover: #262626;
+  --primary-active: #404040;
+  --primary-foreground: #ffffff;
+  --primary-subtle: color-mix(in srgb, var(--primary) 10%, transparent);
+  --primary-subtle-strong: color-mix(in srgb, var(--primary) 16%, transparent);
+  --primary-subtle-stronger: color-mix(
+    in srgb,
+    var(--primary) 24%,
+    transparent
+  );
+  --switch-on: var(--primary);
+
+  /* ---------- status: {state} solid, -fg text, -line, -subtle ---------- */
+  --danger: #e7000b; /* white on it: 4.8:1 */
+  --danger-fg: #82181a;
+  --danger-line: #ffc9c9;
+  --danger-subtle: #fef2f2;
+  --danger-foreground: #ffffff;
+  --warning: #ff6900;
+  --warning-fg: #7e2a0c;
+  --warning-line: #ffd6a7;
+  --warning-subtle: #fff7ed;
+  --success: #00c950;
+  --success-fg: #0d542b;
+  --success-line: #b9f8cf;
+  --success-subtle: #f0fdf4;
+  --info: #2b7fff;
+  --info-fg: #1c398e;
+  --info-line: #bedbff;
+  --info-subtle: #eff6ff;
+  --highlight: #8e51ff;
+  --highlight-fg: #4d179a;
+  --highlight-line: #ddd6ff;
+  --highlight-subtle: #f5f3ff;
+  --caution: #ffb900;
+  --caution-fg: #7b3306;
+  --caution-line: #fee685;
+  --caution-subtle: #fffbeb;
+  --neutral: #737373;
+  --neutral-fg: #262626;
+  --neutral-line: #e5e5e5;
+  --neutral-subtle: #f5f5f5;
+
+  /* ---------- elevation: one shadow, scaled ---------- */
+  --ds-shadow-xs: 0 0.5px 1px 0px rgb(0 0 0 / 0.088);
+  --ds-shadow-sm: 0 1px 2px 0px rgb(0 0 0 / 0.1);
+  --ds-shadow-md: 0 4px 8px 0px rgb(0 0 0 / 0.175);
+  --ds-shadow-lg:
+    0 8px 16px 0px rgb(0 0 0 / 0.275), 0 0 0 1px rgb(14 18 27 / 0.04);
+  --ds-shadow-field: 0 0.5px 1px 0px rgb(0 0 0 / 0.088);
+  --ds-shadow-control: 0 0.5px 1px 0px rgb(0 0 0 / 0.088);
+  --ds-shadow-button:
+    0 0 0 1px rgb(10 10 10 / 0.08), 0 1px 2px 0 rgb(10 10 10 / 0.12);
+  --ds-shadow-primary:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 1px var(--primary),
+    0 1px 2px 0 rgb(10 10 10 / 0.24), 0 3px 6px -2px rgb(10 10 10 / 0.2);
+  --ds-shadow-inverse:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 1px var(--inverse),
+    0 1px 2px 0 rgb(10 10 10 / 0.24), 0 3px 6px -2px rgb(10 10 10 / 0.2);
+  --ds-shadow-danger:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.16), 0 0 0 1px var(--danger),
+    0 1px 2px 0 rgb(10 10 10 / 0.24), 0 3px 6px -2px rgb(10 10 10 / 0.2);
+  --ds-shadow-badge:
+    0 0 0 1px color-mix(in srgb, currentColor 14%, transparent),
+    0 1px 2px 0 color-mix(in srgb, currentColor 16%, transparent);
+  --ds-shadow-menu:
+    0 0 0 1px rgb(10 10 10 / 0.08), 0 1px 2px 0 rgb(10 10 10 / 0.12),
+    0 4px 8px -4px rgb(10 10 10 / 0.16);
+
+  /* ---------- shadcn names, pointing at the tokens above ---------- */
+  --background: var(--surface);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--floating);
+  --popover-foreground: var(--fg);
+  --secondary: var(--subtle);
+  --secondary-foreground: var(--fg);
+  --accent: var(--hover);
+  --accent-foreground: var(--fg);
+  --muted: var(--subtle);
+  --muted-foreground: var(--fg-muted);
+  --destructive: #c10007; /* error text: 6.3:1 on white */
+  --destructive-foreground: #ffffff;
+  --border: var(--line);
+  --input: var(--field-line);
+  --ring: var(--line-focus);
+
+  /* Charts: ordered, distinguishable without relying on hue alone */
+  --chart-1: var(--primary);
+  --chart-2: #00a63e;
+  --chart-3: #f54900;
+  --chart-4: #8e51ff;
+  --chart-5: #e7000b;
+
+  /* Sidebar: a white column, the open page a grey tint */
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--fg);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--selected);
+  --sidebar-accent-foreground: var(--fg);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--line-focus);
+
+  /* One radius, scaled from a 10px base */
+  --radius: 0.625rem;
+
+  /* The UI text and the long text: 13 and 15 px on a computer. */
+  --type-sm: 0.8125rem;
+  --type-base: 0.9375rem;
+  --type-base-leading: 1.375rem;
+}
+
+:where(.light) {
+  color-scheme: light;
+}
+
+/* On a phone, a notch larger (14 and 16 px): read at arm's length, often
+   outdoors. Titles keep their sizes. */
+@media (width < 48rem) {
+  :root,
+  :where(.light) {
+    --type-sm: 0.875rem;
+    --type-base: 1rem;
+    --type-base-leading: 1.5rem;
+  }
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Full black: the page is pure black, a card barely lifts from it, and a
+     hairline, not a grey, tells one zone from the next. */
+  --canvas: #000000;
+  --surface: #0a0a0a;
+  --raised: #111111;
+  --floating: #171717;
+  --subtle: #0d0d0d;
+  --tray: #000000;
+  --table-head: #0d0d0d;
+  --field: #0a0a0a;
+  --control: #141414;
+  --control-hover: #1c1c1c;
+  --inverse: #ffffff;
+  --inverse-hover: #e5e5e5;
+  --track: #737373;
+  --track-strong: #8c8c8c;
+  --hover: rgb(255 255 255 / 0.05);
+  --selected: rgb(255 255 255 / 0.1);
+  --overlay: rgb(0 0 0 / 0.72);
+
+  --fg: #fafafa;
+  --fg-muted: #a3a3a3; /* 7.1:1 on the floating level */
+  --fg-subtle: #8a8a8a; /* 5.2:1 on the floating level */
+  --fg-disabled: #525252;
+  --fg-inverse: #0a0a0a;
+
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+  --line-focus: #ffffff;
+  --line-inverse: #0a0a0a;
+  --field-line: #6b6b6b; /* 3.7:1 on a card */
+
+  /* The sidebar is the page's black, a hairline on its edge */
+  --sidebar: var(--canvas);
+
+  /* Neutral primary at night: near white, dark text on it */
+  --primary: #fafafa;
+  --primary-hover: #e5e5e5;
+  --primary-active: #d4d4d4;
+  --primary-foreground: #0a0a0a;
+  --primary-subtle: color-mix(in srgb, var(--primary) 16%, transparent);
+  --primary-subtle-strong: color-mix(in srgb, var(--primary) 24%, transparent);
+  --primary-subtle-stronger: color-mix(
+    in srgb,
+    var(--primary) 36%,
+    transparent
+  );
+
+  --danger: #e7000b;
+  --danger-fg: #ffc9c9;
+  --danger-line: rgb(251 44 54 / 0.24);
+  --danger-subtle: rgb(251 44 54 / 0.16);
+  --warning: #ff6900;
+  --warning-fg: #ffd6a7;
+  --warning-line: rgb(255 105 0 / 0.24);
+  --warning-subtle: rgb(255 105 0 / 0.16);
+  --success: #00c950;
+  --success-fg: #b9f8cf;
+  --success-line: rgb(0 201 80 / 0.24);
+  --success-subtle: rgb(0 201 80 / 0.16);
+  --info: #2b7fff;
+  --info-fg: #bedbff;
+  --info-line: rgb(43 127 255 / 0.24);
+  --info-subtle: rgb(43 127 255 / 0.16);
+  --highlight: #8e51ff;
+  --highlight-fg: #ddd6ff;
+  --highlight-line: rgb(142 81 255 / 0.24);
+  --highlight-subtle: rgb(142 81 255 / 0.16);
+  --caution: #ffb900;
+  --caution-fg: #fee685;
+  --caution-line: rgb(255 185 0 / 0.24);
+  --caution-subtle: rgb(255 185 0 / 0.16);
+  --neutral: #737373;
+  --neutral-fg: #e5e5e5;
+  --neutral-line: #333333;
+  --neutral-subtle: rgb(255 255 255 / 0.1);
+
+  /* In the dark a shadow is a hairline edge plus a black drop */
+  --ds-shadow-xs: 0 0.5px 1px 0px rgb(0 0 0 / 0.5);
+  --ds-shadow-sm: 0 0 0 1px #1f1f1f, 0 1px 2px 0px rgb(0 0 0 / 0.5);
+  --ds-shadow-md: 0 0 0 1px #262626, 0 4px 8px 0px rgb(0 0 0 / 0.6);
+  --ds-shadow-lg: 0 0 0 1px #2a2a2a, 0 8px 16px 0px rgb(0 0 0 / 0.8);
+  --ds-shadow-field: 0 0 0 0px transparent;
+  --ds-shadow-control: 0 1px 2px 0px rgb(0 0 0 / 0.5);
+  --ds-shadow-button: 0 0 0 1px #262626, 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ds-shadow-primary: 0 0 0 1px var(--primary), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ds-shadow-inverse: 0 0 0 1px var(--inverse), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ds-shadow-danger: 0 0 0 1px var(--danger), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ds-shadow-badge:
+    0 0 0 0.5px color-mix(in srgb, currentColor 34%, #000),
+    0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ds-shadow-menu:
+    0 0 0 1px #262626, 0 1px 2px 0 rgb(0 0 0 / 0.5),
+    0 4px 8px -4px rgb(0 0 0 / 0.6);
+
+  --destructive: #ff8a8a; /* error text: 6.6:1 on a card */
+  --destructive-foreground: #2a0b0b;
+
+  --chart-1: #5b8dff;
+  --chart-2: #05df72;
+  --chart-3: #ff8904;
+  --chart-4: #a684ff;
+  --chart-5: #ff6467;
+}

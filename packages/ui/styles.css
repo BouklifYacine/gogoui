@@ -1,0 +1,218 @@
+/*
+ * GoGoUI for a Tailwind CSS 4 project. In your main CSS:
+ *
+ *   @import 'tailwindcss';
+ *   @import '@gogoui/ui/styles.css';
+ *
+ * It brings the tokens, their Tailwind theme, the animations and the base
+ * styles, and tells Tailwind to read GoGoUI's components (@source), so
+ * their classes are generated in your build.
+ */
+@import 'tw-animate-css';
+@import '@gogoui/tokens/tokens.css';
+@import '@gogoui/tokens/theme.css';
+
+@source './dist';
+
+/*
+ * State variants for Base UI's data attributes (from shadcn/ui, MIT):
+ * `data-open:`, `data-closed:`, `data-checked:`…
+ */
+@custom-variant data-open {
+  &:where([data-state='open']),
+  &:where([data-open]:not([data-open='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-closed {
+  &:where([data-state='closed']),
+  &:where([data-closed]:not([data-closed='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-checked {
+  &:where([data-state='checked']),
+  &:where([data-checked]:not([data-checked='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-unchecked {
+  &:where([data-state='unchecked']),
+  &:where([data-unchecked]:not([data-unchecked='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-selected {
+  &:where([data-selected='true']) {
+    @slot;
+  }
+}
+@custom-variant data-disabled {
+  &:where([data-disabled='true']),
+  &:where([data-disabled]:not([data-disabled='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-active {
+  &:where([data-state='active']),
+  &:where([data-active]:not([data-active='false'])) {
+    @slot;
+  }
+}
+@custom-variant data-horizontal {
+  &:where([data-orientation='horizontal']) {
+    @slot;
+  }
+}
+@custom-variant data-vertical {
+  &:where([data-orientation='vertical']) {
+    @slot;
+  }
+}
+
+@theme inline {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--accordion-panel-height, auto);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--accordion-panel-height, auto);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+  /* The hand on every button, like on links: on the web, people read it
+     as « clickable » (Tailwind 4 leaves buttons with the arrow). */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  html {
+    font-family: var(--font-sans);
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--canvas);
+    color: var(--fg);
+    font-size: var(--type-base);
+    line-height: var(--type-base-leading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    letter-spacing: var(--tracking-heading);
+  }
+  /* A word set apart in a sentence weighs what a name does. */
+  strong,
+  b {
+    font-weight: 500;
+  }
+  ::selection {
+    background: var(--primary-subtle-stronger);
+  }
+  /* Amounts line up in columns. */
+  .amount {
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/*
+ * A select's menu: it drops from under its button on a spring, a little
+ * past its height and back, its rows falling in one after another, and the
+ * tick of the chosen row draws itself. Reduced motion stills all three.
+ */
+@keyframes select-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.94, 0.6);
+  }
+}
+/* Opened above its button, for want of room below: it rises instead. */
+@keyframes select-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94, 0.6);
+  }
+}
+@keyframes select-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+@keyframes select-tick {
+  from {
+    stroke-dashoffset: 22;
+  }
+}
+[data-slot='select-content'][data-open] {
+  animation: select-drop 420ms
+    linear(
+      0,
+      0.157 4.2%,
+      0.517 9.7%,
+      0.794 15.3%,
+      0.968 21.5%,
+      1.048 27.4%,
+      1.071 33.2%,
+      1.06 39.6%,
+      1.03 47.2%,
+      1.006 56.9%,
+      0.996 68.4%,
+      1
+    );
+}
+[data-slot='select-content'][data-open][data-side='top'] {
+  animation-name: select-rise;
+}
+[data-slot='select-content'][data-open] [data-slot='select-item'] {
+  animation: select-row-in 260ms var(--ease-tactile) both;
+}
+[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(2) {
+  animation-delay: 45ms;
+}
+[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(3) {
+  animation-delay: 90ms;
+}
+[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(4) {
+  animation-delay: 135ms;
+}
+[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(5) {
+  animation-delay: 180ms;
+}
+[data-slot='select-content'][data-open]
+  [data-slot='select-item']:nth-child(n + 6) {
+  animation-delay: 225ms;
+}
+[data-slot='select-tick'] path {
+  stroke-dasharray: 22;
+  animation: select-tick 300ms 80ms var(--ease-tactile) both;
+}

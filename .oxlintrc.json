@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "react", "jsx-a11y", "unicorn"],
+  "env": {
+    "builtin": true,
+    "browser": true
+  },
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/storybook-static/**",
+    "prettier.config.js"
+  ],
+  "rules": {
+    "no-var": "error",
+    "prefer-const": "error",
+    "import/no-duplicates": "error",
+    "import/no-commonjs": "error",
+    "typescript/consistent-type-imports": "error",
+    "react/rules-of-hooks": "error",
+    "react/jsx-key": "error",
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-role": "error",
+    "jsx-a11y/role-has-required-aria-props": "error"
+  }
+}
