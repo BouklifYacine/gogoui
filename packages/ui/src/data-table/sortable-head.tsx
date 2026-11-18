@@ -1,18 +1,13 @@
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ArrowsDownUpIcon,
-} from '@phosphor-icons/react'
 import type { Header } from '@tanstack/react-table'
 
-import { TableHead } from '../components/table.tsx'
+import { TableSortHead } from '../components/table-sort-head.tsx'
 import { cn } from '../lib/cn.ts'
 import { hideBelowClasses } from './table-hook.ts'
 import type { DataTableInstance, dataTableFeatures } from './table-hook.ts'
 
 /**
- * A column header: a button that sorts the column when it can, the
- * direction said by `aria-sort` and drawn by an arrow.
+ * A column header of DataTable: `TableSortHead` driven by the TanStack
+ * column, with the widths its meta asks for.
  */
 export function SortableHead<TData extends { id: string }>({
   header,
@@ -26,25 +21,16 @@ export function SortableHead<TData extends { id: string }>({
 }) {
   const { column } = header
   const meta = column.columnDef.meta
-  const sorted = column.getIsSorted()
-  const ariaSort =
-    sorted === 'asc'
-      ? 'ascending'
-      : sorted === 'desc'
-        ? 'descending'
-        : undefined
+  const sortable = column.getCanSort() && !covered
 
   return (
-    <TableHead
-      scope="col"
-      aria-sort={ariaSort}
+    <TableSortHead
+      sort={column.getIsSorted()}
+      onSort={sortable ? column.getToggleSortingHandler() : undefined}
+      align={meta?.amount ? 'end' : 'start'}
       className={cn(
-        // 44 px to sort under a finger, 36 with a mouse. Headers are
-        // labels: quieter than the data, the sorted one comes forward.
-        'h-auto px-3 py-1 whitespace-normal text-fg-muted',
-        sorted && 'text-fg',
-        meta?.amount && 'text-right',
         // The layout is fixed: these widths hold whatever the rows.
+        'h-auto px-3 py-1 whitespace-normal',
         meta?.width ??
           (meta?.title
             ? 'w-1/4'
@@ -54,32 +40,7 @@ export function SortableHead<TData extends { id: string }>({
         meta?.hideBelow && hideBelowClasses[meta.hideBelow],
       )}
     >
-      {header.isPlaceholder ? null : column.getCanSort() && !covered ? (
-        <button
-          type="button"
-          onClick={column.getToggleSortingHandler()}
-          className={cn(
-            'inline-flex min-h-11 items-center gap-1 rounded-md font-medium outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-line-focus pointer-fine:min-h-9',
-            meta?.amount && 'flex-row-reverse',
-          )}
-        >
-          <table.FlexRender header={header} />
-          {sorted === 'asc' ? (
-            <ArrowUpIcon aria-hidden="true" className="size-3.5 text-fg" />
-          ) : sorted === 'desc' ? (
-            <ArrowDownIcon aria-hidden="true" className="size-3.5 text-fg" />
-          ) : (
-            <ArrowsDownUpIcon
-              aria-hidden="true"
-              className="size-3.5 text-fg-subtle"
-            />
-          )}
-        </button>
-      ) : (
-        <span className="inline-flex min-h-11 items-center font-medium pointer-fine:min-h-9">
-          <table.FlexRender header={header} />
-        </span>
-      )}
-    </TableHead>
+      {header.isPlaceholder ? null : <table.FlexRender header={header} />}
+    </TableSortHead>
   )
 }

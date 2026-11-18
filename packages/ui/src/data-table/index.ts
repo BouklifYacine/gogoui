@@ -2,8 +2,8 @@ export { DataTable } from './data-table.tsx'
 export { DataTableColumnsMenu } from './data-table-columns-menu.tsx'
 export { DataTableSkeleton } from './data-table-skeleton.tsx'
 export type { SkeletonRow } from './data-table-skeleton.tsx'
-export { pageWindow } from './page-window.ts'
-export type { PageSlot } from './page-window.ts'
+export { pageWindow } from '../internal/page-window.ts'
+export type { PageSlot } from '../internal/page-window.ts'
 export {
   createDataColumns,
   dataTableFeatures,

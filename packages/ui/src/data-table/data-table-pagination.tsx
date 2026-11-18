@@ -1,16 +1,6 @@
 import { Button } from '../components/button.tsx'
-import { PageSizeSelect } from '../components/page-size-select.tsx'
-import {
-  Pagination,
-  PaginationButton,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from '../components/pagination.tsx'
+import { TablePagination } from '../components/table-pagination.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
-import { pageWindow } from './page-window.ts'
 import type { DataTableInstance } from './table-hook.ts'
 
 // The rows « Voir plus » adds on a phone.
@@ -39,8 +29,6 @@ export function DataTablePagination<TData extends { id: string }>({
   const messages = useGoGoUIMessages()
   const { pageIndex, pageSize } = table.state.pagination
   const total = table.getRowCount()
-  const pageCount = Math.max(1, table.getPageCount())
-  const current = pageIndex + 1
   const first = total === 0 ? 0 : pageIndex * pageSize + 1
   const last = Math.min(total, (pageIndex + 1) * pageSize)
 
@@ -76,51 +64,14 @@ export function DataTablePagination<TData extends { id: string }>({
   }
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      {/* Read aloud when the page changes, without moving the focus. */}
-      <p role="status" className="text-fg-muted tabular-nums">
-        {messages.rowsRange(first, last, rowsLabel(total))}
-      </p>
-      <div className="flex flex-wrap items-center gap-4 md:gap-6">
-        <PageSizeSelect
-          value={pageSize}
-          sizes={pageSizes}
-          onValueChange={(size) => table.setPageSize(size)}
-        />
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                disabled={!table.getCanPreviousPage()}
-                onClick={() => table.previousPage()}
-              />
-            </PaginationItem>
-            {pageWindow(current, pageCount).map((slot, index) =>
-              slot === 'gap' ? (
-                <PaginationItem key={`gap-${index}`}>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              ) : (
-                <PaginationItem key={slot}>
-                  <PaginationButton
-                    isActive={slot === current}
-                    aria-label={messages.page(slot)}
-                    onClick={() => table.setPageIndex(slot - 1)}
-                  >
-                    {slot}
-                  </PaginationButton>
-                </PaginationItem>
-              ),
-            )}
-            <PaginationItem>
-              <PaginationNext
-                disabled={!table.getCanNextPage()}
-                onClick={() => table.nextPage()}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
-    </div>
+    <TablePagination
+      page={pageIndex + 1}
+      pageSize={pageSize}
+      total={total}
+      rowsLabel={rowsLabel}
+      pageSizes={pageSizes}
+      onPageChange={(page) => table.setPageIndex(page - 1)}
+      onPageSizeChange={(size) => table.setPageSize(size)}
+    />
   )
 }

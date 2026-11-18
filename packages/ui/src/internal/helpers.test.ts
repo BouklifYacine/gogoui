@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 
 import { passwordScore } from '../components/password-strength.tsx'
-import { pageWindow } from '../data-table/page-window.ts'
+import { pageWindow } from './page-window.ts'
 import { formatTypedDay, parseDay, parseTypedDay, toDay } from './days.ts'
 import { parseTypedNumber } from './numbers.ts'
 import { maskTime, timeMatches, typedTime } from './times.ts'

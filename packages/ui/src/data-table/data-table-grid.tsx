@@ -1,15 +1,14 @@
-import { Checkbox } from '../components/checkbox.tsx'
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
   TableFooter,
-  TableHead,
   TableHeader,
   TableRow,
 } from '../components/table.tsx'
-import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { TableSelectAll } from '../components/table-select-all.tsx'
+import { TableSelectRow } from '../components/table-select-row.tsx'
 import { cn } from '../lib/cn.ts'
 import { SortableHead } from './sortable-head.tsx'
 import { hideBelowClasses } from './table-hook.ts'
@@ -32,7 +31,6 @@ export function DataTableGrid<TData extends { id: string }>({
   onRowClick?: (row: TData) => void
   selectedRowId?: string | null
 }) {
-  const messages = useGoGoUIMessages()
   const hasFooter = table
     .getAllLeafColumns()
     .some((column) => column.columnDef.footer !== undefined)
@@ -56,22 +54,16 @@ export function DataTableGrid<TData extends { id: string }>({
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
               {selectable && (
-                <TableHead className="w-12 px-3">
-                  {/* Full once the page is ticked, a dash while some rows
-                      are, and a click then unticks everything. */}
-                  <Checkbox
-                    aria-label={messages.selectPage}
-                    checked={pageTicked}
-                    indeterminate={!pageTicked && ticked > 0}
-                    onCheckedChange={() =>
-                      ticked > 0
-                        ? table.toggleAllRowsSelected(false, {
-                            deselectAll: true,
-                          })
-                        : table.toggleAllPageRowsSelected(true)
-                    }
-                  />
-                </TableHead>
+                <TableSelectAll
+                  checked={pageTicked ? true : ticked > 0 ? 'some' : false}
+                  onCheckedChange={(all) =>
+                    all
+                      ? table.toggleAllPageRowsSelected(true)
+                      : table.toggleAllRowsSelected(false, {
+                          deselectAll: true,
+                        })
+                  }
+                />
               )}
               {group.headers.map((header) => (
                 <SortableHead
@@ -111,18 +103,14 @@ export function DataTableGrid<TData extends { id: string }>({
               }}
             >
               {selectable && (
-                <TableCell className="w-12 px-3">
-                  <Checkbox
-                    aria-label={messages.selectRow(
-                      titleColumn
-                        ? String(row.getValue(titleColumn.id))
-                        : row.id,
-                    )}
-                    checked={row.getIsSelected()}
-                    disabled={!row.getCanSelect()}
-                    onCheckedChange={(checked) => row.toggleSelected(checked)}
-                  />
-                </TableCell>
+                <TableSelectRow
+                  name={
+                    titleColumn ? String(row.getValue(titleColumn.id)) : row.id
+                  }
+                  checked={row.getIsSelected()}
+                  disabled={!row.getCanSelect()}
+                  onCheckedChange={(checked) => row.toggleSelected(checked)}
+                />
               )}
               {row.getVisibleCells().map((cell) => {
                 const meta = cell.column.columnDef.meta
