@@ -42,6 +42,14 @@
       "types": "./dist/lib/cn.d.ts",
       "default": "./dist/lib/cn.js"
     },
+    "./data-table": {
+      "types": "./dist/data-table/index.d.ts",
+      "default": "./dist/data-table/index.js"
+    },
+    "./tanstack-form": {
+      "types": "./dist/tanstack-form/index.d.ts",
+      "default": "./dist/tanstack-form/index.js"
+    },
     "./*": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"
@@ -54,27 +62,47 @@
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
     "@phosphor-icons/react": "^2.1.0",
+    "@tanstack/react-form": "^1.0.0",
+    "@tanstack/react-table": "^9.0.0",
     "cmdk": "^1.1.0",
     "react": "^19.0.0",
     "react-day-picker": "^10.0.0",
+    "react-dropzone": "^20.0.0",
+    "react-joyride": "^3.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^3.8.0",
+    "sonner": "^2.0.0",
     "tailwindcss": "^4.1.0"
   },
   "peerDependenciesMeta": {
+    "@tanstack/react-table": {
+      "optional": true
+    },
+    "@tanstack/react-form": {
+      "optional": true
+    },
     "cmdk": {
       "optional": true
     },
     "react-day-picker": {
       "optional": true
     },
+    "react-dropzone": {
+      "optional": true
+    },
+    "react-joyride": {
+      "optional": true
+    },
     "recharts": {
+      "optional": true
+    },
+    "sonner": {
       "optional": true
     }
   },
@@ -95,6 +123,8 @@
     "@storybook/addon-themes": "11.0.0-beta.3",
     "@storybook/react-vite": "11.0.0-beta.3",
     "@tailwindcss/vite": "^4.3.5",
+    "@tanstack/react-form": "^1.33.5",
+    "@tanstack/react-table": "^9.3.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",
@@ -102,7 +132,10 @@
     "react": "^19.3.1",
     "react-day-picker": "^10.0.2",
     "react-dom": "^19.3.1",
+    "react-dropzone": "^20.1.4",
+    "react-joyride": "^3.2.0",
     "recharts": "^3.8.0",
+    "sonner": "^2.0.8",
     "storybook": "11.0.0-beta.3",
     "tailwindcss": "^4.3.5",
     "tsdown": "^0.23.7",

@@ -3,10 +3,11 @@
 GoGoUI includes code adapted from the projects below, each under the MIT
 License reproduced at the end of this file.
 
-| Project                                       | What GoGoUI took                                                                                                                                   | Copyright                 |
-| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| [shadcn/ui](https://github.com/shadcn-ui/ui)  | The structure and the class recipes of the components in `packages/ui/src/components`, and the `data-*` state variants of `packages/ui/styles.css` | Copyright (c) 2023 shadcn |
-| [Bklit UI](https://github.com/bklit/bklit-ui) | The funnel chart, `packages/ui/src/components/funnel-chart.tsx`                                                                                    | Copyright (c) 2026 uixmat |
+| Project                                                 | What GoGoUI took                                                                                                                                   | Copyright                    |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| [shadcn/ui](https://github.com/shadcn-ui/ui)            | The structure and the class recipes of the components in `packages/ui/src/components`, and the `data-*` state variants of `packages/ui/styles.css` | Copyright (c) 2023 shadcn    |
+| [Bklit UI](https://github.com/bklit/bklit-ui)           | The funnel chart, `packages/ui/src/components/funnel-chart.tsx`                                                                                    | Copyright (c) 2026 uixmat    |
+| [Kokonut UI](https://github.com/kokonut-labs/kokonutui) | The slide to confirm and its physics, `packages/ui/src/components/slide-to-confirm.tsx` and `packages/ui/src/internal/slide-*`                     | Copyright (c) 2025 kokonutUI |
 
 ## MIT License
 

@@ -7,7 +7,7 @@ default, English included.
 | Package                             | What it holds                                                                      |
 | ----------------------------------- | ---------------------------------------------------------------------------------- |
 | [`@gogoui/tokens`](packages/tokens) | The design tokens as CSS variables (light and dark) and their Tailwind CSS 4 theme |
-| [`@gogoui/ui`](packages/ui)         | 38 React components, one import each                                               |
+| [`@gogoui/ui`](packages/ui)         | About 110 React components, one import each                                        |
 
 ## Requirements
 
@@ -19,8 +19,18 @@ React 19 and Tailwind CSS 4.
 bun add @gogoui/ui @phosphor-icons/react
 ```
 
-Charts, the command palette and the calendar need their library, only if
-you use them: `recharts`, `cmdk`, `react-day-picker`.
+A few components need a library of their own, installed only if you use
+them:
+
+| Library                 | For                                                   |
+| ----------------------- | ----------------------------------------------------- |
+| `react-day-picker`      | Calendar, DateField, DateRangePicker, FilterDateRange |
+| `sonner`                | Toaster                                               |
+| `@tanstack/react-table` | `@gogoui/ui/data-table`                               |
+| `@tanstack/react-form`  | `@gogoui/ui/tanstack-form`                            |
+| `react-dropzone`        | FileDrop, PhotoDropZone                               |
+| `react-joyride`         | GuidedTour                                            |
+| `recharts`, `cmdk`      | Chart, Command                                        |
 
 ## Use
 
@@ -40,6 +50,35 @@ export function Save() {
   return <Button>Enregistrer</Button>
 }
 ```
+
+### Forms
+
+Every field takes `value`, `onValueChange` and `error`, so it works with
+any form library. With TanStack Form, the fields come already bound:
+
+```tsx
+import { useAppForm } from '@gogoui/ui/tanstack-form'
+
+export function NewClient() {
+  const form = useAppForm({ defaultValues: { email: '' } })
+  return (
+    <form.AppForm>
+      <form.Form>
+        <form.AppField name="email">
+          {(field) => <field.TextField label="E-mail" type="email" />}
+        </form.AppField>
+        <form.SubmitButton loadingText="Création…">Créer</form.SubmitButton>
+      </form.Form>
+    </form.AppForm>
+  )
+}
+```
+
+### Lists
+
+`@gogoui/ui/data-table` gives `DataTable`, `useDataTable` and
+`createDataColumns`: a table with search, sort, columns to hide, rows to
+tick and pages, and dense rows on a phone.
 
 ### Your brand
 

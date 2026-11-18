@@ -1,0 +1,76 @@
+import { useState } from 'react'
+
+import preview from '#.storybook/preview'
+
+import { Button } from './button.tsx'
+import { ConfirmDialog } from './confirm-dialog.tsx'
+
+const meta = preview.meta({
+  title: 'Composants/ConfirmDialog',
+  component: ConfirmDialog,
+})
+
+/**
+ * Deleting: the title asks, the description says what is lost, the way
+ * out says what it keeps. The button spins while the action runs.
+ *
+ * @summary Ask before deleting.
+ */
+export const Destructive = meta.story({
+  render: function Render() {
+    const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
+    return (
+      <>
+        <Button variant="destructive" onClick={() => setOpen(true)}>
+          Supprimer le devis
+        </Button>
+        <ConfirmDialog
+          open={open}
+          onOpenChange={setOpen}
+          title="Supprimer le devis n° 42 ?"
+          description="Le couple ne pourra plus l'ouvrir. Les paiements reçus restent enregistrés."
+          confirmLabel="Supprimer"
+          cancelLabel="Garder le devis"
+          loadingLabel="Suppression…"
+          loading={loading}
+          destructive
+          onConfirm={() => {
+            setLoading(true)
+            setTimeout(() => {
+              setLoading(false)
+              setOpen(false)
+            }, 1500)
+          }}
+        />
+      </>
+    )
+  },
+})
+
+/**
+ * The action failed: the reason shows in the dialog, which stays open.
+ *
+ * @summary A confirmation whose action failed.
+ */
+export const WithError = meta.story({
+  render: function Render() {
+    const [open, setOpen] = useState(false)
+    return (
+      <>
+        <Button variant="outline" onClick={() => setOpen(true)}>
+          Envoyer le contrat
+        </Button>
+        <ConfirmDialog
+          open={open}
+          onOpenChange={setOpen}
+          title="Envoyer le contrat au couple ?"
+          description="Il le recevra par e-mail et pourra le signer en ligne."
+          confirmLabel="Envoyer"
+          error="L'envoi a échoué. Vérifiez votre connexion, puis réessayez."
+          onConfirm={() => undefined}
+        />
+      </>
+    )
+  },
+})
