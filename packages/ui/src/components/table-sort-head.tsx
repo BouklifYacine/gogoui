@@ -1,10 +1,6 @@
 import type { ComponentProps, MouseEvent } from 'react'
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ArrowsDownUpIcon,
-} from '@phosphor-icons/react'
 
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { TableHead } from './table.tsx'
 
@@ -33,8 +29,8 @@ function TableSortHead({
   children,
   ...props
 }: TableSortHeadProps) {
-  const Arrow =
-    sort === 'asc' ? ArrowUpIcon : sort === 'desc' ? ArrowDownIcon : null
+  const arrow =
+    sort === 'asc' ? 'sortAscending' : sort === 'desc' ? 'sortDescending' : null
   return (
     <TableHead
       scope="col"
@@ -63,10 +59,15 @@ function TableSortHead({
           )}
         >
           {children}
-          {Arrow ? (
-            <Arrow aria-hidden="true" className="size-3.5 text-fg" />
+          {arrow ? (
+            <GoGoIcon
+              name={arrow}
+              aria-hidden="true"
+              className="size-3.5 text-fg"
+            />
           ) : (
-            <ArrowsDownUpIcon
+            <GoGoIcon
+              name="sortNone"
               aria-hidden="true"
               className="size-3.5 text-fg-subtle"
             />

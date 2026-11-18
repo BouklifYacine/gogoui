@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Menu as MenuPrimitive } from '@base-ui/react/menu'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
-import { CaretRightIcon, CheckIcon } from '@phosphor-icons/react'
 
 /**
  * A list of actions opened from a button: a row’s « … », an account menu.
@@ -127,7 +127,7 @@ function DropdownMenuSubTrigger({
       {...props}
     >
       {children}
-      <CaretRightIcon aria-hidden="true" className="ml-auto" />
+      <GoGoIcon name="chevronRight" aria-hidden="true" className="ml-auto" />
     </MenuPrimitive.SubmenuTrigger>
   )
 }
@@ -181,7 +181,7 @@ function DropdownMenuCheckboxItem({
         data-slot="dropdown-menu-checkbox-item-indicator"
       >
         <MenuPrimitive.CheckboxItemIndicator>
-          <CheckIcon aria-hidden="true" />
+          <GoGoIcon name="check" aria-hidden="true" />
         </MenuPrimitive.CheckboxItemIndicator>
       </span>
       {children}
@@ -221,7 +221,7 @@ function DropdownMenuRadioItem({
         data-slot="dropdown-menu-radio-item-indicator"
       >
         <MenuPrimitive.RadioItemIndicator>
-          <CheckIcon aria-hidden="true" />
+          <GoGoIcon name="check" aria-hidden="true" />
         </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}

@@ -1,4 +1,4 @@
-import { XIcon } from '@phosphor-icons/react'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { Button } from './button.tsx'
@@ -67,7 +67,11 @@ function FilterChips({ chips, onReset, fallbackFocusId }: FilterChipsProps) {
           onClick={() => remove(index)}
         >
           {chip.label}
-          <XIcon aria-hidden="true" className="text-fg-subtle" />
+          <GoGoIcon
+            name="close"
+            aria-hidden="true"
+            className="text-fg-subtle"
+          />
         </Button>
       ))}
       <Button

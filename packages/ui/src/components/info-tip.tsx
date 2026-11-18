@@ -1,5 +1,4 @@
-import { InfoIcon } from '@phosphor-icons/react'
-
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip.tsx'
 
@@ -29,7 +28,7 @@ function InfoTip({ text, className }: InfoTipProps) {
           className,
         )}
       >
-        <InfoIcon className="size-3.5" aria-hidden="true" />
+        <GoGoIcon name="info" className="size-3.5" aria-hidden="true" />
       </TooltipTrigger>
       <TooltipContent className="text-pretty">{text}</TooltipContent>
     </Tooltip>

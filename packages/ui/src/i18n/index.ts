@@ -1,4 +1,7 @@
 export { GoGoUIProvider } from './gogoui-provider.tsx'
+export { defaultIcons } from './icons.ts'
+export type { GoGoUIIcon, GoGoUIIcons } from './icons.ts'
+export { useGoGoUIIcons } from './icons-context.ts'
 export { useGoGoUIMessages } from './messages-context.ts'
 export { messages } from './messages.ts'
 export type { GoGoUILocale, GoGoUIMessages } from './messages.ts'

@@ -1,14 +1,9 @@
 import type { ComponentProps, ReactNode } from 'react'
-import {
-  CheckCircleIcon,
-  InfoIcon,
-  WarningCircleIcon,
-  WarningIcon,
-} from '@phosphor-icons/react'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
 import type { Color } from '../internal/colors.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 const alertVariants = cva(
@@ -30,12 +25,12 @@ const alertVariants = cva(
 )
 
 const icons = {
-  neutral: InfoIcon,
-  primary: InfoIcon,
-  info: InfoIcon,
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  danger: WarningCircleIcon,
+  neutral: 'info',
+  primary: 'info',
+  info: 'info',
+  success: 'success',
+  warning: 'warning',
+  danger: 'danger',
 } as const
 
 type AlertProps = Omit<ComponentProps<'div'>, 'color'> &
@@ -67,7 +62,6 @@ function Alert({
   ...props
 }: AlertProps) {
   const tone = color ?? variant ?? 'info'
-  const Icon = icons[tone]
   return (
     <div
       data-slot="alert"
@@ -75,7 +69,11 @@ function Alert({
       className={cn(alertVariants({ variant: tone }), className)}
       {...props}
     >
-      {icon === undefined ? <Icon aria-hidden="true" weight="fill" /> : icon}
+      {icon === undefined ? (
+        <GoGoIcon name={icons[tone]} aria-hidden="true" weight="fill" />
+      ) : (
+        icon
+      )}
       <div className="col-start-2 flex min-w-0 flex-col gap-1">{children}</div>
       {action && (
         <div className="col-start-2 mt-1 flex flex-wrap gap-2">{action}</div>

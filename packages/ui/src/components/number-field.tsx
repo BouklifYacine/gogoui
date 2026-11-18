@@ -1,7 +1,7 @@
 import { NumberField as NumberFieldPrimitive } from '@base-ui/react/number-field'
-import { MinusIcon, PlusIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 type NumberFieldProps = Omit<NumberFieldPrimitive.Root.Props, 'locale'> & {
@@ -53,7 +53,7 @@ function NumberField({
           aria-label={messages.decrease}
           className={button}
         >
-          <MinusIcon aria-hidden="true" />
+          <GoGoIcon name="minus" aria-hidden="true" />
         </NumberFieldPrimitive.Decrement>
         <NumberFieldPrimitive.Input
           id={id}
@@ -64,7 +64,7 @@ function NumberField({
           aria-label={messages.increase}
           className={button}
         >
-          <PlusIcon aria-hidden="true" />
+          <GoGoIcon name="plus" aria-hidden="true" />
         </NumberFieldPrimitive.Increment>
       </NumberFieldPrimitive.Group>
     </NumberFieldPrimitive.Root>

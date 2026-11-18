@@ -1,4 +1,4 @@
-import { DotsThreeIcon } from '@phosphor-icons/react'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { RowActionItem } from '../internal/row-action-item.tsx'
@@ -45,7 +45,7 @@ function RowActionsMenu({ name, actions, pending }: RowActionsMenuProps) {
         }
       >
         {pending === undefined && (
-          <DotsThreeIcon aria-hidden="true" className="size-4.5" />
+          <GoGoIcon name="more" aria-hidden="true" className="size-4.5" />
         )}
         <span className="sr-only">{pending ?? rowActions(name)}</span>
       </DropdownMenuTrigger>

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
-import { CaretRightIcon, DotsThreeIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -95,7 +95,7 @@ function BreadcrumbSeparator({
       className={cn('[&>svg]:size-3.5', className)}
       {...props}
     >
-      {children ?? <CaretRightIcon aria-hidden="true" />}
+      {children ?? <GoGoIcon name="chevronRight" aria-hidden="true" />}
     </li>
   )
 }
@@ -116,7 +116,7 @@ function BreadcrumbEllipsis({
       )}
       {...props}
     >
-      <DotsThreeIcon aria-hidden="true" />
+      <GoGoIcon name="more" aria-hidden="true" />
       <span className="sr-only">{more}</span>
     </span>
   )

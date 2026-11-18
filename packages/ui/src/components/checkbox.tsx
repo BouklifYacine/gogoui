@@ -1,7 +1,7 @@
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox'
-import { CheckIcon, MinusIcon } from '@phosphor-icons/react'
 import { checked } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -35,11 +35,13 @@ function Checkbox({
         data-slot="checkbox-indicator"
         className="flex items-center justify-center text-current"
       >
-        <CheckIcon
+        <GoGoIcon
+          name="check"
           weight="bold"
           className="size-3 group-data-indeterminate/checkbox:hidden"
         />
-        <MinusIcon
+        <GoGoIcon
+          name="minus"
           weight="bold"
           className="hidden size-3 group-data-indeterminate/checkbox:block"
         />

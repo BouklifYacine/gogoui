@@ -1,6 +1,6 @@
 import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion'
-import { CaretDownIcon } from '@phosphor-icons/react'
 
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -48,7 +48,8 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <CaretDownIcon
+        <GoGoIcon
+          name="chevronDown"
           aria-hidden="true"
           className="size-4 shrink-0 text-fg-subtle transition-transform duration-200 group-data-[panel-open]/accordion-trigger:rotate-180 motion-reduce:transition-none"
         />

@@ -1,8 +1,8 @@
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
-import { XIcon } from '@phosphor-icons/react'
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
@@ -101,7 +101,7 @@ function DialogContent({
               />
             }
           >
-            <XIcon />
+            <GoGoIcon name="close" />
             <span className="sr-only">{close}</span>
           </DialogPrimitive.Close>
         )}

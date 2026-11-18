@@ -1,16 +1,12 @@
 import * as React from 'react'
 import { calendarDay } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 import type { DayButton, Locale } from 'react-day-picker'
 
 import { Button, buttonVariants } from './button.tsx'
-import {
-  CaretDownIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-} from '@phosphor-icons/react'
 
 /**
  * A month to pick a day or a range, built on react-day-picker (install
@@ -158,7 +154,8 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
             return (
-              <CaretLeftIcon
+              <GoGoIcon
+                name="chevronLeft"
                 aria-hidden="true"
                 className={cn('size-3.5', className)}
                 {...props}
@@ -168,7 +165,8 @@ function Calendar({
 
           if (orientation === 'right') {
             return (
-              <CaretRightIcon
+              <GoGoIcon
+                name="chevronRight"
                 aria-hidden="true"
                 className={cn('size-3.5', className)}
                 {...props}
@@ -177,7 +175,8 @@ function Calendar({
           }
 
           return (
-            <CaretDownIcon
+            <GoGoIcon
+              name="chevronDown"
               aria-hidden="true"
               className={cn('size-3.5', className)}
               {...props}

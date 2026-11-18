@@ -1,9 +1,9 @@
-import { CircleNotchIcon } from '@phosphor-icons/react'
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { text } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -24,11 +24,12 @@ function Spinner({
 }) {
   const { loading } = useGoGoUIMessages()
   return (
-    <CircleNotchIcon
+    <GoGoIcon
       role="status"
       aria-label={loading}
-      className={cn('size-3.5 animate-spin', color && text[color], className)}
       {...props}
+      name="loading"
+      className={cn('size-3.5 animate-spin', color && text[color], className)}
     />
   )
 }

@@ -1,15 +1,9 @@
 import { useCallback } from 'react'
-import {
-  CheckCircleIcon,
-  InfoIcon,
-  WarningCircleIcon,
-  WarningIcon,
-  XIcon,
-} from '@phosphor-icons/react'
 import { Toaster as Sonner, toast } from 'sonner'
 import type { ToasterProps } from 'sonner'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 /**
  * Where short confirmations appear (« Devis envoyé »), with « Annuler »
@@ -35,16 +29,30 @@ function Toaster(props: ToasterProps) {
       containerAriaLabel={notifications}
       icons={{
         success: (
-          <CheckCircleIcon weight="fill" className="size-4.5 text-success" />
+          <GoGoIcon
+            name="success"
+            weight="fill"
+            className="size-4.5 text-success"
+          />
         ),
         error: (
-          <WarningCircleIcon weight="fill" className="size-4.5 text-danger" />
+          <GoGoIcon
+            name="danger"
+            weight="fill"
+            className="size-4.5 text-danger"
+          />
         ),
         warning: (
-          <WarningIcon weight="fill" className="size-4.5 text-warning" />
+          <GoGoIcon
+            name="warning"
+            weight="fill"
+            className="size-4.5 text-warning"
+          />
         ),
-        info: <InfoIcon weight="fill" className="size-4.5 text-info" />,
-        close: <XIcon className="size-3.5" />,
+        info: (
+          <GoGoIcon name="info" weight="fill" className="size-4.5 text-info" />
+        ),
+        close: <GoGoIcon name="close" className="size-3.5" />,
       }}
       toastOptions={{
         unstyled: true,

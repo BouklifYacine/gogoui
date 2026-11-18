@@ -7,9 +7,9 @@ import {
   motion,
   useReducedMotion,
 } from 'motion/react'
-import { MagnifyingGlassIcon, XIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Kbd } from './kbd.tsx'
 
@@ -154,7 +154,8 @@ function ExpandingSearch({
                 {...enter}
                 className="relative flex w-full items-center gap-2 ps-3 pe-1.5"
               >
-                <MagnifyingGlassIcon
+                <GoGoIcon
+                  name="search"
                   aria-hidden="true"
                   className="size-4 shrink-0 text-fg-subtle"
                 />
@@ -190,7 +191,8 @@ function ExpandingSearch({
                     // 28 px, with a 44 px touch target around it.
                     className="relative flex size-7 shrink-0 items-center justify-center rounded-full text-fg outline-line-focus after:absolute after:-inset-2 hover:bg-hover focus-visible:outline-2"
                   >
-                    <XIcon
+                    <GoGoIcon
+                      name="close"
                       aria-hidden="true"
                       weight="bold"
                       className="size-3.5"
@@ -220,7 +222,8 @@ function ExpandingSearch({
                   query && 'bg-primary-subtle text-fg',
                 )}
               >
-                <MagnifyingGlassIcon
+                <GoGoIcon
+                  name="search"
                   aria-hidden="true"
                   className={cn(
                     'size-4 shrink-0',

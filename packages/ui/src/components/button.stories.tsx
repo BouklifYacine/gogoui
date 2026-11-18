@@ -91,12 +91,8 @@ export const IconOnly = meta.story({
  */
 export const WithIcon = meta.story({
   args: {
-    children: (
-      <>
-        Continuer
-        <ArrowRightIcon data-icon="inline-end" />
-      </>
-    ),
+    children: 'Continuer',
+    iconEnd: <ArrowRightIcon />,
   },
 })
 

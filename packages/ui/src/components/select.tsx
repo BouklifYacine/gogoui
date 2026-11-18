@@ -1,8 +1,8 @@
 import { Select as SelectPrimitive } from '@base-ui/react/select'
-import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react'
 import type { ComponentProps } from 'react'
 
 import { SelectHighlight } from '../internal/select-highlight.tsx'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -73,7 +73,8 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <CaretDownIcon
+          <GoGoIcon
+            name="chevronDown"
             aria-hidden="true"
             className="pointer-events-none size-3.5 text-fg-subtle transition-transform duration-150 ease-tactile group-data-popup-open/select-trigger:rotate-180"
           />
@@ -225,7 +226,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <CaretUpIcon aria-hidden="true" />
+      <GoGoIcon name="chevronUp" aria-hidden="true" />
     </SelectPrimitive.ScrollUpArrow>
   )
 }
@@ -244,7 +245,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <CaretDownIcon aria-hidden="true" />
+      <GoGoIcon name="chevronDown" aria-hidden="true" />
     </SelectPrimitive.ScrollDownArrow>
   )
 }

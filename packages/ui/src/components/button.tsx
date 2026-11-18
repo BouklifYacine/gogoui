@@ -135,6 +135,10 @@ type ButtonProps = Omit<ButtonPrimitive.Props, 'color'> &
     loading?: boolean
     /** Replaces the label while `loading` (« Envoi… »). */
     loadingText?: ReactNode
+    /** An icon before the words (any library's); the spinner takes its place while loading. */
+    iconStart?: ReactNode
+    /** An icon after the words (an arrow). */
+    iconEnd?: ReactNode
   }
 
 /**
@@ -154,6 +158,8 @@ function Button({
   color,
   loading = false,
   loadingText,
+  iconStart,
+  iconEnd,
   disabled,
   children,
   ...props
@@ -175,8 +181,25 @@ function Button({
       aria-busy={loading || undefined}
       {...props}
     >
-      {loading && <Spinner aria-hidden="true" />}
+      {loading ? (
+        <Spinner aria-hidden="true" />
+      ) : (
+        iconStart && (
+          <span
+            data-icon="inline-start"
+            aria-hidden="true"
+            className="contents"
+          >
+            {iconStart}
+          </span>
+        )
+      )}
       {loading && loadingText !== undefined ? loadingText : children}
+      {!loading && iconEnd && (
+        <span data-icon="inline-end" aria-hidden="true" className="contents">
+          {iconEnd}
+        </span>
+      )}
     </ButtonPrimitive>
   )
 }

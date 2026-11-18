@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react/combobox'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 import {
@@ -10,7 +11,6 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from './input-group.tsx'
-import { CaretDownIcon, XIcon, CheckIcon } from '@phosphor-icons/react'
 
 /**
  * A field that filters a long list as you type, then picks one value (or
@@ -38,7 +38,10 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <CaretDownIcon className="pointer-events-none size-3.5 text-muted-foreground" />
+      <GoGoIcon
+        name="chevronDown"
+        className="pointer-events-none size-3.5 text-muted-foreground"
+      />
     </ComboboxPrimitive.Trigger>
   )
 }
@@ -51,7 +54,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
       className={cn(className)}
       {...props}
     >
-      <XIcon className="pointer-events-none" />
+      <GoGoIcon name="close" className="pointer-events-none" />
     </ComboboxPrimitive.Clear>
   )
 }
@@ -164,7 +167,7 @@ function ComboboxItem({
           <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <GoGoIcon name="check" className="pointer-events-none" />
       </ComboboxPrimitive.ItemIndicator>
     </ComboboxPrimitive.Item>
   )
@@ -266,7 +269,7 @@ function ComboboxChip({
           className="-ml-1 opacity-50 hover:opacity-100"
           data-slot="combobox-chip-remove"
         >
-          <XIcon className="pointer-events-none" />
+          <GoGoIcon name="close" className="pointer-events-none" />
         </ComboboxPrimitive.ChipRemove>
       )}
     </ComboboxPrimitive.Chip>

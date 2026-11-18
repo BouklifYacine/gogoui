@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Dialog as SheetPrimitive } from '@base-ui/react/dialog'
-import { XIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
@@ -81,7 +81,7 @@ function SheetContent({
               />
             }
           >
-            <XIcon aria-hidden="true" />
+            <GoGoIcon name="close" aria-hidden="true" />
             <span className="sr-only">{close}</span>
           </SheetPrimitive.Close>
         )}
