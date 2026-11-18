@@ -7,7 +7,7 @@ default, English included.
 | Package                             | What it holds                                                                      |
 | ----------------------------------- | ---------------------------------------------------------------------------------- |
 | [`@gogoui/tokens`](packages/tokens) | The design tokens as CSS variables (light and dark) and their Tailwind CSS 4 theme |
-| [`@gogoui/ui`](packages/ui)         | About 140 React components, one import each                                        |
+| [`@gogoui/ui`](packages/ui)         | About 150 React components, one import each                                        |
 
 ## Requirements
 
@@ -22,15 +22,18 @@ bun add @gogoui/ui @phosphor-icons/react
 A few components need a library of their own, installed only if you use
 them:
 
-| Library                 | For                                                   |
-| ----------------------- | ----------------------------------------------------- |
-| `react-day-picker`      | Calendar, DateField, DateRangePicker, FilterDateRange |
-| `sonner`                | Toaster                                               |
-| `@tanstack/react-table` | `@gogoui/ui/data-table`                               |
-| `@tanstack/react-form`  | `@gogoui/ui/tanstack-form`                            |
-| `react-dropzone`        | FileDrop, PhotoDropZone                               |
-| `react-joyride`         | GuidedTour                                            |
-| `recharts`, `cmdk`      | Chart, Command                                        |
+| Library                                                                               | For                                                   |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `react-day-picker`                                                                    | Calendar, DateField, DateRangePicker, FilterDateRange |
+| `sonner`                                                                              | Toaster                                               |
+| `@tanstack/react-table`                                                               | `@gogoui/ui/data-table`                               |
+| `@tanstack/react-form`                                                                | `@gogoui/ui/tanstack-form`                            |
+| `react-dropzone`                                                                      | FileDrop, PhotoDropZone                               |
+| `react-joyride`                                                                       | GuidedTour                                            |
+| `recharts`, `cmdk`                                                                    | Chart, Command                                        |
+| `embla-carousel-react`                                                                | Carousel                                              |
+| `react-resizable-panels`                                                              | Resizable                                             |
+| `@tiptap/react`, `@tiptap/pm`, `@tiptap/starter-kit`, `@tiptap/extension-placeholder` | RichTextEditor                                        |
 
 ## Use
 

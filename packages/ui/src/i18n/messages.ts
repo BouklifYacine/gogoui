@@ -254,6 +254,23 @@ export type GoGoUIMessages = {
   presets: string
   /** Read aloud near a text's limit. */
   charactersLeft: (count: number) => string
+  /** A carousel's name and its buttons. */
+  carousel: string
+  previousSlide: string
+  nextSlide: string
+  /** Where one is in a carousel. */
+  slideOf: (current: number, total: number) => string
+  /** A rich text editor's buttons. */
+  bold: string
+  italic: string
+  strike: string
+  bulletList: string
+  orderedList: string
+  heading: string
+  quote: string
+  undo2: string
+  redo: string
+  formatting: string
 }
 
 export type GoGoUILocale = 'fr' | 'en'
@@ -416,6 +433,20 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
       count > 0
         ? `Encore ${count} caractère${count > 1 ? 's' : ''}`
         : 'Limite atteinte',
+    carousel: 'Carrousel',
+    previousSlide: 'Diapositive précédente',
+    nextSlide: 'Diapositive suivante',
+    slideOf: (current, total) => `${current} sur ${total}`,
+    bold: 'Gras',
+    italic: 'Italique',
+    strike: 'Barré',
+    bulletList: 'Liste à puces',
+    orderedList: 'Liste numérotée',
+    heading: 'Titre',
+    quote: 'Citation',
+    undo2: 'Annuler la frappe',
+    redo: 'Rétablir',
+    formatting: 'Mise en forme',
   },
   en: {
     close: 'Close',
@@ -572,5 +603,19 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
       count > 0
         ? `${count} character${count > 1 ? 's' : ''} left`
         : 'Limit reached',
+    carousel: 'Carousel',
+    previousSlide: 'Previous slide',
+    nextSlide: 'Next slide',
+    slideOf: (current, total) => `${current} of ${total}`,
+    bold: 'Bold',
+    italic: 'Italic',
+    strike: 'Strikethrough',
+    bulletList: 'Bulleted list',
+    orderedList: 'Numbered list',
+    heading: 'Heading',
+    quote: 'Quote',
+    undo2: 'Undo',
+    redo: 'Redo',
+    formatting: 'Formatting',
   },
 }
