@@ -2,6 +2,8 @@ import { Toggle as TogglePrimitive } from '@base-ui/react/toggle'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
+import { pressed } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 const toggleVariants = cva(
@@ -23,7 +25,11 @@ const toggleVariants = cva(
   },
 )
 
-type ToggleProps = TogglePrimitive.Props & VariantProps<typeof toggleVariants>
+type ToggleProps = TogglePrimitive.Props &
+  VariantProps<typeof toggleVariants> & {
+    /** Its tint once pressed; grey by default. */
+    color?: Color
+  }
 
 /**
  * A button that stays pressed or not (bold, a favourite), its state told
@@ -32,11 +38,15 @@ type ToggleProps = TogglePrimitive.Props & VariantProps<typeof toggleVariants>
  *
  * @summary A button that stays pressed.
  */
-function Toggle({ className, variant, size, ...props }: ToggleProps) {
+function Toggle({ className, variant, size, color, ...props }: ToggleProps) {
   return (
     <TogglePrimitive
       data-slot="toggle"
-      className={cn(toggleVariants({ variant, size }), className)}
+      className={cn(
+        toggleVariants({ variant, size }),
+        color && pressed[color],
+        className,
+      )}
       {...props}
     />
   )

@@ -99,14 +99,17 @@
   --color-warning-fg: var(--warning-fg);
   --color-warning-line: var(--warning-line);
   --color-warning-subtle: var(--warning-subtle);
+  --color-warning-foreground: var(--warning-foreground);
   --color-success: var(--success);
   --color-success-fg: var(--success-fg);
   --color-success-line: var(--success-line);
   --color-success-subtle: var(--success-subtle);
+  --color-success-foreground: var(--success-foreground);
   --color-info: var(--info);
   --color-info-fg: var(--info-fg);
   --color-info-line: var(--info-line);
   --color-info-subtle: var(--info-subtle);
+  --color-info-foreground: var(--info-foreground);
   --color-highlight: var(--highlight);
   --color-highlight-fg: var(--highlight-fg);
   --color-highlight-line: var(--highlight-line);
@@ -119,6 +122,7 @@
   --color-neutral-fg: var(--neutral-fg);
   --color-neutral-line: var(--neutral-line);
   --color-neutral-subtle: var(--neutral-subtle);
+  --color-neutral-foreground: var(--neutral-foreground);
 
   /* shadcn names */
   --color-background: var(--background);

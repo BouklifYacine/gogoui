@@ -5,6 +5,7 @@ import { Slider } from './slider.tsx'
 const meta = preview.meta({
   title: 'Composants/Slider',
   component: Slider,
+  args: { color: 'primary' },
 })
 
 /**
@@ -13,12 +14,13 @@ const meta = preview.meta({
  * @summary Drag to pick a value.
  */
 export const Basic = meta.story({
-  render: () => (
+  render: (args) => (
     <div className="grid w-72 gap-3">
       <span id="guests-label" className="text-sm font-medium">
         Invités : jusqu'à 150
       </span>
       <Slider
+        {...args}
         defaultValue={150}
         min={20}
         max={300}
@@ -35,12 +37,13 @@ export const Basic = meta.story({
  * @summary Drag two thumbs to pick a range.
  */
 export const Range = meta.story({
-  render: () => (
+  render: (args) => (
     <div className="grid w-72 gap-3">
       <span id="budget-label" className="text-sm font-medium">
         Budget : 8 000 à 15 000 €
       </span>
       <Slider
+        {...args}
         defaultValue={[8000, 15000]}
         min={0}
         max={30000}

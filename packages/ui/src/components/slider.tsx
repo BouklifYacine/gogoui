@@ -1,5 +1,7 @@
 import { Slider as SliderPrimitive } from '@base-ui/react/slider'
 
+import { fill } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -15,8 +17,12 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  color = 'primary',
   ...props
-}: SliderPrimitive.Root.Props) {
+}: SliderPrimitive.Root.Props & {
+  /** The filled part's colour, the primary by default. */
+  color?: Color
+}) {
   const _values = Array.isArray(value)
     ? value
     : Array.isArray(defaultValue)
@@ -41,7 +47,10 @@ function Slider({
         >
           <SliderPrimitive.Indicator
             data-slot="slider-range"
-            className="bg-primary select-none data-horizontal:h-full data-vertical:w-full"
+            className={cn(
+              'select-none data-horizontal:h-full data-vertical:w-full',
+              fill[color],
+            )}
           />
         </SliderPrimitive.Track>
         {Array.from({ length: _values.length }, (_, index) => (

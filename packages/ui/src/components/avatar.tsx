@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar'
+import { subtle } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -45,13 +47,18 @@ function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
 
 function AvatarFallback({
   className,
+  color,
   ...props
-}: AvatarPrimitive.Fallback.Props) {
+}: AvatarPrimitive.Fallback.Props & {
+  /** The initials' tint; grey by default. */
+  color?: Color
+}) {
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
         'flex size-full items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground group-data-[size=sm]/avatar:text-xs',
+        color && subtle[color],
         className,
       )}
       {...props}

@@ -3,6 +3,8 @@ import { useRender } from '@base-ui/react/use-render'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
+import { edge, solid, subtle, text } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 // A small pill, always round, figures in columns. Tinted badges draw
@@ -14,6 +16,9 @@ const badgeVariants = cva(
       variant: {
         default:
           'bg-primary text-primary-foreground [a]:hover:bg-primary-hover',
+        // The shapes a `color` paints.
+        solid: 'bg-primary text-primary-foreground [a]:hover:bg-primary-hover',
+        subtle: 'bg-primary-subtle text-primary-active shadow-badge',
         secondary:
           'bg-control text-fg-muted shadow-button [a]:hover:bg-control-hover',
         destructive:
@@ -30,27 +35,58 @@ const badgeVariants = cva(
   },
 )
 
-type BadgeProps = useRender.ComponentProps<'span'> &
-  VariantProps<typeof badgeVariants>
+type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>
+
+/** The classes of a badge's shape in a colour, over the variant's own. */
+function badgeColor(variant: BadgeVariant, color: Color): string {
+  switch (variant) {
+    case 'default':
+    case 'solid':
+      return cn(solid[color], 'shadow-none')
+    case 'subtle':
+    case 'destructive':
+      return cn(subtle[color], 'shadow-badge ring-0')
+    case 'outline':
+      return cn(text[color], edge[color])
+    default:
+      return text[color]
+  }
+}
+
+type BadgeProps = Omit<useRender.ComponentProps<'span'>, 'color'> &
+  VariantProps<typeof badgeVariants> & {
+    /**
+     * The colour of its shape: `neutral`, `primary`, `info`, `success`,
+     * `warning` or `danger`. `variant` keeps the shape.
+     */
+    color?: Color
+  }
 
 /**
  * A small round label: a count, a short state, a tag. A state is always
- * written in words, never told by colour alone. Rendered as a link
- * (`render={<a href="…" />}`), it darkens when pointed at.
+ * written in words, never told by colour alone. Any shape takes a `color`
+ * (`<Badge variant="subtle" color="success">Payé</Badge>`). Rendered as a
+ * link (`render={<a href="…" />}`), it darkens when pointed at.
  *
  * @summary A small pill for a count, a tag or a short state in words.
  */
 function Badge({
   className,
   variant = 'default',
+  color,
   render,
   ...props
 }: BadgeProps) {
+  const shape = variant ?? 'default'
   return useRender({
     defaultTagName: 'span',
     props: mergeProps<'span'>(
       {
-        className: cn(badgeVariants({ variant }), className),
+        className: cn(
+          badgeVariants({ variant: shape }),
+          color && badgeColor(shape, color),
+          className,
+        ),
       },
       props,
     ),
@@ -58,6 +94,7 @@ function Badge({
     state: {
       slot: 'badge',
       variant,
+      color,
     },
   })
 }

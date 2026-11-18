@@ -12,6 +12,8 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { fill } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 // A thumb chasing its value: stiff enough to stay under the finger, with
@@ -35,6 +37,8 @@ type RangeSliderProps = {
   format: (value: number) => string
   /** The range once a thumb is let go; an end means no bound. */
   onCommit: (range: { min?: number; max?: number }) => void
+  /** The range's colour on the track; dark by default. */
+  color?: Color
   className?: string
 }
 
@@ -56,6 +60,7 @@ function RangeSlider({
   high,
   format,
   onCommit,
+  color,
   className,
 }: RangeSliderProps) {
   const messages = useGoGoUIMessages()
@@ -222,7 +227,10 @@ function RangeSlider({
         >
           <span className="absolute inset-x-0 top-3 h-1 rounded-full bg-tray" />
           <motion.span
-            className="absolute top-3 h-1 rounded-full bg-inverse"
+            className={cn(
+              'absolute top-3 h-1 rounded-full bg-inverse',
+              color && fill[color],
+            )}
             style={{ left: leftA, width: fillWidth }}
           />
 

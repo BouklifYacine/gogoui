@@ -2,6 +2,8 @@ import { ArrowRightIcon, PlusIcon, TrashIcon } from '@phosphor-icons/react'
 
 import preview from '#.storybook/preview'
 
+import { COLORS } from '../internal/colors.ts'
+
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
@@ -143,4 +145,28 @@ export const RowActions = meta.story({
  */
 export const Disabled = meta.story({
   args: { disabled: true },
+})
+
+/**
+ * Every shape (`variant`) in every colour (`color`): the colours come
+ * from the tokens, so a brand change follows.
+ *
+ * @summary Every shape in every colour.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="grid gap-3">
+      {(['solid', 'subtle', 'outline', 'ghost', 'link'] as const).map(
+        (variant) => (
+          <div key={variant} className="flex flex-wrap items-center gap-2">
+            {COLORS.map((color) => (
+              <Button key={color} variant={variant} color={color}>
+                Valider
+              </Button>
+            ))}
+          </div>
+        ),
+      )}
+    </div>
+  ),
 })

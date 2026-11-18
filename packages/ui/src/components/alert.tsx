@@ -8,6 +8,7 @@ import {
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 const alertVariants = cva(
@@ -16,6 +17,8 @@ const alertVariants = cva(
     variants: {
       variant: {
         neutral: 'border-line bg-tray text-fg [&>svg]:text-fg-muted',
+        primary:
+          'border-primary-subtle-stronger bg-primary-subtle text-primary-active',
         info: 'border-info-line bg-info-subtle text-info-fg',
         success: 'border-success-line bg-success-subtle text-success-fg',
         warning: 'border-warning-line bg-warning-subtle text-warning-fg',
@@ -28,14 +31,17 @@ const alertVariants = cva(
 
 const icons = {
   neutral: InfoIcon,
+  primary: InfoIcon,
   info: InfoIcon,
   success: CheckCircleIcon,
   warning: WarningIcon,
   danger: WarningCircleIcon,
 } as const
 
-type AlertProps = ComponentProps<'div'> &
+type AlertProps = Omit<ComponentProps<'div'>, 'color'> &
   VariantProps<typeof alertVariants> & {
+    /** Its colour; `variant` says the same and stays for compatibility. */
+    color?: Color
     /** Its own icon; null for none. The variant's by default. */
     icon?: ReactNode
     /** A button or a link on the right (« Réessayer »). */
@@ -53,18 +59,20 @@ type AlertProps = ComponentProps<'div'> &
  */
 function Alert({
   className,
-  variant = 'info',
+  color,
+  variant,
   icon,
   action,
   children,
   ...props
 }: AlertProps) {
-  const Icon = icons[variant ?? 'info']
+  const tone = color ?? variant ?? 'info'
+  const Icon = icons[tone]
   return (
     <div
       data-slot="alert"
-      data-variant={variant}
-      className={cn(alertVariants({ variant }), className)}
+      data-color={tone}
+      className={cn(alertVariants({ variant: tone }), className)}
       {...props}
     >
       {icon === undefined ? <Icon aria-hidden="true" weight="fill" /> : icon}

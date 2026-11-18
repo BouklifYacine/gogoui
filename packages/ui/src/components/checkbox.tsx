@@ -1,5 +1,7 @@
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox'
 import { CheckIcon, MinusIcon } from '@phosphor-icons/react'
+import { checked } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -11,12 +13,20 @@ import { cn } from '../lib/cn.ts'
  *
  * @summary A box to tick, with its label; indeterminate for a partial list.
  */
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
+function Checkbox({
+  className,
+  color,
+  ...props
+}: CheckboxPrimitive.Root.Props & {
+  /** Its fill once ticked, the primary by default. */
+  color?: Color
+}) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
         'group/checkbox peer relative flex size-4 shrink-0 items-center justify-center rounded-xs bg-surface shadow-xs ring-1 ring-field-line outline-none focus-visible:outline-hidden forced-colors:border ring-inset transition-[background-color,box-shadow] after:absolute after:-inset-3 focus-visible:shadow-focus-primary disabled:cursor-not-allowed disabled:bg-track disabled:shadow-none disabled:ring-0 aria-invalid:ring-danger data-checked:bg-primary data-checked:text-primary-foreground data-checked:ring-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:ring-primary',
+        color && checked[color],
         className,
       )}
       {...props}

@@ -203,6 +203,8 @@ function CalendarDayButton({
   day,
   modifiers,
   locale,
+  // The HTML colour attribute: Button's `color` is its own palette.
+  color: _htmlColor,
   ...props
 }: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
   const defaultClassNames = getDefaultClassNames()

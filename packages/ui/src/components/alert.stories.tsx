@@ -17,7 +17,7 @@ const meta = preview.meta({
  */
 export const Info = meta.story({
   render: () => (
-    <Alert variant="info">
+    <Alert color="info">
       <AlertTitle>Votre essai finit dans 5 jours</AlertTitle>
       <AlertDescription>
         Ajoutez une carte pour garder vos demandes et vos devis.
@@ -34,17 +34,17 @@ export const Info = meta.story({
 export const Variants = meta.story({
   render: () => (
     <div className="flex flex-col gap-3">
-      <Alert variant="neutral">
+      <Alert color="neutral">
         <AlertTitle>Aucune relance prévue cette semaine</AlertTitle>
       </Alert>
-      <Alert variant="success">
+      <Alert color="success">
         <AlertTitle>Votre agenda Google est connecté</AlertTitle>
       </Alert>
-      <Alert variant="warning">
+      <Alert color="warning">
         <AlertTitle>La date est déjà en option pour un autre couple</AlertTitle>
       </Alert>
       <Alert
-        variant="danger"
+        color="danger"
         action={
           <Button variant="outline" size="sm">
             Réessayer

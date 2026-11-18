@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import { subtle } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 import {
   Empty,
@@ -24,6 +26,8 @@ type EmptyStateProps = {
   action?: ReactNode
   /** « large »: the whole page is empty, the state is its centre. */
   size?: 'default' | 'large'
+  /** The icon's round tint; grey by default. */
+  color?: Color
   className?: string
 }
 
@@ -40,6 +44,7 @@ function EmptyState({
   icon,
   action,
   size = 'default',
+  color,
   className,
 }: EmptyStateProps) {
   const Title = headingLevel ? (`h${headingLevel}` as const) : 'p'
@@ -56,6 +61,7 @@ function EmptyState({
             variant="icon"
             className={cn(
               large && "size-16 [&_svg:not([class*='size-'])]:size-8",
+              color && subtle[color],
             )}
           >
             {icon}

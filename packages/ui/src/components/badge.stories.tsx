@@ -1,5 +1,7 @@
 import preview from '#.storybook/preview'
 
+import { COLORS } from '../internal/colors.ts'
+
 import { Badge } from './badge.tsx'
 
 const meta = preview.meta({
@@ -51,4 +53,26 @@ export const Outline = meta.story({
  */
 export const AsLink = meta.story({
   args: { render: <a href="#impayes" />, children: '2 impayés' },
+})
+
+/**
+ * Every shape (`variant`) in every colour (`color`): the colours come
+ * from the tokens, so a brand change follows.
+ *
+ * @summary Every shape in every colour.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="grid gap-3">
+      {(['solid', 'subtle', 'outline', 'ghost'] as const).map((variant) => (
+        <div key={variant} className="flex flex-wrap items-center gap-2">
+          {COLORS.map((color) => (
+            <Badge key={color} variant={variant} color={color}>
+              Payé
+            </Badge>
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
 })

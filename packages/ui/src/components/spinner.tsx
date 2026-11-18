@@ -2,6 +2,8 @@ import { CircleNotchIcon } from '@phosphor-icons/react'
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { text } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -12,13 +14,20 @@ import { cn } from '../lib/cn.ts'
  *
  * @summary A loading indicator that speaks to screen readers when alone.
  */
-function Spinner({ className, ...props }: ComponentProps<'svg'>) {
+function Spinner({
+  className,
+  color,
+  ...props
+}: Omit<ComponentProps<'svg'>, 'color'> & {
+  /** Its colour; the words around it by default. */
+  color?: Color
+}) {
   const { loading } = useGoGoUIMessages()
   return (
     <CircleNotchIcon
       role="status"
       aria-label={loading}
-      className={cn('size-3.5 animate-spin', className)}
+      className={cn('size-3.5 animate-spin', color && text[color], className)}
       {...props}
     />
   )

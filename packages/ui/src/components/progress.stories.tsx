@@ -5,6 +5,7 @@ import { Progress, ProgressLabel, ProgressValue } from './progress.tsx'
 const meta = preview.meta({
   title: 'Composants/Progress',
   component: Progress,
+  args: { value: 60, color: 'primary' },
 })
 
 /**
@@ -13,8 +14,8 @@ const meta = preview.meta({
  * @summary A labelled progress bar with its value.
  */
 export const Basic = meta.story({
-  render: () => (
-    <Progress value={60} className="w-72">
+  render: (args) => (
+    <Progress {...args} className="w-72">
       <ProgressLabel>Configuration du lieu</ProgressLabel>
       <ProgressValue />
     </Progress>

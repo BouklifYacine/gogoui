@@ -3,6 +3,14 @@ import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 import type { ReactNode } from 'react'
 
+import {
+  hoverTint,
+  solid,
+  subtle,
+  subtleHover,
+  text,
+} from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 import { Spinner } from './spinner.tsx'
 
@@ -22,6 +30,11 @@ const buttonVariants = cva(
       variant: {
         // The single main action of a view.
         default: `bg-primary text-primary-foreground shadow-primary hover:bg-primary-hover ${solidDisabledAtNight}`,
+        // The shapes a `color` paints: filled, tinted (with outline,
+        // ghost and link below).
+        solid: `bg-primary text-primary-foreground shadow-primary hover:bg-primary-hover ${solidDisabledAtNight}`,
+        subtle:
+          'bg-primary-subtle text-primary-active ring-[0.5px] ring-primary-subtle-strong hover:bg-primary-subtle-strong',
         // The white button, for the second action, on the grey page or a
         // white card. Only its colour moves when pointed at.
         outline:
@@ -70,8 +83,51 @@ const buttonVariants = cva(
   },
 )
 
-type ButtonProps = ButtonPrimitive.Props &
+type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>['variant']>
+
+// The shape each variant has once a `color` paints it.
+const shapeOf: Record<
+  ButtonVariant,
+  'solid' | 'subtle' | 'outline' | 'ghost' | 'link'
+> = {
+  default: 'solid',
+  solid: 'solid',
+  danger: 'solid',
+  subtle: 'subtle',
+  info: 'subtle',
+  warning: 'subtle',
+  success: 'subtle',
+  outline: 'outline',
+  secondary: 'outline',
+  soft: 'outline',
+  destructive: 'outline',
+  ghost: 'ghost',
+  link: 'link',
+}
+
+/** The classes of a shape in a colour, laid over the variant's own. */
+function buttonColor(variant: ButtonVariant, color: Color): string {
+  switch (shapeOf[variant]) {
+    case 'solid':
+      return solid[color]
+    case 'subtle':
+      return cn(subtle[color], subtleHover[color])
+    case 'link':
+      return text[color]
+    default:
+      // A white or a bare button: its words and icon take the colour.
+      return cn(text[color], hoverTint[color], '[&_svg]:text-current')
+  }
+}
+
+type ButtonProps = Omit<ButtonPrimitive.Props, 'color'> &
   VariantProps<typeof buttonVariants> & {
+    /**
+     * The colour of its shape: `neutral`, `primary`, `info`, `success`,
+     * `warning` or `danger`. `variant` keeps the shape (solid, subtle,
+     * outline, ghost, link).
+     */
+    color?: Color
     /**
      * Shows a spinner and blocks the click while keeping the focus, so a
      * screen reader stays on the button.
@@ -84,8 +140,9 @@ type ButtonProps = ButtonPrimitive.Props &
 /**
  * A button. `default` is the single main action of a view; `outline` the
  * second actions; `ghost` and `soft` the small tools; `destructive` opens a
- * confirmation and `danger` confirms it. An icon alone takes an `icon` size
- * and an `aria-label`. To navigate, render a link:
+ * confirmation and `danger` confirms it. Any shape takes a `color`
+ * (`<Button variant="subtle" color="success">`). An icon alone takes an
+ * `icon` size and an `aria-label`. To navigate, render a link:
  * `<Button render={<a href="/factures" />}>`.
  *
  * @summary The button: one `default` per view, variants for every other action.
@@ -94,16 +151,23 @@ function Button({
   className,
   variant = 'default',
   size = 'default',
+  color,
   loading = false,
   loadingText,
   disabled,
   children,
   ...props
 }: ButtonProps) {
+  const shape = variant ?? 'default'
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      data-color={color}
+      className={cn(
+        buttonVariants({ variant: shape, size }),
+        color && buttonColor(shape, color),
+        className,
+      )}
       disabled={disabled || loading}
       // While loading the button looks disabled (aria-busy greys it) but
       // keeps the focus: only the click is blocked.
@@ -118,4 +182,4 @@ function Button({
 }
 
 export { Button, buttonVariants }
-export type { ButtonProps }
+export type { ButtonProps, Color }

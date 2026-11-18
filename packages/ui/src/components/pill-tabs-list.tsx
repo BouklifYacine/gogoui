@@ -8,6 +8,8 @@ import {
   useTransform,
 } from 'motion/react'
 
+import { fill, onFill } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 import { TabsList, TabsTrigger } from './tabs.tsx'
 
@@ -32,6 +34,8 @@ type PillTabsListProps<TValue extends string> = {
   tabClassName?: string
   /** False: the pill lands at once, for tabs that swap a heavy page. */
   slides?: boolean
+  /** The pill's colour; dark by default. */
+  color?: Color
 }
 
 // The edge that leads the move is stiff, the one that follows is soft:
@@ -54,6 +58,7 @@ function PillTabsList<TValue extends string>({
   className,
   tabClassName,
   slides = true,
+  color,
 }: PillTabsListProps<TValue>) {
   const reduce = useReducedMotion() || !slides
   // The pill's two edges, in px from the tray's left.
@@ -134,6 +139,7 @@ function PillTabsList<TValue extends string>({
         style={{ x: left, width }}
         className={cn(
           'pointer-events-none absolute top-1 bottom-1 left-0 rounded-full bg-inverse will-change-[transform,width]',
+          color && fill[color],
           !placed && 'invisible',
         )}
       />
@@ -147,6 +153,7 @@ function PillTabsList<TValue extends string>({
             className={cn(
               'rounded-full px-3 transition-colors duration-250 data-active:bg-transparent! data-active:text-fg-inverse! data-active:shadow-none!',
               !placed && 'data-active:bg-inverse!',
+              color && onFill[color],
               tabClassName,
             )}
           >

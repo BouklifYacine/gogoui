@@ -14,6 +14,13 @@ export default definePreview({
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+    // Only the props that change the look or the content: the HTML and
+    // event props of every element would bury them.
+    controls: {
+      exclude:
+        /^(on[A-Z].*|aria-.*|data-.*|style|className|render|ref|key|id|nativeButton|focusableWhenDisabled|tabIndex|form.*|name|type)$/,
+      sort: 'requiredFirst',
+    },
     // Fail the a11y check of a story on any violation (WCAG AA).
     a11y: { test: 'error' },
     backgrounds: { disable: true },

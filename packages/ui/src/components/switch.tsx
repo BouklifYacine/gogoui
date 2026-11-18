@@ -1,5 +1,7 @@
 import { Switch as SwitchPrimitive } from '@base-ui/react/switch'
 
+import { switchedOn } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -11,9 +13,12 @@ import { cn } from '../lib/cn.ts'
 function Switch({
   className,
   size = 'default',
+  color,
   ...props
 }: SwitchPrimitive.Root.Props & {
   size?: 'sm' | 'default'
+  /** Its colour once on; the theme's switch colour by default. */
+  color?: Color
 }) {
   return (
     <SwitchPrimitive.Root
@@ -21,6 +26,7 @@ function Switch({
       data-size={size}
       className={cn(
         'peer group/switch relative inline-flex shrink-0 items-center rounded-full p-1 transition-[background-color,box-shadow] duration-300 ease-tactile outline-none focus-visible:outline-hidden forced-colors:border after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:shadow-focus-primary aria-invalid:ring-1 aria-invalid:ring-danger data-[size=default]:h-6 data-[size=default]:w-10 data-[size=sm]:h-5 data-[size=sm]:w-8 data-checked:bg-switch-on data-unchecked:bg-track data-disabled:cursor-not-allowed data-disabled:opacity-60',
+        color && switchedOn[color],
         className,
       )}
       {...props}

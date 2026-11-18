@@ -1,5 +1,7 @@
 import preview from '#.storybook/preview'
 
+import { COLORS } from '../internal/colors.ts'
+
 import { Label } from './label.tsx'
 import { RadioGroup, RadioGroupItem } from './radio-group.tsx'
 
@@ -28,6 +30,23 @@ export const Basic = meta.story({
           </div>
         ))}
       </RadioGroup>
+    </div>
+  ),
+})
+
+/**
+ * The chosen dot in each colour of the palette (`color` on the item).
+ *
+ * @summary A chosen option in every colour.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="flex gap-4">
+      {COLORS.map((color) => (
+        <RadioGroup key={color} defaultValue="on" aria-label={color}>
+          <RadioGroupItem value="on" color={color} aria-label={color} />
+        </RadioGroup>
+      ))}
     </div>
   ),
 })

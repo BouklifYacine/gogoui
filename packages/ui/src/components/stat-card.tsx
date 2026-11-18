@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import { ArrowDownRightIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { subtle } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 type StatCardProps = {
@@ -19,6 +21,8 @@ type StatCardProps = {
   /** A fall is the good news (cancellations, a delay): green when down. */
   lowerIsBetter?: boolean
   icon?: ReactNode
+  /** The icon's tile tint; a plain grey icon without it. */
+  color?: Color
   className?: string
 }
 
@@ -36,6 +40,7 @@ function StatCard({
   changeLabel,
   lowerIsBetter = false,
   icon,
+  color,
   className,
 }: StatCardProps) {
   const messages = useGoGoUIMessages()
@@ -62,7 +67,18 @@ function StatCard({
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-fg-muted">{label}</p>
         {icon && (
-          <span aria-hidden="true" className="text-fg-subtle [&_svg]:size-4.5">
+          <span
+            aria-hidden="true"
+            className={cn(
+              '[&_svg]:size-4.5',
+              color
+                ? cn(
+                    'flex size-8 items-center justify-center rounded-lg',
+                    subtle[color],
+                  )
+                : 'text-fg-subtle',
+            )}
+          >
             {icon}
           </span>
         )}

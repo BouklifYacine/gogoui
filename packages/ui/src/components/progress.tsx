@@ -1,5 +1,7 @@
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress'
 
+import { fill } from '../internal/colors.ts'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -12,8 +14,12 @@ function Progress({
   className,
   children,
   value,
+  color = 'primary',
   ...props
-}: ProgressPrimitive.Root.Props) {
+}: ProgressPrimitive.Root.Props & {
+  /** The bar's colour, the primary by default. */
+  color?: Color
+}) {
   return (
     <ProgressPrimitive.Root
       value={value}
@@ -23,7 +29,7 @@ function Progress({
     >
       {children}
       <ProgressTrack>
-        <ProgressIndicator />
+        <ProgressIndicator className={fill[color]} />
       </ProgressTrack>
     </ProgressPrimitive.Root>
   )

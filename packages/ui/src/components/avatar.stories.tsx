@@ -1,5 +1,7 @@
 import preview from '#.storybook/preview'
 
+import { COLORS } from '../internal/colors.ts'
+
 import {
   Avatar,
   AvatarFallback,
@@ -22,6 +24,23 @@ export const Basic = meta.story({
     <Avatar>
       <AvatarFallback>LH</AvatarFallback>
     </Avatar>
+  ),
+})
+
+/**
+ * The initials in each colour of the palette (`color` on `AvatarFallback`).
+ *
+ * @summary Initials in every colour.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="flex gap-2">
+      {COLORS.map((color) => (
+        <Avatar key={color}>
+          <AvatarFallback color={color}>LH</AvatarFallback>
+        </Avatar>
+      ))}
+    </div>
   ),
 })
 

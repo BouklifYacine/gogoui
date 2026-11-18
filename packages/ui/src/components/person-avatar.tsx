@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { Color } from '../internal/colors.ts'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar.tsx'
 
 type PersonAvatarProps = {
@@ -13,6 +14,8 @@ type PersonAvatarProps = {
   /** Shown instead of the initials (an icon). */
   fallback?: ReactNode
   size?: 'sm' | 'default' | 'lg'
+  /** The initials' tint; grey by default. */
+  color?: Color
   className?: string
 }
 
@@ -43,6 +46,7 @@ function PersonAvatar({
   alt,
   fallback,
   size = 'default',
+  color,
   className,
 }: PersonAvatarProps) {
   const { profilePhoto } = useGoGoUIMessages()
@@ -50,7 +54,9 @@ function PersonAvatar({
   return (
     <Avatar size={size} className={className} data-slot="person-avatar">
       {src && <AvatarImage src={src} alt={alt ?? name ?? profilePhoto} />}
-      <AvatarFallback>{fallback ?? initialsOf(name)}</AvatarFallback>
+      <AvatarFallback color={color}>
+        {fallback ?? initialsOf(name)}
+      </AvatarFallback>
     </Avatar>
   )
 }
