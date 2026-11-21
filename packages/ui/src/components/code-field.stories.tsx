@@ -11,8 +11,6 @@ const meta = preview.meta({
 
 /**
  * The code received by e-mail: type it, or paste the whole line.
- *
- * @summary A sign-in code.
  */
 export const Basic = meta.story({
   args: {
@@ -39,8 +37,6 @@ export const Basic = meta.story({
 
 /**
  * Refused: red boxes and the reason in words.
- *
- * @summary A refused code.
  */
 export const Refused = meta.story({
   render: function Render() {

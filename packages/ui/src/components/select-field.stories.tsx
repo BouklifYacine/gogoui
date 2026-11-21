@@ -19,8 +19,6 @@ const sources = [
 
 /**
  * One choice among a list too long to show at once.
- *
- * @summary A labelled list to pick from.
  */
 export const Basic = meta.story({
   args: {

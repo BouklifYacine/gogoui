@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * How far a set-up has gone, named and written in figures.
- *
- * @summary A labelled progress bar with its value.
  */
 export const Basic = meta.story({
   render: (args) => (

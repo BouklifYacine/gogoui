@@ -16,22 +16,16 @@ const meta = preview.meta({
 
 /**
  * A yes or no saved with the form, next to its label.
- *
- * @summary A labelled box to tick.
  */
 export const Basic = meta.story({})
 
 /**
  * Already ticked.
- *
- * @summary A ticked box.
  */
 export const Checked = meta.story({ args: { defaultChecked: true } })
 
 /**
  * The box at the head of a list when only some rows are ticked: a dash,
  * not a tick.
- *
- * @summary Some rows of a list ticked.
  */
 export const Indeterminate = meta.story({ args: { indeterminate: true } })

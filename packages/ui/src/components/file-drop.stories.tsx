@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * A spreadsheet to import: drop it, click, or press Enter on the zone.
- *
- * @summary Drop or pick one file.
  */
 export const Basic = meta.story({
   args: {

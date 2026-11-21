@@ -10,8 +10,6 @@ const meta = preview.meta({
 /**
  * A page's h1: it takes the focus when it appears, so a screen reader
  * reads the new page.
- *
- * @summary A page's title.
  */
 export const Basic = meta.story({
   args: { children: 'Paramètres' },

@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Moving through a calendar: back, today, forward, glued as one control.
- *
- * @summary Related buttons joined into one control.
  */
 export const Basic = meta.story({
   render: () => (

@@ -11,8 +11,6 @@ const box = 'rounded-lg bg-tray px-4 py-3 text-sm text-fg-muted'
 
 /**
  * Change its direction, gap and alignment in the controls.
- *
- * @summary Things in a column or a row.
  */
 export const Basic = meta.story({
   args: {

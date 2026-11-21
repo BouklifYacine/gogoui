@@ -10,15 +10,11 @@ const meta = preview.meta({
 
 /**
  * Too short: it counts what is missing.
- *
- * @summary A password too short.
  */
 export const TooShort = meta.story({ args: { password: 'mariage' } })
 
 /**
  * A long phrase mixing kinds of characters: very strong.
- *
- * @summary A very strong password.
  */
 export const VeryStrong = meta.story({
   args: { password: 'Le-domaine-des-Chênes-2027' },

@@ -13,8 +13,6 @@ const meta = preview.meta({
 
 /**
  * An empty list: what is missing, then the button that fills it.
- *
- * @summary An empty list and its way out.
  */
 export const Basic = meta.story({
   args: {
@@ -28,8 +26,6 @@ export const Basic = meta.story({
 
 /**
  * The whole page is empty: the state is its centre.
- *
- * @summary A whole empty page.
  */
 export const Large = meta.story({
   args: {

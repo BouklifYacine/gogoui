@@ -10,8 +10,6 @@ const meta = preview.meta({
 /**
  * What failed, and what to do now, in one or two sentences. Shown where
  * the person is (in the form, in the dialog), never as a toast.
- *
- * @summary A failure told where the person is.
  */
 export const Basic = meta.story({
   args: {

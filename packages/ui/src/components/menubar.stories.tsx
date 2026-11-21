@@ -20,8 +20,6 @@ const meta = preview.meta({
 /**
  * An editor's menus: open one, then move to the others with the arrows or
  * the pointer.
- *
- * @summary An application's menus.
  */
 export const Basic = meta.story({
   render: () => (

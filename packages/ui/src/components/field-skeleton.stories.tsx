@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * A form while it loads, each field as tall as the real one.
- *
- * @summary A form while it loads.
  */
 export const Form = meta.story({
   render: () => (

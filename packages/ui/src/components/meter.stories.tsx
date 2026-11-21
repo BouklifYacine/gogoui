@@ -12,8 +12,6 @@ const meta = preview.meta({
 /**
  * The Saturdays already booked this year; change the value and colour in
  * the controls.
- *
- * @summary A measure within a range.
  */
 export const Basic = meta.story({
   args: {

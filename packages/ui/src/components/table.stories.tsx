@@ -24,8 +24,6 @@ const meta = preview.meta({
 /**
  * Invoices in rows: a header naming each column, amounts aligned right in
  * columns, a caption saying what the table is.
- *
- * @summary A data table with amounts aligned right.
  */
 export const Basic = meta.story({
   render: () => (

@@ -9,8 +9,6 @@ const meta = preview.meta({
 
 /**
  * A shortcut written in a sentence.
- *
- * @summary A keyboard shortcut in a text.
  */
 export const Basic = meta.story({
   args: { children: 'K' },

@@ -15,8 +15,6 @@ const steps = ['Fichier', 'Colonnes', 'Vérification', 'Import']
 
 /**
  * An import in four steps: go forward to watch a step turn green.
- *
- * @summary Numbered steps on a line.
  */
 export const Basic = meta.story({
   args: { steps, current: 2 },

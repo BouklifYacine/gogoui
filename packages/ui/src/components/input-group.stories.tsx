@@ -16,8 +16,6 @@ const meta = preview.meta({
 
 /**
  * A search field: the magnifier inside, before the text.
- *
- * @summary A field with an icon inside.
  */
 export const Basic = meta.story({
   render: () => (
@@ -35,8 +33,6 @@ export const Basic = meta.story({
 
 /**
  * An amount: the unit after the figure, inside the field.
- *
- * @summary A field with its unit.
  */
 export const WithUnit = meta.story({
   render: () => (

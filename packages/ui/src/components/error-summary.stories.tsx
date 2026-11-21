@@ -11,8 +11,6 @@ const meta = preview.meta({
 /**
  * At the top of a long form after a refused submit; each line leads to
  * its field.
- *
- * @summary Every error of a long form.
  */
 export const Basic = meta.story({
   args: {

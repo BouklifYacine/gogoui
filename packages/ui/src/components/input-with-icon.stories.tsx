@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * A search field: the magnifier says what the field does at a glance, the
  * hidden label names it for a screen reader.
- *
- * @summary A search field with its magnifier.
  */
 export const Search = meta.story({
   args: {
@@ -34,8 +32,6 @@ export const Search = meta.story({
 
 /**
  * An e-mail field under its visible label.
- *
- * @summary An e-mail field with an envelope.
  */
 export const Email = meta.story({
   render: () => (

@@ -20,8 +20,6 @@ const meta = preview.meta({
 /**
  * A list with nothing yet: say what will be here and offer the action that
  * fills it.
- *
- * @summary An empty list with its first action.
  */
 export const Basic = meta.story({
   render: () => (

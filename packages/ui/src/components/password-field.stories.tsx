@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Signing up: the strength shows under the field as it is typed.
- *
- * @summary A new password with its strength.
  */
 export const NewPassword = meta.story({
   args: {
@@ -40,8 +38,6 @@ export const NewPassword = meta.story({
 
 /**
  * Signing in: no strength, the password exists already.
- *
- * @summary The password to sign in.
  */
 export const CurrentPassword = meta.story({
   render: function Render() {

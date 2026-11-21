@@ -17,8 +17,6 @@ const meta = preview.meta({
 /**
  * A field with its label above and a hint under it, linked for a screen
  * reader.
- *
- * @summary A labelled field with a hint.
  */
 export const Basic = meta.story({
   render: () => (
@@ -42,8 +40,6 @@ export const Basic = meta.story({
 /**
  * An error: `data-invalid` on the field, `aria-invalid` on the control, and
  * the message that says how to fix it.
- *
- * @summary A field in error with its message.
  */
 export const Invalid = meta.story({
   render: () => (

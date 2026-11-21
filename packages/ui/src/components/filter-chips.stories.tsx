@@ -11,8 +11,6 @@ const meta = preview.meta({
 
 /**
  * The filters that are on; each chip takes its own off.
- *
- * @summary Active filters as chips.
  */
 export const Basic = meta.story({
   render: function Render() {

@@ -18,8 +18,6 @@ const meta = preview.meta({
 
 /**
  * Filters of a list in a side panel: the list stays behind, in context.
- *
- * @summary A side panel for filters or a detail.
  */
 export const Basic = meta.story({
   render: () => (

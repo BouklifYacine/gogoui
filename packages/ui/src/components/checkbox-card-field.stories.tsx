@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Several answers among cards.
- *
- * @summary Several choices among cards.
  */
 export const Basic = meta.story({
   args: {

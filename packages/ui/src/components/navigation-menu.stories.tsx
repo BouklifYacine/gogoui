@@ -33,8 +33,6 @@ const product = [
 /**
  * A site's navigation: « Produit » opens a panel of links, « Tarifs » is
  * a plain link.
- *
- * @summary A site's top navigation.
  */
 export const Basic = meta.story({
   render: () => (

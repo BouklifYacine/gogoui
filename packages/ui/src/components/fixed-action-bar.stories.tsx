@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * On a phone, the total and the next step stay under the thumb. Hidden
  * from 768 px.
- *
- * @summary A phone's bottom action band.
  */
 export const Basic = meta.story({
   render: () => (

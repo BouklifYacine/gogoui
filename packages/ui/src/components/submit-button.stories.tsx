@@ -11,8 +11,6 @@ const meta = preview.meta({
 
 /**
  * Busy while the form submits, saying so.
- *
- * @summary A submit button busy while it submits.
  */
 export const Basic = meta.story({
   render: function Render() {
@@ -36,8 +34,6 @@ export const Basic = meta.story({
 /**
  * On a form that stays in sight: it closes into a spinner, then opens into
  * a green « Enregistré ».
- *
- * @summary A submit button that says it saved.
  */
 export const Saved = meta.story({
   render: function Render() {

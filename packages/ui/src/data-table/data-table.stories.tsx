@@ -114,8 +114,6 @@ const meta = preview.meta({
  * A whole list: search (« / »), sort by the headers, columns to hide, rows
  * to tick with their actions, pages. On a phone, dense rows and a sort
  * chip. Import from `@gogoui/ui/data-table`.
- *
- * @summary A list of records with search, sort, selection and pages.
  */
 export const Basic = meta.story({
   render: function Render() {
@@ -158,8 +156,6 @@ export const Basic = meta.story({
 
 /**
  * No row yet: the list's own empty state, with its way out.
- *
- * @summary An empty list.
  */
 export const Empty = meta.story({
   render: function Render() {
@@ -183,8 +179,6 @@ export const Empty = meta.story({
 
 /**
  * While the rows load: the same columns, in grey.
- *
- * @summary A list while it loads.
  */
 export const Loading = meta.story({
   render: () => (

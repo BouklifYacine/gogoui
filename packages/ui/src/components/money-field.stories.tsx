@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * An amount, typed with spaces and a comma; the example sits in the help.
- *
- * @summary A labelled amount.
  */
 export const Basic = meta.story({
   args: {

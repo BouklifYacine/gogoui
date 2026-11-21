@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * A time picked by quarters, or typed (« 2210 » becomes « 22:10 »).
- *
- * @summary A labelled time.
  */
 export const Basic = meta.story({
   args: {

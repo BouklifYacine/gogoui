@@ -11,8 +11,6 @@ const meta = preview.meta({
  * `useAppForm` from `@gogoui/ui/tanstack-form`: each field reads its value
  * and errors from the form. Submit it empty: the summary lists what to
  * fix and takes the focus.
- *
- * @summary A whole form with TanStack Form.
  */
 export const RequestForm = meta.story({
   render: function Render() {

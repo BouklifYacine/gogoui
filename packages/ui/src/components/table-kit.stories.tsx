@@ -62,8 +62,6 @@ const euros = new Intl.NumberFormat('fr-FR', {
  * Every piece together, the sorting, ticking, search and pages done by
  * the story itself: GoGoUI only draws them. Your app does the same with
  * its own data, or its API.
- *
- * @summary A table built from pieces, the logic in your code.
  */
 export const Composed = meta.story({
   render: function Render() {
@@ -223,8 +221,6 @@ export const Composed = meta.story({
 
 /**
  * The pages alone: change `page`, `pageSize` and `total` in the controls.
- *
- * @summary A table's pages.
  */
 export const Pagination = meta.story({
   args: {
@@ -238,8 +234,6 @@ export const Pagination = meta.story({
 
 /**
  * The body while the rows load, under the real header.
- *
- * @summary A table while it loads.
  */
 export const Loading = meta.story({
   render: () => (

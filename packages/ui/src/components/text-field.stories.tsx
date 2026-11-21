@@ -14,8 +14,6 @@ const meta = preview.meta({
 /**
  * A name: label above, value kept by the page (`useState` or a form
  * library).
- *
- * @summary A labelled text field.
  */
 export const Basic = meta.story({
   args: {
@@ -47,8 +45,6 @@ export const Basic = meta.story({
 /**
  * An e-mail with its icon, a line of help and an error that says what to
  * do.
- *
- * @summary A field with help and an error.
  */
 export const WithError = meta.story({
   render: function Render() {

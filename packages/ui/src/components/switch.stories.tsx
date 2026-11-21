@@ -16,14 +16,10 @@ const meta = preview.meta({
 
 /**
  * A setting that applies at once, without a save button.
- *
- * @summary An on/off setting with its label.
  */
 export const Basic = meta.story({})
 
 /**
  * The setting already on.
- *
- * @summary A switch turned on.
  */
 export const Checked = meta.story({ args: { defaultChecked: true } })

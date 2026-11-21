@@ -14,8 +14,6 @@ const meta = preview.meta({
 
 /**
  * A list and its details: drag the line, or focus it and use the arrows.
- *
- * @summary Two panels to resize.
  */
 export const Basic = meta.story({
   render: () => (

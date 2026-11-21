@@ -32,8 +32,6 @@ const meta = preview.meta({
 /**
  * Connected tools: an icon, its name and line, its state and action.
  * Change the variant and size in the controls.
- *
- * @summary Lines of a list with their actions.
  */
 export const Basic = meta.story({
   render: (args) => (

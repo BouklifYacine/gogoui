@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * Labels and values side by side; one under the other in a narrow block.
- *
- * @summary A record's details.
  */
 export const Basic = meta.story({
   args: {

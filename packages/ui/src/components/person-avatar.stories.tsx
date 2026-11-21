@@ -9,8 +9,6 @@ const meta = preview.meta({
 
 /**
  * No photo: the initials of the name.
- *
- * @summary A person's initials.
  */
 export const Initials = meta.story({
   args: { name: 'Marie Durand' },
@@ -18,8 +16,6 @@ export const Initials = meta.story({
 
 /**
  * The three sizes, for a dense list, a row and a header.
- *
- * @summary The three sizes.
  */
 export const Sizes = meta.story({
   render: () => (
@@ -33,8 +29,6 @@ export const Sizes = meta.story({
 
 /**
  * A photo that fails to load: the initials take its place.
- *
- * @summary A broken photo falls back to the initials.
  */
 export const BrokenPhoto = meta.story({
   args: { name: 'Lucas Martin', src: 'https://example.invalid/photo.jpg' },

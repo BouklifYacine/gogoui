@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * With its word: change its shape, size and colour in the controls.
- *
- * @summary A button that stays pressed.
  */
 export const Basic = meta.story({
   args: {
@@ -29,8 +27,6 @@ export const Basic = meta.story({
 
 /**
  * Formatting buttons, icons alone, each named for a screen reader.
- *
- * @summary Icon toggles.
  */
 export const Icons = meta.story({
   render: (args) => (

@@ -14,8 +14,6 @@ const words = ['En attente', 'Envoi en cours', 'Envoyé']
 
 /**
  * A status that rolls to its next words.
- *
- * @summary A line that rolls.
  */
 export const Basic = meta.story({
   render: function Render() {

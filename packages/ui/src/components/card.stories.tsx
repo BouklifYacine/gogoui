@@ -18,8 +18,6 @@ const meta = preview.meta({
 
 /**
  * A figure and what it means, with the action that follows from it.
- *
- * @summary A titled card with content and a footer action.
  */
 export const Basic = meta.story({
   render: () => (

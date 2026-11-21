@@ -16,8 +16,6 @@ const meta = preview.meta({
 
 /**
  * A person without a picture: their initials, on a quiet tint.
- *
- * @summary Initials when there is no picture.
  */
 export const Basic = meta.story({
   render: () => (
@@ -29,8 +27,6 @@ export const Basic = meta.story({
 
 /**
  * The initials in each colour of the palette (`color` on `AvatarFallback`).
- *
- * @summary Initials in every colour.
  */
 export const Colors = meta.story({
   render: () => (
@@ -47,8 +43,6 @@ export const Colors = meta.story({
 /**
  * Several people on the same item: the first ones stacked, then how many
  * more.
- *
- * @summary A stack of people with a « +n ».
  */
 export const Group = meta.story({
   render: () => (

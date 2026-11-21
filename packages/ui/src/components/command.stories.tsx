@@ -18,8 +18,6 @@ const meta = preview.meta({
 
 /**
  * Go anywhere by typing a few letters: the list filters, Enter opens.
- *
- * @summary A searchable list of actions.
  */
 export const Basic = meta.story({
   render: () => (

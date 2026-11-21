@@ -12,8 +12,6 @@ const meta = preview.meta({
 /**
  * Point at the name: the client's card shows; the link still leads to
  * their page.
- *
- * @summary A preview behind a name.
  */
 export const Basic = meta.story({
   render: () => (

@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Notes of several lines.
- *
- * @summary A labelled text of several lines.
  */
 export const Basic = meta.story({
   args: {

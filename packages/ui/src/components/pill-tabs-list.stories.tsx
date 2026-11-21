@@ -13,8 +13,6 @@ const meta = preview.meta({
 
 /**
  * Click another tab: the pill stretches to it, its leading edge first.
- *
- * @summary Tabs with a sliding pill.
  */
 export const Basic = meta.story({
   args: {
@@ -41,8 +39,6 @@ export const Basic = meta.story({
 
 /**
  * The same tabs while the page loads.
- *
- * @summary Pill tabs while they load.
  */
 export const Loading = meta.story({
   render: () => (

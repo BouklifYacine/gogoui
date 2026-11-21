@@ -28,8 +28,6 @@ const meta = preview.meta({
 /**
  * One choice in a list of six or more, under its label. `items` gives the
  * trigger the label of the chosen value instead of its code.
- *
- * @summary Pick one value in a labelled list.
  */
 export const Basic = meta.story({
   render: () => (
@@ -55,8 +53,6 @@ export const Basic = meta.story({
 
 /**
  * A long list cut in groups, each with its title.
- *
- * @summary Items in titled groups.
  */
 export const Grouped = meta.story({
   render: () => (
@@ -84,8 +80,6 @@ export const Grouped = meta.story({
 /**
  * The small trigger of a toolbar (a sort, a page size): 32px at a desk,
  * still 44px under a thumb.
- *
- * @summary A compact select for a toolbar.
  */
 export const Small = meta.story({
   render: () => (

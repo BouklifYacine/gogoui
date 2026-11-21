@@ -15,8 +15,6 @@ const meta = preview.meta({
 
 /**
  * A calendar's view: one pressed among three.
- *
- * @summary One choice among a few.
  */
 export const Basic = meta.story({
   render: function Render() {
@@ -39,8 +37,6 @@ export const Basic = meta.story({
 
 /**
  * The pressed item in each colour of the palette (`color` on the item).
- *
- * @summary A pressed item in every colour.
  */
 export const Colors = meta.story({
   render: () => (
@@ -61,8 +57,6 @@ export const Colors = meta.story({
 
 /**
  * Icons alone, each named for a screen reader.
- *
- * @summary A list or grid switch.
  */
 export const Icons = meta.story({
   render: () => (

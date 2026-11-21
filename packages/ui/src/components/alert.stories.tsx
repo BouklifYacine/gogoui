@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Something to know before going on.
- *
- * @summary An information in the page.
  */
 export const Info = meta.story({
   args: {
@@ -31,8 +29,6 @@ export const Info = meta.story({
 
 /**
  * The four states, each with its icon and its words.
- *
- * @summary Info, success, warning and failure.
  */
 export const Variants = meta.story({
   render: () => (

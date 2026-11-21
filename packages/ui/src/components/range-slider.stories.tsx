@@ -19,8 +19,6 @@ const euros = new Intl.NumberFormat('fr-FR', {
 /**
  * A budget from and to; the right end means no limit. The range is kept
  * when the thumb is let go.
- *
- * @summary A range on a track.
  */
 export const Basic = meta.story({
   args: {

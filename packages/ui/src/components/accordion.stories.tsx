@@ -31,8 +31,6 @@ const questions = [
 
 /**
  * A FAQ: one answer open at a time.
- *
- * @summary Questions that open on their answers.
  */
 export const Basic = meta.story({
   render: () => (
@@ -49,8 +47,6 @@ export const Basic = meta.story({
 
 /**
  * Several sections open at once.
- *
- * @summary Several sections open together.
  */
 export const Multiple = meta.story({
   render: () => (

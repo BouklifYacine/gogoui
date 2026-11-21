@@ -37,8 +37,6 @@ const meta = preview.meta({
 
 /**
  * A long list filtered as you type; a message when nothing matches.
- *
- * @summary Type to filter, then pick.
  */
 export const Basic = meta.story({
   render: () => (
@@ -61,8 +59,6 @@ export const Basic = meta.story({
 /**
  * Several choices, each a chip in the field (`multiple`): type to narrow
  * the list, Backspace removes the last chip.
- *
- * @summary Pick several choices, shown as chips.
  */
 export const Multiple = meta.story({
   render: function Render() {

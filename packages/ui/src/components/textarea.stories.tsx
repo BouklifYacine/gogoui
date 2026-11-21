@@ -11,8 +11,6 @@ const meta = preview.meta({
 /**
  * A message of several lines, under its label; the field grows with the
  * text.
- *
- * @summary A multi-line field with its label.
  */
 export const Basic = meta.story({
   args: {

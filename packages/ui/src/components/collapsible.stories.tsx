@@ -16,8 +16,6 @@ const meta = preview.meta({
 
 /**
  * Rare options kept out of the way until asked for.
- *
- * @summary A section shown on demand.
  */
 export const Basic = meta.story({
   render: () => (

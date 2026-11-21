@@ -17,8 +17,6 @@ const meta = preview.meta({
 
 /**
  * A short detail next to what it explains, closed by a click outside.
- *
- * @summary A small panel anchored to its button.
  */
 export const Basic = meta.story({
   render: () => (

@@ -11,8 +11,6 @@ const meta = preview.meta({
 /**
  * The name of a field, above it, linked by `htmlFor`: a click on it puts
  * the focus in the field.
- *
- * @summary A field's visible name.
  */
 export const Basic = meta.story({
   render: () => (

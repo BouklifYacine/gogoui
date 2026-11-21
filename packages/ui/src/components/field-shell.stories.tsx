@@ -14,8 +14,6 @@ const meta = preview.meta({
 /**
  * A control of your own (here a slider) gets its label, help and error
  * links from the shell.
- *
- * @summary Label, help and error around your own control.
  */
 export const CustomControl = meta.story({
   render: function Render() {

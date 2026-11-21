@@ -11,8 +11,6 @@ const meta = preview.meta({
 /**
  * A sign-in password: the eye shows what was typed. `autoComplete` lets
  * the password manager fill it.
- *
- * @summary A password field with its eye.
  */
 export const Basic = meta.story({
   args: {

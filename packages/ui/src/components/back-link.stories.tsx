@@ -9,8 +9,6 @@ const meta = preview.meta({
 
 /**
  * Back to the list. With a router, pass its link to `render`.
- *
- * @summary The way back to a list.
  */
 export const Basic = meta.story({
   args: { label: 'Clients', href: '#clients' },
@@ -18,8 +16,6 @@ export const Basic = meta.story({
 
 /**
  * A button back in history, to find the list as it was left.
- *
- * @summary Back in history.
  */
 export const HistoryBack = meta.story({
   args: {

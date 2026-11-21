@@ -26,8 +26,6 @@ const meta = preview.meta({
 /**
  * Requests per month in bars, the colour from the theme, a tooltip on
  * hover.
- *
- * @summary A themed bar chart with its tooltip.
  */
 export const Basic = meta.story({
   render: () => (

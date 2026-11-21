@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * Deleting: the title asks, the description says what is lost, the way
  * out says what it keeps. The button spins while the action runs.
- *
- * @summary Ask before deleting.
  */
 export const Destructive = meta.story({
   render: function Render() {
@@ -50,8 +48,6 @@ export const Destructive = meta.story({
 
 /**
  * The action failed: the reason shows in the dialog, which stays open.
- *
- * @summary A confirmation whose action failed.
  */
 export const WithError = meta.story({
   render: function Render() {

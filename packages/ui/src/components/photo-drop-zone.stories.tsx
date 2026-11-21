@@ -14,8 +14,6 @@ const meta = preview.meta({
 
 /**
  * A venue's logo: drop an image on the square, or use the button.
- *
- * @summary A logo to drop or pick.
  */
 export const Logo = meta.story({
   args: {
@@ -31,8 +29,6 @@ export const Logo = meta.story({
 
 /**
  * A photo picked by a button alone, for a grid of photos.
- *
- * @summary A button that picks a photo.
  */
 export const PickerButton = meta.story({
   render: function Render() {

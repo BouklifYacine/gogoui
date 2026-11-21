@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * A setting inside a form, saved with it.
- *
- * @summary A setting turned on or off.
  */
 export const Basic = meta.story({
   args: {

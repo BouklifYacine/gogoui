@@ -11,8 +11,6 @@ const meta = preview.meta({
 /**
  * A picture kept at 16:9 whatever its width; change the ratio in the
  * controls.
- *
- * @summary A box that keeps its shape.
  */
 export const Basic = meta.story({
   args: {

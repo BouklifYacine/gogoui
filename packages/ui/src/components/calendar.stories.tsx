@@ -15,8 +15,6 @@ const meta = preview.meta({
 /**
  * One day to pick. Every option is in the controls: colour, months shown,
  * week numbers, first day of the week, outside days, fixed weeks.
- *
- * @summary Pick one day.
  */
 export const Basic = meta.story({
   args: {
@@ -35,8 +33,6 @@ export const Basic = meta.story({
  * A stay: first and last days filled, the days between tinted. Two to
  * fourteen nights (`min`, `max`), never across a booked day
  * (`excludeDisabled`).
- *
- * @summary Pick a stay of 2 to 14 nights.
  */
 export const Range = meta.story({
   render: function Render(args) {
@@ -61,8 +57,6 @@ export const Range = meta.story({
 
 /**
  * Several separate days (visit slots), up to five.
- *
- * @summary Pick several days.
  */
 export const Multiple = meta.story({
   render: function Render(args) {
@@ -84,8 +78,6 @@ export const Multiple = meta.story({
 
 /**
  * Month and year in lists, to jump to a wedding two years away.
- *
- * @summary Month and year dropdowns.
  */
 export const Dropdowns = meta.story({
   args: {
@@ -98,8 +90,6 @@ export const Dropdowns = meta.story({
 
 /**
  * Two months side by side, with the weeks' numbers.
- *
- * @summary Two months with week numbers.
  */
 export const TwoMonths = meta.story({
   args: { mode: 'range', numberOfMonths: 2, showWeekNumber: true },
@@ -108,8 +98,6 @@ export const TwoMonths = meta.story({
 /**
  * Only Saturdays can be chosen, and no day in the past: the others are
  * greyed and skipped by the keyboard.
- *
- * @summary Only some days can be chosen.
  */
 export const SaturdaysOnly = meta.story({
   args: {
@@ -124,8 +112,6 @@ const held = [new Date(2027, 5, 12), new Date(2027, 5, 26)]
 /**
  * Days marked by their state (`modifiers` and `modifiersClassNames`): booked
  * in red and not choosable, held in orange; the legend says it in words.
- *
- * @summary Booked and held days, with a legend.
  */
 export const MarkedDays = meta.story({
   render: () => (
@@ -165,8 +151,6 @@ export const MarkedDays = meta.story({
 /**
  * A price under each day (`components.DayButton`): the dearest Saturdays
  * at a glance.
- *
- * @summary A price under each day.
  */
 export const Prices = meta.story({
   render: () => (

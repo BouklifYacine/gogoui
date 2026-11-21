@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * A colour for a room in the calendar, its name written under the tiles.
- *
- * @summary One colour among tiles.
  */
 export const Basic = meta.story({
   args: {

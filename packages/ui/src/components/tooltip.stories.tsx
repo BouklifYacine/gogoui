@@ -18,8 +18,6 @@ const meta = preview.meta({
 /**
  * The name of an icon button, on hover or keyboard focus. The button keeps
  * its own `aria-label`: a tooltip is never the only name.
- *
- * @summary The name of an icon button on hover.
  */
 export const Basic = meta.story({
   render: () => (

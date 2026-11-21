@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * Change its level and its size apart in the controls.
- *
- * @summary A title.
  */
 export const Basic = meta.story({
   args: { level: 2, size: 'xl', children: 'Vos demandes de la semaine' },
@@ -21,8 +19,6 @@ export const Basic = meta.story({
 
 /**
  * The type scale: titles, then body text in its tones and a state's colour.
- *
- * @summary Titles and body text.
  */
 export const Scale = meta.story({
   render: () => (

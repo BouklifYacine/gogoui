@@ -13,8 +13,6 @@ const meta = preview.meta({
 
 /**
  * An e-mail template: bold, a title, lists; the HTML comes out under it.
- *
- * @summary A text with its formatting.
  */
 export const Basic = meta.story({
   args: {

@@ -23,8 +23,6 @@ const meta = preview.meta({
 /**
  * From the requests received to the contracts signed: where people drop
  * off between two steps. The chart takes the width of its parent.
- *
- * @summary A sales funnel with values and drop rates.
  */
 export const Basic = meta.story({
   args: { data: steps, orientation: 'horizontal' },

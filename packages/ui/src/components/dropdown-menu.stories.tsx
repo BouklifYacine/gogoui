@@ -24,8 +24,6 @@ const meta = preview.meta({
 /**
  * A row's « … »: the usual actions, then the destructive one apart, in
  * red.
- *
- * @summary A row's actions, the destructive one last.
  */
 export const Basic = meta.story({
   render: () => (

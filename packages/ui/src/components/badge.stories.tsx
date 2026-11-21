@@ -12,15 +12,11 @@ const meta = preview.meta({
 
 /**
  * A count next to a title or a tab: « Demandes 3 ».
- *
- * @summary A count in a pill.
  */
 export const Basic = meta.story({})
 
 /**
  * A neutral tag or a short state, quieter than the solid pill.
- *
- * @summary A quiet tag.
  */
 export const Secondary = meta.story({
   args: { variant: 'secondary', children: 'Brouillon' },
@@ -29,8 +25,6 @@ export const Secondary = meta.story({
 /**
  * Something wrong, written in words (« En retard »): the red alone would
  * say nothing to someone who does not see it.
- *
- * @summary A problem state, always in words.
  */
 export const Destructive = meta.story({
   args: { variant: 'destructive', children: 'En retard' },
@@ -38,8 +32,6 @@ export const Destructive = meta.story({
 
 /**
  * A tag drawn only by its edge, for a list of many tags side by side.
- *
- * @summary An outlined tag.
  */
 export const Outline = meta.story({
   args: { variant: 'outline', children: 'Mariage' },
@@ -48,8 +40,6 @@ export const Outline = meta.story({
 /**
  * A badge that leads somewhere: rendered as a link, it darkens when
  * pointed at.
- *
- * @summary A badge that is a link.
  */
 export const AsLink = meta.story({
   args: { render: <a href="#impayes" />, children: '2 impayés' },
@@ -58,8 +48,6 @@ export const AsLink = meta.story({
 /**
  * Every shape (`variant`) in every colour (`color`): the colours come
  * from the tokens, so a brand change follows.
- *
- * @summary Every shape in every colour.
  */
 export const Colors = meta.story({
   render: () => (

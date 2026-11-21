@@ -13,8 +13,6 @@ const meta = preview.meta({
 
 /**
  * Three rows ticked: their count, « Tout sélectionner » and the action.
- *
- * @summary The ticked rows' bar.
  */
 export const Basic = meta.story({
   args: {

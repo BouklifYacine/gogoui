@@ -25,8 +25,6 @@ const meta = preview.meta({
 /**
  * Right-click the card (or press long on a phone): its actions open
  * where the pointer is.
- *
- * @summary The menu of a right click.
  */
 export const Basic = meta.story({
   render: () => (

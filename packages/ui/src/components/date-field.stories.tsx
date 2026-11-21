@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * A day typed or picked; the weekday shows under it.
- *
- * @summary A labelled day.
  */
 export const Basic = meta.story({
   args: {
@@ -42,8 +40,6 @@ export const Basic = meta.story({
 
 /**
  * Past days cannot be chosen, typed or picked.
- *
- * @summary Only days to come.
  */
 export const FutureOnly = meta.story({
   render: function Render() {

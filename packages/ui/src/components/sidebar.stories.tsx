@@ -38,8 +38,6 @@ const meta = preview.meta({
 /**
  * The app's menu: a column on a computer, folded to icons with the
  * trigger, a sheet opened by « Menu » on a phone.
- *
- * @summary The application's side menu with its page.
  */
 export const Basic = meta.story({
   render: () => (

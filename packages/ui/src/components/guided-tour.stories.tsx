@@ -35,8 +35,6 @@ const guide: Guide = {
 
 /**
  * The offer card, then the guide's bubbles on the page's own elements.
- *
- * @summary A page's guide, offered then followed.
  */
 export const Basic = meta.story({
   render: function Render() {

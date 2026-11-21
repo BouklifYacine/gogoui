@@ -9,8 +9,6 @@ const meta = preview.meta({
 
 /**
  * A hairline between two zones of a card.
- *
- * @summary A horizontal hairline.
  */
 export const Basic = meta.story({
   args: { orientation: 'horizontal' },
@@ -25,8 +23,6 @@ export const Basic = meta.story({
 
 /**
  * A thin vertical line between items of a row.
- *
- * @summary A vertical hairline in a row.
  */
 export const Vertical = meta.story({
   render: () => (

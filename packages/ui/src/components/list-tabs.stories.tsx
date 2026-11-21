@@ -13,8 +13,6 @@ const meta = preview.meta({
 
 /**
  * Two sets of rows of one list, a tool on the tabs' line.
- *
- * @summary Tabs switching a list's rows.
  */
 export const Basic = meta.story({
   render: function Render() {

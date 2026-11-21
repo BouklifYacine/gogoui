@@ -17,8 +17,6 @@ const meta = preview.meta({
 /**
  * One figure: change its words, its change and its colour in the
  * controls.
- *
- * @summary A key figure.
  */
 export const Basic = meta.story({
   args: {
@@ -36,8 +34,6 @@ export const Basic = meta.story({
 /**
  * Three figures of a month, each against the month before. Fewer
  * cancellations is good news: it shows in green.
- *
- * @summary Key figures of a dashboard.
  */
 export const Dashboard = meta.story({
   render: () => (

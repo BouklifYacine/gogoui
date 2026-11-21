@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * One line around an icon button; change its words and side in the
  * controls.
- *
- * @summary A tooltip in one line.
  */
 export const Basic = meta.story({
   args: {

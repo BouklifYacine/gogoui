@@ -17,8 +17,6 @@ const meta = preview.meta({
 
 /**
  * A request's history, newest first.
- *
- * @summary A record's history.
  */
 export const Basic = meta.story({
   args: {

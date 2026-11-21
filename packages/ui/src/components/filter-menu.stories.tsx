@@ -30,8 +30,6 @@ type Stage = (typeof stages)[number]['value']
  * Four groups behind « Filtrer »: a choice, a period, a budget and a few
  * on/off filters. The chips under it say what is on. On a phone, the
  * groups open one at a time in a drawer.
- *
- * @summary A list's filters with their chips.
  */
 export const Basic = meta.story({
   render: function Render() {
@@ -122,8 +120,6 @@ export const Basic = meta.story({
 
 /**
  * A single group opens alone, without a sidebar.
- *
- * @summary One filter group.
  */
 export const SingleGroup = meta.story({
   render: function Render() {

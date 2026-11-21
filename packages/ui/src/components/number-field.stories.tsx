@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * A guest count between 1 and 300, by tens with the buttons.
- *
- * @summary A number with − and +.
  */
 export const Basic = meta.story({
   args: {
@@ -32,8 +30,6 @@ export const Basic = meta.story({
 
 /**
  * A price, formatted as money.
- *
- * @summary A formatted amount.
  */
 export const Money = meta.story({
   render: () => (

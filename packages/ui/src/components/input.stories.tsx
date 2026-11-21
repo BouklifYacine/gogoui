@@ -18,8 +18,6 @@ const meta = preview.meta({
 /**
  * A text field always under its visible label, linked by `id`/`htmlFor`.
  * The placeholder is an example, never the label.
- *
- * @summary A labelled text field with an example placeholder.
  */
 export const Basic = meta.story({
   args: { placeholder: 'Léa et Hugo' },
@@ -28,8 +26,6 @@ export const Basic = meta.story({
 /**
  * An error: `aria-invalid` turns the edge red; the message under the field
  * says what to fix, linked with `aria-describedby`.
- *
- * @summary A field in error, its message linked.
  */
 export const Invalid = meta.story({
   render: () => (
@@ -53,8 +49,6 @@ export const Invalid = meta.story({
 
 /**
  * A field that cannot be changed here: greyed, out of the tab order.
- *
- * @summary A field that cannot be edited.
  */
 export const Disabled = meta.story({
   args: { disabled: true, defaultValue: 'Domaine des Tilleuls' },

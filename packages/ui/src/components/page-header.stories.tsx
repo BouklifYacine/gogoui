@@ -15,8 +15,6 @@ const meta = preview.meta({
 
 /**
  * A list page's header: title, one sentence, the main button.
- *
- * @summary A page's title and buttons.
  */
 export const Basic = meta.story({
   args: {
@@ -34,8 +32,6 @@ export const Basic = meta.story({
 
 /**
  * The same header while the page loads.
- *
- * @summary A page's header while it loads.
  */
 export const Loading = meta.story({
   render: () => (

@@ -21,8 +21,6 @@ const meta = preview.meta({
 /**
  * On a phone, the actions of a row rise from the bottom, under the thumb;
  * a swipe down closes them.
- *
- * @summary A bottom panel of actions on a phone.
  */
 export const Basic = meta.story({
   render: () => (

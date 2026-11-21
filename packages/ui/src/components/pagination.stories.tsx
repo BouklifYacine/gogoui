@@ -18,8 +18,6 @@ const meta = preview.meta({
 /**
  * Page 2 of a long list: the current page outlined and announced as
  * current, the far pages folded.
- *
- * @summary Pages of a long list, the current one marked.
  */
 export const Basic = meta.story({
   render: () => (

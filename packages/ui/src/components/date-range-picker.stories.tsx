@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * A period in a two-month calendar; the button says it in words. Change
  * its colour and its shortest and longest period in the controls.
- *
- * @summary A period picked in a calendar.
  */
 export const Basic = meta.story({
   args: {
@@ -44,8 +42,6 @@ export const Basic = meta.story({
 /**
  * The usual shortcuts beside the months (`useDateRangePresets()`): one
  * click for the last 7 days, this month, last month.
- *
- * @summary A period with shortcuts.
  */
 export const WithPresets = meta.story({
   render: function Render() {

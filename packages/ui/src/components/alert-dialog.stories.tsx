@@ -21,8 +21,6 @@ const meta = preview.meta({
 /**
  * Leaving a form with unsaved changes: the question must be answered, a
  * click outside does nothing. The safe choice comes first.
- *
- * @summary A blocking question before losing work.
  */
 export const Basic = meta.story({
   render: () => (

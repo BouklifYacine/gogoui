@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * A public link to share, with where to paste it.
- *
- * @summary A link to copy.
  */
 export const Basic = meta.story({
   args: {

@@ -13,8 +13,6 @@ const meta = preview.meta({
 /**
  * Three choices seen at once, each with its own label; the group named by
  * a visible title.
- *
- * @summary One of a few visible options.
  */
 export const Basic = meta.story({
   render: () => (
@@ -36,8 +34,6 @@ export const Basic = meta.story({
 
 /**
  * The chosen dot in each colour of the palette (`color` on the item).
- *
- * @summary A chosen option in every colour.
  */
 export const Colors = meta.story({
   render: () => (

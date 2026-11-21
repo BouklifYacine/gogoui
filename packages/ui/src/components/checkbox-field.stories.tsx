@@ -12,8 +12,6 @@ const meta = preview.meta({
 
 /**
  * A consent, its label holding a link to read first.
- *
- * @summary Accepting the terms.
  */
 export const Consent = meta.story({
   args: {

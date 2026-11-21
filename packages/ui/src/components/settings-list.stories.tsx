@@ -28,8 +28,6 @@ const meta = preview.meta({
 /**
  * A settings page: a switch that applies at once, with its details and
  * their « Modifier »; a value changed in its dialog.
- *
- * @summary A settings page's rows.
  */
 export const Basic = meta.story({
   render: function Render() {
@@ -103,8 +101,6 @@ export const Basic = meta.story({
 
 /**
  * The same rows while the page loads.
- *
- * @summary Settings rows while they load.
  */
 export const Loading = meta.story({
   render: () => (
@@ -124,8 +120,6 @@ export const Loading = meta.story({
 
 /**
  * On a phone, each part of a long settings form folds into a card.
- *
- * @summary A settings part folded on a phone.
  */
 export const FoldedOnPhone = meta.story({
   globals: { viewport: { value: 'phone' } },

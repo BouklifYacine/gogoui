@@ -10,8 +10,6 @@ const meta = preview.meta({
 /**
  * Views of one request side by side, one shown at a time; the arrows move
  * between tabs.
- *
- * @summary Switch between views of the same subject.
  */
 export const Basic = meta.story({
   render: () => (
@@ -36,8 +34,6 @@ export const Basic = meta.story({
 
 /**
  * Tabs drawn as an underline, for the top of a page.
- *
- * @summary Underlined tabs for a page.
  */
 export const Line = meta.story({
   render: () => (

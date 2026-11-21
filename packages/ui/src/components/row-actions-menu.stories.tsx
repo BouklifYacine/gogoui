@@ -18,8 +18,6 @@ const noop = () => undefined
 
 /**
  * A row's actions, the destructive one last and apart.
- *
- * @summary A row's « … » menu.
  */
 export const Basic = meta.story({
   args: {
@@ -40,8 +38,6 @@ export const Basic = meta.story({
 
 /**
  * While an action runs, the button spins and says what is happening.
- *
- * @summary The menu while an action runs.
  */
 export const Pending = meta.story({
   args: {

@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * A number of guests by dragging, the value written next to it.
- *
- * @summary Drag to pick a value.
  */
 export const Basic = meta.story({
   render: (args) => (
@@ -33,8 +31,6 @@ export const Basic = meta.story({
 
 /**
  * A budget between two amounts: two thumbs.
- *
- * @summary Drag two thumbs to pick a range.
  */
 export const Range = meta.story({
   render: (args) => (

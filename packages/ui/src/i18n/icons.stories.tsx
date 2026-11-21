@@ -50,8 +50,6 @@ const sample = (
  * `iconWeight` changes every Phosphor icon at once; `icons` replaces one
  * of GoGoUI's own (here the ×) by yours, from any library. Change the
  * weight in the controls.
- *
- * @summary Change the icons everywhere at once.
  */
 export const Override = meta.story({
   args: {

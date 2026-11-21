@@ -17,8 +17,6 @@ const meta = preview.meta({
 
 /**
  * Two steps back, the current page last and not a link.
- *
- * @summary The path to the current page.
  */
 export const Basic = meta.story({
   render: () => (
@@ -42,8 +40,6 @@ export const Basic = meta.story({
 
 /**
  * A deep path folded in the middle, so it fits on a phone.
- *
- * @summary A long path folded with an ellipsis.
  */
 export const Collapsed = meta.story({
   render: () => (

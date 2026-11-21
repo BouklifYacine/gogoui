@@ -11,8 +11,6 @@ const meta = preview.meta({
 
 /**
  * How many rows a page shows.
- *
- * @summary Rows per page.
  */
 export const Basic = meta.story({
   render: function Render() {

@@ -14,8 +14,6 @@ const meta = preview.meta({
 
 /**
  * Slide the thumb to the end, or focus it and press Enter.
- *
- * @summary Slide to confirm.
  */
 export const Basic = meta.story({
   args: {
@@ -28,8 +26,6 @@ export const Basic = meta.story({
 
 /**
  * In red: the action takes something away.
- *
- * @summary A destructive slide.
  */
 export const Destructive = meta.story({
   args: {
@@ -43,8 +39,6 @@ export const Destructive = meta.story({
 
 /**
  * In a confirmation dialog, for money that leaves for good.
- *
- * @summary A confirmation by slide.
  */
 export const InConfirmDialog = meta.story({
   render: function Render() {

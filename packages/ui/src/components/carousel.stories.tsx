@@ -31,8 +31,6 @@ const rooms = [
 /**
  * A venue's rooms, one at a time: swipe, click the arrows, or use the
  * arrow keys once inside.
- *
- * @summary Slides one at a time.
  */
 export const Basic = meta.story({
   args: { orientation: 'horizontal', label: 'Les espaces du domaine' },
@@ -57,8 +55,6 @@ export const Basic = meta.story({
 
 /**
  * Three slides at a time, looping.
- *
- * @summary Several slides at a time.
  */
 export const Several = meta.story({
   render: () => (

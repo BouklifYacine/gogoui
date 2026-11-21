@@ -21,8 +21,6 @@ const meta = preview.meta({
 /**
  * A short form in a window: title, one sentence, the fields, then the
  * actions with the main one last. Escape or the × closes it.
- *
- * @summary A small form in a modal window.
  */
 export const Basic = meta.story({
   render: () => (
@@ -55,8 +53,6 @@ export const Basic = meta.story({
 /**
  * Confirming what cannot be undone: the title asks, the description says
  * what is lost, `danger` confirms. The default focus goes to « Annuler ».
- *
- * @summary Confirm an irreversible action.
  */
 export const Confirmation = meta.story({
   render: () => (
@@ -85,8 +81,6 @@ export const Confirmation = meta.story({
 /**
  * Information only: the footer's own « Fermer » (in the provider's
  * language) is enough.
- *
- * @summary A read-only dialog with its close button.
  */
 export const InformationOnly = meta.story({
   render: () => (
@@ -111,8 +105,6 @@ export const InformationOnly = meta.story({
 /**
  * The widths: sm for a question, default for a short form, lg and xl for
  * a long one, full for a whole page.
- *
- * @summary A dialog in each width.
  */
 export const Sizes = meta.story({
   render: () => (

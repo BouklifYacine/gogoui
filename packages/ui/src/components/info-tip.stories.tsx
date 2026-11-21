@@ -10,8 +10,6 @@ const meta = preview.meta({
 /**
  * Beside a section title, a sentence that helps without crowding the
  * page.
- *
- * @summary An explanation beside a title.
  */
 export const Basic = meta.story({
   args: { text: 'La somme versée à la signature, déduite du solde.' },

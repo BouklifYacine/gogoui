@@ -12,8 +12,6 @@ const meta = preview.meta({
 /**
  * One `Toaster` at the root, then `toast.success`, `toast.info`,
  * `toast.warning` from anywhere.
- *
- * @summary Short confirmations.
  */
 export const Basic = meta.story({
   render: () => (
@@ -44,8 +42,6 @@ export const Basic = meta.story({
 
 /**
  * A reversible action: done at once, « Annuler » for ten seconds.
- *
- * @summary A toast that can undo the action.
  */
 export const WithUndo = meta.story({
   render: function Render() {
@@ -69,8 +65,6 @@ export const WithUndo = meta.story({
 /**
  * Work that takes time: « Envoi… » with a turning circle, then
  * « Devis envoyé », or the reason it failed (`toast.promise`).
- *
- * @summary A toast that follows a promise.
  */
 export const Promise_ = meta.story({
   name: 'Promise',

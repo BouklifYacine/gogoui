@@ -14,8 +14,6 @@ const meta = preview.meta({
 
 /**
  * A part of a record's page under its title, an info tip beside it.
- *
- * @summary A titled part of a page.
  */
 export const Basic = meta.story({
   args: {
@@ -37,8 +35,6 @@ export const Basic = meta.story({
 
 /**
  * The same part while the page loads.
- *
- * @summary A titled part while it loads.
  */
 export const Loading = meta.story({
   render: () => (

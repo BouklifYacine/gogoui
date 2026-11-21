@@ -19,8 +19,6 @@ const meta = preview.meta({
 
 /**
  * An icon for a catalogue item, its name under the grid.
- *
- * @summary One icon among tiles.
  */
 export const Basic = meta.story({
   args: {

@@ -19,8 +19,6 @@ const kinds = [
 
 /**
  * A few choices seen at once, each a card with its icon.
- *
- * @summary One choice among cards.
  */
 export const Cards = meta.story({
   args: {
@@ -49,8 +47,6 @@ export const Cards = meta.story({
 
 /**
  * Two or three one-word choices on one line.
- *
- * @summary Short choices side by side.
  */
 export const Inline = meta.story({
   render: function Render() {
@@ -73,8 +69,6 @@ export const Inline = meta.story({
 
 /**
  * Many one-line choices in one framed list.
- *
- * @summary Many choices as a list.
  */
 export const List = meta.story({
   render: function Render() {

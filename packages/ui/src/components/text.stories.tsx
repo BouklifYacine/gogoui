@@ -9,8 +9,6 @@ const meta = preview.meta({
 
 /**
  * Body text: its size, tone, weight and colour in the controls.
- *
- * @summary Body text.
  */
 export const Basic = meta.story({
   args: {

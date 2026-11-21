@@ -10,8 +10,6 @@ const meta = preview.meta({
 
 /**
  * The second of three steps, at the top of a dialog.
- *
- * @summary Bars for a short flow.
  */
 export const Basic = meta.story({
   args: { steps: ['Choisir', 'Connecter', 'Terminer'], current: 1 },

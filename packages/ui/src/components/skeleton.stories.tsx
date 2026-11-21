@@ -15,8 +15,6 @@ const meta = preview.meta({
 /**
  * A client card while it loads: picture, name, state and action in grey,
  * each the size of the real thing.
- *
- * @summary A loading card that keeps its final size.
  */
 export const Basic = meta.story({
   render: () => (

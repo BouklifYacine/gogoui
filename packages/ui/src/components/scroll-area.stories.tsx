@@ -12,8 +12,6 @@ const days = Array.from({ length: 30 }, (_, index) => `${index + 1} juin 2027`)
 
 /**
  * A long list in a box of a fixed height.
- *
- * @summary A box that scrolls.
  */
 export const Basic = meta.story({
   render: () => (
