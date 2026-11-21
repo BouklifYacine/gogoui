@@ -12,8 +12,10 @@ type TableEmptyProps = {
 }
 
 /**
- * The one row of a table with no data (« Aucun client pour ce filtre »),
- * across all its columns, so the header stays in place.
+ * A table's single row when it has no data.
+ *
+ * **Key props**: `colSpan` (all columns), children (an `EmptyState` or a
+ * sentence with its way out).
  *
  * @summary A table's row when it has no data.
  */

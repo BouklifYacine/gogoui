@@ -13,8 +13,11 @@ type StepBarsProps = {
 }
 
 /**
- * Where one is in a short flow, at the top of a dialog: one bar per step,
- * filled up to the current one, and the step's name under them.
+ * Bars for the steps of a short flow.
+ *
+ * **Use it for** 2 to 5 steps in a dialog or an onboarding card.
+ *
+ * **Key props**: `steps` (their names), `current` (from 0), `color`.
  *
  * @summary Bars for the steps of a short flow.
  */

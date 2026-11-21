@@ -43,12 +43,15 @@ type RangeSliderProps = {
 }
 
 /**
- * A range on a track: two thumbs, each with a bubble over it that leans
- * into its motion; close together, the bubbles melt into one that says the
- * whole range. The ends mean no bound. The range is committed when the
- * finger lifts or the arrow key is released, not at every step. Each
- * thumb is a slider for the keyboard (arrows, Page up and down, Home,
- * End); keep fields beside it for a number typed exactly.
+ * Two thumbs on a track choosing a range, their values in bubbles.
+ *
+ * **Use it for** a budget or a number of guests in a filter.
+ *
+ * **Key props**: `label`, `low`, `high` (absent: no bound), `max` (at it,
+ * « no limit »), `step`, `format` (how a value is written: « 3 000 € »),
+ * `onCommit` (when a thumb is let go), `color`.
+ *
+ * **Accessibility**: each thumb is a slider with its value in words.
  *
  * @summary Two thumbs on a track choosing a range.
  */

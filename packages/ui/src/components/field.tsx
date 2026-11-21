@@ -69,9 +69,16 @@ const fieldVariants = cva(
 )
 
 /**
- * A form field’s frame: its label, the control, a hint and the error,
- * linked for a screen reader. `FieldSet` with `FieldLegend` groups fields;
- * `FieldGroup` stacks them. Set `data-invalid` on `Field` for an error.
+ * The parts of a form field, to compose your own.
+ *
+ * **Prefer** the ready fields (`TextField`, `SelectField`…) or `FieldShell`
+ * around your own control.
+ *
+ * **Compose**: `Field` > `FieldLabel` + control + `FieldDescription` +
+ * `FieldError`; `FieldSet` + `FieldLegend` for a group; `FieldGroup` to
+ * stack fields.
+ *
+ * **Key props**: `orientation` (vertical, horizontal), `data-invalid`.
  *
  * @summary Label, control, hint and error of one form field.
  */

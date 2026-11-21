@@ -18,9 +18,9 @@ type FilterDateRangeProps = {
 }
 
 /**
- * Two days of a `FilterMenu`, both included: typed or picked one by one in
- * « À partir du » and « Jusqu'au », or both at once in a two-month
- * calendar. The same two days on both sides, each bounding the other.
+ * A filter on a period (« Date de l'événement »).
+ *
+ * **Key props**: `legend`, `from`, `to`, `onChange`.
  *
  * @summary A filter on a period.
  */

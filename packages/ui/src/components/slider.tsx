@@ -5,9 +5,17 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A value or a range picked by dragging a thumb on a track: a budget, a
- * number of guests. Always show the value in words next to it; for an
- * exact figure, prefer a field.
+ * A value, or a range, chosen by dragging.
+ *
+ * **Use it for** an approximate value where seeing the scale helps (a
+ * budget, a distance). **Prefer** `NumberField` for an exact number,
+ * `RangeSlider` for a range with bubbles.
+ *
+ * **Key props**: `value` / `defaultValue` + `onValueChange` (a number, or
+ * two for a range), `min`, `max`, `step`, `color`.
+ *
+ * **Accessibility**: arrows move by a step; show the value in words beside
+ * it.
  *
  * @summary Pick a value or a range by dragging.
  */

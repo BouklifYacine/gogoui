@@ -16,9 +16,20 @@ type MoneyFieldProps = FieldValueProps<string> & {
 }
 
 /**
- * An amount, typed as people write it (« 3 000,50 »). The field keeps the
- * text: your form's schema turns it into a number, or says what is wrong.
- * Numbers keyboard with a comma on phones. A typed amount, never a list.
+ * A labelled amount, typed the way people write it.
+ *
+ * **Use it for** a price, a deposit, a budget. Accepts « 1 200,50 » and
+ * « 1200.5 ».
+ *
+ * **States**: empty, filled, invalid.
+ *
+ * **Key props**: `label`, `value` (the typed text: your form's schema turns
+ * it into a number or says what is wrong) + `onValueChange`, `error`,
+ * `description`, `placeholder`, `required`, `size`, `icon` (the currency,
+ * the euro by default).
+ *
+ * **Accessibility**: a decimal keyboard on a phone; the currency is read
+ * with the label.
  *
  * @summary A labelled amount, typed as people write it.
  */

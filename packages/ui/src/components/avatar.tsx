@@ -5,10 +5,23 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A person or a place as a round picture, with its initials while the
- * picture loads or when there is none. `AvatarGroup` stacks several,
- * `AvatarGroupCount` says how many more. Give the image an `alt` with the
- * name.
+ * A round picture, its initials when there is no picture.
+ *
+ * **Use it for** anything that is not a person (a company, a venue); for a
+ * person, **prefer** `PersonAvatar` (initials from the name in one prop).
+ *
+ * **Where**: in a list row, a card header, a menu, a comment.
+ *
+ * **States**: image, image loading or broken (the fallback shows), group
+ * with « +n ».
+ *
+ * **Key props**: `size` (sm, default, lg); `color` on `AvatarFallback`.
+ *
+ * **Compose**: `Avatar` > `AvatarImage` + `AvatarFallback`; several in
+ * `AvatarGroup` with `AvatarGroupCount`.
+ *
+ * **Accessibility**: `alt` on the image; decorative avatars next to the
+ * person's name can take `alt=""`.
  *
  * @summary A round picture of a person, initials as fallback.
  */

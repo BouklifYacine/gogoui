@@ -44,11 +44,24 @@ type CarouselProps = ComponentProps<'section'> & {
 }
 
 /**
- * Slides one after the other: photos of a venue, testimonials. Swiped on
- * a phone, the arrows or the arrow keys elsewhere; where one is is read
- * aloud. Never the only place of important information. Needs
- * `embla-carousel-react`. Compose it: `Carousel` > `CarouselContent` >
- * `CarouselItem`s, with `CarouselPrevious` and `CarouselNext`.
+ * Slides to swipe or step through (embla).
+ *
+ * **Use it for** photos of a venue, testimonials, a gallery. **Not for**
+ * important information: half the people never see slide 3.
+ *
+ * **Where**: in a page section or a card, with room for the arrows.
+ *
+ * **States**: first slide (previous disabled), middle, last (next
+ * disabled); looping with `opts.loop`.
+ *
+ * **Key props**: `opts` (loop, align, slidesToScroll), `orientation`,
+ * `label` (what the slides show), `setApi` (to drive it from outside).
+ * `basis-1/3` on `CarouselItem` shows three at once.
+ *
+ * **Compose**: `Carousel` > `CarouselContent` > `CarouselItem`s +
+ * `CarouselPrevious` + `CarouselNext`.
+ *
+ * **Accessibility**: named region; arrow keys move; « 2 sur 5 » read aloud.
  *
  * @summary Slides to swipe or step through.
  */

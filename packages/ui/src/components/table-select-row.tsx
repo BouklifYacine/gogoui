@@ -14,9 +14,13 @@ type TableSelectRowProps = {
 }
 
 /**
- * A row's box to tick, first cell of the row. Put `data-state="selected"`
- * on the `TableRow` when it is ticked, so the row shows it. It holds no
- * selection: your code keeps it.
+ * A row's box to tick.
+ *
+ * **Key props**: `checked`, `onCheckedChange`, `name` (the row's name, read
+ * as « Sélectionner Grange »), `disabled`.
+ *
+ * **Accessibility**: each box is named by its row, never « Sélectionner »
+ * alone.
  *
  * @summary A row's box to tick.
  */

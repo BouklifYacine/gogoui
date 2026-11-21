@@ -21,9 +21,21 @@ type SubmitButtonProps = {
 }
 
 /**
- * A form's submit button, busy and saying so while the form submits. Its
- * own text changes under the focus, which screen readers do not announce:
- * a hidden status next to it says it.
+ * A form's submit button, busy while it submits, « Enregistré » after.
+ *
+ * **Use it for** the main button of every form. With TanStack Form, use
+ * `form.SubmitButton` (bound to its state).
+ *
+ * **Where**: last, at the bottom right of the form or the dialog.
+ *
+ * **States**: ready, submitting (spinner, `loadingText`), saved (tick and
+ * `savedText`, then back).
+ *
+ * **Key props**: `submitting`, `saved`, `loadingText`, `savedText`,
+ * `variant`, children (the words: « Enregistrer »).
+ *
+ * **Accessibility**: stays focusable while busy (`aria-busy`); the saved
+ * state is read politely.
  *
  * @summary A form's submit button, busy while it submits.
  */

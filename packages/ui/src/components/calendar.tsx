@@ -9,9 +9,24 @@ import type { DayButton, Locale } from 'react-day-picker'
 import { Button, buttonVariants } from './button.tsx'
 
 /**
- * A month to pick a day or a range, built on react-day-picker (install
- * it). Pass `locale` from react-day-picker for the month and day names;
- * the days outside the month show greyed.
+ * A month grid to pick a day, several days or a range (react-day-picker).
+ *
+ * **Use it for** a visible calendar on a page or in a popover. **Prefer**
+ * `DateField` for one date in a form, `DateRangePicker` for a period.
+ *
+ * **Where**: in a popover, a side panel, a booking page.
+ *
+ * **States**: today, chosen, range start / middle / end, disabled, outside
+ * the month, marked days (`modifiers`).
+ *
+ * **Key props**: `mode` (single, multiple, range), `selected` + `onSelect`,
+ * `color`, `numberOfMonths`, `captionLayout="dropdown"` with `startMonth` /
+ * `endMonth`, `showWeekNumber`, `weekStartsOn`, `disabled` (dates or rules),
+ * `min` / `max` (range length), `modifiers` + `modifiersClassNames`,
+ * `locale` (from react-day-picker/locale).
+ *
+ * **Accessibility**: arrows move between days, Page up / down between
+ * months; marked days need a legend in words.
  *
  * @summary Pick a day or a range in a month grid (needs react-day-picker).
  */

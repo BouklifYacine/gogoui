@@ -24,10 +24,18 @@ const buttonGroupVariants = cva(
 )
 
 /**
- * Buttons glued together for one decision with several ways: « Jour |
- * Semaine | Mois », « Précédent | Aujourd’hui | Suivant ».
- * `ButtonGroupText` adds a label inside, `ButtonGroupSeparator` a line
- * between.
+ * Buttons joined into one control.
+ *
+ * **Use it for** actions of the same subject side by side (« Précédent |
+ * Suivant », a button and its menu). **Not for** one choice among a few
+ * (`ToggleGroup`).
+ *
+ * **Where**: toolbars, table headers, pagination.
+ *
+ * **Key props**: `orientation` (horizontal, vertical).
+ *
+ * **Accessibility**: `role="group"`; give it an `aria-label` when the
+ * buttons do not say what they share.
  *
  * @summary Buttons joined into one control.
  */

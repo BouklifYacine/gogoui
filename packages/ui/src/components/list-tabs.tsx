@@ -16,10 +16,13 @@ type ListTabsProps<TValue extends string> = {
 }
 
 /**
- * Tabs over one list showing another set of rows per tab (« Clients »,
- * « Archivés »). The page keeps the chosen tab (often in the address) and
- * loads the rows; the list shows once, under the chosen tab. Many tabs
- * scroll sideways on a phone instead of widening the page.
+ * Tabs over one list, each showing another set of rows.
+ *
+ * **Use it for** « À traiter | En cours | Archivées » on a list page.
+ *
+ * **Key props**: `label`, `tabs` (`{ value, label, count? }[]`), `value` +
+ * `onValueChange`, `toolbar` (a search or a filter on the same line),
+ * children (the list).
  *
  * @summary Tabs that switch the rows of one list.
  */

@@ -5,10 +5,15 @@ import { firstErrorMessage } from './first-error-message.ts'
 import { useFormContext } from './form-context.ts'
 
 /**
- * The `<form>` element: no browser bubbles, TanStack submits. A date typed
- * but refused stops the submit and takes the focus. A refused submit puts
- * the focus on the error summary when there is one, else on the first
- * field in error, so a screen reader reads what to fix.
+ * A TanStack form's `form` element.
+ *
+ * **Use it for** the outer element of a `useAppForm` form: it submits,
+ * blocks the browser's own checks and moves the focus to the first error.
+ *
+ * **Compose**: `const form = useAppForm({...})` then `<form.AppForm><Form>
+ * <form.AppField name="email">{(field) => <field.TextField label="E-mail"
+ * />}</form.AppField> <form.SubmitButton>Enregistrer</form.SubmitButton>
+ * </Form></form.AppForm>`.
  *
  * @summary A TanStack form's element, focusing the first error.
  */

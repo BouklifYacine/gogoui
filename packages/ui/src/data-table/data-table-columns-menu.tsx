@@ -14,8 +14,12 @@ import { columnLabel, hideableColumns } from './hideable-columns.ts'
 import type { DataTableInstance } from './table-hook.ts'
 
 /**
- * « Colonnes »: a box per column that may be hidden. The row's name and
- * its actions always show. Hidden while fewer than two columns can be.
+ * The « Colonnes » menu that shows or hides a list's columns.
+ *
+ * **Use it for** wide lists; `DataTable` shows it with `columnsMenu`.
+ * `useStoredColumns` remembers the choice.
+ *
+ * **Key props**: `table`.
  *
  * @summary The menu that hides a list's columns.
  */

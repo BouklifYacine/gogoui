@@ -31,9 +31,16 @@ type ThemeToggleProps = {
 }
 
 /**
- * Light, dark or the device's own theme, kept on this device. Put
- * `themeScript` in a `<script>` at the top of `<head>` so the page opens
- * in its theme without a flash.
+ * Switches between light, dark and the device's theme.
+ *
+ * **Use it for** the app's header, its user menu or its settings.
+ *
+ * **Key props**: `compact` (icons only, their names on hover and for screen
+ * readers, for a header).
+ * Put `themeScript` in the page's head so the right theme shows before
+ * React starts.
+ *
+ * **Accessibility**: each choice is named; the chosen one is pressed.
  *
  * @summary Switch between light, dark and the device's theme.
  */

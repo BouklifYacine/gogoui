@@ -10,9 +10,14 @@ type InputWithIconProps = ComponentProps<typeof Input> & {
 }
 
 /**
- * A text field with an icon at its start (a magnifier, an envelope). The
- * icon only decorates: the field's label still names it. For a button or
- * a text inside the field, use `InputGroup`.
+ * A text field with a decorative icon at its start.
+ *
+ * **Use it for** a search (magnifier), an e-mail (envelope). **Prefer**
+ * `TextField icon={…}` in a form.
+ *
+ * **Key props**: `icon` (a component), all of `Input`'s (`size`, `type`…).
+ *
+ * **Accessibility**: the icon is hidden; the label names the field.
  *
  * @summary A text field with a decorative icon at its start.
  */

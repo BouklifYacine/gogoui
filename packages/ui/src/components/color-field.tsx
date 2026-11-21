@@ -20,9 +20,14 @@ type ColorFieldProps = Omit<FieldValueProps<string>, 'description'> & {
 }
 
 /**
- * One colour among rounded tiles: the chosen one ringed and ticked, its
- * name written under them (a colour is never told by its look alone). The
- * value is the colour, or '' while none is picked.
+ * One colour among rounded tiles.
+ *
+ * **Use it for** a calendar's colour, a tag's colour.
+ *
+ * **Key props**: `legend`, `options` (`{ value, label }[]`, value a CSS
+ * colour or a token), `value` + `onValueChange`, `description`, `error`.
+ *
+ * **Accessibility**: each colour has a name in words.
  *
  * @summary One colour among rounded tiles.
  */

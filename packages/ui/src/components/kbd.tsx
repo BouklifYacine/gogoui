@@ -1,8 +1,13 @@
 import { cn } from '../lib/cn.ts'
 
 /**
- * A key of the keyboard written in a text: « ⌘ K ». `KbdGroup` holds a
- * combination.
+ * A keyboard key shown in a text.
+ *
+ * **Use it for** shortcuts in a menu, a tooltip or help: « Ctrl K », « / ».
+ *
+ * **Compose**: several keys in `KbdGroup`.
+ *
+ * **Accessibility**: a `kbd` element; write keys the way the platform does.
  *
  * @summary A keyboard key shown in a text.
  */

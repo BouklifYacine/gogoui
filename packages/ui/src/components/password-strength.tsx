@@ -43,9 +43,14 @@ type PasswordStrengthProps = {
 }
 
 /**
- * How strong a new password is: four bars fill one after another and take
- * the level's colour, the word under them rises in. Under the minimum it
- * counts what is missing. The word is read aloud when the level changes.
+ * Four bars telling how strong a new password is.
+ *
+ * **Use it for** under a new password; `PasswordField` already includes
+ * it.
+ *
+ * **Key props**: `password`, `minLength`.
+ *
+ * **Accessibility**: the level is written in words and read politely.
  *
  * @summary Four bars telling how strong a new password is.
  */

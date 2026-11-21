@@ -142,12 +142,25 @@ type ButtonProps = Omit<ButtonPrimitive.Props, 'color'> &
   }
 
 /**
- * A button. `default` is the single main action of a view; `outline` the
- * second actions; `ghost` and `soft` the small tools; `destructive` opens a
- * confirmation and `danger` confirms it. Any shape takes a `color`
- * (`<Button variant="subtle" color="success">`). An icon alone takes an
- * `icon` size and an `aria-label`. To navigate, render a link:
- * `<Button render={<a href="/factures" />}>`.
+ * The button, for every action.
+ *
+ * **Use it for** what happens on a click: save, send, open, delete. **Not
+ * for** going to another page (render a link: `render={<a href="…" />}`).
+ *
+ * **Where**: one solid `default` per view (its main action); `outline` for
+ * the others beside it; `ghost` and `soft` for small tools; in a dialog the
+ * main action last, on the right.
+ *
+ * **States**: default, hover, pressed, focus (outline), disabled, loading
+ * (spinner, words kept or `loadingText`).
+ *
+ * **Key props**: `variant` (default, solid, subtle, outline, ghost, soft,
+ * link, destructive, danger), `color` (neutral, primary, info, success,
+ * warning, danger), `size` (xs, sm, default, lg, icon sizes), `loading` +
+ * `loadingText`, `iconStart` / `iconEnd`.
+ *
+ * **Accessibility**: an icon alone needs an `aria-label`; loading keeps the
+ * focus and says it with `aria-busy`. 44 px under a thumb on a phone.
  *
  * @summary The button: one `default` per view, variants for every other action.
  */

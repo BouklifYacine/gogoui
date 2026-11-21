@@ -27,9 +27,17 @@ type StatCardProps = {
 }
 
 /**
- * A key figure on a dashboard: what it counts, the figure, and how it
- * moved, the direction told by an arrow and in words, its colour saying
- * whether that is good. Put a few side by side in a grid.
+ * A key figure and how it moved.
+ *
+ * **Use it for** a dashboard's top line: revenue, signed quotes, visits.
+ *
+ * **Where**: a row of 2 to 4 at the top of a dashboard.
+ *
+ * **Key props**: `label`, `value` (already formatted), `change` (a
+ * number, in %), `changeLabel` (« vs mois dernier »), `lowerIsBetter`
+ * (green when it drops), `icon`, `color`.
+ *
+ * **Accessibility**: the change is told in words and sign, not colour.
  *
  * @summary A key figure and how it moved.
  */

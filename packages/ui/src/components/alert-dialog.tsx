@@ -5,12 +5,23 @@ import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
 /**
- * A question that blocks the page until it is answered: confirming a
- * deletion, leaving unsaved changes. Unlike a Dialog, a click outside does
- * not close it. Compose it: `AlertDialog` > `AlertDialogTrigger` +
- * `AlertDialogContent` > `AlertDialogHeader` (`AlertDialogTitle`,
- * `AlertDialogDescription`), `AlertDialogFooter` (`AlertDialogCancel`,
- * `AlertDialogAction`).
+ * A confirmation that must be answered before going on.
+ *
+ * **Use it for** an action that cannot be undone and needs custom content.
+ * **Prefer** `ConfirmDialog` (one call, loading and error included) for the
+ * usual « Supprimer ? ». **Not for** a form (`Dialog`).
+ *
+ * **Where**: opened from the button that triggers the action; centred over
+ * the page.
+ *
+ * **States**: closed, open; a click outside does not close it, Escape does.
+ *
+ * **Compose**: `AlertDialog` > `AlertDialogTrigger` + `AlertDialogContent` >
+ * `AlertDialogHeader` (`AlertDialogTitle`, `AlertDialogDescription`) +
+ * `AlertDialogFooter` (`AlertDialogCancel`, then the action).
+ *
+ * **Accessibility**: `role="alertdialog"`, its title and description read
+ * aloud; the focus starts on the safe way out.
  *
  * @summary A confirmation that must be answered; a click outside does not close it.
  */

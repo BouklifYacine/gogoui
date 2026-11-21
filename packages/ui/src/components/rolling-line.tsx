@@ -12,8 +12,14 @@ type RollingLineProps = {
 }
 
 /**
- * A line of text that rolls when it changes: the old words leave upward,
- * the new ones rise in. Its height is fixed, so nothing below jumps.
+ * A line of text that rolls to its new words.
+ *
+ * **Use it for** a figure or a status that changes in place (« 3 nouvelles
+ * demandes »).
+ *
+ * **Key props**: `text`, `twoLines` (room for two lines).
+ *
+ * **Accessibility**: still with reduced motion; the new words are read.
  *
  * @summary A line of text that rolls to its new words.
  */

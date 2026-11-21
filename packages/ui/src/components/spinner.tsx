@@ -7,10 +7,16 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A turning circle while something loads. Alone, it says « Chargement »
- * (or the provider's word) to a screen reader. Inside a button or beside a
- * text that already says it, pass `aria-hidden`: `Button` does it for you
- * with `loading`.
+ * A turning circle while something loads.
+ *
+ * **Use it for** a short wait of unknown length, inside a button or a
+ * small zone. **Prefer** `Skeleton` for a page's first load, `Progress`
+ * when the end is known.
+ *
+ * **Key props**: `color`, size through `className`.
+ *
+ * **Accessibility**: alone, it says « Chargement »; inside a button the
+ * button's `aria-busy` says it.
  *
  * @summary A loading indicator that speaks to screen readers when alone.
  */

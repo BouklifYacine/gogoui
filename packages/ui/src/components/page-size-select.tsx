@@ -17,7 +17,10 @@ type PageSizeSelectProps = {
 }
 
 /**
- * « Lignes par page » and its few sizes, under a list that pages.
+ * How many rows a page of a list shows.
+ *
+ * **Key props**: `value` + `onValueChange`, `sizes` (25, 50, 100),
+ * `label`.
  *
  * @summary How many rows a page of a list shows.
  */

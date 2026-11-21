@@ -6,13 +6,26 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * One choice in a list of six or more. For two to five choices seen at
- * once, prefer radio buttons; for a date or an amount, never a select.
- * Compose it: `Select` (pass `items` so the trigger shows the label of the
- * value, not its code) > `SelectTrigger` > `SelectValue`, then
- * `SelectContent` > `SelectItem`s.
+ * A closed list of choices to pick one from.
  *
- * @summary A list to pick one value from; pass `items` for the labels.
+ * **Use it for** one value among 5 to 15 known options. **Prefer**
+ * `SelectField` in a form (label, help and error), `RadioGroup` under 5,
+ * `Combobox` when people search.
+ *
+ * **Where**: in a form, a toolbar, a settings row.
+ *
+ * **States**: placeholder, chosen, open, disabled, invalid.
+ *
+ * **Key props**: on `Select` `value` + `onValueChange`, `items`; on
+ * `SelectTrigger` `size` (sm, default, lg); on `SelectContent`
+ * `alignItemWithTrigger`.
+ *
+ * **Compose**: `Select` > `SelectTrigger` (`SelectValue`) + `SelectContent`
+ * > `SelectItem`s (+ `SelectGroup`, `SelectLabel`, `SelectSeparator`).
+ *
+ * **Accessibility**: typing a letter jumps to it; give it a label.
+ *
+ * @summary A closed list to pick one value from.
  */
 const Select = SelectPrimitive.Root
 

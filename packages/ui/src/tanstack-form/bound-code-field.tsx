@@ -6,8 +6,10 @@ import { firstErrorMessage } from './first-error-message.ts'
 import { useFieldContext } from './form-context.ts'
 
 /**
- * A code of digits bound to its TanStack field: it shakes again at each
- * refused submit.
+ * A TanStack form's code field, shaking again at each refused submit.
+ *
+ * **Use it for** `field.CodeField` in a sign-in step; value, error and
+ * `attempt` come from the form.
  *
  * @summary A TanStack form's code field.
  */

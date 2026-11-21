@@ -21,9 +21,19 @@ type SelectFieldProps<TValue extends string> = FieldValueProps<TValue | ''> & {
 }
 
 /**
- * One choice in a list, with its label, help and error. The value is ''
- * while nothing is chosen. For two to five choices seen at once, prefer
- * `RadioCardField`; never for a date or an amount.
+ * A labelled list to pick one choice from.
+ *
+ * **Use it for** 5 to 15 known options in a form. **Prefer**
+ * `RadioCardField` under 5 when each needs a picture or a sentence,
+ * `Combobox` when people search.
+ *
+ * **States**: placeholder, chosen, open, disabled, invalid.
+ *
+ * **Key props**: `label`, `options` (`{ value, label }[]`), `value` +
+ * `onValueChange`, `placeholder`, `required`, `error`, `description`,
+ * `size`.
+ *
+ * **Accessibility**: label and error wired; letters jump to options.
  *
  * @summary A labelled list to pick one choice from.
  */

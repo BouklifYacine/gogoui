@@ -3,10 +3,12 @@ import type { VariantProps } from 'class-variance-authority'
 import { cn } from '../lib/cn.ts'
 
 /**
- * What a list or a page shows when there is nothing yet: a picture, a
- * title that says what will be here, one sentence, the action that fills
- * it. Compose it: `Empty` > `EmptyHeader` (`EmptyMedia`, `EmptyTitle`,
- * `EmptyDescription`), `EmptyContent`.
+ * The parts of an empty state, to compose your own.
+ *
+ * **Prefer** `EmptyState` (one call). Use `Empty` for an unusual layout.
+ *
+ * **Compose**: `Empty` > `EmptyHeader` (`EmptyMedia variant="icon"`,
+ * `EmptyTitle`, `EmptyDescription`) + `EmptyContent` (actions).
  *
  * @summary The empty state of a list, with the action that fills it.
  */

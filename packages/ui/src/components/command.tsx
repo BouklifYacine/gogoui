@@ -14,10 +14,22 @@ import { InputGroup, InputGroupAddon } from './input-group.tsx'
 import { CheckIcon, MagnifyingGlassIcon } from '@phosphor-icons/react'
 
 /**
- * A searchable list of actions: type, the list filters, Enter runs the
- * highlighted one. In a page or, as `CommandDialog`, a palette opened from
- * a shortcut. Compose it: `Command` > `CommandInput` + `CommandList` >
- * `CommandEmpty`, `CommandGroup`s of `CommandItem`s. Needs `cmdk`.
+ * A filterable list of actions, or a command palette (cmdk).
+ *
+ * **Use it for** jumping anywhere with Ctrl K, picking among many actions.
+ * **Not for** one value in a form (`Combobox` or `SelectField`).
+ *
+ * **Where**: in a `CommandDialog` opened by a shortcut, or inline in a
+ * popover.
+ *
+ * **States**: empty query, filtered, no result (`CommandEmpty`), item
+ * highlighted.
+ *
+ * **Compose**: `Command` > `CommandInput` + `CommandList` > `CommandGroup`s
+ * > `CommandItem`s (+ `CommandShortcut`, `CommandSeparator`).
+ *
+ * **Accessibility**: arrows move, Enter runs; title and description are
+ * read even when hidden.
  *
  * @summary A filterable list of actions, or a command palette.
  */

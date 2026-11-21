@@ -27,10 +27,16 @@ function focusField(fieldId: string) {
 }
 
 /**
- * At the top of a long form (six fields or more), after a refused submit:
- * every error in one place, each a link that puts the focus on its field
- * (GOV.UK's error summary). Focus it at the refusal so a screen reader
- * reads the list. Shows nothing without errors.
+ * Every error of a long form, each a link to its field.
+ *
+ * **Use it for** forms longer than a screen, after a failed submit.
+ *
+ * **Where**: at the top of the form; it takes the focus when it shows.
+ *
+ * **Key props**: `errors` (`{ fieldId, message }[]`, the `id` of each
+ * field).
+ *
+ * **Accessibility**: `role="alert"`, focused, each link moves to its field.
  *
  * @summary Every error of a long form, each leading to its field.
  */

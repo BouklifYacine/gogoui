@@ -37,10 +37,19 @@ function useChart() {
 }
 
 /**
- * The frame of a Recharts chart (install recharts): its colours come from
- * a `config` keyed by series, read as `var(--color-<key>)`, so light and
- * dark follow. `ChartTooltip` with `ChartTooltipContent` and `ChartLegend`
- * with `ChartLegendContent` style the tooltip and the legend.
+ * A themed frame for a Recharts chart.
+ *
+ * **Use it for** trends and comparisons on a dashboard. **Prefer**
+ * `StatCard` for one figure, `FunnelChart` for steps that lose people.
+ *
+ * **Where**: in a card, under its title and the figure it explains.
+ *
+ * **Key props**: `config` (each series' label and colour: `var(--chart-1)`…),
+ * children (the Recharts chart). `ChartTooltip` + `ChartTooltipContent` and
+ * `ChartLegend` + `ChartLegendContent` style the overlays.
+ *
+ * **Accessibility**: say the key figure in words next to the chart; a chart
+ * alone is not readable by everyone.
  *
  * @summary A themed frame for a Recharts chart (needs recharts).
  */

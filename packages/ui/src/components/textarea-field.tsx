@@ -24,8 +24,18 @@ type TextareaFieldProps = FieldValueProps<string> &
 const NEAR_END = 20
 
 /**
- * A text of several lines (a message, notes) with its label, help and
- * error. Four lines by default. With `maxLength`, a counter under it.
+ * A labelled text of several lines, with an optional counter.
+ *
+ * **Use it for** a message, a note, a description.
+ *
+ * **States**: empty, filled, focus, invalid, near the limit (the counter
+ * turns), over it.
+ *
+ * **Key props**: `label`, `value` + `onValueChange`, `error`,
+ * `description`, `maxLength` (shows « 120 caractères restants »). Four
+ * lines high.
+ *
+ * **Accessibility**: the counter is read politely, not at every key.
  *
  * @summary A labelled text of several lines, with a counter.
  */

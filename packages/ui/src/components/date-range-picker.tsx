@@ -35,8 +35,10 @@ type DateRangePickerProps = {
 }
 
 /**
- * The usual shortcuts, from today: today, the last 7 and 30 days, this
- * month, last month, the next 30 days. In GoGoUIProvider's language.
+ * The usual period shortcuts, counted from today: today, the last 7 and 30
+ * days, this month, last month, the next 30 days.
+ *
+ * **Use it for** `<DateRangePicker presets={useDateRangePresets()} />`.
  *
  * @summary The usual period shortcuts, from today.
  */
@@ -70,10 +72,19 @@ function useDateRangePresets(): DateRangePreset[] {
 }
 
 /**
- * A period, day to day, both included: one button that opens two months
- * side by side (one on a phone), a first click on the first day, a second
- * on the last. The button then says it: « du 01/11/2026 au 26/02/2027 ».
- * A first day alone means « from that day ».
+ * A period picked in a two-month calendar, with shortcuts.
+ *
+ * **Use it for** a report's period, a stay, a filter on dates. **Prefer**
+ * `DateField` for one day.
+ *
+ * **States**: empty, start chosen, full range, disabled days, too short or
+ * too long.
+ *
+ * **Key props**: `from`, `to`, `onChange`, `placeholder`, `presets`
+ * (`useDateRangePresets()` gives the usual ones: 7 days, this month…),
+ * `minDays`, `maxDays`, `disabledDates`, `color`.
+ *
+ * **Accessibility**: the button says the chosen period in words.
  *
  * @summary A period picked in a two-month calendar.
  */

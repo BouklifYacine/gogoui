@@ -27,11 +27,17 @@ type FilterMenuProps = {
 }
 
 /**
- * A list's filters behind one « Filtrer » button, how many are on beside
- * the word. Several groups get a sidebar, one group's controls beside it;
- * a single group opens alone. On a phone, the groups open one at a time
- * in a drawer from the bottom. Pair it with `FilterChips` under the
- * toolbar.
+ * A list's filters behind one « Filtrer » button.
+ *
+ * **Use it for** three filters or more; a popover on a computer, a bottom
+ * panel on a phone.
+ *
+ * **Where**: in the list's toolbar, beside the search.
+ *
+ * **Key props**: `activeCount` (shown on the button), `onReset`, `title`,
+ * children (`FilterSection`s, `FilterCheckbox`, ranges).
+ *
+ * **Accessibility**: the count is in the button's name.
  *
  * @summary A list's filters behind one « Filtrer » button.
  */

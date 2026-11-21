@@ -4,10 +4,18 @@ import type { ComponentProps } from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A one-line text field. White, with its own edge visible at rest (3:1 on
- * the page); pointed at, only the edge darkens; focused, a dark edge and a
- * halo; `aria-invalid` turns it red. 16px text on a phone so iOS does not
- * zoom in on the focus. Always give it a visible label.
+ * A one-line text field.
+ *
+ * **Prefer** `TextField` in a form (label, help and error included).
+ *
+ * **States**: empty (placeholder), filled, hover, focus (halo), disabled,
+ * invalid (`aria-invalid`).
+ *
+ * **Key props**: `size` (sm, default, lg), `type`, `autoComplete`,
+ * `inputMode` (the phone's keyboard).
+ *
+ * **Accessibility**: always a visible label; 16 px text on a phone so iOS
+ * does not zoom.
  *
  * @summary A text field; pair it with a label, `aria-invalid` for an error.
  */

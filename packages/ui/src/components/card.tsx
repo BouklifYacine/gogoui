@@ -2,9 +2,19 @@ import * as React from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A white card on the grey page, grouping what belongs together: a title,
- * a figure, a short list. Compose it: `Card` > `CardHeader` (`CardTitle`,
- * `CardDescription`, `CardAction`), `CardContent`, `CardFooter`.
+ * A white card that groups related content.
+ *
+ * **Use it for** one subject: a client's summary, a figure, a setting group.
+ * **Not for** a whole page's layout or one line of a list (`Item`).
+ *
+ * **Where**: on the grey page, in grids or columns.
+ *
+ * **Key props**: `size` (default, sm).
+ *
+ * **Compose**: `Card` > `CardHeader` (`CardTitle`, `CardDescription`,
+ * `CardAction`) + `CardContent` + `CardFooter`.
+ *
+ * **Accessibility**: give the title a heading level that fits the page.
  *
  * @summary A white card that groups related content.
  */

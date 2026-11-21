@@ -50,10 +50,24 @@ type ConfirmDialogProps = {
 }
 
 /**
- * Asks before an action that cannot be undone in one click: what it does,
- * then the way out or the action. Stays open while the action runs, and
- * shows its failure inside. For an action that can be undone, act at once
- * and offer « Annuler » in a toast instead.
+ * Asks before an action that cannot be undone.
+ *
+ * **Use it for** deleting, sending, stopping, taking money. **Prefer**
+ * acting at once with an « Annuler » toast (`useToastWithUndo`) when the
+ * action can be undone.
+ *
+ * **Where**: opened by the button of the action (a `destructive` button,
+ * a menu item).
+ *
+ * **States**: closed, open, loading (button spins, dialog stays), error
+ * (shown inside), slide to confirm (money).
+ *
+ * **Key props**: `open` + `onOpenChange`, `title` (a question),
+ * `description` (what is lost, what stays), `confirmLabel`, `cancelLabel`
+ * (say what it keeps: « Garder le devis »), `destructive`, `loading` +
+ * `loadingLabel`, `error`, `slide`, `finalFocus`.
+ *
+ * **Accessibility**: an alert dialog; the focus starts on the safe way out.
  *
  * @summary Asks before an action that cannot be undone.
  */

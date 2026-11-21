@@ -13,10 +13,19 @@ type NumberFieldProps = Omit<NumberFieldPrimitive.Root.Props, 'locale'> & {
 }
 
 /**
- * A number with − and + around it (guests, a quantity): typed, stepped
- * with the buttons, the arrow keys or the wheel, kept between `min` and
- * `max`. Formatted in the language of GoGoUIProvider (`format` takes
- * Intl options: a currency, a percent). Point a `Label` at its `id`.
+ * A number with − and + buttons.
+ *
+ * **Use it for** small counts: guests, nights, rooms, a quantity.
+ * **Prefer** `MoneyField` for an amount, a plain field for a big number.
+ *
+ * **Where**: in a form, short width.
+ *
+ * **States**: default, at min (− off), at max (+ off), disabled, invalid.
+ *
+ * **Key props**: `value` / `defaultValue` + `onValueChange`, `min`, `max`,
+ * `step`, `size` (sm, default, lg).
+ *
+ * **Accessibility**: arrows up and down change it; give it a label.
  *
  * @summary A number with − and + buttons.
  */

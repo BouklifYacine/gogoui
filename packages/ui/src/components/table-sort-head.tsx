@@ -14,10 +14,16 @@ type TableSortHeadProps = Omit<ComponentProps<'th'>, 'align'> & {
 }
 
 /**
- * A column header that sorts its column: a button with an arrow, the
- * order told by `aria-sort`. It sorts nothing itself: give it the current
- * `sort` and an `onSort`, and sort your rows. Without `onSort`, a plain
- * header.
+ * A sortable column header, without the sorting logic.
+ *
+ * **Use it for** a `Table` you sort yourself (server, your own state).
+ *
+ * **States**: not sorted, ascending, descending; arrow and `aria-sort`.
+ *
+ * **Key props**: `sort` (`'asc'`, `'desc'` or `false`), `onSort`, `align`
+ * (right for numbers).
+ *
+ * **Accessibility**: a button inside the `th`; the order is read aloud.
  *
  * @summary A sortable column header, without sorting logic.
  */

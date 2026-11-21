@@ -9,11 +9,18 @@ import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
 /**
- * Pages of a long list: « Précédent », the page numbers, « Suivant ». The
- * pages are buttons, not links: a page changes the list's state, which the
- * screen may keep in the address. Compose it: `Pagination` >
- * `PaginationContent` > `PaginationItem`s holding a `PaginationPrevious`,
- * `PaginationButton`s, a `PaginationEllipsis`, a `PaginationNext`.
+ * Links to the pages of a long list.
+ *
+ * **Use it for** lists kept in the URL (`?page=3`). **Prefer**
+ * `TablePagination` under a table, `DataTablePagination` with DataTable.
+ *
+ * **Where**: under the list, centred or right.
+ *
+ * **Compose**: `Pagination` > `PaginationContent` > `PaginationItem`s with
+ * `PaginationPrevious`, `PaginationButton isActive`, `PaginationEllipsis`,
+ * `PaginationNext`.
+ *
+ * **Accessibility**: a `nav`; the current page has `aria-current="page"`.
  *
  * @summary Move between the pages of a long list.
  */

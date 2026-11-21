@@ -45,9 +45,13 @@ type StackProps = useRender.ComponentProps<'div'> &
   VariantProps<typeof stackVariants>
 
 /**
- * Things one under the other, or side by side, a set gap between them
- * (the spacing scale: 1 is 4 px, 4 is 16 px). `direction="responsive"`
- * puts them side by side from a tablet up. A div by default.
+ * Things in a column or a row with a set gap.
+ *
+ * **Use it for** spacing parts of a page without writing flex classes.
+ *
+ * **Key props**: `direction` (column, row, responsive: a column on a phone
+ * then a row), `gap` (0 to 12), `align`, `justify` (start, center, end,
+ * between), `wrap`, `render` (another tag: `<ul />`, `<section />`).
  *
  * @summary Things in a column or a row with a set gap.
  */

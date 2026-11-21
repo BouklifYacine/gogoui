@@ -11,9 +11,12 @@ type FieldSkeletonProps = {
 }
 
 /**
- * A form field while its page loads, built on the real `Field`: its label
- * and help as grey text of their own length, its control as tall as the
- * real one. Nothing moves when the form arrives.
+ * A form field while it loads.
+ *
+ * **Use it for** a form whose values come from the server.
+ *
+ * **Key props**: `label`, `description`, `control` (input, textarea,
+ * switch), `rows`.
  *
  * @summary A form field while it loads.
  */

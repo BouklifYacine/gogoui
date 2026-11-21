@@ -2,10 +2,21 @@ import * as React from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Rows and columns of data: amounts aligned right in columns, a header
- * that names each column. Compose it: `Table` > `TableHeader` > `TableRow`
- * > `TableHead`s, `TableBody` > `TableRow`s > `TableCell`s,
- * `TableCaption`.
+ * The styled parts of an HTML table.
+ *
+ * **Use it for** any table; add the table kit (`TableSortHead`,
+ * `TableSelectAll`, `TableSelectRow`, `TableToolbar`, `TablePagination`,
+ * `TableEmpty`, `TableLoading`) for its controls. **Prefer** `DataTable`
+ * for records with sorting, filters and a phone view done for you.
+ *
+ * **Where**: in a card or full width of the page.
+ *
+ * **Compose**: `Table` > `TableCaption` + `TableHeader` > `TableRow` >
+ * `TableHead`s, `TableBody` > `TableRow`s > `TableCell`s, `TableFooter`
+ * for totals.
+ *
+ * **Accessibility**: a caption (visible or `sr-only`), headers in `th`;
+ * numbers aligned right.
  *
  * @summary A data table with its header and rows.
  */

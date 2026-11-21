@@ -4,9 +4,22 @@ import type { VariantProps } from 'class-variance-authority'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Views of the same thing side by side, one shown at a time: « Infos |
- * Paiements | Échanges ». Compose it: `Tabs` > `TabsList` >
- * `TabsTrigger`s, then a `TabsContent` per value.
+ * Views of the same subject, one at a time.
+ *
+ * **Use it for** a record's parts (Détails, Paiements, Historique).
+ * **Prefer** `ListTabs` to switch the rows of one list, `PillTabsList` for
+ * a light look, `ToggleGroup` for a display choice.
+ *
+ * **Where**: under a page's or a card's title.
+ *
+ * **States**: tab chosen, hover, focus, disabled.
+ *
+ * **Key props**: `value` / `defaultValue` + `onValueChange`, `orientation`;
+ * on `TabsList` `variant` (default, line) and `size` (sm, default, lg).
+ *
+ * **Compose**: `Tabs` > `TabsList` > `TabsTrigger`s + `TabsContent`s.
+ *
+ * **Accessibility**: arrows move between tabs; Tab goes into the panel.
  *
  * @summary Switch between views of the same subject.
  */

@@ -3,8 +3,9 @@ import { firstErrorMessage } from './first-error-message.ts'
 import { useFormContext } from './form-context.ts'
 
 /**
- * Every error of the TanStack form, after a refused submit, following the
- * fixes as they are typed. For a long form (six fields or more).
+ * A TanStack form's error summary, from its fields' errors.
+ *
+ * **Use it for** `form.ErrorSummary` at the top of a long form.
  *
  * @summary A TanStack form's error summary.
  */

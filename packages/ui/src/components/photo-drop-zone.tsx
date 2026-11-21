@@ -34,10 +34,11 @@ type PhotoDropZoneProps = {
 }
 
 /**
- * One image, as settings pages show it: small on the left, the advice
- * and the buttons beside it. A file can be dropped on the image or picked
- * with the button (the keyboard's way). While a new image travels it
- * shows at once, faded, in its place. Needs `react-dropzone`.
+ * A logo or a portrait to drop or pick, with its preview.
+ *
+ * **Key props**: `shape` (logo, portrait), `current` (`{ src, alt }` or
+ * null), `onPick`, `onRefuse`, `pickLabel`, `description`,
+ * `extraActions` (« Retirer »).
  *
  * @summary A logo or a portrait to drop or pick.
  */

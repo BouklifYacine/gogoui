@@ -23,10 +23,14 @@ type MobileSettingsSectionProps = {
 }
 
 /**
- * A long settings form folded by part on a phone: each part a card that
- * opens on a tap, its summary under its title. From 768 px it is always
- * open and adds nothing around its content. The fields stay mounted while
- * folded, so the form keeps their values.
+ * A long settings form folded by part on a phone.
+ *
+ * **Use it for** a settings page with many fields: each part a card that
+ * opens on a tap. From 768 px it is always open.
+ *
+ * **Key props**: `title`, `summary` (what is set, under the title while
+ * folded), `defaultOpen`, `reveal` (raise it at a refused submit: the part
+ * opens on its errors), `plain` (no card).
  *
  * @summary A settings part folded on a phone.
  */

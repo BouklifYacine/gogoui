@@ -39,11 +39,18 @@ type FileDropProps = {
 }
 
 /**
- * One file, dropped, clicked or chosen at the keyboard: the zone lifts
- * when a file comes over it and the arrow bobs; on the drop the circle
- * gulps, a ring turns while the file travels, then it floods green and
- * the tick draws itself. No percentage: nothing invents how far a file
- * has gone. Needs `react-dropzone`.
+ * A zone to drop or pick one file.
+ *
+ * **Use it for** an import (CSV), a contract, a document.
+ *
+ * **States**: idle, dragging over, busy (`busyTitle`), done (`doneTitle`),
+ * refused (`refusal`), disabled.
+ *
+ * **Key props**: `label`, `title`, `hint` (types and size), `accept`,
+ * `onFile`, `onRefuse`.
+ *
+ * **Accessibility**: a real file button inside; drop is never the only
+ * way.
  *
  * @summary A zone to drop or pick one file.
  */

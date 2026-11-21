@@ -17,9 +17,25 @@ type TextFieldProps = FieldValueProps<string> &
   }
 
 /**
- * A text field with its label, help and error: a name, an e-mail, a phone
- * number. Give `type`, `autoComplete` and `inputMode` so phones show the
- * right keyboard.
+ * A labelled one-line text, with its help and its error.
+ *
+ * **Use it for** a name, an e-mail, a phone, an address in a form.
+ * **Prefer** `MoneyField`, `DateField`, `PasswordField`, `TextareaField`
+ * for those values.
+ *
+ * **Where**: in a form, one per line; side by side only for short pairs
+ * (first name, last name) on a computer.
+ *
+ * **States**: empty, filled, focus, disabled, invalid (`error` shown under
+ * it and linked to it).
+ *
+ * **Key props**: `label`, `value` + `onValueChange` (controlled), `error`
+ * (the message, shown after a blur or a submit), `description` (help under
+ * the label), `icon`, plus `type`, `autoComplete`, `inputMode`, `size`.
+ * With TanStack Form: `<field.TextField label="…" />`.
+ *
+ * **Accessibility**: label, help and error are wired with `aria-describedby`
+ * and `aria-invalid`.
  *
  * @summary A labelled text field with its error.
  */

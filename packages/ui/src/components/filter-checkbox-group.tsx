@@ -16,8 +16,12 @@ type FilterCheckboxGroupProps<TValue extends string> = {
 }
 
 /**
- * A group of a `FilterMenu` where one box at most is ticked: ticking one
- * unticks the other, ticking it again shows everything.
+ * A filter group of boxes, one ticked at most.
+ *
+ * **Use it for** a status or a type where one value at a time is enough.
+ *
+ * **Key props**: `legend`, `icon`, `options`, `checked` +
+ * `onCheckedChange`.
  *
  * @summary A filter group of boxes, one ticked at most.
  */

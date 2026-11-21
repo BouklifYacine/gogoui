@@ -15,10 +15,15 @@ function TooltipProvider({
 }
 
 /**
- * A short label shown on hover or focus: the name of an icon button. Never
- * the only place of important information, unreachable on a phone. Compose
- * it: `Tooltip` > `TooltipTrigger` + `TooltipContent`; put one
- * `TooltipProvider` around the app.
+ * A short label shown on hover or focus.
+ *
+ * **Use it for** naming an icon button, a truncated text. **Prefer**
+ * `SimpleTooltip` (one call). **Never** essential information.
+ *
+ * **Compose**: `TooltipProvider` once, then `Tooltip` > `TooltipTrigger` +
+ * `TooltipContent` (`side`, `align`).
+ *
+ * **Accessibility**: opens on keyboard focus too; Escape closes it.
  *
  * @summary A short label on hover or focus.
  */

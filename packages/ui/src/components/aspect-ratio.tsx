@@ -8,9 +8,17 @@ type AspectRatioProps = ComponentProps<'div'> & {
 }
 
 /**
- * A box that keeps its shape whatever its width: a photo or a video
- * stays 16:9 while the page reflows, and nothing jumps when it loads.
- * Its child fills it (`object-cover` on an image).
+ * A box that keeps its shape whatever its width.
+ *
+ * **Use it for** photos, videos, maps and their placeholders, so nothing
+ * jumps when they load.
+ *
+ * **Where**: in a card, a grid of photos, a carousel slide.
+ *
+ * **Key props**: `ratio` (width over height: `16 / 9`, `4 / 3`, `1`). Its
+ * child fills it (`object-cover` on an image).
+ *
+ * **Accessibility**: give the image inside its `alt`.
  *
  * @summary A box that keeps its shape.
  */

@@ -15,9 +15,15 @@ type TitledSectionProps = {
 }
 
 /**
- * A part of a page under its h2, named by its title. The h2 can take the
- * focus: when an action removes the button that had it, send the focus to
- * the section's title rather than losing it.
+ * A part of a page under its title.
+ *
+ * **Use it for** splitting a long page (a record, a settings page) into
+ * named parts.
+ *
+ * **Where**: stacked in the page's column.
+ *
+ * **Key props**: `title` (an h2), `aside` (a link or a button on the
+ * title's line: « Modifier »), `compact` (less space), `id` (to link to it).
  *
  * @summary A part of a page under its title.
  */

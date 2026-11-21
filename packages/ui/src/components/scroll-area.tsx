@@ -3,9 +3,16 @@ import { ScrollArea as ScrollAreaPrimitive } from '@base-ui/react/scroll-area'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A box that scrolls with a thin bar drawn the same in every browser,
- * shown while scrolling or hovering. Give it a height (`h-72`). The
- * keyboard reaches its content as usual.
+ * A box that scrolls with a discreet bar.
+ *
+ * **Use it for** a long list inside a fixed height: a menu, a side panel,
+ * a chat. **Not for** the page itself.
+ *
+ * **Key props**: a fixed height on it (`h-72`), `orientation` on
+ * `ScrollBar` for a horizontal scroll.
+ *
+ * **Accessibility**: the content stays reachable with the keyboard and the
+ * wheel.
  *
  * @summary A box that scrolls with a discreet bar.
  */

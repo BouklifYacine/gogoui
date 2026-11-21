@@ -7,11 +7,25 @@ import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
 /**
- * A window over the page that keeps the focus until it closes: a short
- * form, a confirmation, a detail. Compose it: `Dialog` > `DialogTrigger` +
- * `DialogContent` > `DialogHeader` (`DialogTitle`, `DialogDescription`),
- * the body, `DialogFooter`. A `DialogTitle` is required: it names the
- * window for a screen reader.
+ * A modal window over the page.
+ *
+ * **Use it for** a short form or a decision that needs the person's full
+ * attention. **Prefer** `Sheet` for a long form or details, `ConfirmDialog`
+ * for « Supprimer ? », the page itself for anything long.
+ *
+ * **Where**: opened by a button; centred.
+ *
+ * **States**: closed, open; Escape and the × close it.
+ *
+ * **Key props** (on `DialogContent`): `size` (sm, default, lg, xl, full),
+ * `showCloseButton`; `DialogFooter showCloseButton` adds « Fermer ».
+ *
+ * **Compose**: `Dialog` > `DialogTrigger` + `DialogContent` > `DialogHeader`
+ * (`DialogTitle`, `DialogDescription`) + body + `DialogFooter` (main action
+ * last).
+ *
+ * **Accessibility**: always a `DialogTitle`; the focus is trapped and comes
+ * back to the trigger.
  *
  * @summary A modal window; always give it a DialogTitle.
  */

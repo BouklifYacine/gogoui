@@ -12,9 +12,16 @@ type CheckboxFieldProps = Omit<FieldValueProps<boolean>, 'description'> & {
 }
 
 /**
- * A box to tick, its label beside it, a line of help under it. For a
- * consent (the terms) or a filter; a setting that takes effect is a
- * `SwitchField`.
+ * A labelled box to tick inside a form.
+ *
+ * **Use it for** a consent (« J'accepte les conditions »), an option saved
+ * with the form. **Prefer** `SwitchField` for an on / off feature,
+ * `CheckboxCardField` for several choices.
+ *
+ * **Key props**: `label`, `value` (boolean) + `onValueChange`,
+ * `description`, `error`.
+ *
+ * **Accessibility**: the whole label ticks it; the error is read with it.
  *
  * @summary A labelled box to tick, for a consent.
  */

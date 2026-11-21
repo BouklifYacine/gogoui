@@ -13,10 +13,25 @@ import {
 } from './input-group.tsx'
 
 /**
- * A field that filters a long list as you type, then picks one value (or
- * several, with chips). For a short list, prefer a Select. Compose it:
- * `Combobox` (`items`) > `ComboboxInput` + `ComboboxContent` >
- * `ComboboxEmpty` + `ComboboxList` > `ComboboxItem`s.
+ * A field that filters a long list as you type, then picks one value, or
+ * several as chips.
+ *
+ * **Use it for** a client, a city, a country, a tag among dozens. **Prefer**
+ * `SelectField` under 15 known options, `Command` for actions.
+ *
+ * **Where**: in a form or a filter.
+ *
+ * **States**: empty, typing (filtered), no result (`ComboboxEmpty`), chosen,
+ * several chosen (chips), disabled.
+ *
+ * **Key props**: on `Combobox` `items`, `value` + `onValueChange`,
+ * `multiple`; on `ComboboxInput` `showTrigger`, `showClear`.
+ *
+ * **Compose**: `Combobox` > `ComboboxInput` + `ComboboxContent` >
+ * `ComboboxEmpty` + `ComboboxList` > `ComboboxItem`s; for several values
+ * `ComboboxChips` around the chips and the input.
+ *
+ * **Accessibility**: arrows move in the list, Enter picks; give it a label.
  *
  * @summary Type to filter a long list, then pick a value.
  */

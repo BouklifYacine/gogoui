@@ -63,10 +63,22 @@ type BadgeProps = Omit<useRender.ComponentProps<'span'>, 'color'> &
   }
 
 /**
- * A small round label: a count, a short state, a tag. A state is always
- * written in words, never told by colour alone. Any shape takes a `color`
- * (`<Badge variant="subtle" color="success">Payé</Badge>`). Rendered as a
- * link (`render={<a href="…" />}`), it darkens when pointed at.
+ * A small round label.
+ *
+ * **Use it for** a count, a short state in words (« Payé », « En retard »),
+ * a tag. **Not for** an action (`Button`) or a long text.
+ *
+ * **Where**: beside a title, in a table cell, on a card, in a tab.
+ *
+ * **States**: the shapes × the colours; as a link it darkens on hover.
+ *
+ * **Key props**: `variant` (solid, subtle, outline, ghost, link) and
+ * `color` (neutral, primary, info, success, warning, danger):
+ * `<Badge variant="subtle" color="success">Payé</Badge>`. `render` makes it
+ * a link.
+ *
+ * **Accessibility**: the state is always written in words; never rely on
+ * the colour alone.
  *
  * @summary A small pill for a count, a tag or a short state in words.
  */

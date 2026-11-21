@@ -16,9 +16,13 @@ type SettingValueRowProps = {
 }
 
 /**
- * A row of a settings list showing a value and a « Modifier » button: the
- * change happens in a `SettingDialog`, with its own « Enregistrer ». The
- * button names its row for a screen reader (« Modifier Signature »).
+ * A setting's current value and its « Modifier ».
+ *
+ * **Use it for** a value changed in a dialog: an address, a currency, a
+ * deposit rate.
+ *
+ * **Key props**: `title`, `value` (in words), `description`, `onEdit`
+ * (opens a `SettingDialog`), `editLabel`.
  *
  * @summary A setting's value and its « Modifier ».
  */

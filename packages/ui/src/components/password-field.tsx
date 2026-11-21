@@ -15,8 +15,18 @@ type PasswordFieldProps = FieldValueProps<string> & {
 }
 
 /**
- * A password with its label, help and error, an eye to show it. A new
- * password shows how strong it is under it; one typed to sign in does not.
+ * A labelled password, with its strength when it is new.
+ *
+ * **Use it for** sign-in (`autoComplete="current-password"`) and sign-up
+ * or reset (`autoComplete="new-password"`, shows `PasswordStrength`).
+ *
+ * **States**: hidden, shown (the eye button), weak to strong, invalid.
+ *
+ * **Key props**: `label`, `autoComplete` (required: it picks the mode),
+ * `minLength`, `value` + `onValueChange`, `error`, `size`.
+ *
+ * **Accessibility**: the show button says what it will do; password
+ * managers fill it thanks to `autoComplete`.
  *
  * @summary A labelled password, with its strength when new.
  */

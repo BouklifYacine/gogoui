@@ -4,10 +4,25 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A list of actions opened from a button: a row’s « … », an account menu.
- * Items can be grouped, ticked, chosen among (radio) or open a submenu.
- * Compose it: `DropdownMenu` > `DropdownMenuTrigger` +
- * `DropdownMenuContent` > `DropdownMenuItem`s.
+ * Actions in a menu opened from a button.
+ *
+ * **Use it for** three or more actions of one subject, sorting choices,
+ * « … » on a row (`RowActionsMenu` does it for a table row). **Not for**
+ * navigation between pages (links) or one value in a form (`Select`).
+ *
+ * **Where**: under its trigger button.
+ *
+ * **States**: items default, highlighted, disabled, destructive (last,
+ * red), checked (checkbox and radio items), submenus.
+ *
+ * **Compose**: `DropdownMenu` > `DropdownMenuTrigger` + `DropdownMenuContent`
+ * > `DropdownMenuItem`s (+ `Label`, `Separator`, `Shortcut`, `Sub`…).
+ *
+ * **Key props**: `variant="destructive"` on an item; `align`, `side` on the
+ * content.
+ *
+ * **Accessibility**: arrows move, Enter chooses, Escape closes and returns
+ * the focus.
  *
  * @summary Actions in a menu opened from a button.
  */

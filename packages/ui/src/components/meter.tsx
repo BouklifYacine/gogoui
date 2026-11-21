@@ -5,9 +5,17 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A measure within a range, not a task's progress: the storage used, the
- * dates booked this year. `MeterLabel` names it, `MeterValue` writes the
- * figure. For something that moves toward its end, use `Progress`.
+ * A measure within a known range.
+ *
+ * **Use it for** a static amount: storage used, places taken, a quota.
+ * **Not for** a task going on (`Progress`).
+ *
+ * **Where**: in a settings row, a card, a plan's limits.
+ *
+ * **Key props**: `value`, `min`, `max`, `color`; a visible label with the
+ * number in words (« 12 sur 50 invités »).
+ *
+ * **Accessibility**: `role="meter"` with its value read aloud.
  *
  * @summary A measure within a range (storage, capacity).
  */

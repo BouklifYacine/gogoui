@@ -17,9 +17,14 @@ type TableSelectAllProps = {
 }
 
 /**
- * The box at the head of a table: full when the page is ticked, a dash
- * when only some rows are, empty otherwise. A click with some ticked
- * unticks everything. It holds no selection: your code keeps it.
+ * The head row's box that ticks a page of rows.
+ *
+ * **Use it for** a `Table` with ticked rows; pair with `TableSelectRow`.
+ *
+ * **States**: none, some (indeterminate), all.
+ *
+ * **Key props**: `checked` (true, false or `'some'`),
+ * `onCheckedChange`, `label`.
  *
  * @summary The head row's box that ticks a page of rows.
  */

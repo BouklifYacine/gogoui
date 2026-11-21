@@ -3,10 +3,16 @@ import { PreviewCard as PreviewCardPrimitive } from '@base-ui/react/preview-card
 import { cn } from '../lib/cn.ts'
 
 /**
- * A card that shows a preview when a link or a name is pointed at (a
- * client's details behind their name). Never the only way to the
- * information: the link leads to it too, and a phone has no hover.
- * Compose it: `HoverCard` > `HoverCardTrigger` + `HoverCardContent`.
+ * A preview card when a link or a name is pointed at.
+ *
+ * **Use it for** a client's details behind their name, a link's preview.
+ * **Never** the only way to the information: a phone has no hover.
+ *
+ * **Where**: on names and links inside text or tables.
+ *
+ * **Compose**: `HoverCard` > `HoverCardTrigger` (a link) + `HoverCardContent`.
+ *
+ * **Key props**: `side`, `align`, `sideOffset` on the content.
  *
  * @summary A preview card when pointing at a link.
  */

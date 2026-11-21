@@ -6,10 +6,17 @@ type DetailsListProps = {
 }
 
 /**
- * What a record holds, as label and value, a thin line between rows. Side
- * by side when its block is wide enough, one under the other in a narrow
- * one: it reads its own width, not the screen's. A long value wraps. A
- * description list for screen readers.
+ * A record's labels and values.
+ *
+ * **Use it for** what a record holds: date, guests, budget, contact.
+ * **Not for** values to edit in place (`SettingValueRow`).
+ *
+ * **Where**: in a card or a `TitledSection`.
+ *
+ * **Key props**: `rows` (`[label, value][]`). Side by side when its block is
+ * wide, stacked when narrow.
+ *
+ * **Accessibility**: a description list (`dl`).
  *
  * @summary A record's labels and values.
  */

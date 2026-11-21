@@ -23,9 +23,14 @@ type CheckboxCardFieldProps<TValue extends string> = Omit<
 }
 
 /**
- * Several choices among cards, the twin of `RadioCardField`: the whole
- * card is the label, each box is ticked on its own. The value keeps the
- * ticked choices in the order of the options.
+ * Several choices among cards seen at once.
+ *
+ * **Use it for** services offered, days open, rooms included.
+ *
+ * **Key props**: `legend`, `options` (`{ value, label }[]`), `value` (an
+ * array) + `onValueChange`, `description`, `error`.
+ *
+ * **Accessibility**: a fieldset with its legend; each card is a checkbox.
  *
  * @summary Several choices among cards seen at once.
  */

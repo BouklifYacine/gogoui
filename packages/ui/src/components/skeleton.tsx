@@ -8,11 +8,19 @@ import { buttonVariants } from './button.tsx'
 const pulse = 'animate-[pulse_1s_ease-in-out_infinite] bg-line-strong'
 
 /**
- * What a page shows while its data loads: grey shapes the size of what is
- * coming, so nothing jumps when it arrives. `Skeleton` is a block (a
- * picture, a field, a card); `SkeletonText` a line of text,
- * `SkeletonButton` a button and `SkeletonBadge` a badge, each sized by a
- * sample of the real content.
+ * Grey shapes the size of content that is loading.
+ *
+ * **Use it for** the first load of a page, a card, a list, so nothing
+ * jumps. **Prefer** the ready ones (`PageHeaderSkeleton`,
+ * `DataTableSkeleton`, `FieldSkeleton`…); `Spinner` for an action.
+ *
+ * **Where**: exactly where the content will be, at its size.
+ *
+ * **Key props**: size through `className` (`h-4 w-32`); `SkeletonText`,
+ * `SkeletonButton`, `SkeletonBadge` for the usual shapes.
+ *
+ * **Accessibility**: hidden from screen readers; say « Chargement » once on
+ * the region (`aria-busy`).
  *
  * @summary Grey placeholders the size of the content being loaded.
  */

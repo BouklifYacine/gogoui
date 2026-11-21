@@ -11,8 +11,7 @@ type PageHeaderSkeletonProps = {
 }
 
 /**
- * `PageHeader` while the page loads: its title and sentence in grey, as
- * long as the words, its buttons on the right.
+ * A page's header while it loads, at the same size.
  *
  * @summary A page's header while it loads.
  */

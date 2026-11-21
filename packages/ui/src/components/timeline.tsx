@@ -27,9 +27,17 @@ type TimelineProps = {
 }
 
 /**
- * What happened to a record, one event under the other along a line: a
- * request received, a visit, a quote sent. A list for screen readers, each
- * moment a `<time>`. Newest first or last, as you give them.
+ * A record's history along a line.
+ *
+ * **Use it for** what happened to a request, an order, a contract: sent,
+ * seen, paid.
+ *
+ * **Where**: in a record's « Historique » tab or side column.
+ *
+ * **Key props**: `events` (each `id`, `title`, `time`, `dateTime`,
+ * `description`, `icon`, `color`), newest first.
+ *
+ * **Accessibility**: an ordered list; each time in a `time` element.
  *
  * @summary A record's history along a line.
  */

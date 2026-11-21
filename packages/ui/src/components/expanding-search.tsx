@@ -59,11 +59,19 @@ type ExpandingSearchProps = {
 }
 
 /**
- * A list's search on its toolbar: a pill « Rechercher / » that stretches
- * open into a field, on a click or the « / » key anywhere on the page.
- * Escape, or the focus leaving it, folds it back; while a search is typed
- * the closed pill shows it. On a phone the pill is the glass alone. The
- * page decides what a search does.
+ * A search pill that opens into a field, also on « / ».
+ *
+ * **Use it for** filtering a list by text without taking the toolbar's
+ * room when unused.
+ *
+ * **Where**: in a list's toolbar, left.
+ *
+ * **States**: closed (pill), open, filled (stays open), cleared.
+ *
+ * **Key props**: `value` + `onValueChange`, `label` (« Rechercher un
+ * client »).
+ *
+ * **Accessibility**: « / » opens it; Escape clears then closes it.
  *
  * @summary A search pill that opens into a field, also on « / ».
  */

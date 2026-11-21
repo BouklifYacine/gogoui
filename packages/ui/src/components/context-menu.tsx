@@ -17,11 +17,17 @@ import {
 } from './dropdown-menu.tsx'
 
 /**
- * The menu a right click (or a long press) opens on an area: a row, a
- * card, a calendar day. Its actions must also be reachable another way (a
- * « … » button): nobody guesses a right click. Compose it like a
- * DropdownMenu: `ContextMenu` > `ContextMenuTrigger` + `ContextMenuContent`
- * > `ContextMenuItem`s.
+ * The menu a right click (or a long press) opens on an area.
+ *
+ * **Use it for** shortcuts on rows, cards or days for people who know them.
+ * **Never** the only way: the same actions must be in a « … » menu.
+ *
+ * **Where**: on a card, a table row, a calendar day.
+ *
+ * **Compose**: `ContextMenu` > `ContextMenuTrigger` (the area) +
+ * `ContextMenuContent` > `ContextMenuItem`s (same items as DropdownMenu).
+ *
+ * **Accessibility**: Shift + F10 opens it from the keyboard.
  *
  * @summary The menu of a right click on an area.
  */

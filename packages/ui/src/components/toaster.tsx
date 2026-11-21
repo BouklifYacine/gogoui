@@ -6,14 +6,21 @@ import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 /**
- * Where short confirmations appear (« Devis envoyé »), with « Annuler »
- * when the action can be undone. Mount it once at the root, then call
- * `toast.success('…')`, imported from here. Never for an error that needs
- * a fix: that one stays next to its field or in an `ErrorAlert`.
+ * Short confirmations at the top of the screen.
  *
- * Drawn whole by GoGoUI (Sonner's own look never shows): a floating card,
- * the state told by a small filled icon, the action as a second button.
- * Needs `sonner` installed.
+ * **Use it for** « Devis envoyé », « Copié », a background failure. **Not
+ * for** an error to fix in a form (`ErrorAlert`) or anything to read
+ * later (`Alert`).
+ *
+ * **Where**: mount `<Toaster />` once in the app's root; call
+ * `toast.success('…')`, `toast.error`, `toast.loading`, `toast.promise`
+ * anywhere. `useToastWithUndo()` gives `(message, undo)` for a deletion
+ * that can be undone.
+ *
+ * **States**: success, error, warning, info, loading, with an action.
+ *
+ * **Accessibility**: read aloud politely; it stays 10 s when it carries
+ * « Annuler ».
  *
  * @summary Short confirmations at the top of the screen.
  */

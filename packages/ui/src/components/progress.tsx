@@ -5,8 +5,16 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * How far a task has gone, as a bar: an upload, an onboarding.
- * `ProgressLabel` names it and `ProgressValue` writes the figure.
+ * A bar showing how far a task has gone.
+ *
+ * **Use it for** an upload, an import, a long save. **Prefer** `Meter` for
+ * a static amount, `StepProgress` for the steps of a flow, `Spinner` when
+ * the end is unknown.
+ *
+ * **Key props**: `value` (0 to 100), `color`;
+ * `ProgressLabel` and `ProgressValue` write it in words.
+ *
+ * **Accessibility**: `role="progressbar"` with its value read aloud.
  *
  * @summary A bar showing how far a task has gone.
  */

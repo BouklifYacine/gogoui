@@ -32,9 +32,15 @@ type ToggleProps = TogglePrimitive.Props &
   }
 
 /**
- * A button that stays pressed or not (bold, a favourite), its state told
- * by `aria-pressed`. An icon alone needs an `aria-label`. For one choice
- * among a few, use `ToggleGroup`.
+ * A button that stays pressed.
+ *
+ * **Use it for** an on / off tool: bold, a favourite, « Afficher les
+ * archivés ». **Prefer** `Switch` for a setting.
+ *
+ * **Key props**: `pressed` / `defaultPressed` + `onPressedChange`,
+ * `variant` (default, outline), `size` (sm, default, lg), `color`.
+ *
+ * **Accessibility**: `aria-pressed`; an icon alone needs an `aria-label`.
  *
  * @summary A button that stays pressed.
  */

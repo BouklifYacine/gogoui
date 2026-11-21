@@ -9,10 +9,16 @@ type InfoTipProps = {
 }
 
 /**
- * A small « i » beside a title: its explanation opens on hover or keyboard
- * focus instead of sitting under the title as a paragraph. The button is
- * named by the text, so a screen reader hears it without the tooltip. A
- * tooltip does not open on a tap: never hide there what a phone user needs.
+ * A small « i » that explains a title on hover or focus.
+ *
+ * **Use it for** one sentence of help that would crowd the page. **Never**
+ * for something needed to finish a task: a tap does not open it.
+ *
+ * **Where**: right after a title or a label.
+ *
+ * **Key props**: `text`.
+ *
+ * **Accessibility**: the button is named by the text itself.
  *
  * @summary A small « i » that explains a title on hover.
  */

@@ -12,9 +12,12 @@ type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type'> & {
 }
 
 /**
- * A password field with a lock icon and an eye that shows or hides what
- * was typed: on a phone, checking the password saves a failed sign-in.
- * The eye keeps one name and tells its state with `aria-pressed`.
+ * A password field with a button to show what was typed.
+ *
+ * **Prefer** `PasswordField` in a form (label, strength and error).
+ *
+ * **Accessibility**: the button is named « Afficher le mot de passe » and
+ * pressed while shown.
  *
  * @summary A password field with a button to show what was typed.
  */

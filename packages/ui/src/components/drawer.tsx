@@ -22,11 +22,20 @@ function useDrawer() {
 }
 
 /**
- * A panel that rises from the bottom of a phone screen and follows the
- * finger: swipe it down to close. For a computer, prefer a Sheet or a
- * Dialog. Compose it: `Drawer` > `DrawerTrigger` + `DrawerContent` >
- * `DrawerHeader` (`DrawerTitle`, `DrawerDescription`), the body,
- * `DrawerFooter`.
+ * A panel rising from the bottom, closed by a swipe.
+ *
+ * **Use it for** a phone's choices and filters (a sort order, a short
+ * form). **Prefer** `Sheet` on a computer, `Dialog` for a decision.
+ *
+ * **Where**: from the bottom edge on a phone.
+ *
+ * **Key props**: `showSwipeHandle` (the grip), `swipeDirection`, `modal`,
+ * snap points.
+ *
+ * **Compose**: `Drawer` > `DrawerTrigger` + `DrawerContent` > `DrawerHeader`
+ * (`DrawerTitle`) + body + `DrawerFooter`.
+ *
+ * **Accessibility**: a `DrawerTitle` always; Escape closes it too.
  *
  * @summary A bottom panel for a phone, closed by a swipe.
  */

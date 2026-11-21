@@ -11,9 +11,14 @@ type SwitchFieldProps = Omit<FieldValueProps<boolean>, 'description'> & {
 }
 
 /**
- * A setting turned on or off inside a form, its label and help on the
- * left, the switch on the right. Saved with the form, like the other
- * fields. A consent to tick stays a `CheckboxField`.
+ * A labelled on / off switch inside a form.
+ *
+ * **Use it for** turning a feature on in a form that has a « Save »
+ * button. **Prefer** `SettingSwitchRow` for a setting that applies at
+ * once, `CheckboxField` for a consent.
+ *
+ * **Key props**: `label`, `value` (boolean) + `onValueChange`,
+ * `description`, `error`.
  *
  * @summary A labelled on/off switch inside a form.
  */

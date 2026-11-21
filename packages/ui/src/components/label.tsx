@@ -3,8 +3,17 @@ import * as React from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * The visible name of a field, linked to it with `htmlFor`. Every field
- * has one: a placeholder is not a label.
+ * The visible name of a form field.
+ *
+ * **Use it for** a control you place yourself; the ready fields already
+ * have one.
+ *
+ * **Where**: above a text field, right of a checkbox or a switch.
+ *
+ * **Key props**: `htmlFor` (the control's `id`).
+ *
+ * **Accessibility**: a click on it focuses or ticks the control; never
+ * replace it with a placeholder.
  *
  * @summary The visible name of a form field.
  */

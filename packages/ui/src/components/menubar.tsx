@@ -20,11 +20,19 @@ import {
 } from './dropdown-menu.tsx'
 
 /**
- * An application's bar of menus (« Fichier », « Édition », « Affichage »):
- * once one is open, the others open on hover, and the arrows move between
- * them. For a desktop-like tool; a site uses `NavigationMenu`. Compose it:
- * `Menubar` > `MenubarMenu` > `MenubarTrigger` + `MenubarContent` >
- * `MenubarItem`s.
+ * An application's bar of menus (Fichier, Édition, Affichage…).
+ *
+ * **Use it for** an editor or a tool with many commands. **Not for** a
+ * website's navigation (`NavigationMenu`) or one menu (`DropdownMenu`).
+ *
+ * **Where**: top of the tool's window, under the page header.
+ *
+ * **Compose**: `Menubar` > `MenubarMenu`s > `MenubarTrigger` +
+ * `MenubarContent` > `MenubarItem`s (+ checkbox, radio, sub-menus,
+ * `MenubarShortcut`).
+ *
+ * **Accessibility**: left and right arrows move between menus once one is
+ * open.
  *
  * @summary An application's bar of menus.
  */

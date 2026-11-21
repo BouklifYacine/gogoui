@@ -556,9 +556,16 @@ function SegmentLabel({
 // ─── FunnelChart ─────────────────────────────────────────────────────────────
 
 /**
- * A funnel from the first step to the last (requests, visits, signed),
- * each step’s width its value, the drop between steps in percent. Numbers
- * in French by default.
+ * Steps that lose people, with their values and drop rates.
+ *
+ * **Use it for** a conversion: demandes → visites → devis → signés.
+ *
+ * **Where**: in a dashboard card.
+ *
+ * **Key props**: `data` (label, value, colour per step), `orientation`,
+ * `showPercentage`, `layers`, `color`.
+ *
+ * **Accessibility**: write the figures in words beside it too.
  *
  * @summary A funnel of steps with their values and drop rates.
  */

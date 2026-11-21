@@ -18,10 +18,15 @@ type SimpleTooltipProps = {
 }
 
 /**
- * A tooltip in one line: `<SimpleTooltip content="Notifications"><Button
- * … /></SimpleTooltip>`. The element keeps its own name (`aria-label` on
- * an icon button): a tooltip is never the only name. For more control,
- * compose `Tooltip` yourself.
+ * A tooltip in one line around any element.
+ *
+ * **Use it for** naming an icon button, explaining a short term. **Prefer**
+ * `InfoTip` for a sentence of help behind an « i ».
+ *
+ * **Key props**: `content`, `side`, `delay`.
+ *
+ * **Accessibility**: never hide anything needed there: a phone has no
+ * hover.
  *
  * @summary A tooltip in one line around any element.
  */

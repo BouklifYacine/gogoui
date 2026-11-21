@@ -14,9 +14,10 @@ type GuideOfferProps = {
 }
 
 /**
- * The card that offers a page's guide, once, in the page and never over
- * it: a window opened on its own is the one people finish least.
- * « Non merci » removes it for good.
+ * The card offering a page's guide, once, in the page.
+ *
+ * **Key props**: `title` (what it teaches), `steps` (how many), `onStart`,
+ * `onDecline` (« Non merci » removes it for good).
  *
  * @summary The card offering a page's guide.
  */

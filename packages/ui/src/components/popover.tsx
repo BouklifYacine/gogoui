@@ -3,11 +3,20 @@ import { Popover as PopoverPrimitive } from '@base-ui/react/popover'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A small floating panel anchored to its trigger, closed by a click
- * outside: a date picker, a filter, a short detail. For a label on hover,
- * use a Tooltip. Compose it: `Popover` > `PopoverTrigger` +
- * `PopoverContent` (`PopoverHeader`, `PopoverTitle`,
- * `PopoverDescription`).
+ * A floating panel anchored to its trigger.
+ *
+ * **Use it for** a small form or a picker that stays near what it changes
+ * (a date, a colour, a quick filter). **Not for** a label (`Tooltip`) or a
+ * list of actions (`DropdownMenu`).
+ *
+ * **Where**: under or beside its trigger button.
+ *
+ * **Key props** (on `PopoverContent`): `side`, `align`, `sideOffset`.
+ *
+ * **Compose**: `Popover` > `PopoverTrigger` + `PopoverContent` >
+ * `PopoverHeader` (`PopoverTitle`, `PopoverDescription`) + body.
+ *
+ * **Accessibility**: Escape closes it and gives the focus back.
  *
  * @summary A floating panel anchored to its trigger.
  */

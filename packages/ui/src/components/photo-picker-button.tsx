@@ -18,9 +18,11 @@ type PhotoPickerButtonProps = {
 }
 
 /**
- * A button that opens the computer's files or the phone's photos. The
- * file input is hidden: it cannot be styled, and a real button is easier
- * to reach and to read. JPEG, PNG or WebP.
+ * A button that picks a photo.
+ *
+ * **Use it for** adding photos to a gallery from a toolbar.
+ *
+ * **Key props**: `onPick`, `loading` + `loadingText`, `disabled`, children.
  *
  * @summary A button that picks a photo.
  */

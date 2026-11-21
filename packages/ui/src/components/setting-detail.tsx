@@ -11,8 +11,11 @@ type SettingDetailProps = {
 }
 
 /**
- * Under a `SettingSwitchRow`: the setting's details (« Après 7 jours de
- * silence ») and the « Modifier » link that opens their dialog.
+ * A switched setting's details and their « Modifier ».
+ *
+ * **Use it for** under a `SettingSwitchRow` that is on (« 3 jours avant »).
+ *
+ * **Key props**: children, `onEdit`, `editLabel`.
  *
  * @summary A switched setting's details and their « Modifier ».
  */

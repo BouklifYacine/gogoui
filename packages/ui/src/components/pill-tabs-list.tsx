@@ -44,10 +44,13 @@ const lead = { type: 'spring', stiffness: 620, damping: 40 } as const
 const trail = { type: 'spring', stiffness: 170, damping: 19 } as const
 
 /**
- * Tabs on a round tray, the chosen one on a dark pill that stretches to
- * the tab picked, its leading edge first. Jumps under reduced motion. A
- * tab may count its rows on a small pill. Put it inside a `Tabs` root,
- * which holds the value.
+ * Tabs on a tray with a sliding pill.
+ *
+ * **Use it for** a light set of tabs, counts included; `ListTabs` builds
+ * on it.
+ *
+ * **Key props**: `label`, `tabs`, `value`, `color`, `slides` (the pill
+ * moves, off with reduced motion).
  *
  * @summary Tabs on a tray with a sliding pill.
  */

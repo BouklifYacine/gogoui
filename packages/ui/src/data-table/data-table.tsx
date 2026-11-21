@@ -57,11 +57,27 @@ type DataTableProps<TData extends { id: string }> = {
 }
 
 /**
- * A list of records: a table from a tablet up, with sortable headers;
- * dense rows on a phone, with a « Trier » chip, since columns do not fit
- * there. The same TanStack table drives both. Search, filter chips, rows
- * to tick with their actions, pages and an empty state come with it.
- * Build the table with `useDataTable` and `createDataColumns`.
+ * A list of records: a table from a tablet up, dense rows on a phone.
+ *
+ * **Use it for** a page's main list (demandes, clients, factures) that
+ * people sort, search, filter, tick and page through. **Prefer** `Table`
+ * and the table kit when you keep the logic yourself, `Item` for a short
+ * list.
+ *
+ * **Where**: the body of a list page, under its `PageHeader`.
+ *
+ * **States**: loading (`DataTableSkeleton`), empty (`emptyState`), no
+ * result for the filters (chips + reset), rows ticked (bulk actions),
+ * a row open (`selectedRowId`).
+ *
+ * **Key props**: `table` (from `useDataTable({ data, columns })`, columns
+ * from `createDataColumns<Row>()`), `caption`, `emptyState`, `filterLabel`
+ * (the search), `filters` (a `FilterMenu`), `activeFilters` (`chips`,
+ * `onReset`), `pagination` (`rowsLabel`, `pageSizes`), `selection`
+ * (`label`, `actions`, `selectAll`), `onRowClick`, `columnsMenu`.
+ *
+ * **Accessibility**: the caption names the table; sorting, ticking and the
+ * count are read aloud.
  *
  * @summary A list of records: a table, or rows on a phone.
  */

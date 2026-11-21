@@ -14,10 +14,16 @@ type StepProgressProps = {
 }
 
 /**
- * Where one is in a few steps: a line that fills to the current step, a
- * step done turning green with a tick that draws itself, the current one
- * dark, each step's name under it. Read as « Étape 2 sur 4 : Colonnes ».
- * For a short flow in a dialog, `StepBars` is lighter.
+ * Numbered steps on a line that fills.
+ *
+ * **Use it for** a flow of 3 to 6 steps: an import, a sign-up, a booking.
+ * **Prefer** `StepBars` in a dialog.
+ *
+ * **Where**: at the top of the flow, under its title.
+ *
+ * **Key props**: `steps` (their names), `current` (from 1).
+ *
+ * **Accessibility**: read as « Étape 2 sur 4 : Colonnes ».
  *
  * @summary Numbered steps on a line that fills.
  */

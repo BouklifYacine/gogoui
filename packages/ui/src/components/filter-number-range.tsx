@@ -25,9 +25,10 @@ type FilterNumberRangeProps = {
 }
 
 /**
- * Two numbers of a `FilterMenu`, both included: « À partir de » and
- * « Jusqu'à », money or a count. Either can stay empty. Set by dragging
- * two thumbs on a track, or typed in the fields under it.
+ * A filter on an amount or a count, from and to.
+ *
+ * **Key props**: `legend`, `icon`, `min`, `max`, `onChange`, `unit`,
+ * `scale` (`{ max, step }` for its slider), `decimals`, `example`.
  *
  * @summary A filter on an amount or a count, from and to.
  */

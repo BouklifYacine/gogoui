@@ -10,12 +10,15 @@ type FixedActionBarProps = {
 }
 
 /**
- * On a phone, a page's next step stays under the thumb while scrolling: a
- * band fixed at the bottom, what it is about on the left (a total), its
- * action on the right. A spacer of its height ends the page, so its last
- * block is never hidden. Hidden from 768 px, where the page shows the same
- * action in its place. Above a bottom tab bar, set `--fixed-bar-offset`
- * to the bar's height.
+ * A phone's band of actions fixed at the bottom of the screen.
+ *
+ * **Use it for** a long form or a record on a phone, so its main button
+ * stays under the thumb. On a computer it sits in the flow.
+ *
+ * **Key props**: `label` (names the band), children (the buttons, main one
+ * last).
+ *
+ * **Accessibility**: a named region; the page leaves room under it.
  *
  * @summary A phone's action band fixed at the bottom.
  */

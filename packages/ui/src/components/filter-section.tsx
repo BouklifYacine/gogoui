@@ -13,8 +13,10 @@ type FilterSectionProps = {
 }
 
 /**
- * Several independent filters sharing one group of a `FilterMenu` (a few
- * `FilterCheckbox`).
+ * Several filters in one group of the menu.
+ *
+ * **Key props**: `legend`, `icon`, `summary` (what is chosen, shown while
+ * folded), children.
  *
  * @summary Several filters in one group of the menu.
  */

@@ -19,10 +19,15 @@ function focusWhenShown(heading: HTMLHeadingElement | null) {
 }
 
 /**
- * The title of a page reached by navigation. A single-page app does not
- * reload, so a screen reader would not notice the new page: the heading
- * takes the focus when it appears and is read aloud. Focusable by script
- * only, never by Tab.
+ * A page's title, focused and read aloud when the page opens.
+ *
+ * **Use it for** a page that has no `PageHeader` (a sign-in, a wizard
+ * step); `PageHeader` already uses it.
+ *
+ * **Key props**: `level` (1 or 2), children.
+ *
+ * **Accessibility**: in a single-page app the change of page is otherwise
+ * silent; this title says it.
  *
  * @summary A page's title, read aloud when the page opens.
  */

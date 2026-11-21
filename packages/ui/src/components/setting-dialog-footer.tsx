@@ -13,8 +13,9 @@ type SettingDialogFooterProps = {
 }
 
 /**
- * The end of a `SettingDialog`'s form: « Annuler » closes without saving,
- * « Enregistrer » submits the form around it.
+ * A setting dialog's « Annuler » and « Enregistrer ».
+ *
+ * **Key props**: `submitting`, `submitLabel`, `loadingText`.
  *
  * @summary A setting dialog's « Annuler » and « Enregistrer ».
  */

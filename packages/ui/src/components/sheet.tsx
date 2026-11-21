@@ -7,11 +7,22 @@ import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 
 /**
- * A panel sliding from an edge of the screen (right by default): a filter,
- * a detail, a long form, the menu on a phone. It keeps the focus like a
- * Dialog. Compose it: `Sheet` > `SheetTrigger` + `SheetContent` >
- * `SheetHeader` (`SheetTitle`, `SheetDescription`), the body,
- * `SheetFooter`. A `SheetTitle` is required.
+ * A side panel over the page.
+ *
+ * **Use it for** a record's details, an edit form, filters on a computer,
+ * without losing the list behind. **Prefer** `Drawer` on a phone,
+ * `Dialog` for a short decision.
+ *
+ * **Where**: from the right edge (left for a navigation).
+ *
+ * **Key props** (on `SheetContent`): `side` (right, left, top, bottom),
+ * `size` (sm, default, lg, xl, full), `showCloseButton`.
+ *
+ * **Compose**: `Sheet` > `SheetTrigger` + `SheetContent` > `SheetHeader`
+ * (`SheetTitle`, `SheetDescription`) + body + `SheetFooter`.
+ *
+ * **Accessibility**: a `SheetTitle` always; the focus is trapped and comes
+ * back.
  *
  * @summary A side panel over the page; always give it a SheetTitle.
  */

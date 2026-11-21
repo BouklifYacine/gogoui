@@ -53,11 +53,16 @@ const bottomBand: Partial<FloatingOptions> = {
 }
 
 /**
- * A page's guide, started by the person: a few bubbles pointing at the
- * page's own elements (`data-guide`). The last can wait for a click on
- * the element itself, which ends the guide. « Arrêter le guide » or Escape
- * end it at any time. Offer it with `GuideOffer`; never start it on its
- * own. Needs `react-joyride`.
+ * A short guided tour of a page's elements, bubble by bubble.
+ *
+ * **Use it for** a page's first visit, 3 to 5 steps, offered by
+ * `GuideOffer`, never forced.
+ *
+ * **Key props**: `guide` (`{ name, title, steps }`, each step `{ target,
+ * title, content, action? }`, `target` the element's `data-guide`),
+ * `onDone`, `onStart`, `onFinish`.
+ *
+ * **Accessibility**: each bubble is a dialog; Escape stops the tour.
  *
  * @summary A short guided tour of a page's elements.
  */

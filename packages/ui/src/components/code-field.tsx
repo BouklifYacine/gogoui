@@ -23,12 +23,19 @@ type CodeFieldProps = FieldValueProps<string> & {
 }
 
 /**
- * A code of digits in boxes (a sign-in code): one real input, invisible,
- * over the boxes, so typing, pasting, the phone's suggested code and a
- * screen reader all meet a plain text field. A digit drops in, a caret
- * blinks where the next one goes, a full code closes into one pill.
- * Refused, the boxes turn red and shake; accepted, green with a swell.
- * The error's words still show under it: the colour is never alone.
+ * A code of digits, one box per digit.
+ *
+ * **Use it for** a code sent by e-mail or SMS, a two-factor code.
+ *
+ * **States**: empty, typing, success (green), error (shakes, clears with
+ * `attempt`).
+ *
+ * **Key props**: `label`, `length` (6 by default), `value` +
+ * `onValueChange` (submit when full), `status` (error, success), `attempt`
+ * (bump it after a wrong code to replay the shake).
+ *
+ * **Accessibility**: one field for the screen reader; paste and the phone's
+ * « code from SMS » fill every box.
  *
  * @summary A code of digits in boxes, for a sign-in.
  */

@@ -28,12 +28,24 @@ type ItemProps = useRender.ComponentProps<'div'> &
   VariantProps<typeof itemVariants>
 
 /**
- * One line of a list that is not a table: a picture or an icon, a title
- * and its line, its actions at the end (a connected tool, a team member, a
- * file). Rendered as a link (`render={<a href="…" />}`), the whole line
- * leads there. Compose it: `Item` > `ItemMedia` + `ItemContent`
- * (`ItemTitle`, `ItemDescription`) + `ItemActions`; several in an
- * `ItemGroup`.
+ * A list line with its media, words and actions.
+ *
+ * **Use it for** a short list that is not a table: team members, files,
+ * integrations, notifications. **Prefer** `DataTable` for records to sort
+ * and filter.
+ *
+ * **Where**: stacked in a card or a section, in an `ItemGroup`.
+ *
+ * **States**: default, hover when it is a link (`render={<a />}`), with
+ * actions on the right.
+ *
+ * **Key props**: `variant` (default, outline, muted), `size` (default, sm),
+ * `render` (a link to the record).
+ *
+ * **Compose**: `Item` > `ItemMedia` + `ItemContent` (`ItemTitle`,
+ * `ItemDescription`) + `ItemActions`.
+ *
+ * **Accessibility**: one link per line at most; buttons inside need names.
  *
  * @summary A list line with its media, words and actions.
  */

@@ -5,8 +5,21 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * One choice among two to five, all seen at once. Each `RadioGroupItem`
- * has its own label. For six choices or more, prefer a Select.
+ * One choice among a few, all visible.
+ *
+ * **Use it for** 2 to 5 options to compare (a payment mode, a delivery).
+ * **Prefer** `RadioCardField` when each option needs a sentence,
+ * `SelectField` beyond 5, `ToggleGroup` for a view switch.
+ *
+ * **Where**: in a form, stacked.
+ *
+ * **States**: unchosen, chosen, disabled item, invalid.
+ *
+ * **Key props**: `value` / `defaultValue` + `onValueChange`; `color` on
+ * `RadioGroupItem`.
+ *
+ * **Accessibility**: wrap it in a fieldset with a legend; arrows move the
+ * choice.
  *
  * @summary Pick one of a few options, all visible.
  */

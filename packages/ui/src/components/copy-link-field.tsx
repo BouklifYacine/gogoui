@@ -20,10 +20,13 @@ type CopyLinkFieldProps = {
 }
 
 /**
- * A link (or a key, an address, a code), read-only, with a button that
- * copies it. The copy is announced. When the browser refuses the
- * clipboard, the text is selected in the field and the page says to copy
- * it by hand.
+ * A read-only link with its copy button.
+ *
+ * **Use it for** a booking link, an invitation, a calendar feed to paste
+ * elsewhere.
+ *
+ * **Key props**: `label`, `value`, `description`, `copyLabel`,
+ * `copiedMessage`.
  *
  * @summary A read-only link with its copy button.
  */

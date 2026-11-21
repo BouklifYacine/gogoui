@@ -20,9 +20,18 @@ type FieldShellProps = {
 }
 
 /**
- * Label, help, error and their accessibility links, written once around
- * any control. GoGoUI's fields are built on it; use it for a control of
- * your own: `{(control) => <MyInput {...control} />}`.
+ * Label, help and error around a control of your own.
+ *
+ * **Use it for** wrapping a control the library does not have, so it looks
+ * and reads like the other fields.
+ *
+ * **Key props**: `label`, `description`, `error`, `id`, `name`; children
+ * is a function given the control's props:
+ * `{(control) => <MyInput {...control} />}`.
+ *
+ * **Accessibility**: spread `control` on your element: it carries the
+ * `id`, `aria-invalid` and `aria-describedby` that link it to its label,
+ * help and error.
  *
  * @summary Label, help and error around a control of your own.
  */

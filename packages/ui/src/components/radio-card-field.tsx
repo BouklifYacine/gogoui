@@ -31,9 +31,16 @@ type RadioCardFieldProps<TValue extends string> = Omit<
 }
 
 /**
- * One choice among cards seen at once: the whole card is the label, the
- * arrow keys move between them. For two to five choices; more go in a
- * `list`, or a `SelectField`.
+ * One choice among cards seen at once.
+ *
+ * **Use it for** 2 to 5 options where an icon helps: a type of event, a
+ * plan, a payment mode.
+ *
+ * **Key props**: `legend`, `options` (`{ value, label, icon? }[]`), `value`
+ * + `onValueChange`, `error`, `required`, `hideLegend`, `inline` (in a
+ * row), `list` (stacked lines).
+ *
+ * **Accessibility**: a fieldset with its legend; arrows move the choice.
  *
  * @summary One choice among cards seen at once.
  */

@@ -7,8 +7,7 @@ type PillTabsSkeletonProps = {
 }
 
 /**
- * `PillTabsList` while its page loads: the tray in grey, as wide as the
- * real one.
+ * Pill tabs while they load.
  *
  * @summary Pill tabs while they load.
  */

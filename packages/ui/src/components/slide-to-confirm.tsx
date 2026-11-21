@@ -45,12 +45,21 @@ type SlideToConfirmProps = {
 }
 
 /**
- * An action that cannot be undone (money that leaves), confirmed by
- * sliding the thumb to the end: a slip of the finger does not send it.
- * The ink follows the thumb, floods the track past 90 %, a spinner turns
- * while the work runs, then it turns green. At the keyboard or with a
- * screen reader, Enter, Space or a double tap confirm in one go. A refused
- * action sends the thumb back.
+ * Slide a thumb to the end to confirm.
+ *
+ * **Use it for** taking money, sending a contract, an act that cannot be
+ * undone and must not happen by a slip. **Prefer** `ConfirmDialog` for an
+ * ordinary deletion.
+ *
+ * **States**: idle, sliding, confirming (`confirmingLabel`), done
+ * (`doneLabel`), disabled.
+ *
+ * **Key props**: `label`, `onConfirm` (returns a promise: the thumb waits
+ * for it, a refusal sends it back), `destructive`, `confirmingLabel`,
+ * `doneLabel`, `disabled`.
+ *
+ * **Accessibility**: Enter, Space or a screen reader's double tap confirm
+ * in one go, without sliding.
  *
  * @summary Slide a thumb to confirm what cannot be undone.
  */

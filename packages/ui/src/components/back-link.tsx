@@ -11,10 +11,16 @@ type BackLinkProps = useRender.ComponentProps<'a'> & {
 }
 
 /**
- * Back to a page's list: an arrow and the list's name, cut when too long.
- * A link by default; give your router's link with `render`
- * (`render={<Link to="/clients" />}`), or a button calling
- * `history.back()` to return to the list as it was left.
+ * The way back to a page's list.
+ *
+ * **Use it for** a record's page opened from a list (a client, a quote).
+ *
+ * **Where**: top left of the page, above its title.
+ *
+ * **Key props**: `label` (the list's name: « Clients »), `href`, or
+ * `render` to use your router's link or a `history.back()` button.
+ *
+ * **Accessibility**: a real link, read as « Clients »; the arrow is hidden.
  *
  * @summary The way back to a page's list.
  */

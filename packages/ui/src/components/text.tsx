@@ -38,9 +38,17 @@ type TextProps = Omit<useRender.ComponentProps<'p'>, 'color'> &
   }
 
 /**
- * Body text from the type scale: its size, its tone (default, muted,
- * subtle), its weight, a state's colour when it says one. A paragraph by
- * default; `render={<span />}` inside a line.
+ * Body text from the type scale.
+ *
+ * **Use it for** paragraphs, help lines, figures.
+ *
+ * **Key props**: `size` (xs, sm, base, lg), `tone` (default, muted,
+ * subtle), `weight` (normal, medium, semibold), `color`, `numeric` (figures
+ * of equal width, for amounts in columns), `render` (`<span />`,
+ * `<label />`).
+ *
+ * **Accessibility**: muted and subtle tones keep a readable contrast; do
+ * not go lighter.
  *
  * @summary Body text from the type scale.
  */

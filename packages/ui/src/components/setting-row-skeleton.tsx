@@ -9,8 +9,7 @@ type SettingRowSkeletonProps = {
 }
 
 /**
- * A row of a `SettingsList` while its page loads: its title and help in
- * grey, its switch or its « Modifier » on the right.
+ * A settings row while it loads.
  *
  * @summary A settings row while it loads.
  */

@@ -4,11 +4,26 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Several sections that open and close under their titles (a FAQ, the
- * details of an offer). One open at a time by default; `multiple` lets
- * several stay open. Compose it: `Accordion` > `AccordionItem` >
- * `AccordionTrigger` + `AccordionContent`. For a single section, use
- * `Collapsible`.
+ * Several sections that open and close under their titles.
+ *
+ * **Use it for** a FAQ, the details of an offer, long settings read part by
+ * part. **Not for** a single section (`Collapsible`) or views of the same
+ * subject (`Tabs`).
+ *
+ * **Where**: in the page's flow, full width of its column, never in a table.
+ *
+ * **States**: closed, open (the caret turns), disabled item. One open at a
+ * time by default.
+ *
+ * **Key props**: `multiple` (several open at once), `defaultValue` (the
+ * items open at first, by their `value`), `value` + `onValueChange` (kept
+ * by the page).
+ *
+ * **Compose**: `Accordion` > `AccordionItem value` > `AccordionTrigger` +
+ * `AccordionContent`.
+ *
+ * **Accessibility**: each trigger is a button with `aria-expanded`; Tab
+ * moves between titles, Enter or Space opens.
  *
  * @summary Sections that open and close under their titles.
  */

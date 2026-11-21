@@ -36,11 +36,19 @@ type DateFieldProps = FieldValueProps<string | null> & {
 }
 
 /**
- * A calendar day ("YYYY-MM-DD", or null): typed in the field
- * (« 14/06/2027 », any separator), or picked in the calendar its button
- * opens, on the month of the day already chosen. The weekday shows under
- * it in full (« samedi 14 juin 2027 »). A day typed wrong, or one that
- * cannot be chosen, keeps what was typed and says why.
+ * A labelled day, typed or picked in a calendar.
+ *
+ * **Use it for** one date in a form: a wedding day, a due date. **Prefer**
+ * `DateRangePicker` for a period.
+ *
+ * **States**: empty, filled, calendar open, disabled days, invalid.
+ *
+ * **Key props**: `label`, `value` (a Date) + `onValueChange`, `error`,
+ * `placeholder`, `required`, `disabledDates` (a react-day-picker
+ * matcher: past days, Mondays), `calendarLocale`, `size`.
+ *
+ * **Accessibility**: typed in the local format; the calendar button is
+ * named.
  *
  * @summary A labelled day, typed or picked in a calendar.
  */

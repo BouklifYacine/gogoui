@@ -6,10 +6,18 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A few choices side by side, one pressed (« Jour · Semaine · Mois »), on
- * a tray where the chosen one stands out; `multiple` lets several be
- * pressed. The value is a list of the pressed items' values. The arrow
- * keys move between them. Give the group an `aria-label`.
+ * A segmented choice among a few buttons.
+ *
+ * **Use it for** a display choice (Liste | Grille | Calendrier), text
+ * alignment, a period (Jour | Semaine | Mois). **Prefer** `RadioGroup` for
+ * a form's value, `Tabs` for views with their own content.
+ *
+ * **Where**: in a toolbar or above a list.
+ *
+ * **Key props**: `value` + `onValueChange` (an array), `multiple`; on
+ * items `color`, `variant`, `size` like `Toggle`.
+ *
+ * **Accessibility**: arrows move between items; each item needs a name.
  *
  * @summary A segmented choice among a few buttons.
  */

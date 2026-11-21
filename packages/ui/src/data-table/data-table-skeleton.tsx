@@ -52,10 +52,12 @@ function sample(value: ReactNode) {
 const actionsSample = <Skeleton className="size-11 rounded-lg md:size-8" />
 
 /**
- * DataTable while its rows load, from the list's own columns: the same
- * widths and headers, the phone rows on a phone. Each row is given as
- * samples by column id, as long as the usual values, so nothing moves
- * when the rows arrive.
+ * A list while its rows load.
+ *
+ * **Use it for** the route's pending state, before `DataTable` has data.
+ *
+ * **Key props**: `columns` (the same as the table, so widths match),
+ * `rows`, `selectable`.
  *
  * @summary A list while its rows load.
  */

@@ -4,11 +4,18 @@ import type { ComponentProps } from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Panels side by side (or stacked) whose share the person changes by
- * dragging the line between them, or with the arrow keys on it: a list
- * and its details, an editor and its preview. Needs
- * `react-resizable-panels`. Compose it: `ResizablePanelGroup` >
- * `ResizablePanel` + `ResizableHandle` + `ResizablePanel`.
+ * Panels the person resizes by dragging the line between them.
+ *
+ * **Use it for** an inbox (list | message), an editor and its preview.
+ * **Not for** a phone: stack the panels instead.
+ *
+ * **Key props**: `orientation` (horizontal, vertical); `defaultSize`,
+ * `minSize` on each `ResizablePanel`; `withHandle` on `ResizableHandle`.
+ *
+ * **Compose**: `ResizablePanelGroup` > `ResizablePanel` + `ResizableHandle`
+ * + `ResizablePanel`.
+ *
+ * **Accessibility**: the handle is focusable; arrows resize.
  *
  * @summary Panels the person resizes by dragging.
  */

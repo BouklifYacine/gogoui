@@ -34,9 +34,12 @@ function initialsOf(name: string | undefined) {
 }
 
 /**
- * A person's round photo, or their initials when there is no photo or it
- * fails to load. Built on `Avatar`; use `Avatar` itself for anything that
- * is not a person (a company logo).
+ * A person's photo, or their initials without one.
+ *
+ * **Use it for** a client, a team member, an author.
+ *
+ * **Key props**: `name` (gives the initials and the alt), `src`, `size`,
+ * `color`.
  *
  * @summary A person's photo, or their initials without one.
  */

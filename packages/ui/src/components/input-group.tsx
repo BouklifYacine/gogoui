@@ -8,10 +8,17 @@ import { Input } from './input.tsx'
 import { Textarea } from './textarea.tsx'
 
 /**
- * A field with something inside its edge: an icon, a unit (« € »), a
- * button. Compose it: `InputGroup` > `InputGroupInput` (or
- * `InputGroupTextarea`) + `InputGroupAddon` holding an icon, an
- * `InputGroupText` or an `InputGroupButton`.
+ * A field with an icon, a unit, a text or a button inside.
+ *
+ * **Use it for** « € » after an amount, a search with its button, a URL
+ * with its prefix. **Prefer** `InputWithIcon` for a lone decorative icon.
+ *
+ * **Compose**: `InputGroup` > `InputGroupAddon` (align inline-start or
+ * inline-end, block-start…) + `InputGroupInput` (or `InputGroupTextarea`);
+ * `InputGroupButton`, `InputGroupText` inside an addon.
+ *
+ * **Accessibility**: the field keeps its own label; a button inside needs a
+ * name.
  *
  * @summary A field with an icon, a unit or a button inside.
  */

@@ -30,12 +30,14 @@ type TimeFieldProps = FieldValueProps<string> & {
 }
 
 /**
- * An hour of the day ("14:30"), offered by quarters of an hour and
- * narrowed as one types (« 22 » becomes « 22: » and keeps 22:00 to
- * 22:45). A time picked counts at once; one typed by hand (« 22:10 »)
- * counts on Enter or on leaving the field, never key by key. Something
- * typed that is no time gives the field its time back. Looks like the
- * other fields in every browser, unlike `<input type="time">`.
+ * A labelled time, picked by quarters or typed.
+ *
+ * **Use it for** an arrival, a start, an appointment.
+ *
+ * **Key props**: `label`, `value` (« 14:30 ») + `onValueChange`, `error`,
+ * `description`.
+ *
+ * **Accessibility**: typing « 1430 » or « 14h30 » works.
  *
  * @summary A labelled time, picked by quarters or typed.
  */

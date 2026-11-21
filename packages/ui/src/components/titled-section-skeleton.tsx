@@ -12,8 +12,7 @@ type TitledSectionSkeletonProps = {
 }
 
 /**
- * `TitledSection` while its page loads: its title in grey, then its
- * content's skeletons.
+ * A titled part of a page while it loads.
  *
  * @summary A titled part of a page while it loads.
  */

@@ -35,11 +35,20 @@ type RichTextEditorProps = {
 }
 
 /**
- * A text with its formatting: bold, italic, a title, lists, a quote (an
- * e-mail template, a venue's description). A bar of buttons above it,
- * each saying whether it is on; the usual shortcuts work (Ctrl+B…). The
- * text comes and goes as HTML. Needs `@tiptap/react`, `@tiptap/pm`,
- * `@tiptap/starter-kit` and `@tiptap/extension-placeholder`.
+ * A text with bold, italics, titles and lists (Tiptap).
+ *
+ * **Use it for** an e-mail template, a description, a contract clause.
+ * **Prefer** `TextareaField` for plain text.
+ *
+ * **Where**: in a form or a settings page, full width.
+ *
+ * **States**: empty (placeholder), editing, disabled.
+ *
+ * **Key props**: `defaultValue` (HTML), `onValueChange` (HTML),
+ * `placeholder`, `disabled`, `extensions` (add your Tiptap ones).
+ *
+ * **Accessibility**: the toolbar buttons are named and pressed; the usual
+ * shortcuts work (Ctrl B, Ctrl I).
  *
  * @summary A text editor with bold, titles and lists.
  */

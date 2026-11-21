@@ -29,9 +29,14 @@ type TablePaginationProps = {
 }
 
 /**
- * Under a table: « 1 à 10 sur 257 clients », the page size and the pages
- * (the first, the last and those around the current one). It pages
- * nothing itself: give it the page and the total, and load the rows.
+ * A table's pages and page size, without the paging logic.
+ *
+ * **Key props**: `page` + `onPageChange`, `pageSize` + `onPageSizeChange`,
+ * `pageSizes`, `total`, `rowsLabel` (« 257 demandes »).
+ *
+ * **Where**: under the table, inside its card.
+ *
+ * **Accessibility**: a `nav`; the range « 1–25 sur 257 » is read.
  *
  * @summary A table's pages and page size, without paging logic.
  */

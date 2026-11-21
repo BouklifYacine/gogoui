@@ -7,10 +7,19 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Where the page sits in the site: « Clients › Léa et Hugo › Devis ». The
- * last item, the current page, is a `BreadcrumbPage`, not a link. Compose
- * it: `Breadcrumb` > `BreadcrumbList` > `BreadcrumbItem`s with
- * `BreadcrumbLink` or `BreadcrumbPage`, `BreadcrumbSeparator` between them.
+ * The path to the current page, each step a link back.
+ *
+ * **Use it for** pages two levels deep or more (Paramètres › Équipe ›
+ * Marie). **Not for** a flat app; one step back is a `BackLink`.
+ *
+ * **Where**: top of the page, above its title.
+ *
+ * **Compose**: `Breadcrumb` > `BreadcrumbList` > `BreadcrumbItem`s with
+ * `BreadcrumbLink` (or `BreadcrumbPage` for the current one) and
+ * `BreadcrumbSeparator`; `BreadcrumbEllipsis` hides middle steps.
+ *
+ * **Accessibility**: a `nav` named « Fil d'Ariane »; the current page has
+ * `aria-current="page"`.
  *
  * @summary The path to the current page, each step a link back.
  */

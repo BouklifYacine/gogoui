@@ -4,12 +4,18 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A site's top navigation with panels: « Produit », « Tarifs »… a panel
- * of links opens under a section on hover or focus, the panel resizing as
- * it moves between sections. For an app's side navigation, use `Sidebar`.
- * Compose it: `NavigationMenu` > `NavigationMenuList` >
- * `NavigationMenuItem` > `NavigationMenuTrigger` + `NavigationMenuContent`
- * > `NavigationMenuLink`s.
+ * A website's top navigation, its menus opening panels of links.
+ *
+ * **Use it for** a public site or a docs site with groups of pages. **Not
+ * for** an app's own navigation (`Sidebar`).
+ *
+ * **Where**: in the site's header.
+ *
+ * **Compose**: `NavigationMenu` > `NavigationMenuList` >
+ * `NavigationMenuItem`s with a `NavigationMenuTrigger` +
+ * `NavigationMenuContent`, or a `NavigationMenuLink` alone.
+ *
+ * **Accessibility**: a `nav`; each panel opens with Enter and arrows.
  *
  * @summary A site's top navigation with panels of links.
  */

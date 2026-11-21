@@ -20,10 +20,19 @@ type RowActionsMenuProps = {
 }
 
 /**
- * The « … » button at the end of a table row, opening its actions: one
- * button per row instead of three. Destructive actions come last, apart,
- * in red; they should open a `ConfirmDialog` rather than act at once.
- * 44 px under a finger, 32 px with a mouse.
+ * The « … » menu of a table row's actions.
+ *
+ * **Use it for** two or more actions on a row; one button per row instead
+ * of three. Destructive ones come last, in red, and open a
+ * `ConfirmDialog`.
+ *
+ * **Where**: the last cell of the row, aligned right.
+ *
+ * **States**: closed, open, an action running (`pending`: spins and says
+ * it).
+ *
+ * **Key props**: `name` (the row's name for screen readers), `actions`
+ * (`{ label, onSelect, icon?, destructive?, disabled? }`), `pending`.
  *
  * @summary The « … » menu of a table row's actions.
  */

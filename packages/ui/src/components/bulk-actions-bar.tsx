@@ -27,11 +27,17 @@ type BulkActionsBarProps = {
 }
 
 /**
- * What can be done to the ticked rows: how many, « Tout sélectionner (N) »
- * while only the page is ticked, and their actions. Put inside a
- * `@container relative` box holding the table: on a wide list it lies over
- * the table's head row, so ticking a box never moves the list; on a narrow
- * one it sits above the table.
+ * The ticked rows' count and their actions.
+ *
+ * **Use it for** acting on several rows at once (archive, export).
+ *
+ * **Where**: in the table's head or right above it, only while rows are
+ * ticked.
+ *
+ * **Key props**: `label` (« 3 demandes sélectionnées »), `actions`,
+ * `selectAll` (offer every row of every page).
+ *
+ * **Accessibility**: the count is read as it changes.
  *
  * @summary The ticked rows' count and actions.
  */

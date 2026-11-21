@@ -3,8 +3,14 @@ import * as React from 'react'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A field for several lines of text: a message, a note. It grows with its
- * text. Same edge, focus and error as an Input.
+ * A text field of several lines.
+ *
+ * **Prefer** `TextareaField` in a form (label, counter, error).
+ *
+ * **States**: empty, filled, focus, disabled, invalid (`aria-invalid`). It
+ * grows with its text.
+ *
+ * **Accessibility**: always a visible label.
  *
  * @summary A multi-line text field.
  */

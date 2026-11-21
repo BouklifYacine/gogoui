@@ -14,8 +14,9 @@ type TableLoadingProps = {
 const widths = ['w-3/4', 'w-1/2', 'w-2/3', 'w-1/3', 'w-5/6']
 
 /**
- * Grey rows in a table's body while its data loads, under the real
- * header: nothing moves when the rows arrive.
+ * A table's grey rows while they load.
+ *
+ * **Key props**: `columns`, `rows`, `selectable` (a box column first).
  *
  * @summary A table's rows while they load.
  */

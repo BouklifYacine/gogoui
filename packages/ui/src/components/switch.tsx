@@ -5,8 +5,21 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
- * Turns a setting on or off at once, without a save button: « Recevoir les
- * e-mails ». For a choice saved with a form, prefer a Checkbox.
+ * An on / off setting that applies at once.
+ *
+ * **Use it for** a setting saved without a « Save » button. **Prefer**
+ * `Checkbox` for a choice saved with a form, `SettingSwitchRow` in a
+ * settings page, `SwitchField` in a form.
+ *
+ * **Where**: right of its label in a settings row.
+ *
+ * **States**: off, on, disabled, focus.
+ *
+ * **Key props**: `checked` / `defaultChecked` + `onCheckedChange`, `size`
+ * (sm, default), `color` (on colour).
+ *
+ * **Accessibility**: `role="switch"` with its label; the change is
+ * announced by the result, not a toast each time.
  *
  * @summary An on/off setting that applies at once.
  */

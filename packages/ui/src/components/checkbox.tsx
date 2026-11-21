@@ -5,11 +5,22 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
- * A box to tick, for a yes/no saved with a form or for picking rows of a
- * list: white with the field's edge (3:1 on the page, day and night),
- * filled with the primary once ticked. Half-ticked (`indeterminate`, some
- * rows of a list), the same fill with a dash. Its hit area reaches 12px
- * around it for a thumb. Always next to its label.
+ * A box to tick.
+ *
+ * **Use it for** a yes / no saved with a form, a consent, picking rows.
+ * **Prefer** `CheckboxField` in a form (label, help and error included),
+ * `Switch` for a setting that applies at once.
+ *
+ * **Where**: left of its label, always.
+ *
+ * **States**: unticked, ticked, indeterminate (some rows of a list),
+ * disabled, invalid (`aria-invalid`).
+ *
+ * **Key props**: `checked` / `defaultChecked` + `onCheckedChange`,
+ * `indeterminate`, `color` (the tick's fill).
+ *
+ * **Accessibility**: a `Label` with `htmlFor`; the hit area reaches 12 px
+ * around the box.
  *
  * @summary A box to tick, with its label; indeterminate for a partial list.
  */

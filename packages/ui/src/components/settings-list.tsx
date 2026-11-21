@@ -8,8 +8,10 @@ type SettingsListProps = {
 }
 
 /**
- * The card holding the rows of a settings page (`SettingSwitchRow`,
- * `SettingValueRow`), one under the other with a line between them.
+ * The card that holds a settings page's rows.
+ *
+ * **Compose**: `SettingsList` > `SettingSwitchRow`s and `SettingValueRow`s;
+ * one list per `TitledSection`.
  *
  * @summary The card of a settings page's rows.
  */

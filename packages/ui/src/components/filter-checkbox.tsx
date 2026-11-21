@@ -9,8 +9,9 @@ type FilterCheckboxProps = {
 }
 
 /**
- * One filter that is on or off, inside a `FilterMenu` group or a
- * `FilterSection`: « Non lues seulement ».
+ * One on / off filter (« Avec acompte payé »).
+ *
+ * **Key props**: `label`, `checked` + `onCheckedChange`.
  *
  * @summary One on/off filter.
  */

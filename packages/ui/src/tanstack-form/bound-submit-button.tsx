@@ -4,7 +4,11 @@ import { SubmitButton } from '../components/submit-button.tsx'
 import { useFormContext } from './form-context.ts'
 
 /**
- * The form's submit button, busy while the TanStack form submits.
+ * A TanStack form's submit button, read from its state.
+ *
+ * **Use it for** `form.SubmitButton` inside `form.AppForm`: busy while the
+ * form submits, every other prop of `SubmitButton` kept (`saved`,
+ * `loadingText`…).
  *
  * @summary A TanStack form's submit button.
  */

@@ -32,8 +32,18 @@ type EmptyStateProps = {
 }
 
 /**
- * A list or a page with nothing yet: what is missing, why it matters, and
- * the button that fills it. Built on `Empty`, in one call.
+ * A list or a page with nothing yet, in one call.
+ *
+ * **Use it for** the first time a list is empty, a search with no result,
+ * an empty page. Say what is missing and offer the way out.
+ *
+ * **Where**: in place of the list or the page's content.
+ *
+ * **Key props**: `title`, `description`, `icon`, `action` (the button that
+ * fills it), `size` (default, large for a whole page), `headingLevel`,
+ * `color` (the icon's tint).
+ *
+ * **Accessibility**: `headingLevel` makes the title a heading at its place.
  *
  * @summary An empty list's message and its way out.
  */

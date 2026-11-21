@@ -44,11 +44,25 @@ type AlertProps = Omit<ComponentProps<'div'>, 'color'> &
   }
 
 /**
- * A message in the page: something to know (info), done (success), to
- * watch (warning) or that failed (danger), told by its words and an icon,
- * never by its colour alone. Static by default; give `role="alert"` to
- * one that appears after an action so it is read aloud. Compose its words
- * with `AlertTitle` and `AlertDescription`.
+ * A message in the page that the person should read.
+ *
+ * **Use it for** something to know (info), done (success), to watch
+ * (warning) or that failed (danger), above the content it is about.
+ * **Not for** a short confirmation that disappears (`Toaster`), an error on
+ * one field (the field's `error`).
+ *
+ * **Where**: at the top of a page, of a card or of a dialog, full width.
+ *
+ * **States**: the six colours; with or without title, description and
+ * action.
+ *
+ * **Key props**: `color` (neutral, primary, info, success, warning,
+ * danger), `icon` (yours, or `null` for none), `action` (a button on the
+ * right: « Réessayer »). Words in `AlertTitle` and `AlertDescription`.
+ *
+ * **Accessibility**: static by default; add `role="alert"` when it appears
+ * after an action, so it is read aloud. The state is told by words and
+ * icon, never colour alone.
  *
  * @summary A message in the page: info, success, warning or failure.
  */

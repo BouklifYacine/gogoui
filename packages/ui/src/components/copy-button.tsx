@@ -32,11 +32,20 @@ type CopyButtonProps = {
 }
 
 /**
- * A button that copies a text: the copy icon turns away while a green
- * check pops in, the word rolls up to « Copié » and the button grows to
- * fit it, then rolls back. It says nothing to a screen reader itself:
- * `onResult` lets the screen announce the copy. Motion follows the
- * visitor's reduced-motion setting.
+ * A button that copies a text and says « Copié ».
+ *
+ * **Use it for** a link, a code, a key, an address to paste elsewhere.
+ * **Prefer** `CopyLinkField` when the text must be seen too.
+ *
+ * **Where**: beside the text it copies.
+ *
+ * **States**: idle, copied (green tick, 3 s), refused by the browser.
+ *
+ * **Key props**: `text`, `label` / `copiedLabel`, `onResult` (announce it,
+ * or offer a manual copy).
+ *
+ * **Accessibility**: announce the copy with `onResult` (a toast or a live
+ * region).
  *
  * @summary A button that copies a text and says « Copié ».
  */

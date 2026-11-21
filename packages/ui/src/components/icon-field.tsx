@@ -15,9 +15,14 @@ type IconFieldProps<TValue extends string> = Omit<
 }
 
 /**
- * One icon among square tiles, six a row, the chosen one filled. An icon
- * alone does not say what it is: each tile carries its name for screen
- * readers and on hover, and the chosen one's name shows under the grid.
+ * One icon among square tiles.
+ *
+ * **Use it for** giving a category, a space or a resource its icon.
+ *
+ * **Key props**: `legend`, `options` (`{ value, label, icon }[]`), `value`
+ * + `onValueChange`, `error`.
+ *
+ * **Accessibility**: each tile is named by its `label`, not its picture.
  *
  * @summary One icon among square tiles.
  */

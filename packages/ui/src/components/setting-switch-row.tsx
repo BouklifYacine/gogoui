@@ -20,9 +20,19 @@ type SettingSwitchRowProps = {
 }
 
 /**
- * A row of a settings list with a switch at its end: the setting applies
- * as soon as it is flipped, nothing to save afterwards. Inside a form
- * saved with a button, use `SwitchField` instead.
+ * A setting that applies as soon as it is switched.
+ *
+ * **Use it for** « Rappels par e-mail », « Accepter les visites le
+ * dimanche ».
+ *
+ * **States**: off, on, saving (spinner), refused (`error` under it, the
+ * switch back), with details shown when on (children, `SettingDetail`).
+ *
+ * **Key props**: `title`, `description`, `checked` + `onCheckedChange`,
+ * `saving`, `error`, children.
+ *
+ * **Accessibility**: the switch is named by the title and described by the
+ * sentence.
  *
  * @summary A setting that applies when switched.
  */

@@ -15,9 +15,12 @@ type TableToolbarProps = {
 }
 
 /**
- * The line above a table: what is shown on the left, the search and the
- * filters on the right, the buttons at the end; the active filters under
- * it. Only places: give it the parts you use.
+ * The line above a table for its search, filters and buttons.
+ *
+ * **Key props**: `start` (search or tabs on the left), `filters`,
+ * `actions` (buttons on the right), children (a second line: chips).
+ *
+ * **Where**: right above the table, inside its card.
  *
  * @summary The line above a table for its search, filters and buttons.
  */

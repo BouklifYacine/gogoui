@@ -24,11 +24,15 @@ function focusSoon(id: string) {
 }
 
 /**
- * The filters that are on, as chips under a list's toolbar: what the list
- * shows at a glance. A chip is a button that takes its filter off;
- * « Réinitialiser » takes them all off. A chip taken off passes its focus
- * to the next one, else the previous one, else to `fallbackFocusId`.
- * Hidden while none is on.
+ * The filters that are on, each a chip that removes it.
+ *
+ * **Use it for** showing what narrows a list, under its toolbar.
+ *
+ * **Key props**: `chips` (`{ id, label, onRemove }[]`), `onReset`
+ * (« Tout effacer »), `fallbackFocusId` (where the focus goes when the last
+ * chip is gone).
+ *
+ * **Accessibility**: each chip says « Retirer le filtre … ».
  *
  * @summary The filters that are on, each a chip that removes it.
  */

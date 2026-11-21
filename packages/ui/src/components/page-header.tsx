@@ -11,9 +11,16 @@ type PageHeaderProps = {
 }
 
 /**
- * A page's header: its title and its sentence on the left, its buttons on
- * the right, under them on a phone. The title is read aloud when the page
- * opens (`PageHeading`).
+ * A page's title, its sentence and its buttons.
+ *
+ * **Use it for** the top of every app page.
+ *
+ * **Where**: first in the page, above everything; buttons on the right on
+ * a computer, under the title on a phone.
+ *
+ * **Key props**: `title` (an h1, read when the page opens), `description`
+ * (one sentence: what the page is for), `actions` (the page's main button
+ * first, `default` variant, others `outline`).
  *
  * @summary A page's title, sentence and buttons.
  */

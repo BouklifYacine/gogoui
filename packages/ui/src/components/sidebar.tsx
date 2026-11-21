@@ -49,14 +49,30 @@ function useSidebar() {
 }
 
 /**
- * The application’s side menu: a column on a computer, folded to icons or
- * hidden, a sheet opened by « Menu » on a phone. `Ctrl/⌘ B` toggles it.
- * Compose it: `SidebarProvider` > `Sidebar` (`SidebarHeader`,
- * `SidebarContent` > `SidebarGroup` > `SidebarMenu` > `SidebarMenuItem` >
- * `SidebarMenuButton`, `SidebarFooter`) + `SidebarInset` holding the page
- * and a `SidebarTrigger`.
+ * An app's side navigation, a sheet on a phone.
  *
- * @summary The app’s side navigation, a sheet on a phone.
+ * **Use it for** an app's main sections (Demandes, Calendrier, Clients,
+ * Réglages). **Not for** a public site (`NavigationMenu`).
+ *
+ * **Where**: left of every page; the page itself in `SidebarInset`.
+ *
+ * **States**: open, collapsed to icons, hidden; on a phone a sheet;
+ * current link (`isActive`).
+ *
+ * **Key props**: on `SidebarProvider` `defaultOpen` or `open` +
+ * `onOpenChange`; on `Sidebar` `side` (left, right), `variant` (sidebar,
+ * floating, inset), `collapsible` (offcanvas, icon, none); on
+ * `SidebarMenuButton` `isActive`, `tooltip`.
+ *
+ * **Compose**: `SidebarProvider` > `Sidebar` (`SidebarHeader`,
+ * `SidebarContent` > `SidebarGroup` > `SidebarMenu` > `SidebarMenuItem` >
+ * `SidebarMenuButton`, `SidebarFooter`) + `SidebarInset` (with
+ * `SidebarTrigger`). `useSidebar()` reads and drives it.
+ *
+ * **Accessibility**: Ctrl B toggles it; the current page has
+ * `aria-current`.
+ *
+ * @summary The app's side navigation, a sheet on a phone.
  */
 function SidebarProvider({
   defaultOpen = true,

@@ -21,10 +21,12 @@ type SettingDialogProps = {
 }
 
 /**
- * The dialog that changes one setting or a few related ones, opened by a
- * row's « Modifier ». Its form starts from the saved values at each
- * opening (the children mount with it); close it once saved. Taller than
- * the screen, it scrolls inside.
+ * The dialog that changes one setting.
+ *
+ * **Use it for** editing what a `SettingValueRow` shows.
+ *
+ * **Key props**: `open` + `onOpenChange`, `title`, `description`, children
+ * (the form, ending with `SettingDialogFooter`).
  *
  * @summary The dialog that changes a setting.
  */
