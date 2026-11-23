@@ -1,5 +1,0 @@
----
-'@gogoui/ui': minor
----
-
-Arc UI's free components, in GoGoUI's API and tokens. New: SplitButton, ExpandingButtonGroup, ActionSwap, HoldToConfirm, SwipeActions, UserMenu, ShortcutRecorder and ShortcutField, TagInput and TagField, MentionInput and MentionField, ExpandableText, MultiSelectField, BillingToggle and BillingPrice, RollingNumber, Rating and RatingField, PhoneField, ColorPicker and ColorPickerField, TextMorph, SignaturePad and SignatureField, FileUpload, ChangelogFeed and ChangelogEntry, BlogGrid and BlogCard, SiteHeader. New variants: ButtonGroup `surface`, ThemeToggle `button`, Select `multiple` chips and `morph`, ToggleGroup `chips`, Slider `elastic`, RangeSlider `histogram`. Animated: Checkbox, RadioGroup, RadioCardField (with `description`, `meta`, `disabledReason`), Select, Combobox, CopyButton, Input and Textarea messages, PasswordStrength, NumberField, MoneyField, Calendar (Arc's look, 44px days, six weeks), DateField, DateRangePicker, Dialog, ScrollArea edge fades, Resizable, Kbd keycaps. The new fields are bound in `@gogoui/ui/tanstack-form`. SlideToConfirm's `destructive` becomes `color`.

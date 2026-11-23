@@ -1,6 +1,6 @@
 {
   "name": "@gogoui/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "GoGoUI design tokens: CSS variables for light and dark, and their Tailwind CSS 4 theme.",
   "license": "MIT",
   "type": "module",

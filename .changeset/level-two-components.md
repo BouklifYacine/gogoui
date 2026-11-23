@@ -1,6 +1,0 @@
----
-'@gogoui/ui': minor
-'@gogoui/tokens': minor
----
-
-About seventy new components: toasts, a confirmation dialog, form fields bound or not to TanStack Form, a data table with search, sort, selection and pages, list filters, page layout, settings rows, slide to confirm, file and photo drops, and a guided tour. Also Alert, Accordion, Toggle, ToggleGroup, NumberField, ScrollArea, StatCard and a ThemeToggle that keeps the theme on the device. A `color` prop (neutral, primary, info, success, warning, danger) on Button, Badge, Alert, Progress, Spinner, Switch, Checkbox, Radio, Slider, RangeSlider, Toggle, ToggleGroup, Avatar, StatCard, PillTabsList, StepBars and EmptyState; Button and Badge gain the solid and subtle shapes. New tokens give readable words on each colour's fill. Table pieces without logic (sort header, row and page boxes, toolbar, pagination, empty and loading rows), calendar colour and period shortcuts, a size prop on inputs, selects, fields, NumberField and Tabs, and icons: GoGoUIProvider takes icons (any library) and iconWeight, Button takes iconStart and iconEnd. SimpleTooltip, HoverCard, ContextMenu, NavigationMenu, Timeline and Item; Dialog and Sheet sizes; a character counter on TextareaField; a spinner on promise toasts. Heading, Text, Stack, AspectRatio, Meter, Menubar, Carousel, Resizable and a RichTextEditor.
