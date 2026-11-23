@@ -1719,7 +1719,8 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     chartHiddenItem: (label) => `${label}, hidden`,
     chartSegments: (label, toggles) =>
       `${label}, segments${toggles ? '. Press a segment to show or hide it' : ''}`,
-    chartRingHint: (label) => `${label}. Use the arrow keys to read each segment.`,
+    chartRingHint: (label) =>
+      `${label}. Use the arrow keys to read each segment.`,
     chartSegment: 'Segment',
     chartShare: 'Share',
     chartRange: (from, to) => `${from} to ${to}`,
@@ -1732,8 +1733,7 @@ export const messages: Record<GoGoUILocale, GoGoUIMessages> = {
     heatmapDays: (count, formatted) =>
       `${formatted} ${count === 1 ? 'day' : 'days'}`,
     heatmapDaysWith: (days, range) => `${days} with ${range}`,
-    heatmapLegend: (levels) =>
-      `Darker squares mean more. Levels: ${levels}.`,
+    heatmapLegend: (levels) => `Darker squares mean more. Levels: ${levels}.`,
     // Streamgraph, BrushChart, Ridgeline, Treemap, WaffleChart, SlopeChart (after Arc UI).
     streamgraphRole: 'stream graph',
     brushRole: 'time series chart',
