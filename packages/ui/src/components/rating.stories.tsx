@@ -7,6 +7,7 @@ import { RatingField } from './rating-field.tsx'
 
 const meta = preview.meta({
   title: 'Composants/Rating',
+  tags: ['beta'],
   component: Rating,
   args: {
     value: 3,

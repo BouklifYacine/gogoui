@@ -5,6 +5,7 @@ import { BlogCard } from './blog-card.tsx'
 
 const meta = preview.meta({
   title: 'Composants/BlogCard',
+  tags: ['beta'],
   component: BlogCard,
   parameters: { layout: 'padded' },
   args: {

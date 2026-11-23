@@ -6,6 +6,7 @@ import { ShortcutRecorder } from './shortcut-recorder.tsx'
 
 const meta = preview.meta({
   title: 'Composants/ShortcutRecorder',
+  tags: ['beta'],
   component: ShortcutRecorder,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

@@ -4,6 +4,7 @@ import { ChangelogEntry } from './changelog-entry.tsx'
 
 const meta = preview.meta({
   title: 'Composants/ChangelogEntry',
+  tags: ['beta'],
   component: ChangelogEntry,
   parameters: { layout: 'padded' },
   args: {

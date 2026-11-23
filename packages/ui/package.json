@@ -20,6 +20,8 @@
   "files": [
     "dist",
     "styles.css",
+    "tokens.css",
+    "theme.css",
     "THIRD_PARTY_NOTICES.md"
   ],
   "sideEffects": [
@@ -34,6 +36,8 @@
   },
   "exports": {
     "./styles.css": "./styles.css",
+    "./tokens.css": "./tokens.css",
+    "./theme.css": "./theme.css",
     "./provider": {
       "types": "./dist/i18n/index.d.ts",
       "default": "./dist/i18n/index.js"
@@ -132,7 +136,6 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
-    "@gogoui/tokens": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
     "motion": "^14.6.0",

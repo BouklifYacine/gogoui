@@ -1,6 +1,6 @@
 ---
 name: gogoui
-description: Build React screens with GoGoUI (@gogoui/ui), the design system on Base UI and Tailwind CSS 4. Use when a project imports @gogoui/ui or @gogoui/tokens, when installing or theming GoGoUI (brand colour, dark mode, language, icons, motion), or when choosing which GoGoUI component fits a need.
+description: Build React screens with GoGoUI (@gogoui/ui), the design system on Base UI and Tailwind CSS 4. Use when a project imports @gogoui/ui, when installing or theming GoGoUI (brand colour, dark mode, language, icons, motion), or when choosing which GoGoUI component fits a need.
 ---
 
 # GoGoUI
@@ -19,7 +19,7 @@ Done when a `<Button>` from `@gogoui/ui/button` renders with its shadow and the 
 
 - **Brand**: the primary is neutral. Redefine `--primary`, `--primary-hover`, `--primary-active` and `--primary-foreground` in `:root, :where(.light)` and again in `.dark`, after the import. Every tint and ring derives from them.
 - **Dark mode**: the `dark` class on `<html>`; a region that must stay light takes `light`.
-- **Other tokens** (`--focus-outline`, `--menu-highlight`, `--radius`, the `--motion-*` durations and curves) are CSS variables a project overrides the same way. Read them in `@gogoui/tokens/tokens.css`.
+- **Other tokens** (`--focus-outline`, `--menu-highlight`, `--radius`, the `--motion-*` durations and curves) are CSS variables a project overrides the same way. Read them in `@gogoui/ui/tokens.css`.
 
 ## Write with GoGoUI
 

@@ -7,6 +7,7 @@ import { TextMorph } from './text-morph.tsx'
 
 const meta = preview.meta({
   title: 'Composants/TextMorph',
+  tags: ['beta'],
   component: TextMorph,
   args: { children: 'Envoyer' },
 })

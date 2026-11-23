@@ -8,6 +8,7 @@ import { HoldToConfirm } from './hold-to-confirm.tsx'
 
 const meta = preview.meta({
   title: 'Composants/HoldToConfirm',
+  tags: ['beta'],
   component: HoldToConfirm,
 })
 

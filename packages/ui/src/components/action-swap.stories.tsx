@@ -11,6 +11,7 @@ import { ActionSwap } from './action-swap.tsx'
 
 const meta = preview.meta({
   title: 'Composants/ActionSwap',
+  tags: ['beta'],
   component: ActionSwap,
   args: {
     states: [

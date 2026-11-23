@@ -12,6 +12,7 @@ import { UserMenu } from './user-menu.tsx'
 
 const meta = preview.meta({
   title: 'Composants/UserMenu',
+  tags: ['beta'],
   component: UserMenu,
   decorators: [
     (Story) => <div className="flex min-h-96 justify-end p-4">{Story()}</div>,

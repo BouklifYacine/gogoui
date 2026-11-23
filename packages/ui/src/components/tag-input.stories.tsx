@@ -7,6 +7,7 @@ import { TagInput } from './tag-input.tsx'
 
 const meta = preview.meta({
   title: 'Composants/TagInput',
+  tags: ['beta'],
   component: TagInput,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

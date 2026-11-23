@@ -6,17 +6,17 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "bun run --cwd packages/tokens build && bun run --cwd packages/ui build",
+    "build": "bun run --cwd packages/ui build",
     "storybook": "bun run --cwd packages/ui storybook",
     "build-storybook": "bun run --cwd packages/ui build-storybook",
     "typecheck": "bun run --cwd packages/ui typecheck",
-    "test": "bun run --cwd packages/tokens test && bun run --cwd packages/ui test",
+    "test": "bun run --cwd packages/ui test",
     "lint": "oxlint --deny-warnings",
     "format": "bun fmt . && oxlint --fix",
     "format:check": "bun fmt --check .",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "bun run build && cd packages/tokens && bun publish && cd ../ui && bun publish && cd ../.. && changeset tag"
+    "release": "bun run build && cd packages/ui && bun pm pack && npm publish ./gogoui-ui-*.tgz && cd ../.. && changeset tag"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

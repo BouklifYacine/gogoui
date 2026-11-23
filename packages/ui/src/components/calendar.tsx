@@ -19,18 +19,17 @@ import { CalendarDayButton } from './calendar-day-button.tsx'
 // dimmed to 40 %; the title slides 12px and crossfades. react-day-picker
 // puts the leaving month back for the time of the slide and takes it away
 // when its title is done, so the title's exit lasts as long as the slide.
-const STRIP = 'duration-300 ease-standard'
+// react-day-picker adds and removes each of these with classList, so each
+// is ONE class; the keyframes live in styles.css (`calendar-…`).
 const animations = {
-  weeks_after_enter: `animate-in fade-in-40 slide-in-from-right-[length:calc(100%+1rem)] ${STRIP}`,
-  weeks_before_enter: `animate-in fade-in-40 slide-in-from-left-[length:calc(100%+1rem)] ${STRIP}`,
-  weeks_before_exit: `animate-out fade-out-40 slide-out-to-left-[length:calc(100%+1rem)] fill-mode-forwards ${STRIP}`,
-  weeks_after_exit: `animate-out fade-out-40 slide-out-to-right-[length:calc(100%+1rem)] fill-mode-forwards ${STRIP}`,
-  caption_after_enter:
-    'animate-in fade-in slide-in-from-right-3 duration-200 ease-enter',
-  caption_before_enter:
-    'animate-in fade-in slide-in-from-left-3 duration-200 ease-enter',
-  caption_before_exit: `animate-out fade-out slide-out-to-left-3 fill-mode-forwards ${STRIP}`,
-  caption_after_exit: `animate-out fade-out slide-out-to-right-3 fill-mode-forwards ${STRIP}`,
+  weeks_after_enter: 'calendar-weeks-after-enter',
+  weeks_before_enter: 'calendar-weeks-before-enter',
+  weeks_before_exit: 'calendar-weeks-before-exit',
+  weeks_after_exit: 'calendar-weeks-after-exit',
+  caption_after_enter: 'calendar-caption-after-enter',
+  caption_before_enter: 'calendar-caption-before-enter',
+  caption_before_exit: 'calendar-caption-before-exit',
+  caption_after_exit: 'calendar-caption-after-exit',
 }
 
 /**

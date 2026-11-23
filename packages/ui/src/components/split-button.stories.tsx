@@ -14,6 +14,7 @@ import { SplitButton } from './split-button.tsx'
 
 const meta = preview.meta({
   title: 'Composants/SplitButton',
+  tags: ['beta'],
   component: SplitButton,
   args: {
     children: 'Envoyer le devis',

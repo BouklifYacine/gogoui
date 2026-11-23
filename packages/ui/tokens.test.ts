@@ -1,4 +1,6 @@
-import { describe, expect, it } from 'bun:test'
+import { readFileSync } from 'node:fs'
+
+import { describe, expect, it } from 'vitest'
 
 /*
  * WCAG AA, checked on the tokens themselves: a token that drifts below its
@@ -6,7 +8,7 @@ import { describe, expect, it } from 'bun:test'
  * the edge of a control (WCAG 1.4.11).
  */
 
-const css = await Bun.file(new URL('./tokens.css', import.meta.url)).text()
+const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8')
 
 function block(selector: string): Record<string, string> {
   const start = css.indexOf(selector)

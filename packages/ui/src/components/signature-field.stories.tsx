@@ -6,6 +6,7 @@ import { SignatureField } from './signature-field.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/SignatureField',
+  tags: ['beta'],
   component: SignatureField,
   decorators: [
     (Story) => <div className="w-[34rem] max-w-full">{Story()}</div>,

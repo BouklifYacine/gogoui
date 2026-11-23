@@ -11,6 +11,7 @@ import type { FileUploadEntry, FileUploadHandler } from './file-upload.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/FileUpload',
+  tags: ['beta'],
   component: FileUpload,
   decorators: [
     (Story) => <div className="w-[30rem] max-w-full">{Story()}</div>,

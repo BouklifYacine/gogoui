@@ -9,6 +9,7 @@ const message =
 
 const meta = preview.meta({
   title: 'Composants/ExpandableText',
+  tags: ['beta'],
   component: ExpandableText,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

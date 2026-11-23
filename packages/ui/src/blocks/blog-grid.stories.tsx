@@ -165,6 +165,7 @@ const posts: BlogPost[] = [
 
 const meta = preview.meta({
   title: 'Blocs/BlogGrid',
+  tags: ['beta'],
   component: BlogGrid,
   parameters: { layout: 'padded' },
   args: {

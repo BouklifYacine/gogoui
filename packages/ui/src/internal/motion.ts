@@ -1,5 +1,5 @@
 // GoGoUI's motion for `motion/react`, after Arc UI (https://uiarc.dev, MIT
-// licence, Elia Kuratli). The CSS side lives in @gogoui/tokens
+// licence, Elia Kuratli). The CSS side lives in packages/ui/tokens.css
 // (--motion-*, `ease-enter`, `ease-spring`…): both say the same thing.
 //
 // An interface moves in under 300ms, an exit is quicker than its entry, and

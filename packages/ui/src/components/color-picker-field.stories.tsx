@@ -6,6 +6,7 @@ import { ColorPickerField } from './color-picker-field.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/ColorPickerField',
+  tags: ['beta'],
   component: ColorPickerField,
   decorators: [(Story) => <div className="min-h-120 w-80">{Story()}</div>],
 })

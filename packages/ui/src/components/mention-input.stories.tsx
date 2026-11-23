@@ -16,6 +16,7 @@ const team = [
 
 const meta = preview.meta({
   title: 'Composants/MentionInput',
+  tags: ['beta'],
   component: MentionInput,
   decorators: [(Story) => <div className="w-96 pb-72">{Story()}</div>],
 })

@@ -15,6 +15,7 @@ import {
 
 const meta = preview.meta({
   title: 'Composants/ExpandingButtonGroup',
+  tags: ['beta'],
   component: ExpandingButtonGroup,
   args: {
     'aria-label': 'Actions de la demande',

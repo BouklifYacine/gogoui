@@ -7,6 +7,7 @@ import type { PhoneValueDetails } from './phone-field.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/PhoneField',
+  tags: ['beta'],
   component: PhoneField,
   decorators: [(Story) => <div className="w-80 pb-80">{Story()}</div>],
 })

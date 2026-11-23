@@ -4,10 +4,9 @@ A React design system: shadcn/ui conventions on [Base UI](https://base-ui.com),
 styled with Tailwind CSS 4, light and dark, built for WCAG AA. French by
 default, English included.
 
-| Package                             | What it holds                                                                      |
-| ----------------------------------- | ---------------------------------------------------------------------------------- |
-| [`@gogoui/tokens`](packages/tokens) | The design tokens as CSS variables (light and dark) and their Tailwind CSS 4 theme |
-| [`@gogoui/ui`](packages/ui)         | About 150 React components, one import each                                        |
+One package, [`@gogoui/ui`](packages/ui): about 190 React components, one
+import each, with the design tokens as CSS variables (light and dark) and
+their Tailwind CSS 4 theme (`@gogoui/ui/tokens.css`, `@gogoui/ui/theme.css`).
 
 ## Requirements
 

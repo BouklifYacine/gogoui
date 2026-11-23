@@ -6,6 +6,7 @@ import { MultiSelectField } from './multi-select-field.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/MultiSelectField',
+  tags: ['beta'],
   component: MultiSelectField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

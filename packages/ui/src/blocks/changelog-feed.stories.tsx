@@ -175,6 +175,7 @@ const entries: ChangelogItem[] = [
 
 const meta = preview.meta({
   title: 'Blocs/ChangelogFeed',
+  tags: ['beta'],
   component: ChangelogFeed,
   parameters: { layout: 'padded' },
   args: {

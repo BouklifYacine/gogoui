@@ -14,6 +14,7 @@ import type { ColorSwatch } from './color-picker.tsx'
 
 const meta = preview.meta({
   title: 'Composants/ColorPicker',
+  tags: ['beta'],
   component: ColorPicker,
   decorators: [(Story) => <div className="min-h-120">{Story()}</div>],
 })

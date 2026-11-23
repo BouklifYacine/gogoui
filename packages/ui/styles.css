@@ -9,8 +9,8 @@
  * their classes are generated in your build.
  */
 @import 'tw-animate-css';
-@import '@gogoui/tokens/tokens.css';
-@import '@gogoui/tokens/theme.css';
+@import './tokens.css';
+@import './theme.css';
 
 @source './dist';
 
@@ -266,6 +266,85 @@
     transition-duration: var(--motion-instant);
     transition-delay: 0ms;
   }
+}
+
+/*
+ * The calendar's months (react-day-picker's `animate`): the weeks travel on
+ * one strip with a 1rem gap, the leaving month dimmed to 40 %, in 300ms;
+ * the title slides 12px and crossfades. One class each: react-day-picker
+ * removes them one by one.
+ */
+@keyframes calendar-strip-from-right {
+  from {
+    opacity: 0.4;
+    transform: translateX(calc(100% + 1rem));
+  }
+}
+@keyframes calendar-strip-from-left {
+  from {
+    opacity: 0.4;
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+@keyframes calendar-strip-to-left {
+  to {
+    opacity: 0.4;
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+@keyframes calendar-strip-to-right {
+  to {
+    opacity: 0.4;
+    transform: translateX(calc(100% + 1rem));
+  }
+}
+@keyframes calendar-title-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
+@keyframes calendar-title-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+@keyframes calendar-title-to-left {
+  to {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+@keyframes calendar-title-to-right {
+  to {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+}
+.calendar-weeks-after-enter {
+  animation: calendar-strip-from-right 300ms var(--motion-ease-standard);
+}
+.calendar-weeks-before-enter {
+  animation: calendar-strip-from-left 300ms var(--motion-ease-standard);
+}
+.calendar-weeks-before-exit {
+  animation: calendar-strip-to-left 300ms var(--motion-ease-standard) forwards;
+}
+.calendar-weeks-after-exit {
+  animation: calendar-strip-to-right 300ms var(--motion-ease-standard) forwards;
+}
+.calendar-caption-after-enter {
+  animation: calendar-title-from-right 200ms var(--motion-ease-enter);
+}
+.calendar-caption-before-enter {
+  animation: calendar-title-from-left 200ms var(--motion-ease-enter);
+}
+.calendar-caption-before-exit {
+  animation: calendar-title-to-left 300ms var(--motion-ease-standard) forwards;
+}
+.calendar-caption-after-exit {
+  animation: calendar-title-to-right 300ms var(--motion-ease-standard) forwards;
 }
 
 /*

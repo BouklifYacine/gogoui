@@ -7,6 +7,7 @@ import { RollingNumber } from './rolling-number.tsx'
 
 const meta = preview.meta({
   title: 'Composants/RollingNumber',
+  tags: ['beta'],
   component: RollingNumber,
   args: { value: 1280 },
 })

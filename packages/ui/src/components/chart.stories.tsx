@@ -19,7 +19,7 @@ const config = {
 } satisfies ChartConfig
 
 const meta = preview.meta({
-  title: 'Composants/Chart',
+  title: 'Charts/Chart',
   component: ChartContainer,
 })
 

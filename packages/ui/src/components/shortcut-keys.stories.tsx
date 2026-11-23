@@ -4,6 +4,7 @@ import { ShortcutKeys } from './shortcut-keys.tsx'
 
 const meta = preview.meta({
   title: 'Composants/ShortcutKeys',
+  tags: ['beta'],
   component: ShortcutKeys,
 })
 
