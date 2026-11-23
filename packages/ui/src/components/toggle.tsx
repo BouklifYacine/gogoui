@@ -7,7 +7,7 @@ import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 const toggleVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-button text-sm font-medium whitespace-nowrap text-fg-muted transition-[color,background-color,box-shadow] outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus disabled:pointer-events-none disabled:opacity-50 data-[pressed]:bg-selected data-[pressed]:text-fg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 items-center justify-center gap-2 rounded-button text-sm font-medium whitespace-nowrap text-fg-muted transition-[color,background-color,box-shadow] outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50 data-[pressed]:bg-selected data-[pressed]:text-fg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

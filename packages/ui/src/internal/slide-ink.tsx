@@ -2,14 +2,33 @@ import { AnimatePresence, motion } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { cn } from '../lib/cn.ts'
+import type { Color } from './colors.ts'
 import { EASE_OUT } from './slide-motion.ts'
 import type { Phase } from './slide-motion.ts'
 
-/** The ink the thumb leaves behind, the label white on it; green once done. */
+/** The ink a colour lays, and the words readable on it. */
+const inkOf: Record<Color, string> = {
+  neutral: 'bg-neutral',
+  primary: 'bg-primary',
+  info: 'bg-info',
+  success: 'bg-success',
+  warning: 'bg-warning',
+  danger: 'bg-danger',
+}
+const wordsOf: Record<Color, string> = {
+  neutral: 'text-neutral-foreground',
+  primary: 'text-primary-foreground',
+  info: 'text-info-foreground',
+  success: 'text-success-foreground',
+  warning: 'text-warning-foreground',
+  danger: 'text-danger-foreground',
+}
+
+/** The ink the thumb leaves behind, its words readable on it; green once done. */
 export function SlideInk({
   phase,
   stageLabel,
-  destructive,
+  color,
   reduceMotion,
   fillClip,
   fillOpacity,
@@ -17,7 +36,8 @@ export function SlideInk({
   phase: Phase
   /** The words on the ink: the label, then the work running, then done. */
   stageLabel: string
-  destructive: boolean
+  /** The ink's colour; the page's inverse without one. */
+  color: Color | undefined
   reduceMotion: boolean | null
   fillClip: MotionValue<string>
   fillOpacity: MotionValue<number>
@@ -29,7 +49,7 @@ export function SlideInk({
       aria-hidden="true"
       className={cn(
         'absolute inset-0 transition-colors duration-300 ease-out motion-reduce:transition-none',
-        done ? 'bg-success' : destructive ? 'bg-danger' : 'bg-inverse',
+        done ? 'bg-success' : color ? inkOf[color] : 'bg-inverse',
       )}
       style={{ clipPath: fillClip, opacity: fillOpacity }}
     >
@@ -44,7 +64,11 @@ export function SlideInk({
           }
           className={cn(
             'absolute inset-0 flex items-center justify-center gap-2 text-sm font-medium whitespace-nowrap',
-            done || destructive ? 'text-white' : 'text-fg-inverse',
+            done
+              ? 'text-success-foreground'
+              : color
+                ? wordsOf[color]
+                : 'text-fg-inverse',
             phase === 'idle' || phase === 'dragging' ? 'pl-6' : 'pr-6',
           )}
         >

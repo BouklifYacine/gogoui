@@ -79,12 +79,12 @@ function Toaster(props: ToasterProps) {
           title: 'font-medium text-fg',
           description: 'text-fg-muted',
           actionButton:
-            'h-8 shrink-0 rounded-lg bg-control px-3 text-sm font-medium text-fg shadow-button transition-colors duration-150 outline-none hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus max-md:h-11',
+            'h-8 shrink-0 rounded-lg bg-control px-3 text-sm font-medium text-fg shadow-button transition-colors duration-150 outline-none hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus max-md:h-11',
           cancelButton:
             'h-8 shrink-0 rounded-lg px-3 text-sm font-medium text-fg-muted transition-colors duration-150 hover:bg-hover hover:text-fg max-md:h-11',
           // Sonner puts it first: `order-last` sends it to the line's end.
           closeButton:
-            'order-last flex size-8 shrink-0 items-center justify-center rounded-lg text-fg-subtle transition-colors duration-150 outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-line-focus max-md:size-11',
+            'order-last flex size-8 shrink-0 items-center justify-center rounded-lg text-fg-subtle transition-colors duration-150 outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus max-md:size-11',
         },
       }}
       {...props}

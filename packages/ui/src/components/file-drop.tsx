@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import type { Accept, FileRejection } from 'react-dropzone'
-import { AnimatePresence, MotionConfig, motion, useAnimate } from 'motion/react'
+import { AnimatePresence, motion, useAnimate } from 'motion/react'
+import { MotionScope } from '../internal/motion-scope.tsx'
 import { ArrowUpIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -120,7 +121,7 @@ function FileDrop({
   const subText = busy ? describe(busy) : done ? describe(done) : hint
 
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionScope>
       <div
         ref={zone}
         data-slot="file-drop"
@@ -130,7 +131,7 @@ function FileDrop({
           role: 'button',
           'aria-label': label,
           className: cn(
-            'relative flex min-h-56 w-full cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-[28px] bg-subtle px-6 py-8 text-center outline-none transition-transform duration-300 ease-out select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus aria-disabled:cursor-progress motion-reduce:transition-none',
+            'relative flex min-h-56 w-full cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-[28px] bg-subtle px-6 py-8 text-center outline-none transition-transform duration-300 ease-out select-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus aria-disabled:cursor-progress motion-reduce:transition-none',
             over && 'scale-[1.025]',
             className,
           ),
@@ -246,7 +247,7 @@ function FileDrop({
           {busy ? busyTitle : done ? doneTitle : ''}
         </span>
       </div>
-    </MotionConfig>
+    </MotionScope>
   )
 }
 

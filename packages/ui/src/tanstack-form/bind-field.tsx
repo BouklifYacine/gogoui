@@ -14,8 +14,15 @@ type FromForm = 'id' | 'name' | 'value' | 'onValueChange' | 'onBlur' | 'error'
  *
  * @summary Bind a field of your own to a TanStack form.
  */
+// A field's onValueChange may hand details after the value (PhoneField's
+// E.164 form, ShortcutField's replaced binding): the form keeps the value.
 // oxlint-disable-next-line typescript/no-explicit-any
-export function bindField<TProps extends FieldValueProps<any>>(
+type BindableProps = Omit<FieldValueProps<any>, 'onValueChange'> & {
+  // oxlint-disable-next-line typescript/no-explicit-any
+  onValueChange: (value: any, ...details: never[]) => void
+}
+
+export function bindField<TProps extends BindableProps>(
   Field: ComponentType<TProps>,
 ) {
   function BoundField(props: Omit<TProps, FromForm>) {

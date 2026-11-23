@@ -92,7 +92,12 @@
 @layer base {
   * {
     border-color: var(--line);
-    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+    outline-color: var(--focus-outline);
+  }
+  /* The keyboard's outline sits 2px off the element (Arc UI); a component
+     inside a clipped box sets a negative offset instead. */
+  :focus-visible {
+    outline-offset: 2px;
   }
   /* The hand on every button, like on links: on the web, people read it
      as « clickable » (Tailwind 4 leaves buttons with the arrow). */
@@ -142,77 +147,258 @@
       scroll-behavior: auto !important;
     }
   }
+  /* GoGoUIProvider motion="off": the same stillness, whatever the system. */
+  [data-gogoui-motion='off'] *,
+  [data-gogoui-motion='off'] *::before,
+  [data-gogoui-motion='off'] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /*
- * A select's menu: it drops from under its button on a spring, a little
- * past its height and back, its rows falling in one after another, and the
- * tick of the chosen row draws itself. Reduced motion stills all three.
+ * Select and Combobox (lot 3), after Arc UI (https://uiarc.dev, MIT): the
+ * list opens like the menus (menu-content below), a few px towards its
+ * trigger and from .97, the opacity quick and the movement on a spring that
+ * never overshoots, its rows following one after another (35ms apart, four
+ * at most). Transitions, not keyframes: a close that interrupts the opening
+ * reverses from where it is. The exit is quicker than the entry.
  */
-@keyframes select-drop {
-  from {
+:is(
+  [data-slot='select-content'][data-variant='default'],
+  [data-slot='combobox-content']
+) {
+  --menu-x: 0px;
+  --menu-y: -5px;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--motion-fast) var(--motion-ease-enter),
+    transform var(--motion-spring) var(--motion-ease-spring);
+
+  &[data-side='top'] {
+    --menu-y: 5px;
+  }
+  /* Laid over its trigger (alignItemWithTrigger): it only grows. */
+  &[data-side='none'] {
+    --menu-y: 0px;
+  }
+  &[data-starting-style] {
     opacity: 0;
-    transform: translateY(-6px) scale(0.94, 0.6);
+    transform: translate(var(--menu-x), var(--menu-y)) scale(0.97);
+  }
+  &[data-ending-style] {
+    opacity: 0;
+    transform: translate(calc(var(--menu-x) * 0.5), calc(var(--menu-y) * 0.5))
+      scale(0.985);
+    transition:
+      opacity var(--motion-instant) var(--motion-ease-standard),
+      transform var(--motion-instant) var(--motion-ease-standard);
+    pointer-events: none;
+  }
+
+  & [role='option'] {
+    transition:
+      opacity var(--motion-standard) var(--motion-ease-enter),
+      transform var(--motion-standard) var(--motion-ease-enter);
+  }
+  &[data-starting-style] [role='option'] {
+    opacity: 0;
+    transform: translate(calc(var(--menu-x) * 0.4), calc(var(--menu-y) * 0.4));
+  }
+  & [role='option']:nth-child(2 of [role='option']) {
+    transition-delay: 35ms;
+  }
+  & [role='option']:nth-child(3 of [role='option']) {
+    transition-delay: 70ms;
+  }
+  & [role='option']:nth-child(4 of [role='option']) {
+    transition-delay: 105ms;
+  }
+  & [role='option']:nth-child(n + 5 of [role='option']) {
+    transition-delay: 140ms;
+  }
+  &[data-ending-style] [role='option'] {
+    transition-delay: 0ms;
   }
 }
-/* Opened above its button, for want of room below: it rises instead. */
-@keyframes select-rise {
-  from {
+
+/*
+ * The morph Select (lot 3), after Arc UI: one surface grows from its
+ * trigger's box into the list (width, height, corners and fill) in 280ms,
+ * and folds back quicker, in 240ms, on the spring curve; the list arrives
+ * a moment after the surface starts to grow. --morph-height is the open
+ * content's height, written by SelectContent.
+ */
+[data-slot='select-content'][data-variant='morph'] {
+  --morph-width: max(var(--anchor-width), 17rem);
+  width: var(--morph-width);
+  height: var(--morph-height, auto);
+  border-radius: var(--radius-menu);
+  transition:
+    width 280ms var(--motion-ease-spring),
+    height 280ms var(--motion-ease-spring),
+    border-radius 280ms var(--motion-ease-spring),
+    background-color var(--motion-fast) var(--motion-ease-standard);
+
+  &:is([data-starting-style], [data-ending-style]) {
+    width: var(--anchor-width);
+    height: var(--anchor-height);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-field);
+  }
+  &[data-ending-style] {
+    transition-duration: 240ms, 240ms, 240ms, var(--motion-instant);
+    pointer-events: none;
+  }
+
+  & [role='listbox'] {
+    transition:
+      opacity var(--motion-fast) var(--motion-ease-enter) 30ms,
+      translate 280ms var(--motion-ease-spring);
+  }
+  &:is([data-starting-style], [data-ending-style]) [role='listbox'] {
     opacity: 0;
-    transform: translateY(6px) scale(0.94, 0.6);
+    translate: 0 -4px;
+  }
+  &[data-ending-style] [role='listbox'] {
+    transition-duration: var(--motion-instant);
+    transition-delay: 0ms;
   }
 }
-@keyframes select-row-in {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
+
+/*
+ * A chosen row's tick draws itself as the list opens; in a multiple Select
+ * it draws on a pick and retracts when the value is let go (lot 3).
+ */
 @keyframes select-tick {
   from {
     stroke-dashoffset: 22;
   }
 }
-[data-slot='select-content'][data-open] {
-  animation: select-drop 420ms
-    linear(
-      0,
-      0.157 4.2%,
-      0.517 9.7%,
-      0.794 15.3%,
-      0.968 21.5%,
-      1.048 27.4%,
-      1.071 33.2%,
-      1.06 39.6%,
-      1.03 47.2%,
-      1.006 56.9%,
-      0.996 68.4%,
-      1
-    );
-}
-[data-slot='select-content'][data-open][data-side='top'] {
-  animation-name: select-rise;
-}
-[data-slot='select-content'][data-open] [data-slot='select-item'] {
-  animation: select-row-in 260ms var(--ease-tactile) both;
-}
-[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(2) {
-  animation-delay: 45ms;
-}
-[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(3) {
-  animation-delay: 90ms;
-}
-[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(4) {
-  animation-delay: 135ms;
-}
-[data-slot='select-content'][data-open] [data-slot='select-item']:nth-child(5) {
-  animation-delay: 180ms;
-}
-[data-slot='select-content'][data-open]
-  [data-slot='select-item']:nth-child(n + 6) {
-  animation-delay: 225ms;
-}
 [data-slot='select-tick'] path {
   stroke-dasharray: 22;
-  animation: select-tick 300ms 80ms var(--ease-tactile) both;
+  stroke-dashoffset: 22;
+  transition: stroke-dashoffset var(--motion-fast) var(--motion-ease-standard);
+}
+[data-slot='select-item'][data-selected] [data-slot='select-tick'] path {
+  stroke-dashoffset: 0;
+  animation: select-tick var(--motion-standard) 60ms var(--motion-ease-enter)
+    both;
+}
+
+/*
+ * A Combobox's × (lot 3): it pops in from .7 out of a soft blur, and
+ * leaves quicker. « No result » rises 4px as it fades in.
+ */
+[data-slot='combobox-clear'] {
+  transition:
+    opacity var(--motion-fast) var(--motion-ease-enter),
+    scale var(--motion-standard) var(--motion-ease-spring),
+    filter var(--motion-fast) var(--motion-ease-enter),
+    background-color var(--motion-fast) var(--motion-ease-standard),
+    color var(--motion-fast) var(--motion-ease-standard);
+
+  &:is([data-starting-style], [data-ending-style]) {
+    opacity: 0;
+    scale: 0.7;
+    filter: blur(2px);
+  }
+  &[data-ending-style] {
+    transition-duration: var(--motion-instant);
+  }
+  &:active {
+    scale: 0.96;
+  }
+}
+@keyframes combobox-empty-in {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+    filter: blur(4px);
+  }
+}
+[data-slot='combobox-empty'] {
+  animation: combobox-empty-in var(--motion-standard) var(--motion-ease-enter);
+}
+/*
+ * A menu (DropdownMenu, its sub-menus, ContextMenu, Menubar), after Arc UI
+ * (https://uiarc.dev, MIT): it grows from its trigger, a few px towards it
+ * and from .97, the opacity quick and the movement on a spring that never
+ * overshoots; its rows follow, one after another (35ms apart, four at most).
+ * Transitions, not keyframes: a close that interrupts the opening reverses
+ * from where it is. The exit is quicker than the entry.
+ */
+:is(
+  [data-slot='dropdown-menu-content'],
+  [data-slot='dropdown-menu-sub-content'],
+  [data-slot='context-menu-content']
+) {
+  --menu-x: 0px;
+  --menu-y: -5px;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--motion-fast) var(--motion-ease-enter),
+    transform var(--motion-spring) var(--motion-ease-spring);
+
+  &[data-side='top'] {
+    --menu-y: 5px;
+  }
+  &:is([data-side='left'], [data-side='inline-start']) {
+    --menu-x: 5px;
+    --menu-y: 0px;
+  }
+  &:is([data-side='right'], [data-side='inline-end']) {
+    --menu-x: -5px;
+    --menu-y: 0px;
+  }
+  &[data-starting-style] {
+    opacity: 0;
+    transform: translate(var(--menu-x), var(--menu-y)) scale(0.97);
+  }
+  &[data-ending-style] {
+    opacity: 0;
+    transform: translate(calc(var(--menu-x) * 0.5), calc(var(--menu-y) * 0.5))
+      scale(0.985);
+    transition:
+      opacity var(--motion-instant) var(--motion-ease-standard),
+      transform var(--motion-instant) var(--motion-ease-standard);
+    pointer-events: none;
+  }
+
+  & [role^='menuitem'] {
+    transition:
+      opacity var(--motion-standard) var(--motion-ease-enter),
+      transform var(--motion-standard) var(--motion-ease-enter);
+  }
+  &[data-starting-style] [role^='menuitem'] {
+    opacity: 0;
+    transform: translate(calc(var(--menu-x) * 0.4), calc(var(--menu-y) * 0.4));
+  }
+  & [role^='menuitem']:nth-child(2 of [role^='menuitem']) {
+    transition-delay: 35ms;
+  }
+  & [role^='menuitem']:nth-child(3 of [role^='menuitem']) {
+    transition-delay: 70ms;
+  }
+  & [role^='menuitem']:nth-child(4 of [role^='menuitem']) {
+    transition-delay: 105ms;
+  }
+  & [role^='menuitem']:nth-child(n + 5 of [role^='menuitem']) {
+    transition-delay: 140ms;
+  }
+  &[data-ending-style] [role^='menuitem'] {
+    transition-delay: 0ms;
+  }
+}
+
+/* A trigger's chevron turns over while its menu is open. */
+[data-slot='dropdown-menu-trigger'] [data-icon='inline-end'] > svg {
+  transition: rotate var(--motion-spring) var(--motion-ease-spring);
+}
+[data-slot='dropdown-menu-trigger'][data-popup-open]
+  [data-icon='inline-end']
+  > svg {
+  rotate: 180deg;
 }

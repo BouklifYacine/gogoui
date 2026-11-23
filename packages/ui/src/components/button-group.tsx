@@ -2,6 +2,9 @@ import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
+
+import { ButtonGroupSurface } from '../internal/button-group-surface.tsx'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 import { Separator } from './separator.tsx'
@@ -23,27 +26,71 @@ const buttonGroupVariants = cva(
   },
 )
 
+type ButtonGroupProps = React.ComponentProps<'div'> &
+  VariantProps<typeof buttonGroupVariants> & {
+    /**
+     * `default`: buttons glued edge to edge, each with its own fill.
+     * `surface`: one surface, hairline separators, and one highlight that
+     * glides to the button pointed at (put `ghost` buttons in it).
+     */
+    variant?: 'default' | 'surface'
+    /** `surface` only: fills the surface in a colour (a main group of actions). */
+    color?: Color
+    /**
+     * `surface` only, on by default: when the row does not fit, the buttons
+     * with an icon keep only their icon (their words stay for screen
+     * readers). Horizontal only.
+     */
+    collapseLabels?: boolean
+  }
+
 /**
  * Buttons joined into one control.
  *
  * **Use it for** actions of the same subject side by side (« Précédent |
- * Suivant », a button and its menu). **Not for** one choice among a few
- * (`ToggleGroup`).
+ * Suivant », a button and its menu, « Copier | Partager | … »). **Not for**
+ * one choice among a few (`ToggleGroup`).
  *
- * **Where**: toolbars, table headers, pagination.
+ * **Where**: toolbars, table headers, pagination, a document's actions.
  *
- * **Key props**: `orientation` (horizontal, vertical).
+ * **States** (`surface`): a highlight under the button pointed at, pressed
+ * (darker) or reached with the keyboard; none over a disabled one; the
+ * separators beside it step aside; labels folded into icons when the row
+ * does not fit.
+ *
+ * **Compose**: `ButtonGroup` > `Button`s (`variant="ghost"` in a
+ * `surface`), a `DropdownMenuTrigger` rendered as a `Button` for « … »,
+ * `ButtonGroupText`, `ButtonGroupSeparator` (`default` only).
+ *
+ * **Key props**: `variant` (default, surface), `orientation` (horizontal,
+ * vertical), `color` and `collapseLabels` (surface).
  *
  * **Accessibility**: `role="group"`; give it an `aria-label` when the
- * buttons do not say what they share.
+ * buttons do not say what they share. In a `surface`, Tab visits each
+ * button and the arrows, Home and End move between them too; a label that
+ * changes right after a press (« Copié ») is read once.
  *
- * @summary Buttons joined into one control.
+ * @summary Buttons joined into one control, or one surface with a gliding highlight.
  */
 function ButtonGroup({
   className,
   orientation,
+  variant = 'default',
+  color,
+  collapseLabels,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof buttonGroupVariants>) {
+}: ButtonGroupProps) {
+  if (variant === 'surface') {
+    return (
+      <ButtonGroupSurface
+        className={className}
+        orientation={orientation}
+        color={color}
+        collapseLabels={collapseLabels}
+        {...props}
+      />
+    )
+  }
   return (
     <div
       role="group"
@@ -102,3 +149,4 @@ export {
   ButtonGroupText,
   buttonGroupVariants,
 }
+export type { ButtonGroupProps }

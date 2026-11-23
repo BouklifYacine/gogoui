@@ -64,3 +64,30 @@ export const WithError = meta.story({
     )
   },
 })
+
+/**
+ * The help and the error slide in under the field: the row opens on a
+ * spring, the words rise into place, and only the changed words move as
+ * the message changes (the count rolls).
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: function Render() {
+    const [value, setValue] = useState('')
+    const missing = Math.max(0, 6 - value.length)
+    return (
+      <TextField
+        name="code"
+        label="Code du lieu"
+        description={value ? undefined : 'Six caractères, sur votre devis.'}
+        error={
+          value && missing > 0
+            ? `Encore ${String(missing)} caractères à saisir.`
+            : undefined
+        }
+        value={value}
+        onValueChange={setValue}
+      />
+    )
+  },
+})

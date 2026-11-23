@@ -40,6 +40,30 @@ export const Basic = meta.story({
 })
 
 /**
+ * The panel grows out of its button. Pick a first day: the bar stretches
+ * under the pointer, week by week, and the ends glide; a shortcut's
+ * highlight glides to it and the period's words roll in the button; the
+ * length in days rolls under the months.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: function Render() {
+    const presets = useDateRangePresets()
+    const [range, setRange] = useState<{ from?: string; to?: string }>({})
+    return (
+      <DateRangePicker
+        presets={presets}
+        minDays={2}
+        maxDays={14}
+        from={range.from}
+        to={range.to}
+        onChange={setRange}
+      />
+    )
+  },
+})
+
+/**
  * The usual shortcuts beside the months (`useDateRangePresets()`): one
  * click for the last 7 days, this month, last month.
  */

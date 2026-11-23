@@ -10,7 +10,7 @@ import { cn } from '../lib/cn.ts'
 // A small pill, always round, figures in columns. Tinted badges draw
 // their edge from their own text colour (shadow-badge).
 const badgeVariants = cva(
-  'group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 text-xs font-medium whitespace-nowrap tabular-nums transition-[color,background-color] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus [&>svg]:pointer-events-none [&>svg]:size-3!',
+  'group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2 text-xs font-medium whitespace-nowrap tabular-nums transition-[color,background-color] focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus [&>svg]:pointer-events-none [&>svg]:size-3!',
   {
     variants: {
       variant: {

@@ -124,9 +124,26 @@ export function App({ children }: { children: React.ReactNode }) {
 
 `messages={{ close: 'Retour' }}` overrides a single word.
 
+### Motion
+
+Components animate on their own: menus grow from their button, highlights
+glide, words crossfade, and no spring overshoots. A visitor whose system
+asks for less motion gets still components. To still them for everyone:
+
+```tsx
+<GoGoUIProvider motion="off">{children}</GoGoUIProvider>
+```
+
 ## For AI agents
 
-The Storybook publishes a components manifest (names, props, usage
+Add GoGoUI's skill to your project, so your agent installs, themes and uses
+it the GoGoUI way:
+
+```bash
+npx skills add BouklifYacine/gogoui
+```
+
+The Storybook also publishes a components manifest (names, props, usage
 examples, when to use each component), read by Storybook's agent skills
 and MCP server.
 
@@ -143,5 +160,5 @@ Each user-visible change gets a changeset: `bun run changeset`.
 
 ## License
 
-MIT. GoGoUI adapts code from shadcn/ui and Bklit UI, see
+MIT. GoGoUI adapts code from shadcn/ui, Bklit UI, Kokonut UI and Arc UI, see
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -1,6 +1,8 @@
 import { ContextMenu as ContextMenuPrimitive } from '@base-ui/react/context-menu'
 import { Menu as MenuPrimitive } from '@base-ui/react/menu'
 
+import { MenuHighlight } from '../internal/menu-highlight.tsx'
+import { menuPanel } from '../internal/menu-styles.ts'
 import { cn } from '../lib/cn.ts'
 import {
   DropdownMenuCheckboxItem,
@@ -50,6 +52,7 @@ function ContextMenuTrigger({
 
 function ContextMenuContent({
   className,
+  children,
   ...props
 }: MenuPrimitive.Popup.Props) {
   return (
@@ -57,12 +60,12 @@ function ContextMenuContent({
       <ContextMenuPrimitive.Positioner className="isolate z-50 outline-none">
         <MenuPrimitive.Popup
           data-slot="context-menu-content"
-          className={cn(
-            'z-50 max-h-(--available-height) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-parent-2xl bg-floating p-2 text-fg shadow-menu duration-150 ease-tactile outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
-            className,
-          )}
+          className={cn(menuPanel, 'min-w-48', className)}
           {...props}
-        />
+        >
+          <MenuHighlight />
+          {children}
+        </MenuPrimitive.Popup>
       </ContextMenuPrimitive.Positioner>
     </MenuPrimitive.Portal>
   )

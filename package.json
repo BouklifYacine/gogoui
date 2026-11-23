@@ -16,7 +16,7 @@
     "format:check": "bun fmt --check .",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "bun run build && changeset publish"
+    "release": "bun run build && cd packages/tokens && bun publish && cd ../ui && bun publish && cd ../.. && changeset tag"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

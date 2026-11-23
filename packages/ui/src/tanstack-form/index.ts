@@ -13,6 +13,14 @@ import { SwitchField as SwitchFieldBase } from '../components/switch-field.tsx'
 import { TextField as TextFieldBase } from '../components/text-field.tsx'
 import { TextareaField as TextareaFieldBase } from '../components/textarea-field.tsx'
 import { TimeField as TimeFieldBase } from '../components/time-field.tsx'
+import { ColorPickerField as ColorPickerFieldBase } from '../components/color-picker-field.tsx'
+import { MentionField as MentionFieldBase } from '../components/mention-field.tsx'
+import { MultiSelectField as MultiSelectFieldBase } from '../components/multi-select-field.tsx'
+import { PhoneField as PhoneFieldBase } from '../components/phone-field.tsx'
+import { RatingField as RatingFieldBase } from '../components/rating-field.tsx'
+import { ShortcutField as ShortcutFieldBase } from '../components/shortcut-field.tsx'
+import { SignatureField as SignatureFieldBase } from '../components/signature-field.tsx'
+import { TagField as TagFieldBase } from '../components/tag-field.tsx'
 import { bindField } from './bind-field.tsx'
 import { BoundCodeField } from './bound-code-field.tsx'
 import { BoundErrorSummary } from './bound-error-summary.tsx'
@@ -41,6 +49,14 @@ export const fieldComponents = {
   ColorField: bindField(ColorFieldBase),
   IconField: bindField(IconFieldBase),
   CodeField: BoundCodeField,
+  ColorPickerField: bindField(ColorPickerFieldBase),
+  MentionField: bindField(MentionFieldBase),
+  MultiSelectField: bindField(MultiSelectFieldBase),
+  PhoneField: bindField(PhoneFieldBase),
+  RatingField: bindField(RatingFieldBase),
+  ShortcutField: bindField(ShortcutFieldBase),
+  SignatureField: bindField(SignatureFieldBase),
+  TagField: bindField(TagFieldBase),
 }
 
 /** The form's own parts: its element, its submit button, its error summary. */

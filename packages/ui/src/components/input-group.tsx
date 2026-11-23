@@ -28,7 +28,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot="input-group"
       role="group"
       className={cn(
-        "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg bg-field text-fg shadow-field ring-1 ring-field-line transition-[box-shadow] outline-none ring-inset max-md:h-11 hover:ring-fg-subtle in-data-[slot=combobox-content]:shadow-none in-data-[slot=combobox-content]:focus-within:ring-field-line has-disabled:bg-subtle has-disabled:opacity-60 has-[[data-slot=input-group-control]:focus-visible]:shadow-focus has-[[data-slot=input-group-control]:focus-visible]:ring-line-focus has-[[data-slot][aria-invalid=true]]:ring-danger has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2 [&_svg:not([class*='size-'])]:size-4.5 [&_svg]:text-fg-subtle",
+        "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg bg-field text-fg shadow-field ring-1 ring-field-line transition-[box-shadow] duration-150 ease-standard outline-none motion-reduce:transition-none ring-inset max-md:h-11 hover:ring-fg-subtle in-data-[slot=combobox-content]:shadow-none in-data-[slot=combobox-content]:focus-within:ring-field-line has-disabled:bg-subtle has-disabled:opacity-60 has-[[data-slot=input-group-control]:focus-visible]:ring-line-focus has-[[data-slot][aria-invalid=true]]:ring-danger has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-2 has-[>[data-align=inline-start]]:[&>input]:pl-2 [&_svg:not([class*='size-'])]:size-4.5 [&_svg]:text-fg-subtle",
         className,
       )}
       {...props}
@@ -122,7 +122,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
       className={cn(
-        "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5",
+        "flex items-center gap-2 text-sm text-fg-subtle [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5",
         className,
       )}
       {...props}

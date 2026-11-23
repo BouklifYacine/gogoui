@@ -2,7 +2,12 @@ import * as React from 'react'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react/combobox'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import { useReduceMotion } from '../i18n/motion-context.ts'
+import { FollowHeight } from '../internal/follow-height.tsx'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
+import { MenuHighlight } from '../internal/menu-highlight.tsx'
+import { menuRow } from '../internal/menu-styles.ts'
+import { blur, duration, ease } from '../internal/motion.ts'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 import {
@@ -31,11 +36,54 @@ import {
  * `ComboboxEmpty` + `ComboboxList` > `ComboboxItem`s; for several values
  * `ComboboxChips` around the chips and the input.
  *
+ * **Motion**, after Arc UI (https://uiarc.dev, MIT): the list opens like
+ * the menus and its height follows the filter on a spring; a highlight
+ * glides from row to row; a picked label settles into the field; the ×
+ * pops in. Still with reduced motion.
+ *
  * **Accessibility**: arrows move in the list, Enter picks; give it a label.
  *
  * @summary Type to filter a long list, then pick a value.
  */
 const Combobox = ComboboxPrimitive.Root
+
+// A picked label settles into the field: it rises from below out of a soft
+// blur (Arc UI). Several values (chips) leave the field empty: nothing to
+// settle.
+function settleLabel(row: HTMLElement) {
+  const list = row.closest("[role='listbox']")
+  if (!list?.id || list.getAttribute('aria-multiselectable') === 'true') {
+    return
+  }
+  const input = document.querySelector<HTMLInputElement>(
+    `input[aria-controls="${CSS.escape(list.id)}"]`,
+  )
+  input?.animate(
+    [
+      {
+        opacity: 0,
+        transform: 'translateY(0.35em)',
+        filter: `blur(${blur.soft}px)`,
+      },
+      { opacity: 1, transform: 'none', filter: 'blur(0px)' },
+    ],
+    {
+      duration: duration.standard * 1000,
+      easing: `cubic-bezier(${ease.enter.join(', ')})`,
+    },
+  )
+}
+
+// Clearing fades the placeholder in, instead of snapping from the label.
+function fadeInField(button: HTMLElement) {
+  button
+    .closest("[data-slot='input-group']")
+    ?.querySelector('input')
+    ?.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: duration.fast * 1000,
+      easing: `cubic-bezier(${ease.enter.join(', ')})`,
+    })
+}
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {
   return <ComboboxPrimitive.Value data-slot="combobox-value" {...props} />
@@ -49,24 +97,40 @@ function ComboboxTrigger({
   return (
     <ComboboxPrimitive.Trigger
       data-slot="combobox-trigger"
-      className={cn("[&_svg:not([class*='size-'])]:size-3.5", className)}
+      className={cn(
+        "group/combobox-trigger [&_svg:not([class*='size-'])]:size-3.5",
+        className,
+      )}
       {...props}
     >
       {children}
       <GoGoIcon
         name="chevronDown"
-        className="pointer-events-none size-3.5 text-muted-foreground"
+        aria-hidden="true"
+        className="pointer-events-none size-3.5 text-fg-subtle transition-[rotate] duration-(--motion-spring) ease-spring group-data-popup-open/combobox-trigger:rotate-180"
       />
     </ComboboxPrimitive.Trigger>
   )
 }
 
-function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
+function ComboboxClear({
+  className,
+  onClick,
+  ...props
+}: ComboboxPrimitive.Clear.Props) {
+  const reduce = useReduceMotion()
   return (
     <ComboboxPrimitive.Clear
       data-slot="combobox-clear"
+      // It pops in and out (combobox-clear in styles.css).
       render={<InputGroupButton variant="ghost" size="icon-xs" />}
       className={cn(className)}
+      onClick={(event) => {
+        if (!reduce) {
+          fadeInField(event.currentTarget)
+        }
+        onClick?.(event)
+      }}
       {...props}
     >
       <GoGoIcon name="close" className="pointer-events-none" />
@@ -139,7 +203,9 @@ function ComboboxContent({
           data-slot="combobox-content"
           data-chips={!!anchor}
           className={cn(
-            'group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-parent-2xl bg-floating text-fg shadow-menu duration-150 ease-tactile data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+            // Its entrance and exit live in styles.css (combobox-content),
+            // like the menus'.
+            'group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] overflow-hidden rounded-parent-menu bg-floating text-fg shadow-menu outline-none data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-1.5 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:shadow-none',
             className,
           )}
           {...props}
@@ -149,37 +215,68 @@ function ComboboxContent({
   )
 }
 
-function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
+/**
+ * The rows. Its height follows the filter on a spring, so the list never
+ * jumps, and a highlight glides from row to row (the menus' own).
+ *
+ * @summary The filtered rows of a Combobox.
+ */
+function ComboboxList({
+  className,
+  children,
+  ...props
+}: ComboboxPrimitive.List.Props) {
   return (
-    <ComboboxPrimitive.List
-      data-slot="combobox-list"
-      className={cn(
-        'no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-2 overflow-y-auto overscroll-contain p-2 data-empty:p-0',
-        className,
-      )}
-      {...props}
-    />
+    <FollowHeight>
+      <ComboboxPrimitive.List
+        data-slot="combobox-list"
+        className={cn(
+          'no-scrollbar relative max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1.5 overflow-y-auto overscroll-contain p-1.5 data-empty:p-0',
+          className,
+        )}
+        {...props}
+      >
+        <MenuHighlight />
+        {typeof children === 'function' ? (
+          <ComboboxPrimitive.Collection>
+            {children}
+          </ComboboxPrimitive.Collection>
+        ) : (
+          children
+        )}
+      </ComboboxPrimitive.List>
+    </FollowHeight>
   )
 }
 
 function ComboboxItem({
   className,
   children,
+  onClick,
   ...props
 }: ComboboxPrimitive.Item.Props) {
+  const reduce = useReduceMotion()
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-2 rounded-concentric-2 py-2 pr-8 pl-2 text-sm text-fg-muted outline-hidden select-none data-highlighted:bg-hover data-highlighted:text-fg not-data-[variant=destructive]:data-highlighted:**:text-fg data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+        // Its background is the gliding highlight (MenuHighlight).
+        menuRow,
+        'w-full pr-9',
         className,
       )}
+      onClick={(event) => {
+        if (!reduce) {
+          settleLabel(event.currentTarget)
+        }
+        onClick?.(event)
+      }}
       {...props}
     >
       {children}
       <ComboboxPrimitive.ItemIndicator
         render={
-          <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
+          <span className="pointer-events-none absolute right-2.5 flex size-4 items-center justify-center" />
         }
       >
         <GoGoIcon name="check" className="pointer-events-none" />
@@ -205,7 +302,10 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn('px-2 py-1.5 text-xs text-muted-foreground', className)}
+      className={cn(
+        'px-2.5 pt-2 pb-1 text-xs font-medium text-fg-subtle',
+        className,
+      )}
       {...props}
     />
   )
@@ -222,7 +322,8 @@ function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.Props) {
     <ComboboxPrimitive.Empty
       data-slot="combobox-empty"
       className={cn(
-        'hidden w-full justify-center py-2 text-center text-sm text-muted-foreground group-data-empty/combobox-content:flex',
+        // It rises as it fades in (combobox-empty in styles.css).
+        'hidden w-full justify-center px-3 py-3 text-center text-sm text-fg-subtle group-data-empty/combobox-content:flex',
         className,
       )}
       {...props}
@@ -237,7 +338,7 @@ function ComboboxSeparator({
   return (
     <ComboboxPrimitive.Separator
       data-slot="combobox-separator"
-      className={cn('-mx-1 my-1 h-px bg-border', className)}
+      className={cn('-mx-1.5 my-1 h-px bg-line-subtle', className)}
       {...props}
     />
   )
@@ -252,7 +353,7 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        'flex min-h-9 flex-wrap items-center gap-1 rounded-lg bg-field px-3 py-1 text-sm shadow-field ring-1 ring-field-line transition-[box-shadow] ring-inset hover:ring-fg-subtle focus-within:shadow-focus focus-within:ring-line-focus has-aria-invalid:ring-danger has-data-[slot=combobox-chip]:px-1',
+        'flex min-h-9 flex-wrap items-center gap-1 rounded-lg bg-field px-3 py-1 text-sm shadow-field ring-1 ring-field-line transition-[box-shadow] ring-inset hover:ring-fg-subtle focus-within:ring-line-focus has-aria-invalid:ring-danger has-data-[slot=combobox-chip]:px-1',
         className,
       )}
       {...props}

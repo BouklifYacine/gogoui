@@ -2,13 +2,8 @@
 // kokonutUI), on GoGoUI's tokens and icons.
 import { useCallback, useRef, useState } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useTransform,
-} from 'motion/react'
+import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { useReduceMotion } from '../i18n/motion-context.ts'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { SlideInk } from '../internal/slide-ink.tsx'
@@ -27,6 +22,7 @@ import {
 } from '../internal/slide-motion.ts'
 import type { Phase } from '../internal/slide-motion.ts'
 import { SlideThumbIcon } from '../internal/slide-thumb-icon.tsx'
+import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
 type SlideToConfirmProps = {
@@ -38,8 +34,11 @@ type SlideToConfirmProps = {
   doneLabel: string
   /** The work; a rejected promise sends the thumb back. */
   onConfirm: () => Promise<unknown>
-  /** Red ink: the action takes something away. */
-  destructive?: boolean
+  /**
+   * The ink's colour once slid: `danger` when the act takes something away.
+   * Without it, the ink is the page's inverse (black, white at night).
+   */
+  color?: Color
   disabled?: boolean
   className?: string
 }
@@ -55,7 +54,8 @@ type SlideToConfirmProps = {
  * (`doneLabel`), disabled.
  *
  * **Key props**: `label`, `onConfirm` (returns a promise: the thumb waits
- * for it, a refusal sends it back), `destructive`, `confirmingLabel`,
+ * for it, a refusal sends it back), `color` (`danger` for an act that
+ * takes something away), `confirmingLabel`,
  * `doneLabel`, `disabled`.
  *
  * **Accessibility**: Enter, Space or a screen reader's double tap confirm
@@ -68,14 +68,14 @@ function SlideToConfirm({
   confirmingLabel,
   doneLabel,
   onConfirm,
-  destructive = false,
+  color,
   disabled = false,
   className,
 }: SlideToConfirmProps) {
   const { slideKeyboardHint } = useGoGoUIMessages()
   const [phase, setPhase] = useState<Phase>('idle')
   const [armed, setArmed] = useState(false)
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useReduceMotion()
 
   // `pressed`: a finger or a mouse went down on the thumb before the click.
   const dragRef = useRef({ pointer: 0, from: 0, moved: false, pressed: false })
@@ -274,7 +274,7 @@ function SlideToConfirm({
         <SlideInk
           phase={phase}
           stageLabel={stageLabel}
-          destructive={destructive}
+          color={color}
           reduceMotion={reduceMotion}
           fillClip={fillClip}
           fillOpacity={fillOpacity}
@@ -285,7 +285,7 @@ function SlideToConfirm({
           aria-disabled={disabled || phase !== 'idle'}
           aria-label={`${label}. ${slideKeyboardHint}`}
           className={cn(
-            'absolute flex touch-none items-center justify-center rounded-full bg-control text-fg shadow-button outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus',
+            'absolute flex touch-none items-center justify-center rounded-full bg-control text-fg shadow-button outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
             phase === 'idle' && !disabled && 'cursor-grab',
             phase === 'dragging' && 'cursor-grabbing',
           )}

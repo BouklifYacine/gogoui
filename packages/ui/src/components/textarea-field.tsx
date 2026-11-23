@@ -5,6 +5,7 @@ import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
+import { RollingNumber } from './rolling-number.tsx'
 import { Textarea } from './textarea.tsx'
 
 type TextareaFieldProps = FieldValueProps<string> &
@@ -29,7 +30,8 @@ const NEAR_END = 20
  * **Use it for** a message, a note, a description.
  *
  * **States**: empty, filled, focus, invalid, near the limit (the counter
- * turns), over it.
+ * turns), over it. The count's digits roll as you type; help and error
+ * slide in (FieldShell).
  *
  * **Key props**: `label`, `value` + `onValueChange`, `error`,
  * `description`, `maxLength` (shows « 120 caractères restants »). Four
@@ -88,7 +90,7 @@ function TextareaField({
               )}
             >
               <span aria-hidden="true">
-                {value.length} / {maxLength}
+                <RollingNumber value={value.length} /> / {maxLength}
               </span>
               {/* Read only near the end: every key would be noise. */}
               <span aria-live="polite" className="sr-only">

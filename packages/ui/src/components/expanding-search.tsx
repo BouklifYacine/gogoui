@@ -1,12 +1,9 @@
 import { useCallback, useRef, useState } from 'react'
 import type { FocusEvent } from 'react'
 import { flushSync } from 'react-dom'
-import {
-  AnimatePresence,
-  MotionConfig,
-  motion,
-  useReducedMotion,
-} from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useReduceMotion } from '../i18n/motion-context.ts'
+import { MotionScope } from '../internal/motion-scope.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
@@ -84,7 +81,7 @@ function ExpandingSearch({
 }: ExpandingSearchProps) {
   const messages = useGoGoUIMessages()
   const [open, setOpen] = useState(false)
-  const reduce = useReducedMotion()
+  const reduce = useReduceMotion()
   const container = useRef<HTMLElement>(null)
   const input = useRef<HTMLInputElement>(null)
   const glass = useRef<HTMLButtonElement>(null)
@@ -139,7 +136,7 @@ function ExpandingSearch({
   }, [])
 
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionScope>
       <search
         ref={listenForSlash}
         data-slot="expanding-search"
@@ -197,7 +194,7 @@ function ExpandingSearch({
                     }}
                     onBlur={closeIfLeft}
                     // 28 px, with a 44 px touch target around it.
-                    className="relative flex size-7 shrink-0 items-center justify-center rounded-full text-fg outline-line-focus after:absolute after:-inset-2 hover:bg-hover focus-visible:outline-2"
+                    className="relative flex size-7 shrink-0 items-center justify-center rounded-full text-fg outline-focus after:absolute after:-inset-2 hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid"
                   >
                     <GoGoIcon
                       name="close"
@@ -225,7 +222,7 @@ function ExpandingSearch({
                 aria-keyshortcuts="/"
                 onClick={openField}
                 className={cn(
-                  'flex h-9 cursor-pointer items-center gap-2 rounded-[18px] whitespace-nowrap outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus',
+                  'flex h-9 cursor-pointer items-center gap-2 rounded-[18px] whitespace-nowrap outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
                   'max-sm:w-9 max-sm:justify-center sm:ps-3 sm:pe-2',
                   query && 'bg-primary-subtle text-fg',
                 )}
@@ -260,7 +257,7 @@ function ExpandingSearch({
           </AnimatePresence>
         </motion.div>
       </search>
-    </MotionConfig>
+    </MotionScope>
   )
 }
 

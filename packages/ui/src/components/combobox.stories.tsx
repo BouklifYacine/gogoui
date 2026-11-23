@@ -99,3 +99,27 @@ export const Multiple = meta.story({
     )
   },
 })
+
+/**
+ * The list's height follows the filter on a spring, the highlight glides,
+ * a picked city settles into the field, the × pops in and clearing fades
+ * the placeholder back; « no result » rises as it appears.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: () => (
+    <Combobox items={cities}>
+      <ComboboxInput placeholder="Lyon" aria-label="Ville" showClear />
+      <ComboboxContent>
+        <ComboboxEmpty>Aucune ville trouvée.</ComboboxEmpty>
+        <ComboboxList>
+          {(city: string) => (
+            <ComboboxItem key={city} value={city}>
+              {city}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  ),
+})

@@ -24,8 +24,47 @@ export const Basic = meta.story({
     numberOfMonths: 1,
     showWeekNumber: false,
     showOutsideDays: true,
-    fixedWeeks: false,
+    showToday: false,
+    fixedWeeks: true,
     weekStartsOn: 1,
+  },
+})
+
+/**
+ * Pick a day: the disc glides in a straight line and each number changes
+ * colour as the disc really passes it; the months slide on a strip, the
+ * title crossfades; « Aujourd'hui » slides back and chooses today, marked
+ * by its dot. In a range, the bar stretches under the pointer once the
+ * first day is picked and the two ends glide.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: function Render() {
+    const [day, setDay] = useState<Date | undefined>(new Date(2027, 5, 12))
+    const [range, setRange] = useState<DateRange | undefined>({
+      from: new Date(2027, 5, 8),
+      to: new Date(2027, 5, 11),
+    })
+    return (
+      <div className="flex flex-wrap items-start gap-8">
+        <Calendar
+          locale={fr}
+          defaultMonth={new Date(2027, 5, 1)}
+          mode="single"
+          showToday
+          selected={day}
+          onSelect={setDay}
+        />
+        <Calendar
+          locale={fr}
+          defaultMonth={new Date(2027, 5, 1)}
+          mode="range"
+          color="success"
+          selected={range}
+          onSelect={setRange}
+        />
+      </div>
+    )
   },
 })
 

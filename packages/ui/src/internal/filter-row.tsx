@@ -33,7 +33,7 @@ export function FilterRow({
       onClick={onOpen}
       aria-pressed={sidebar ? selected : undefined}
       className={cn(
-        'flex w-full items-center gap-3 rounded-lg text-left outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-line-focus',
+        'flex w-full items-center gap-3 rounded-lg text-left outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus',
         sidebar ? 'min-h-11 px-3 text-sm text-fg-muted' : 'min-h-14 px-2',
         sidebar && selected && 'bg-hover text-fg',
       )}

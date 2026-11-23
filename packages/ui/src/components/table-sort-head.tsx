@@ -60,7 +60,7 @@ function TableSortHead({
           type="button"
           onClick={onSort}
           className={cn(
-            'inline-flex min-h-11 items-center gap-1 rounded-md font-medium outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-line-focus pointer-fine:min-h-9',
+            'inline-flex min-h-11 items-center gap-1 rounded-md font-medium outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus pointer-fine:min-h-9',
             align === 'end' && 'flex-row-reverse',
           )}
         >

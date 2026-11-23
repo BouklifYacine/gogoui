@@ -7,7 +7,7 @@ import type { VariantProps } from 'class-variance-authority'
 import { cn } from '../lib/cn.ts'
 
 const itemVariants = cva(
-  'group/item flex w-full flex-wrap items-center gap-4 rounded-xl text-sm text-fg outline-none transition-colors [a]:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus',
+  'group/item flex w-full flex-wrap items-center gap-4 rounded-xl text-sm text-fg outline-none transition-colors [a]:hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
   {
     variants: {
       variant: {

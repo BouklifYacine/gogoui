@@ -57,7 +57,7 @@ function MenubarTrigger({ className, ...props }: MenuPrimitive.Trigger.Props) {
     <MenuPrimitive.Trigger
       data-slot="menubar-trigger"
       className={cn(
-        'flex h-8 items-center rounded-lg px-3 text-sm font-medium text-fg-muted outline-none select-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-line-focus data-popup-open:bg-raised data-popup-open:text-fg data-popup-open:shadow-sm',
+        'flex h-8 items-center rounded-lg px-3 text-sm font-medium text-fg-muted outline-none select-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus data-popup-open:bg-raised data-popup-open:text-fg data-popup-open:shadow-sm',
         className,
       )}
       {...props}

@@ -37,3 +37,24 @@ export const Basic = meta.story({
     )
   },
 })
+
+/**
+ * The counter's digits roll as you type, and the help and error slide in
+ * under the field (FieldShell).
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: function Render() {
+    const [value, setValue] = useState('Bonjour Léa et Hugo,')
+    return (
+      <TextareaField
+        name="message"
+        label="Message au couple"
+        maxLength={120}
+        error={value.length > 100 ? 'Restez sous 100 caractères.' : undefined}
+        value={value}
+        onValueChange={setValue}
+      />
+    )
+  },
+})

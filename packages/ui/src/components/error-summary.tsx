@@ -59,7 +59,7 @@ function ErrorSummary({
       data-slot="error-summary"
       aria-labelledby={`${id}-title`}
       className={cn(
-        'flex flex-col gap-2 rounded-lg border border-danger-line bg-danger-subtle p-4 text-danger-fg outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus',
+        'flex flex-col gap-2 rounded-lg border border-danger-line bg-danger-subtle p-4 text-danger-fg outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
         className,
       )}
     >

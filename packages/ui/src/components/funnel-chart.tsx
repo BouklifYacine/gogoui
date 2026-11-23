@@ -1,4 +1,5 @@
-import { motion, useReducedMotion, useSpring, useTransform } from 'motion/react'
+import { motion, useSpring, useTransform } from 'motion/react'
+import { useReduceMotion } from '../i18n/motion-context.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 
@@ -593,7 +594,7 @@ export function FunnelChart({
   grid: gridProp = false,
 }: FunnelChartProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const reduced = useReducedMotion() ?? false
+  const reduced = useReduceMotion()
   const [sz, setSz] = useState({ w: 0, h: 0 })
   const [internalHoveredIndex, setInternalHoveredIndex] = useState<
     number | null

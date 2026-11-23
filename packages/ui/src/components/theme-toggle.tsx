@@ -9,6 +9,7 @@ import {
   writeTheme,
 } from '../internal/theme-store.ts'
 import type { Theme } from '../internal/theme-store.ts'
+import { ThemeButton } from '../internal/theme-button.tsx'
 import { ToggleGroup, ToggleGroupItem } from './toggle-group.tsx'
 
 /**
@@ -25,8 +26,16 @@ function useTheme(): [Theme, (theme: Theme) => void] {
 }
 
 type ThemeToggleProps = {
+  /**
+   * `group`: light, dark and the device's, side by side. `button`: one
+   * button between light and dark whose icon turns (in « system », it
+   * switches from what the device shows).
+   */
+  variant?: 'group' | 'button'
   /** Icons only, their names for screen readers and on hover. */
   compact?: boolean
+  /** `button` only: Button's sizes. */
+  size?: 'sm' | 'default' | 'lg'
   className?: string
 }
 
@@ -35,18 +44,35 @@ type ThemeToggleProps = {
  *
  * **Use it for** the app's header, its user menu or its settings.
  *
- * **Key props**: `compact` (icons only, their names on hover and for screen
- * readers, for a header).
+ * **Where**: `group` in settings, where the device's choice matters;
+ * `button` (compact) in a header, where one click should do.
+ *
+ * **States**: `group`: the chosen one pressed. `button`: pressed in dark
+ * mode; its sun and moon trade places with a turn (not on the first
+ * paint, so a stored theme never spins it).
+ *
+ * **Key props**: `variant` (group, button), `compact` (icons only, their
+ * names on hover and for screen readers, for a header), `size` (button).
  * Put `themeScript` in the page's head so the right theme shows before
  * React starts.
  *
- * **Accessibility**: each choice is named; the chosen one is pressed.
+ * **Accessibility**: `group`: each choice is named, the chosen one is
+ * pressed. `button`: named « Mode sombre » and pressed in dark mode
+ * (`aria-pressed`), so its name never changes under the focus.
  *
  * @summary Switch between light, dark and the device's theme.
  */
-function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
+function ThemeToggle({
+  variant = 'group',
+  compact = false,
+  size = 'default',
+  className,
+}: ThemeToggleProps) {
   const messages = useGoGoUIMessages()
   const [theme, setTheme] = useTheme()
+  if (variant === 'button') {
+    return <ThemeButton compact={compact} size={size} className={className} />
+  }
   const options = [
     { value: 'light', label: messages.themeLight, icon: SunIcon },
     { value: 'dark', label: messages.themeDark, icon: MoonIcon },

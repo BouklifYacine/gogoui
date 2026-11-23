@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import type { ComponentProps, ReactNode } from 'react'
-import { MotionConfig, motion } from 'motion/react'
+import { motion } from 'motion/react'
+import { MotionScope } from './motion-scope.tsx'
 import { CheckIcon } from '@phosphor-icons/react'
 
 import { Button } from '../components/button.tsx'
@@ -57,7 +58,7 @@ export function MorphingButton({
         : undefined) ?? 'auto'
 
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionScope>
       <motion.div
         initial={false}
         animate={{ width }}
@@ -151,6 +152,6 @@ export function MorphingButton({
           </motion.span>
         </Button>
       </motion.div>
-    </MotionConfig>
+    </MotionScope>
   )
 }

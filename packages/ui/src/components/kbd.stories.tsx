@@ -22,3 +22,16 @@ export const Basic = meta.story({
     </p>
   ),
 })
+
+/**
+ * Keys held down (`data-pressed`) sink a pixel and light up.
+ */
+export const Pressed = meta.story({
+  render: () => (
+    <KbdGroup>
+      <Kbd data-pressed="">Ctrl</Kbd>
+      <Kbd data-pressed="">Maj</Kbd>
+      <Kbd>K</Kbd>
+    </KbdGroup>
+  ),
+})

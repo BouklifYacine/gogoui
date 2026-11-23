@@ -128,3 +128,49 @@ export const Sizes = meta.story({
     </div>
   ),
 })
+
+/**
+ * The window rises 8px and grows from .96 on a spring that never
+ * overshoots while its veil fades in; it leaves quicker and quieter. Close
+ * it and reopen it at once: it turns back from where it is.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Dialog>
+        <DialogTrigger render={<Button variant="outline" />}>
+          Ouvrir la fenêtre
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Envoyer le devis ?</DialogTitle>
+            <DialogDescription>
+              Le couple le reçoit par e-mail, avec le lien pour signer.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              Annuler
+            </DialogClose>
+            <DialogClose render={<Button />}>Envoyer</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog>
+        <DialogTrigger render={<Button variant="outline" />}>
+          Grande fenêtre
+        </DialogTrigger>
+        <DialogContent size="lg">
+          <DialogHeader>
+            <DialogTitle>Conditions de la salle</DialogTitle>
+            <DialogDescription>
+              La même entrée, quelle que soit la taille.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter showCloseButton />
+        </DialogContent>
+      </Dialog>
+    </div>
+  ),
+})

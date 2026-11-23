@@ -1,6 +1,19 @@
 import {
+  ArrowClockwiseIcon,
+  ArrowCounterClockwiseIcon,
   ArrowDownIcon,
+  ArrowUUpLeftIcon,
+  ArrowUUpRightIcon,
   ArrowUpIcon,
+  EraserIcon,
+  EyedropperIcon,
+  FileIcon,
+  FileImageIcon,
+  FileTextIcon,
+  FileVideoIcon,
+  FileZipIcon,
+  PlayIcon,
+  StopIcon,
   ArrowsDownUpIcon,
   CalendarDotsIcon,
   CaretDownIcon,
@@ -10,12 +23,19 @@ import {
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
+  CopyIcon,
+  DesktopIcon,
   DotsThreeIcon,
   FunnelSimpleIcon,
   InfoIcon,
+  ListIcon,
   MagnifyingGlassIcon,
   MinusIcon,
+  MoonIcon,
   PlusIcon,
+  SignOutIcon,
+  StarIcon,
+  SunIcon,
   WarningCircleIcon,
   WarningIcon,
   XIcon,
@@ -59,6 +79,46 @@ export type GoGoUIIcons = {
   success: GoGoUIIcon
   warning: GoGoUIIcon
   danger: GoGoUIIcon
+  // UserMenu and ShortcutRecorder (after Arc UI).
+  /** The account menu's way out. */
+  signOut: GoGoUIIcon
+  /** The themes: light, dark, the device's. */
+  themeLight: GoGoUIIcon
+  themeDark: GoGoUIIcon
+  themeSystem: GoGoUIIcon
+  /** Brings a default value back. */
+  reset: GoGoUIIcon
+  // SiteHeader (after Arc UI).
+  /** The ☰ that opens a site's menu on a phone. */
+  menu: GoGoUIIcon
+  // CopyButton (after Arc UI).
+  /** A copy button at rest. */
+  copy: GoGoUIIcon
+  // Rating (after Arc UI).
+  /** A rating's star, drawn filled (Phosphor weight « fill ») and outlined. */
+  star: GoGoUIIcon
+  // SignaturePad and FileUpload (after Arc UI).
+  /** Takes the last stroke back, and gives it again. */
+  undo: GoGoUIIcon
+  redo: GoGoUIIcon
+  /** Replays a signature, and stops it. */
+  play: GoGoUIIcon
+  stop: GoGoUIIcon
+  /** Clears a signature. */
+  eraser: GoGoUIIcon
+  /** The arrow on an upload zone's sheet. */
+  upload: GoGoUIIcon
+  /** Tries an upload again. */
+  retry: GoGoUIIcon
+  /** A file without a thumbnail, by its type. */
+  file: GoGoUIIcon
+  fileImage: GoGoUIIcon
+  fileVideo: GoGoUIIcon
+  fileArchive: GoGoUIIcon
+  fileText: GoGoUIIcon
+  // ColorPicker (after Arc UI).
+  /** Picks a colour from the screen. */
+  eyedropper: GoGoUIIcon
 }
 
 export const defaultIcons: GoGoUIIcons = {
@@ -82,4 +142,31 @@ export const defaultIcons: GoGoUIIcons = {
   success: CheckCircleIcon,
   warning: WarningIcon,
   danger: WarningCircleIcon,
+  // UserMenu and ShortcutRecorder (after Arc UI).
+  signOut: SignOutIcon,
+  themeLight: SunIcon,
+  themeDark: MoonIcon,
+  themeSystem: DesktopIcon,
+  reset: ArrowCounterClockwiseIcon,
+  // SiteHeader (after Arc UI).
+  menu: ListIcon,
+  // CopyButton (after Arc UI).
+  copy: CopyIcon,
+  // Rating (after Arc UI).
+  star: StarIcon,
+  // SignaturePad and FileUpload (after Arc UI).
+  undo: ArrowUUpLeftIcon,
+  redo: ArrowUUpRightIcon,
+  play: PlayIcon,
+  stop: StopIcon,
+  eraser: EraserIcon,
+  upload: ArrowUpIcon,
+  retry: ArrowClockwiseIcon,
+  file: FileIcon,
+  fileImage: FileImageIcon,
+  fileVideo: FileVideoIcon,
+  fileArchive: FileZipIcon,
+  fileText: FileTextIcon,
+  // ColorPicker (after Arc UI).
+  eyedropper: EyedropperIcon,
 }

@@ -62,6 +62,11 @@
   --line-focus: #0a0a0a;
   --line-inverse: #ffffff;
   --field-line: #8c8c8c; /* 3.4:1 on white, 3.1:1 on the canvas */
+  /* A separator inside a menu: barely there, edge to edge. */
+  --line-subtle: #f0f0f0;
+
+  /* The row under the pointer or the arrows, in every menu. */
+  --menu-highlight: var(--hover);
 
   /* ---------- primary: neutral, the brand is the project's ---------- */
   --primary: #171717;
@@ -134,9 +139,10 @@
   --ds-shadow-badge:
     0 0 0 1px color-mix(in srgb, currentColor 14%, transparent),
     0 1px 2px 0 color-mix(in srgb, currentColor 16%, transparent);
+  /* A floating panel (Arc UI): a hairline, a close shade, a wide soft one. */
   --ds-shadow-menu:
-    0 0 0 1px rgb(10 10 10 / 0.08), 0 1px 2px 0 rgb(10 10 10 / 0.12),
-    0 4px 8px -4px rgb(10 10 10 / 0.16);
+    0 0 0 1px rgb(10 10 10 / 0.06), 0 3px 10px 0 rgb(0 0 0 / 0.045),
+    0 20px 48px 0 rgb(0 0 0 / 0.105);
 
   /* ---------- shadcn names, pointing at the tokens above ---------- */
   --background: var(--surface);
@@ -181,6 +187,72 @@
   --type-sm: 0.8125rem;
   --type-base: 0.9375rem;
   --type-base-leading: 1.375rem;
+
+  /*
+   * Focus, after Arc UI (https://uiarc.dev, MIT): a field answers with its
+   * edge alone; everything else draws a softened outline, 2px at 2px, for
+   * the keyboard only. A project sets --focus-outline to its brand (keep it
+   * at 3:1 against the page).
+   */
+  --focus-outline: color-mix(in srgb, var(--line-focus) 72%, transparent);
+
+  /*
+   * Motion, after Arc UI: an interface moves in under 300ms, an exit is
+   * quicker than its entry, and nothing overshoots, so nothing jitters.
+   * `considered` is for the rare larger reveal; `spring` pairs with
+   * --motion-ease-spring for a transform in CSS.
+   */
+  --motion-instant: 100ms;
+  --motion-fast: 150ms;
+  --motion-exit: 140ms;
+  --motion-standard: 200ms;
+  --motion-considered: 360ms;
+  --motion-spring: 440ms;
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  /* For what moves while already on screen. */
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* A critically damped spring: fast start, smooth settle, no overshoot. */
+  --motion-ease-spring: linear(
+    0,
+    0.0213,
+    0.0739,
+    0.1443,
+    0.2235,
+    0.305,
+    0.3849,
+    0.4606,
+    0.5305,
+    0.594,
+    0.6508,
+    0.7011,
+    0.7452,
+    0.7836,
+    0.8168,
+    0.8454,
+    0.8699,
+    0.8907,
+    0.9084,
+    0.9234,
+    0.9361,
+    0.9467,
+    0.9557,
+    0.9632,
+    0.9694,
+    0.9747,
+    0.979,
+    0.9826,
+    0.9857,
+    0.9882,
+    0.9902,
+    0.992,
+    0.9934,
+    0.9946,
+    0.9955,
+    0.9963,
+    1
+  );
 }
 
 :where(.light) {
@@ -232,6 +304,10 @@
   --line-focus: #ffffff;
   --line-inverse: #0a0a0a;
   --field-line: #6b6b6b; /* 3.7:1 on a card */
+  --line-subtle: rgb(255 255 255 / 0.06);
+  /* Declared again so a `.dark` subtree reads its own colours. */
+  --focus-outline: color-mix(in srgb, var(--line-focus) 72%, transparent);
+  --menu-highlight: var(--hover);
 
   /* The sidebar is the page's black, a hairline on its edge */
   --sidebar: var(--canvas);
@@ -294,7 +370,7 @@
     0 1px 2px 0 rgb(0 0 0 / 0.5);
   --ds-shadow-menu:
     0 0 0 1px #262626, 0 1px 2px 0 rgb(0 0 0 / 0.5),
-    0 4px 8px -4px rgb(0 0 0 / 0.6);
+    0 22px 55px 0 rgb(0 0 0 / 0.34);
 
   --destructive: #ff8a8a; /* error text: 6.6:1 on a card */
   --destructive-foreground: #2a0b0b;

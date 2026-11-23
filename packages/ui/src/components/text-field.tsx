@@ -27,7 +27,8 @@ type TextFieldProps = FieldValueProps<string> &
  * (first name, last name) on a computer.
  *
  * **States**: empty, filled, focus, disabled, invalid (`error` shown under
- * it and linked to it).
+ * it and linked to it). The help and the error slide in, their words
+ * rising into place (FieldShell, after Arc UI).
  *
  * **Key props**: `label`, `value` + `onValueChange` (controlled), `error`
  * (the message, shown after a blur or a submit), `description` (help under

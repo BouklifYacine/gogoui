@@ -1,7 +1,7 @@
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox'
-import { checked } from '../internal/colors.ts'
+import { CheckboxMark } from '../internal/checkbox-mark.tsx'
 import type { Color } from '../internal/colors.ts'
-import { GoGoIcon } from '../internal/gogo-icon.tsx'
+import { MotionScope } from '../internal/motion-scope.tsx'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -19,6 +19,11 @@ import { cn } from '../lib/cn.ts'
  * **Key props**: `checked` / `defaultChecked` + `onCheckedChange`,
  * `indeterminate`, `color` (the tick's fill).
  *
+ * **Motion** (after Arc UI, https://uiarc.dev, MIT): the fill grows from
+ * .6 while the tick draws itself, ticked ↔ indeterminate morphs the tick
+ * into the dash, a press squeezes the box to .95. Still with reduced
+ * motion.
+ *
  * **Accessibility**: a `Label` with `htmlFor`; the hit area reaches 12 px
  * around the box.
  *
@@ -26,38 +31,39 @@ import { cn } from '../lib/cn.ts'
  */
 function Checkbox({
   className,
-  color,
+  color = 'primary',
   ...props
 }: CheckboxPrimitive.Root.Props & {
   /** Its fill once ticked, the primary by default. */
   color?: Color
 }) {
   return (
-    <CheckboxPrimitive.Root
-      data-slot="checkbox"
-      className={cn(
-        'group/checkbox peer relative flex size-4 shrink-0 items-center justify-center rounded-xs bg-surface shadow-xs ring-1 ring-field-line outline-none focus-visible:outline-hidden forced-colors:border ring-inset transition-[background-color,box-shadow] after:absolute after:-inset-3 focus-visible:shadow-focus-primary disabled:cursor-not-allowed disabled:bg-track disabled:shadow-none disabled:ring-0 aria-invalid:ring-danger data-checked:bg-primary data-checked:text-primary-foreground data-checked:ring-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:ring-primary',
-        color && checked[color],
-        className,
-      )}
-      {...props}
-    >
-      <CheckboxPrimitive.Indicator
-        data-slot="checkbox-indicator"
-        className="flex items-center justify-center text-current"
+    <MotionScope>
+      <CheckboxPrimitive.Root
+        data-slot="checkbox"
+        className={cn(
+          'group/checkbox peer relative flex size-4 shrink-0 items-center justify-center rounded-xs bg-surface shadow-xs ring-1 ring-field-line outline-none forced-colors:border ring-inset transition-[box-shadow,scale] duration-(--motion-spring) ease-spring after:absolute after:-inset-3 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:duration-(--motion-instant) active:ease-standard motion-safe:active:not-data-disabled:scale-95 disabled:cursor-not-allowed disabled:bg-track disabled:shadow-none disabled:ring-0 aria-invalid:ring-danger data-checked:shadow-none data-indeterminate:shadow-none data-disabled:data-checked:opacity-60 data-disabled:data-indeterminate:opacity-60',
+          className,
+        )}
+        {...props}
       >
-        <GoGoIcon
-          name="check"
-          weight="bold"
-          className="size-3 group-data-indeterminate/checkbox:hidden"
+        {/* Kept mounted, so the tick can draw itself out as well as in. */}
+        <CheckboxPrimitive.Indicator
+          data-slot="checkbox-indicator"
+          keepMounted
+          className="absolute inset-0 flex items-center justify-center rounded-[inherit]"
+          render={(indicatorProps, state) => (
+            <span {...indicatorProps}>
+              <CheckboxMark
+                checked={state.checked}
+                indeterminate={state.indeterminate}
+                color={color}
+              />
+            </span>
+          )}
         />
-        <GoGoIcon
-          name="minus"
-          weight="bold"
-          className="hidden size-3 group-data-indeterminate/checkbox:block"
-        />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
+      </CheckboxPrimitive.Root>
+    </MotionScope>
   )
 }
 

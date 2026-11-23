@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { MotionConfig, motion } from 'motion/react'
+import { motion } from 'motion/react'
+import { MotionScope } from '../internal/motion-scope.tsx'
 
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { cn } from '../lib/cn.ts'
@@ -76,7 +77,7 @@ function CodeField({
       error={error}
     >
       {(control) => (
-        <MotionConfig reducedMotion="user">
+        <MotionScope>
           <div className="relative w-fit">
             <motion.div
               aria-hidden="true"
@@ -153,7 +154,7 @@ function CodeField({
               className="absolute inset-0 size-full cursor-text bg-transparent text-transparent caret-transparent outline-none selection:bg-transparent"
             />
           </div>
-        </MotionConfig>
+        </MotionScope>
       )}
     </FieldShell>
   )

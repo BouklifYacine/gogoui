@@ -66,7 +66,7 @@ function IconField<TValue extends string>({
               key={option.value}
               htmlFor={optionId}
               title={option.label}
-              className="relative flex size-12 cursor-pointer items-center justify-center rounded-xl bg-control text-fg-muted shadow-button transition-colors hover:bg-control-hover hover:text-fg has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-line-focus has-data-checked:bg-primary has-data-checked:text-primary-foreground has-data-checked:shadow-primary"
+              className="relative flex size-12 cursor-pointer items-center justify-center rounded-xl bg-control text-fg-muted shadow-button transition-colors hover:bg-control-hover hover:text-fg has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-offset-2 has-focus-visible:outline-focus has-data-checked:bg-primary has-data-checked:text-primary-foreground has-data-checked:shadow-primary"
             >
               <RadioGroupItem
                 id={optionId}

@@ -1,4 +1,5 @@
-import { MotionConfig, motion } from 'motion/react'
+import { motion } from 'motion/react'
+import { MotionScope } from '../internal/motion-scope.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -32,7 +33,7 @@ function StepProgress({ steps, current, className }: StepProgressProps) {
   const last = Math.max(1, steps.length - 1)
   const index = current - 1
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionScope>
       <div
         data-slot="step-progress"
         className={cn('flex flex-col gap-2.5', className)}
@@ -104,7 +105,7 @@ function StepProgress({ steps, current, className }: StepProgressProps) {
           ))}
         </div>
       </div>
-    </MotionConfig>
+    </MotionScope>
   )
 }
 

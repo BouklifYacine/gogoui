@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ArrowRightIcon, PlusIcon, TrashIcon } from '@phosphor-icons/react'
 
 import preview from '#.storybook/preview'
@@ -143,4 +144,25 @@ export const Colors = meta.story({
       )}
     </div>
   ),
+})
+
+/**
+ * Press it: it squeezes quickly (.97, .96 for an icon alone). When its
+ * words change, the new ones rise into place as the old ones fade.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: function Render() {
+    const [copied, setCopied] = useState(false)
+    return (
+      <div className="flex items-center gap-3">
+        <Button variant="outline" onClick={() => setCopied((done) => !done)}>
+          {copied ? 'Lien copié' : 'Copier le lien'}
+        </Button>
+        <Button variant="soft" size="icon" aria-label="Ajouter">
+          <PlusIcon />
+        </Button>
+      </div>
+    )
+  },
 })

@@ -1,5 +1,9 @@
 import * as React from 'react'
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog'
+import {
+  dialogOverlayMotion,
+  dialogPopupMotion,
+} from '../internal/dialog-motion.ts'
 import { cn } from '../lib/cn.ts'
 
 import { Button } from './button.tsx'
@@ -15,6 +19,7 @@ import { Button } from './button.tsx'
  * the page.
  *
  * **States**: closed, open; a click outside does not close it, Escape does.
+ * It comes and goes like `Dialog` (a spring rise, a quicker exit).
  *
  * **Compose**: `AlertDialog` > `AlertDialogTrigger` + `AlertDialogContent` >
  * `AlertDialogHeader` (`AlertDialogTitle`, `AlertDialogDescription`) +
@@ -49,7 +54,8 @@ function AlertDialogOverlay({
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
       className={cn(
-        'fixed inset-0 isolate z-50 bg-overlay backdrop-blur-[6px] duration-150 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0',
+        'fixed inset-0 isolate z-50 bg-overlay backdrop-blur-[6px]',
+        dialogOverlayMotion,
         className,
       )}
       {...props}
@@ -73,7 +79,9 @@ function AlertDialogContent({
         className={cn(
           // About 15 % larger than shadcn's: read at arm's length on a
           // phone, the last step before a change.
-          'group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-floating p-6 text-fg shadow-lg duration-150 ease-tactile outline-none data-[size=default]:max-w-[23rem] data-[size=sm]:max-w-[23rem] data-[size=default]:sm:max-w-[440px] data-open:animate-in data-open:fade-in-0 data-open:slide-in-from-bottom-1 data-open:zoom-in-[0.98] data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-[0.98]',
+          'group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-floating p-6 text-fg shadow-lg outline-none data-[size=default]:max-w-[23rem] data-[size=sm]:max-w-[23rem] data-[size=default]:sm:max-w-[440px]',
+          // Arc UI's spring entrance, the same as Dialog's.
+          dialogPopupMotion,
           className,
         )}
         {...props}

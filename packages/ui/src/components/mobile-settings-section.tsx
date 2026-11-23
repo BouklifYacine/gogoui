@@ -60,7 +60,7 @@ function MobileSettingsSection({
           'max-md:rounded-xl max-md:border max-md:border-line max-md:bg-card',
       )}
     >
-      <CollapsibleTrigger className="group flex min-h-14 w-full items-center gap-3 rounded-xl px-4 py-3 text-left outline-none focus-visible:outline-2 focus-visible:outline-line-focus md:hidden">
+      <CollapsibleTrigger className="group flex min-h-14 w-full items-center gap-3 rounded-xl px-4 py-3 text-left outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus md:hidden">
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-medium text-fg">{title}</span>
           {summary && (

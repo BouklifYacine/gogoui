@@ -73,7 +73,7 @@ function NavigationMenuItem({
 }
 
 const triggerStyle =
-  'inline-flex h-9 items-center justify-center gap-1 rounded-lg px-3 text-sm font-medium text-fg-muted transition-colors outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus data-popup-open:bg-hover data-popup-open:text-fg max-md:h-11'
+  'inline-flex h-9 items-center justify-center gap-1 rounded-lg px-3 text-sm font-medium text-fg-muted transition-colors outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus data-popup-open:bg-hover data-popup-open:text-fg max-md:h-11'
 
 function NavigationMenuTrigger({
   className,
@@ -118,7 +118,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        'flex flex-col gap-0.5 rounded-lg p-3 text-sm text-fg outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-line-focus data-active:font-medium',
+        'flex flex-col gap-0.5 rounded-lg p-3 text-sm text-fg outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus data-active:font-medium',
         className,
       )}
       {...props}

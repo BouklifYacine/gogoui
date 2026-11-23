@@ -1,12 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useTransform,
-} from 'motion/react'
+import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { useReduceMotion } from '../i18n/motion-context.ts'
 
 import { fill, onFill } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -63,7 +58,7 @@ function PillTabsList<TValue extends string>({
   slides = true,
   color,
 }: PillTabsListProps<TValue>) {
-  const reduce = useReducedMotion() || !slides
+  const reduce = useReduceMotion() || !slides
   // The pill's two edges, in px from the tray's left.
   const left = useMotionValue(0)
   const right = useMotionValue(0)

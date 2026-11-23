@@ -25,16 +25,41 @@ export const Basic = meta.story({
 })
 
 /**
- * In red: the action takes something away.
+ * `color="danger"`: the action takes something away.
  */
-export const Destructive = meta.story({
+export const Danger = meta.story({
   args: {
     label: 'Glissez pour rembourser 1 500 €',
     confirmingLabel: 'Remboursement',
     doneLabel: 'Remboursé',
-    destructive: true,
+    color: 'danger',
     onConfirm: () => new Promise((resolve) => setTimeout(resolve, 1200)),
   },
+})
+
+/**
+ * The ink in each of GoGoUI's colours; without `color`, the page's
+ * inverse.
+ */
+export const Colors = meta.story({
+  render: () => (
+    <div className="flex flex-col gap-3">
+      {(['primary', 'info', 'success', 'warning', 'danger'] as const).map(
+        (color) => (
+          <SlideToConfirm
+            key={color}
+            color={color}
+            label={`Glissez pour confirmer (${color})`}
+            confirmingLabel="Enregistrement"
+            doneLabel="Enregistré"
+            onConfirm={() =>
+              new Promise((resolve) => setTimeout(resolve, 1200))
+            }
+          />
+        ),
+      )}
+    </div>
+  ),
 })
 
 /**

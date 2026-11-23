@@ -30,7 +30,7 @@ function InfoTip({ text, className }: InfoTipProps) {
         aria-label={text}
         data-slot="info-tip"
         className={cn(
-          'inline-flex size-6 items-center justify-center rounded-full text-fg-subtle outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-line-focus',
+          'inline-flex size-6 items-center justify-center rounded-full text-fg-subtle outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus',
           className,
         )}
       >

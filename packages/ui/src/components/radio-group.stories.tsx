@@ -46,3 +46,25 @@ export const Colors = meta.story({
     </div>
   ),
 })
+
+/**
+ * Choose another: its dot springs in from .4 while the old one shrinks
+ * away; hold the pointer down to see the circle dip and a faint dot.
+ */
+export const Animations = meta.story({
+  tags: ['animated'],
+  render: () => (
+    <RadioGroup defaultValue="card" aria-label="Moyen de paiement">
+      {[
+        ['card', 'Carte'],
+        ['transfer', 'Virement'],
+        ['cheque', 'Chèque'],
+      ].map(([value, label]) => (
+        <div key={value} className="flex items-center gap-3">
+          <RadioGroupItem value={value} id={`motion-${value}`} />
+          <Label htmlFor={`motion-${value}`}>{label}</Label>
+        </div>
+      ))}
+    </RadioGroup>
+  ),
+})

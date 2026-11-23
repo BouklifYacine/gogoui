@@ -78,7 +78,7 @@ function ColorField({
               key={color.value}
               htmlFor={optionId}
               title={color.label}
-              className="group flex size-11 cursor-pointer items-center justify-center rounded-xl has-focus-visible:outline-2 has-focus-visible:outline-line-focus"
+              className="group flex size-11 cursor-pointer items-center justify-center rounded-xl has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-offset-2 has-focus-visible:outline-focus"
             >
               <RadioGroupItem
                 id={optionId}

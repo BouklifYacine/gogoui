@@ -13,6 +13,12 @@
   --tracking-title: -0.02em;
   --tracking-heading: -0.015em;
   --ease-tactile: cubic-bezier(0.23, 1, 0.32, 1);
+  /* `ease-enter`, `ease-exit`, `ease-standard`, `ease-in-out`, `ease-spring` */
+  --ease-enter: var(--motion-ease-enter);
+  --ease-exit: var(--motion-ease-exit);
+  --ease-standard: var(--motion-ease-standard);
+  --ease-in-out: var(--motion-ease-in-out);
+  --ease-spring: var(--motion-ease-spring);
 
   /*
    * The type scale, each size with its own tracking: xs 12 a detail (badge,
@@ -78,6 +84,9 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-line-focus: var(--line-focus);
+  --color-focus: var(--focus-outline);
+  --color-line-subtle: var(--line-subtle);
+  --color-menu-highlight: var(--menu-highlight);
   --color-line-inverse: var(--line-inverse);
   --color-field-line: var(--field-line);
 
@@ -167,6 +176,8 @@
   --radius-4xl: 2rem;
   --radius-button: var(--radius);
   --radius-button-sm: 0.5rem;
+  /* A menu's panel (Arc UI); its rows are concentric, 14px at 6px in. */
+  --radius-menu: 1.25rem;
 
   /* ---------- elevation ---------- */
   --shadow-xs: var(--ds-shadow-xs);
@@ -181,17 +192,12 @@
   --shadow-danger: var(--ds-shadow-danger);
   --shadow-badge: var(--ds-shadow-badge);
   --shadow-menu: var(--ds-shadow-menu);
-  --shadow-focus: 0 0 0 2px var(--surface), 0 0 0 4px rgb(115 115 115 / 0.4);
-  --shadow-focus-primary:
-    0 0 0 2px var(--surface), 0 0 0 4px var(--primary-subtle-stronger);
-  --shadow-focus-danger:
-    0 0 0 2px var(--surface), 0 0 0 4px rgb(231 0 11 / 0.3);
 }
 
 /*
  * Concentric radius: inner radius = outer radius − the padding between them.
  *   parent: rounded-parent-{size}  (sets its radius and exposes it as --radius-parent)
- *   child:  rounded-concentric-{n} (n = parent padding in spacing steps, p-2 → 2)
+ *   child:  rounded-concentric-{n} (n = parent padding in spacing steps, p-2 → 2, p-1.5 → 1.5)
  * Clamped at 0 so tight paddings never go negative.
  */
 @utility rounded-parent-* {
@@ -201,7 +207,7 @@
 @utility rounded-concentric-* {
   border-radius: max(
     0px,
-    calc(var(--radius-parent, 0px) - var(--spacing) * --value(integer))
+    calc(var(--radius-parent, 0px) - var(--spacing) * --value(number))
   );
 }
 

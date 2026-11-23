@@ -38,7 +38,7 @@ function Switch({
       data-slot="switch"
       data-size={size}
       className={cn(
-        'peer group/switch relative inline-flex shrink-0 items-center rounded-full p-1 transition-[background-color,box-shadow] duration-300 ease-tactile outline-none focus-visible:outline-hidden forced-colors:border after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:shadow-focus-primary aria-invalid:ring-1 aria-invalid:ring-danger data-[size=default]:h-6 data-[size=default]:w-10 data-[size=sm]:h-5 data-[size=sm]:w-8 data-checked:bg-switch-on data-unchecked:bg-track data-disabled:cursor-not-allowed data-disabled:opacity-60',
+        'peer group/switch relative inline-flex shrink-0 items-center rounded-full p-1 transition-[background-color,box-shadow] duration-300 ease-tactile outline-none forced-colors:border after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus aria-invalid:ring-1 aria-invalid:ring-danger data-[size=default]:h-6 data-[size=default]:w-10 data-[size=sm]:h-5 data-[size=sm]:w-8 data-checked:bg-switch-on data-unchecked:bg-track data-disabled:cursor-not-allowed data-disabled:opacity-60',
         color && switchedOn[color],
         className,
       )}

@@ -154,7 +154,7 @@ function RichTextEditor({
     <div
       data-slot="rich-text-editor"
       className={cn(
-        'overflow-hidden rounded-lg bg-field text-sm text-fg shadow-field ring-1 ring-field-line ring-inset focus-within:shadow-focus focus-within:ring-line-focus has-aria-invalid:ring-danger',
+        'overflow-hidden rounded-lg bg-field text-sm text-fg shadow-field ring-1 ring-field-line ring-inset focus-within:ring-line-focus has-aria-invalid:ring-danger',
         disabled && 'bg-subtle text-fg-disabled',
         className,
       )}

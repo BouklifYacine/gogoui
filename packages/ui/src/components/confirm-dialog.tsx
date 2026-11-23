@@ -102,7 +102,7 @@ function ConfirmDialog({
               label={slide.label}
               confirmingLabel={(loadingLabel ?? confirmLabel).replace(/…$/, '')}
               doneLabel={slide.doneLabel}
-              destructive={destructive}
+              color={destructive ? 'danger' : undefined}
               onConfirm={slide.run}
             />
             <AlertDialogCancel>{cancelLabel ?? cancel}</AlertDialogCancel>

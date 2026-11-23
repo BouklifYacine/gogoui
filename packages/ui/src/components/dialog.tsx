@@ -2,6 +2,10 @@ import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import {
+  dialogOverlayMotion,
+  dialogPopupMotion,
+} from '../internal/dialog-motion.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
@@ -15,7 +19,9 @@ import { Button } from './button.tsx'
  *
  * **Where**: opened by a button; centred.
  *
- * **States**: closed, open; Escape and the × close it.
+ * **States**: closed, open; Escape and the × close it. It rises 8px and
+ * grows from .96 on a spring (Arc UI), its veil fading in; it leaves
+ * quicker and quieter. Still under reduced motion.
  *
  * **Key props** (on `DialogContent`): `size` (sm, default, lg, xl, full),
  * `showCloseButton`; `DialogFooter showCloseButton` adds « Fermer ».
@@ -67,7 +73,8 @@ function DialogOverlay({
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
-        'fixed inset-0 isolate z-50 bg-overlay backdrop-blur-[6px] duration-150 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0',
+        'fixed inset-0 isolate z-50 bg-overlay backdrop-blur-[6px]',
+        dialogOverlayMotion,
         className,
       )}
       {...props}
@@ -103,7 +110,8 @@ function DialogContent({
         data-size={size}
         className={cn(
           'data-[size=sm]:sm:max-w-sm data-[size=lg]:sm:max-w-2xl data-[size=xl]:sm:max-w-4xl data-[size=full]:max-h-[calc(100dvh-2rem)] data-[size=full]:overflow-y-auto data-[size=full]:sm:h-[calc(100dvh-2rem)] data-[size=full]:sm:max-w-[calc(100%-2rem)]',
-          'fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-floating p-6 text-sm text-fg shadow-lg duration-150 ease-tactile outline-none sm:max-w-[440px] data-open:animate-in data-open:fade-in-0 data-open:slide-in-from-bottom-1 data-open:zoom-in-[0.98] data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-[0.98]',
+          'fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-floating p-6 text-sm text-fg shadow-lg outline-none sm:max-w-[440px]',
+          dialogPopupMotion,
           className,
         )}
         {...props}

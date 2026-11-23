@@ -10,6 +10,7 @@ import {
   subtleHover,
   text,
 } from '../internal/colors.ts'
+import { ButtonLabel } from '../internal/button-label.tsx'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 import { Spinner } from './spinner.tsx'
@@ -24,7 +25,10 @@ const solidDisabledAtNight =
   'dark:disabled:bg-control dark:disabled:text-fg-disabled dark:disabled:opacity-100 dark:disabled:shadow-none'
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-button text-sm font-medium whitespace-nowrap outline-none select-none transition-[color,background-color,box-shadow,filter,scale] duration-150 ease-tactile focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-focus active:not-aria-[haspopup]:scale-[0.97] disabled:pointer-events-none disabled:opacity-60 aria-busy:cursor-progress aria-busy:opacity-60 aria-invalid:ring-1 aria-invalid:ring-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+  // The press (Arc UI): a quick 100ms squeeze, .97, and .96 on an icon
+  // alone; a button that opens a menu never scales, or its menu would be
+  // placed against a shrunken box.
+  "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-button text-sm font-medium whitespace-nowrap outline-none select-none transition-[color,background-color,box-shadow,filter,scale] duration-150 ease-standard active:duration-100 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus active:not-aria-[haspopup]:scale-[0.97] disabled:pointer-events-none disabled:opacity-60 aria-busy:cursor-progress aria-busy:opacity-60 aria-invalid:ring-1 aria-invalid:ring-danger [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
   {
     variants: {
       variant: {
@@ -68,12 +72,12 @@ const buttonVariants = cva(
         xs: 'h-7 gap-1 rounded-button-sm px-2 text-xs',
         sm: 'h-8 rounded-button-sm px-4 max-md:h-11 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3',
         lg: 'h-11 px-5 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4',
-        icon: 'size-9 max-md:size-11 active:not-aria-[haspopup]:scale-[0.94]',
+        icon: 'size-9 max-md:size-11 active:not-aria-[haspopup]:scale-[0.96]',
         'icon-xs':
-          'size-7 rounded-button-sm active:not-aria-[haspopup]:scale-[0.94]',
+          'size-7 rounded-button-sm active:not-aria-[haspopup]:scale-[0.96]',
         'icon-sm':
-          'size-8 rounded-button-sm max-md:size-11 active:not-aria-[haspopup]:scale-[0.94]',
-        'icon-lg': 'size-11 active:not-aria-[haspopup]:scale-[0.94]',
+          'size-8 rounded-button-sm max-md:size-11 active:not-aria-[haspopup]:scale-[0.96]',
+        'icon-lg': 'size-11 active:not-aria-[haspopup]:scale-[0.96]',
       },
     },
     defaultVariants: {
@@ -207,7 +211,9 @@ function Button({
           </span>
         )
       )}
-      {loading && loadingText !== undefined ? loadingText : children}
+      <ButtonLabel>
+        {loading && loadingText !== undefined ? loadingText : children}
+      </ButtonLabel>
       {!loading && iconEnd && (
         <span data-icon="inline-end" aria-hidden="true" className="contents">
           {iconEnd}
