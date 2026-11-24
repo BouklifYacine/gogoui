@@ -17,6 +17,7 @@ export default defineConfig({
     'src/i18n/index.ts',
     'src/i18n/locales/*.ts',
     'src/tanstack-form/index.ts',
+    'src/tanstack-form/core.ts',
     'src/data-table/index.ts',
     'src/theme/create-theme.ts',
     '!src/**/*.stories.tsx',

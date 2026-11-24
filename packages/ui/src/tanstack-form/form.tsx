@@ -31,7 +31,9 @@ export function Form({
       className={className}
       onSubmit={(event) => {
         event.preventDefault()
-        const refusedDay = event.currentTarget.querySelector<HTMLElement>(
+        // Kept: currentTarget is gone once the submit's promise settles.
+        const formElement = event.currentTarget
+        const refusedDay = formElement.querySelector<HTMLElement>(
           '[data-typed-invalid]',
         )
         if (refusedDay) {
@@ -44,7 +46,10 @@ export function Form({
           }
           // Drawn with the refusal: wait for the next frame.
           requestAnimationFrame(() => {
-            const summary = document.getElementById('error-summary')
+            // This form's own summary: two forms on a page each have one.
+            const summary = formElement.querySelector<HTMLElement>(
+              '[data-slot="error-summary"]',
+            )
             if (summary) {
               summary.focus()
               return

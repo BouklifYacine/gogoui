@@ -69,10 +69,11 @@ la langue, quelques mots, les icônes ou le mouvement :
 
 ```tsx
 import { GoGoUIProvider } from '@gogoui/ui/provider'
+import { en } from '@gogoui/ui/locales/en'
 
 export function App({ children }: { children: React.ReactNode }) {
   return (
-    <GoGoUIProvider locale="en" motion="auto">
+    <GoGoUIProvider messages={en} motion="auto">
       {children}
     </GoGoUIProvider>
   )

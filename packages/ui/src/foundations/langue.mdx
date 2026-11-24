@@ -14,13 +14,17 @@ Ces mots sont en français tant qu'on ne dit rien. L'anglais est fourni. Le
 menu « Langue » de la barre d'outils de Storybook bascule chaque composant
 de l'un à l'autre.
 
-## Choisir la langue : `locale`
+## Choisir la langue : `messages`
+
+Seul le français est intégré. Une autre langue s'importe à part, pour qu'une
+app en français ne télécharge jamais l'anglais.
 
 ```tsx
 import { GoGoUIProvider } from '@gogoui/ui/provider'
+import { en } from '@gogoui/ui/locales/en'
 
 export function App({ children }: { children: React.ReactNode }) {
-  return <GoGoUIProvider locale="en">{children}</GoGoUIProvider>
+  return <GoGoUIProvider messages={en}>{children}</GoGoUIProvider>
 }
 ```
 

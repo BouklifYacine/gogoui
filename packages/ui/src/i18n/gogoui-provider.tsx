@@ -8,19 +8,24 @@ import { MotionFeatures } from '../internal/motion-features.tsx'
 import { defaultIcons } from './icons.ts'
 import type { GoGoUIIcons } from './icons.ts'
 import { IconsContext } from './icons-context.ts'
-import { en } from './locales/en.ts'
 import { fr } from './locales/fr.ts'
 import { mergeMessages } from './merge-messages.ts'
 import type { GoGoUILocale, GoGoUIMessages } from './messages.ts'
 import { MessagesContext } from './messages-context.ts'
 import { MotionPreferenceContext } from './motion-context.ts'
 
-const shippedLanguages: Record<GoGoUILocale, GoGoUIMessages> = { fr, en }
+// French only: an app in another language passes it in `messages`
+// (`import { en } from '@gogoui/ui/locales/en'`), so a French app never
+// downloads English.
+const builtInLanguages: Partial<Record<GoGoUILocale, GoGoUIMessages>> = { fr }
 
 type GoGoUIProviderProps = {
   /**
-   * One of the languages GoGoUI ships: `fr` or `en`. Without it, the
-   * language of a provider around this one, French at the top.
+   * `fr`, the language built in. Without it, the language of a provider
+   * around this one, French at the top.
+   *
+   * @deprecated for `en`: pass `messages={en}` from
+   * `@gogoui/ui/locales/en`. `locale="en"` falls back to French.
    */
   locale?: GoGoUILocale
   /**
@@ -71,7 +76,8 @@ export function GoGoUIProvider({
   children,
 }: GoGoUIProviderProps) {
   const around = use(MessagesContext)
-  const language = locale ? shippedLanguages[locale] : around
+  const builtIn = locale ? builtInLanguages[locale] : undefined
+  const language = builtIn ?? around
   const words = useMemo(
     () => mergeMessages(language, overrides),
     [language, overrides],

@@ -21,17 +21,15 @@ import { RatingField as RatingFieldBase } from '../components/rating-field.tsx'
 import { ShortcutField as ShortcutFieldBase } from '../components/shortcut-field.tsx'
 import { SignatureField as SignatureFieldBase } from '../components/signature-field.tsx'
 import { TagField as TagFieldBase } from '../components/tag-field.tsx'
-import { bindField } from './bind-field.tsx'
-import { BoundCodeField } from './bound-code-field.tsx'
-import { BoundErrorSummary } from './bound-error-summary.tsx'
-import { BoundSubmitButton } from './bound-submit-button.tsx'
-import { Form } from './form.tsx'
 import {
+  BoundCodeField,
+  bindField,
   fieldContext,
+  formComponents,
   formContext,
   useFieldContext,
   useFormContext,
-} from './form-context.ts'
+} from './core.ts'
 
 /** GoGoUI's fields, each bound to its TanStack field. */
 export const fieldComponents = {
@@ -59,13 +57,6 @@ export const fieldComponents = {
   TagField: bindField(TagFieldBase),
 }
 
-/** The form's own parts: its element, its submit button, its error summary. */
-export const formComponents = {
-  Form,
-  SubmitButton: BoundSubmitButton,
-  ErrorSummary: BoundErrorSummary,
-}
-
 /**
  * TanStack Form's useForm with GoGoUI's fields already wired:
  *
@@ -84,4 +75,11 @@ export const { useAppForm, withForm } = createFormHook({
   formComponents,
 })
 
-export { bindField, fieldContext, formContext, useFieldContext, useFormContext }
+export {
+  bindField,
+  fieldContext,
+  formComponents,
+  formContext,
+  useFieldContext,
+  useFormContext,
+}

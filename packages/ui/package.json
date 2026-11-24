@@ -68,6 +68,10 @@
       "types": "./dist/tanstack-form/index.d.ts",
       "default": "./dist/tanstack-form/index.js"
     },
+    "./tanstack-form/core": {
+      "types": "./dist/tanstack-form/core.d.ts",
+      "default": "./dist/tanstack-form/core.js"
+    },
     "./*": {
       "types": "./dist/components/*.d.ts",
       "default": "./dist/components/*.js"

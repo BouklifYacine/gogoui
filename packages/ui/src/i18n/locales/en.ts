@@ -1,8 +1,9 @@
 import type { GoGoUIMessages } from '../messages.ts'
 
 /**
- * GoGoUI's words in English: `<GoGoUIProvider locale="en">`, or
- * `messages={en}` with `import { en } from '@gogoui/ui/locales/en'`.
+ * GoGoUI's words in English: `<GoGoUIProvider messages={en}>` with
+ * `import { en } from '@gogoui/ui/locales/en'` (only French is built in,
+ * so a French app never downloads English).
  * Copy it to write another language.
  *
  * @summary Every word GoGoUI writes, in English.

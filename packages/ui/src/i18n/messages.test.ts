@@ -43,14 +43,16 @@ describe('the order of the words', () => {
     expect(closeWordIn([])).toBe('Fermer')
   })
 
-  it('takes the language of locale', () => {
-    expect(closeWordIn([{ locale: 'en' }])).toBe('Close')
+  it('takes a whole language in messages', () => {
+    expect(closeWordIn([{ messages: en }])).toBe('Close')
+  })
+
+  it('falls back to French for a locale not built in', () => {
+    expect(closeWordIn([{ locale: 'en' }])).toBe('Fermer')
   })
 
   it('puts the provider’s messages over the language', () => {
-    expect(closeWordIn([{ locale: 'en', messages: { close: 'Back' } }])).toBe(
-      'Back',
-    )
+    expect(closeWordIn([{ messages: { ...en, close: 'Back' } }])).toBe('Back')
   })
 
   it('puts a component’s labels over the provider’s messages', () => {
@@ -63,7 +65,7 @@ describe('the order of the words', () => {
 
   it('keeps the language of the provider around when locale is left out', () => {
     expect(
-      closeWordIn([{ locale: 'en' }, { messages: { loading: 'Wait' } }]),
+      closeWordIn([{ messages: en }, { messages: { loading: 'Wait' } }]),
     ).toBe('Close')
   })
 })

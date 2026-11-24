@@ -7,7 +7,7 @@ import addonThemes, { withThemeByClassName } from '@storybook/addon-themes'
 import { definePreview } from '@storybook/react-vite'
 
 import { GoGoUIProvider } from '../src/i18n/gogoui-provider.tsx'
-import type { GoGoUILocale } from '../src/i18n/messages.ts'
+import { en } from '../src/i18n/locales/en.ts'
 import { paletteCss, paletteToolbar } from './palettes.ts'
 
 export default definePreview({
@@ -98,7 +98,8 @@ export default definePreview({
     }),
     (Story, context) => (
       <GoGoUIProvider
-        locale={context.globals.locale as GoGoUILocale}
+        // French is built in; English comes in, as an app would pass it.
+        messages={context.globals.locale === 'en' ? en : undefined}
         motion={import.meta.env.VITE_GOGOUI_THEME ? 'off' : 'auto'}
       >
         <div className="p-6 text-fg">
