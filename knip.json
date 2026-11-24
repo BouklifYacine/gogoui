@@ -4,7 +4,7 @@
   "ignoreBinaries": ["gitleaks"],
   "workspaces": {
     ".": {
-      "entry": ["prettier.config.js"]
+      "entry": ["prettier.config.js", "scripts/import-every-file.mjs"]
     }
   }
 }

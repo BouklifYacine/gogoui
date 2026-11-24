@@ -7,6 +7,9 @@
  * - Are The Types Wrong resolves every entry point the way TypeScript
  *   does in a project, and fails when one has no types or the wrong ones.
  *
+ * - Node imports every built file (scripts/import-every-file.mjs): its
+ *   strict ESM catches an import of an export a module lacks.
+ *
  * attw does not expand the "./*" export, so the script lists the
  * components itself: one entry point per file in dist/components.
  */
@@ -54,6 +57,8 @@ try {
   // are not supported on purpose. Every other mode must resolve to types.
   const entryPoints = [...namedEntryPoints(), ...componentEntryPoints()]
   await $`attw ${tarball} --profile esm-only --format table-flipped --entrypoints ${entryPoints}`
+
+  await $`node scripts/import-every-file.mjs`
 } finally {
   rmSync(tarball, { force: true })
 }

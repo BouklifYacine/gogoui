@@ -2,8 +2,9 @@ import { useId, useRef, useState, useSyncExternalStore } from 'react'
 import type { ComponentProps, KeyboardEvent, ReactNode } from 'react'
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover'
 import { cva } from 'class-variance-authority'
-import { AnimatePresence, animate, m } from 'motion/react'
-import { Reorder } from 'motion/react-m'
+// Reorder comes from motion/react: motion/react-m (the light `m`
+// components) does not have it.
+import { AnimatePresence, Reorder, animate, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
