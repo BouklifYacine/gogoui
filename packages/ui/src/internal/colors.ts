@@ -129,21 +129,6 @@ export const pressed: Record<Color, string> = {
   danger: 'data-[pressed]:bg-danger-subtle data-[pressed]:text-danger-fg',
 }
 
-/** A calendar's chosen day, and a range's ends filled, its middle tinted. */
-export const calendarDay: Record<Color, string> = {
-  neutral:
-    'data-[selected-single=true]:bg-neutral data-[selected-single=true]:text-neutral-foreground data-[range-start=true]:bg-neutral data-[range-start=true]:text-neutral-foreground data-[range-end=true]:bg-neutral data-[range-end=true]:text-neutral-foreground data-[range-middle=true]:bg-neutral-subtle data-[range-middle=true]:text-neutral-fg',
-  primary:
-    'data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:bg-primary-subtle data-[range-middle=true]:text-primary-active',
-  info: 'data-[selected-single=true]:bg-info data-[selected-single=true]:text-info-foreground data-[range-start=true]:bg-info data-[range-start=true]:text-info-foreground data-[range-end=true]:bg-info data-[range-end=true]:text-info-foreground data-[range-middle=true]:bg-info-subtle data-[range-middle=true]:text-info-fg',
-  success:
-    'data-[selected-single=true]:bg-success data-[selected-single=true]:text-success-foreground data-[range-start=true]:bg-success data-[range-start=true]:text-success-foreground data-[range-end=true]:bg-success data-[range-end=true]:text-success-foreground data-[range-middle=true]:bg-success-subtle data-[range-middle=true]:text-success-fg',
-  warning:
-    'data-[selected-single=true]:bg-warning data-[selected-single=true]:text-warning-foreground data-[range-start=true]:bg-warning data-[range-start=true]:text-warning-foreground data-[range-end=true]:bg-warning data-[range-end=true]:text-warning-foreground data-[range-middle=true]:bg-warning-subtle data-[range-middle=true]:text-warning-fg',
-  danger:
-    'data-[selected-single=true]:bg-danger data-[selected-single=true]:text-danger-foreground data-[range-start=true]:bg-danger data-[range-start=true]:text-danger-foreground data-[range-end=true]:bg-danger data-[range-end=true]:text-danger-foreground data-[range-middle=true]:bg-danger-subtle data-[range-middle=true]:text-danger-fg',
-}
-
 /** The words on a filled shape, for a tab's moving pill. */
 export const onFill: Record<Color, string> = {
   neutral: 'data-active:text-neutral-foreground!',

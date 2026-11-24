@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useSyncExternalStore } from 'react'
 import type { MouseEvent } from 'react'
 import { Nav, dateMatchModifiers, useDayPicker } from 'react-day-picker'
 import type { Modifiers, NavProps } from 'react-day-picker'
@@ -18,7 +18,25 @@ import { CalendarLookContext, sameDay } from './calendar-state.ts'
  *
  * @summary Internal: Calendar's `Nav`, with its « Today » button.
  */
-export function CalendarNav({ className, ...props }: NavProps) {
+
+// Today, read in the browser only. The server and the browser may not share
+// a day (around midnight, another time zone), so the server draws no
+// « Aujourd'hui » button and the browser adds it once hydrated. The day is
+// kept as a string so React sees the same value between two reads.
+const neverChanges = () => () => {}
+const todayKey = () => new Date().toDateString()
+
+function useToday(): Date | undefined {
+  const key = useSyncExternalStore(neverChanges, todayKey, () => null)
+  return key ? new Date(key) : undefined
+}
+
+export function CalendarNav({
+  className,
+  // The empty name would undo `role="none"`.
+  'aria-label': _emptyName,
+  ...props
+}: NavProps) {
   const { showToday } = useContext(CalendarLookContext)
   const picker = useDayPicker()
   const { months, goToMonth, dayPickerProps } = picker
@@ -27,12 +45,11 @@ export function CalendarNav({ className, ...props }: NavProps) {
   const select = picker.select as
     ((date: Date, modifiers: Modifiers, event: MouseEvent) => void) | undefined
   const messages = useGoGoUIMessages()
-  // Read once: today does not move while the calendar is open.
-  const [now] = useState(() => new Date())
-  if (!showToday) {
-    return <Nav className={className} {...props} />
-  }
+  const now = useToday()
   const today = dayPickerProps.today ?? now
+  if (!showToday || !today) {
+    return <Nav role="none" className={className} {...props} />
+  }
   const choosable =
     dayPickerProps.mode === 'single' &&
     !(dayPickerProps.disabled

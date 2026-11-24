@@ -628,6 +628,13 @@ function SidebarMenuBadge({
   )
 }
 
+/** A small stable number from a string. */
+function hashOf(text: string) {
+  let hash = 0
+  for (const char of text) hash = (hash * 31 + char.charCodeAt(0)) % 1000
+  return hash
+}
+
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -635,10 +642,11 @@ function SidebarMenuSkeleton({
 }: React.ComponentProps<'div'> & {
   showIcon?: boolean
 }) {
-  // Random width between 50 to 90%.
-  const [width] = React.useState(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
-  })
+  // A width between 50 and 90 % that differs from one line to the next but
+  // is the same on the server and in the browser (useId is), so the page
+  // hydrates without a mismatch.
+  const id = React.useId()
+  const width = `${50 + (hashOf(id) % 40)}%`
 
   return (
     <div

@@ -53,11 +53,3 @@ export function parseTypedDay(
   const day = `${String(year)}-${monthText.padStart(2, '0')}-${dayText.padStart(2, '0')}`
   return parseDay(day) ? day : null
 }
-
-/** "2027-06-14" in full: « samedi 14 juin 2027 ». */
-export function formatLongDay(day: string, locale: string): string {
-  const date = parseDay(day)
-  return date
-    ? new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(date)
-    : day
-}

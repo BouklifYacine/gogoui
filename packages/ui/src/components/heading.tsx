@@ -4,7 +4,8 @@ import type { VariantProps } from 'class-variance-authority'
 
 import { cn } from '../lib/cn.ts'
 
-const headingVariants = cva('font-medium text-fg text-balance', {
+// No colour of its own: it takes its parent's, so it reads on a dark band too.
+const headingVariants = cva('font-medium text-balance', {
   variants: {
     size: {
       '3xl': 'text-3xl tracking-title',
