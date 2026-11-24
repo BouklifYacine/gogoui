@@ -1,5 +1,11 @@
 # @gogoui/ui
 
+## 0.2.4
+
+### Patch Changes
+
+- fe11861: PillTabsList's tray keeps a hairline edge in dark mode.
+
 ## 0.2.3
 
 ### Patch Changes
