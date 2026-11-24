@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { TimeField } from './time-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/TimeField',
+  title: 'Formulaires/Dates et heures/TimeField',
   component: TimeField,
   decorators: [(Story) => <div className="w-60">{Story()}</div>],
 })

@@ -66,7 +66,7 @@ const annotations = [
 ]
 
 const meta = preview.meta({
-  title: 'Charts/BrushChart',
+  title: 'Graphiques/Courbes/BrushChart',
   tags: ['beta'],
   component: BrushChart,
   parameters: { layout: 'padded' },

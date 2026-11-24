@@ -6,7 +6,7 @@ import { BillingPrice } from './billing-price.tsx'
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/BillingPrice',
+  title: 'Blocs marketing/BillingPrice',
   tags: ['beta'],
   component: BillingPrice,
   args: { amount: 59, period: '/ mois' },

@@ -7,7 +7,7 @@ import { ConfirmDialog } from './confirm-dialog.tsx'
 import { SlideToConfirm } from './slide-to-confirm.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/SlideToConfirm',
+  title: 'Confirmations/SlideToConfirm',
   component: SlideToConfirm,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

@@ -12,7 +12,7 @@ const filling = [
 ] as const
 
 const meta = preview.meta({
-  title: 'Charts/Gauge',
+  title: 'Graphiques/Proportions/Gauge',
   tags: ['beta'],
   component: Gauge,
   args: {

@@ -6,7 +6,7 @@ import preview from '#.storybook/preview'
 import { Slider } from './slider.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Slider',
+  title: 'Formulaires/Saisie/Slider',
   component: Slider,
   args: { color: 'primary', size: 'default' },
   decorators: [(Story) => <div className="w-80 pt-8">{Story()}</div>],

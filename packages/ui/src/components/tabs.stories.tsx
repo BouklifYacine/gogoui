@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Tabs',
+  title: 'Navigation/Tabs',
   component: Tabs,
 })
 

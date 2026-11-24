@@ -9,7 +9,7 @@ import { GuidedTour } from './guided-tour.tsx'
 import type { Guide } from './guided-tour.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/GuidedTour',
+  title: 'Fenêtres/GuidedTour',
   component: GuidedTour,
   subcomponents: { GuideOffer },
   parameters: { layout: 'padded' },

@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { CodeField } from './code-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/CodeField',
+  title: 'Formulaires/Champs prêts/CodeField',
   component: CodeField,
 })
 

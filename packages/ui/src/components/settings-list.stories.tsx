@@ -13,7 +13,7 @@ import { SettingsList } from './settings-list.tsx'
 import { TextareaField } from './textarea-field.tsx'
 
 const meta = preview.meta({
-  title: 'Options/SettingsList',
+  title: 'Réglages/SettingsList',
   component: SettingsList,
   subcomponents: {
     SettingSwitchRow,

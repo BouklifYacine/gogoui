@@ -6,7 +6,7 @@ import { BulkActionsBar } from './bulk-actions-bar.tsx'
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/BulkActionsBar',
+  title: 'Listes et tableaux/BulkActionsBar',
   component: BulkActionsBar,
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],
 })

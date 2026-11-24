@@ -4,7 +4,7 @@ import { Label } from './label.tsx'
 import { Switch } from './switch.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Switch',
+  title: 'Formulaires/Saisie/Switch',
   component: Switch,
   render: (args) => (
     <div className="flex items-center gap-3">

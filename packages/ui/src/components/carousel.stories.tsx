@@ -10,7 +10,7 @@ import {
 } from './carousel.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Carousel',
+  title: 'Affichage/Carousel',
   component: Carousel,
   subcomponents: {
     CarouselContent,

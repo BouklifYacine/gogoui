@@ -13,7 +13,7 @@ import { DropdownMenuItem, DropdownMenuSeparator } from './dropdown-menu.tsx'
 import { SplitButton } from './split-button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/SplitButton',
+  title: 'Actions/SplitButton',
   tags: ['beta'],
   component: SplitButton,
   args: {

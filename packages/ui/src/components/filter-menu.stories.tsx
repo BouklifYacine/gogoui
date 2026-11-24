@@ -12,7 +12,7 @@ import { FilterNumberRange } from './filter-number-range.tsx'
 import { FilterSection } from './filter-section.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/FilterMenu',
+  title: 'Filtres et recherche/FilterMenu',
   component: FilterMenu,
   parameters: { layout: 'padded' },
 })

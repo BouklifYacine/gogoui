@@ -6,8 +6,8 @@ import { Button } from './button.tsx'
 import { TextMorph } from './text-morph.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/TextMorph',
-  tags: ['beta'],
+  title: 'Texte animé/TextMorph',
+  tags: ['beta', 'deprecated'],
   component: TextMorph,
   args: { children: 'Envoyer' },
 })

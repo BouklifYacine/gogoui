@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { StepProgress } from './step-progress.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/StepProgress',
+  title: 'Navigation/StepProgress',
   component: StepProgress,
   decorators: [(Story) => <div className="w-[28rem]">{Story()}</div>],
 })

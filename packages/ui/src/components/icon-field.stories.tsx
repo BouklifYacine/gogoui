@@ -13,7 +13,7 @@ import preview from '#.storybook/preview'
 import { IconField } from './icon-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/IconField',
+  title: 'Formulaires/Champs prêts/IconField',
   component: IconField,
 })
 

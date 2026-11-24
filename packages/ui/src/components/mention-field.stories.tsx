@@ -12,8 +12,8 @@ const team = [
 ]
 
 const meta = preview.meta({
-  title: 'Formulaires/MentionField',
-  tags: ['beta'],
+  title: 'Formulaires/Champs prêts/MentionField',
+  tags: ['beta', 'deprecated'],
   component: MentionField,
   decorators: [(Story) => <div className="w-96 pb-60">{Story()}</div>],
 })

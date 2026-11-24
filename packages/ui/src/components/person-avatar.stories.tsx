@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { PersonAvatar } from './person-avatar.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/PersonAvatar',
+  title: 'Affichage/PersonAvatar',
   component: PersonAvatar,
 })
 

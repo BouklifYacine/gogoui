@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { ShortcutKeys } from './shortcut-keys.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ShortcutKeys',
+  title: 'Affichage/ShortcutKeys',
   tags: ['beta'],
   component: ShortcutKeys,
 })

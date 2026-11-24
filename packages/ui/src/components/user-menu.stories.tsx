@@ -11,7 +11,7 @@ import { DropdownMenuItem } from './dropdown-menu.tsx'
 import { UserMenu } from './user-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/UserMenu',
+  title: 'Menus/UserMenu',
   tags: ['beta'],
   component: UserMenu,
   decorators: [

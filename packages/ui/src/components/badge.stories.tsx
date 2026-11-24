@@ -5,7 +5,7 @@ import { COLORS } from '../internal/colors.ts'
 import { Badge } from './badge.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Badge',
+  title: 'Affichage/Badge',
   component: Badge,
   args: { children: '3' },
 })

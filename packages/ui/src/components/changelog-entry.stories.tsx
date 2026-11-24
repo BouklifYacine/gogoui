@@ -4,7 +4,7 @@ import { AnimatePresence } from 'motion/react'
 import { ChangelogEntry } from './changelog-entry.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ChangelogEntry',
+  title: 'Blocs marketing/ChangelogEntry',
   tags: ['beta'],
   component: ChangelogEntry,
   parameters: { layout: 'padded' },

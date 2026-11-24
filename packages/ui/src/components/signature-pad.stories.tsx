@@ -11,7 +11,7 @@ import {
 import type { SignatureStroke } from './signature-pad.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/SignaturePad',
+  title: 'Formulaires/Saisie/SignaturePad',
   tags: ['beta'],
   component: SignaturePad,
   decorators: [

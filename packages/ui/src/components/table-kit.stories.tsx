@@ -24,7 +24,7 @@ import { TableSortHead } from './table-sort-head.tsx'
 import { TableToolbar } from './table-toolbar.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/Table sans logique',
+  title: 'Listes et tableaux/Table sans logique',
   component: TablePagination,
   subcomponents: {
     TableSortHead,

@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { MoneyField } from './money-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/MoneyField',
+  title: 'Formulaires/Champs prêts/MoneyField',
   component: MoneyField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

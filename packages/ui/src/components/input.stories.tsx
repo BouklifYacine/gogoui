@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Input } from './input.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Input',
+  title: 'Formulaires/Saisie/Input',
   component: Input,
   render: (args) => (
     <div className="grid w-72 gap-2">

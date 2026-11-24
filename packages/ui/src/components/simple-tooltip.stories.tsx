@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { SimpleTooltip } from './simple-tooltip.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/SimpleTooltip',
+  title: 'Fenêtres/SimpleTooltip',
   component: SimpleTooltip,
 })
 

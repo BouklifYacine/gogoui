@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { ExpandingSearch } from './expanding-search.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/ExpandingSearch',
+  title: 'Filtres et recherche/ExpandingSearch',
   component: ExpandingSearch,
 })
 

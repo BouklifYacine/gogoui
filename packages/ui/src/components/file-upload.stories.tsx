@@ -10,7 +10,7 @@ import {
 import type { FileUploadEntry, FileUploadHandler } from './file-upload.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/FileUpload',
+  title: 'Formulaires/Fichiers/FileUpload',
   tags: ['beta'],
   component: FileUpload,
   decorators: [

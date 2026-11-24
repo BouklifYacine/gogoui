@@ -23,7 +23,7 @@ import {
 } from './dropdown-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/DropdownMenu',
+  title: 'Menus/DropdownMenu',
   component: DropdownMenu,
 })
 

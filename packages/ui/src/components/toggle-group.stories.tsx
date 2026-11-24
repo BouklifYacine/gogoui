@@ -8,7 +8,7 @@ import { COLORS } from '../internal/colors.ts'
 import { ToggleGroup, ToggleGroupItem } from './toggle-group.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ToggleGroup',
+  title: 'Actions/ToggleGroup',
   component: ToggleGroup,
   subcomponents: { ToggleGroupItem },
 })

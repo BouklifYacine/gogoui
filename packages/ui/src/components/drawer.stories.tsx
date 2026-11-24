@@ -13,7 +13,7 @@ import {
 } from './drawer.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Drawer',
+  title: 'Fenêtres/Drawer',
   component: Drawer,
   globals: { viewport: { value: 'phone' } },
 })

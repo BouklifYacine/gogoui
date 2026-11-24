@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { InfoTip } from './info-tip.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/InfoTip',
+  title: 'Fenêtres/InfoTip',
   component: InfoTip,
 })
 

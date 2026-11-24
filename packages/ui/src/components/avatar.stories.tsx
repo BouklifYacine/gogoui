@@ -10,7 +10,7 @@ import {
 } from './avatar.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Avatar',
+  title: 'Affichage/Avatar',
   component: Avatar,
 })
 

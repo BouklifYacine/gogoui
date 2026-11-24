@@ -13,7 +13,7 @@ import {
 } from './empty.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Empty',
+  title: 'Retours/Empty',
   component: Empty,
 })
 

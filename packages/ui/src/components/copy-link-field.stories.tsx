@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { CopyLinkField } from './copy-link-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/CopyLinkField',
+  title: 'Formulaires/Champs prêts/CopyLinkField',
   component: CopyLinkField,
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],
 })

@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { CopyButton } from './copy-button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/CopyButton',
+  title: 'Actions/CopyButton',
   component: CopyButton,
 })
 

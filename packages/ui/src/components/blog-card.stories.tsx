@@ -4,7 +4,7 @@ import { demoImage } from '../blocks/demo-images.ts'
 import { BlogCard } from './blog-card.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/BlogCard',
+  title: 'Blocs marketing/BlogCard',
   tags: ['beta'],
   component: BlogCard,
   parameters: { layout: 'padded' },

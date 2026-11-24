@@ -13,7 +13,7 @@ import { SwipeActions } from './swipe-actions.tsx'
 import { SwipeActionsRow } from './swipe-actions-row.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/SwipeActions',
+  title: 'Listes et tableaux/SwipeActions',
   tags: ['beta'],
   component: SwipeActions,
   decorators: [(Story) => <div className="w-full max-w-sm">{Story()}</div>],

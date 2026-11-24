@@ -4,7 +4,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card.tsx'
 import { PersonAvatar } from './person-avatar.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/HoverCard',
+  title: 'Fenêtres/HoverCard',
   component: HoverCard,
   subcomponents: { HoverCardTrigger, HoverCardContent },
 })

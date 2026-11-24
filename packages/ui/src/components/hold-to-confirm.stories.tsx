@@ -7,7 +7,7 @@ import { Button } from './button.tsx'
 import { HoldToConfirm } from './hold-to-confirm.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/HoldToConfirm',
+  title: 'Confirmations/HoldToConfirm',
   tags: ['beta'],
   component: HoldToConfirm,
 })

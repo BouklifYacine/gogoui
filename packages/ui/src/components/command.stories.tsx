@@ -12,7 +12,7 @@ import {
 } from './command.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Command',
+  title: 'Menus/Command',
   component: Command,
 })
 

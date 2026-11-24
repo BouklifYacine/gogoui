@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { ConfirmDialog } from './confirm-dialog.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ConfirmDialog',
+  title: 'Confirmations/ConfirmDialog',
   component: ConfirmDialog,
 })
 

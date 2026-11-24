@@ -12,7 +12,7 @@ import {
 } from './card.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Card',
+  title: 'Affichage/Card',
   component: Card,
 })
 

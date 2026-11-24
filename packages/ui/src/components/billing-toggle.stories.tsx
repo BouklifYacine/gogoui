@@ -6,7 +6,7 @@ import { BillingPrice } from './billing-price.tsx'
 import { BillingToggle, BillingToggleItem } from './billing-toggle.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/BillingToggle',
+  title: 'Blocs marketing/BillingToggle',
   tags: ['beta'],
   component: BillingToggle,
   args: {

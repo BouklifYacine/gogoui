@@ -14,7 +14,7 @@ import {
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/AlertDialog',
+  title: 'Confirmations/AlertDialog',
   component: AlertDialog,
 })
 

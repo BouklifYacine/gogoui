@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { SignatureField } from './signature-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/SignatureField',
+  title: 'Formulaires/Champs prêts/SignatureField',
   tags: ['beta'],
   component: SignatureField,
   decorators: [

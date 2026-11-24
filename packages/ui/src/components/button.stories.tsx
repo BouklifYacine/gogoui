@@ -8,7 +8,7 @@ import { COLORS } from '../internal/colors.ts'
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Button',
+  title: 'Actions/Button',
   component: Button,
   args: { children: 'Enregistrer' },
 })

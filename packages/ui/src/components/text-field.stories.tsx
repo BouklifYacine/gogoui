@@ -6,7 +6,7 @@ import preview from '#.storybook/preview'
 import { TextField } from './text-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/TextField',
+  title: 'Formulaires/Champs prêts/TextField',
   component: TextField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

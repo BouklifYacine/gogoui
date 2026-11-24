@@ -6,7 +6,7 @@ import { FieldShell } from './field-shell.tsx'
 import { Slider } from './slider.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/FieldShell',
+  title: 'Formulaires/Structure/FieldShell',
   component: FieldShell,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

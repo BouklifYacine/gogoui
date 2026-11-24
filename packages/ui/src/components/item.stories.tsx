@@ -15,7 +15,7 @@ import {
 } from './item.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Item',
+  title: 'Affichage/Item',
   component: Item,
   subcomponents: {
     ItemGroup,

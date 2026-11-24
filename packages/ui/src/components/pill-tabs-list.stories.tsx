@@ -7,7 +7,7 @@ import { PillTabsSkeleton } from './pill-tabs-skeleton.tsx'
 import { Tabs } from './tabs.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/PillTabsList',
+  title: 'Navigation/PillTabsList',
   component: PillTabsList,
 })
 

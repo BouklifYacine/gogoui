@@ -31,7 +31,7 @@ const cities = [
 ]
 
 const meta = preview.meta({
-  title: 'Composants/Combobox',
+  title: 'Formulaires/Saisie/Combobox',
   component: Combobox,
 })
 

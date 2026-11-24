@@ -5,8 +5,8 @@ import preview from '#.storybook/preview'
 import { ShortcutRecorder } from './shortcut-recorder.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ShortcutRecorder',
-  tags: ['beta'],
+  title: 'Formulaires/Saisie/ShortcutRecorder',
+  tags: ['beta', 'deprecated'],
   component: ShortcutRecorder,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

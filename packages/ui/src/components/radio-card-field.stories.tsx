@@ -6,7 +6,7 @@ import preview from '#.storybook/preview'
 import { RadioCardField } from './radio-card-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/RadioCardField',
+  title: 'Formulaires/Champs prêts/RadioCardField',
   component: RadioCardField,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

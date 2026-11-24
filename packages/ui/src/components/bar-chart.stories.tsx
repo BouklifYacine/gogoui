@@ -56,7 +56,7 @@ const euros = {
 } as const
 
 const meta = preview.meta({
-  title: 'Charts/BarChart',
+  title: 'Graphiques/Barres/BarChart',
   tags: ['beta'],
   component: BarChart,
   args: {

@@ -11,7 +11,7 @@ import {
 } from './navigation-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/NavigationMenu',
+  title: 'Navigation/NavigationMenu',
   component: NavigationMenu,
   subcomponents: {
     NavigationMenuList,

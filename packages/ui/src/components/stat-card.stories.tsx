@@ -9,7 +9,7 @@ import preview from '#.storybook/preview'
 import { StatCard } from './stat-card.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/StatCard',
+  title: 'Affichage/StatCard',
   component: StatCard,
   parameters: { layout: 'padded' },
 })

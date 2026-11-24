@@ -11,7 +11,7 @@ import {
 } from './popover.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Popover',
+  title: 'Fenêtres/Popover',
   component: Popover,
 })
 

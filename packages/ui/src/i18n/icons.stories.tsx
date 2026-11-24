@@ -9,7 +9,7 @@ import { FilterChips } from '../components/filter-chips.tsx'
 import { GoGoUIProvider } from './gogoui-provider.tsx'
 
 const meta = preview.meta({
-  title: 'Options/Icons',
+  title: 'Fondations/Icônes',
   component: GoGoUIProvider,
 })
 

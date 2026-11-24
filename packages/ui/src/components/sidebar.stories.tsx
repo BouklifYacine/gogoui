@@ -30,7 +30,7 @@ const pages = [
 ]
 
 const meta = preview.meta({
-  title: 'Composants/Sidebar',
+  title: 'Navigation/Sidebar',
   component: SidebarProvider,
   parameters: { layout: 'fullscreen' },
 })

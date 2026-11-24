@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { MultiSelectField } from './multi-select-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/MultiSelectField',
+  title: 'Formulaires/Champs prêts/MultiSelectField',
   tags: ['beta'],
   component: MultiSelectField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],

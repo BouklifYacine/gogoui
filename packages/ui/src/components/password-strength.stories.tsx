@@ -6,7 +6,7 @@ import { Input } from './input.tsx'
 import { PasswordStrength } from './password-strength.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/PasswordStrength',
+  title: 'Formulaires/Champs prêts/PasswordStrength',
   component: PasswordStrength,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

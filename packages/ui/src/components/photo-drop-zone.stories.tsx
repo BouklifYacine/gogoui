@@ -6,7 +6,7 @@ import { PhotoDropZone } from './photo-drop-zone.tsx'
 import { PhotoPickerButton } from './photo-picker-button.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/PhotoDropZone',
+  title: 'Formulaires/Fichiers/PhotoDropZone',
   component: PhotoDropZone,
   subcomponents: { PhotoPickerButton },
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],

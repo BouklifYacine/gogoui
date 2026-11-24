@@ -26,7 +26,7 @@ const revenue = [
 ]
 
 const meta = preview.meta({
-  title: 'Charts/Sparkline',
+  title: 'Graphiques/Courbes/Sparkline',
   tags: ['beta'],
   component: Sparkline,
   args: {

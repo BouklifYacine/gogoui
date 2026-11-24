@@ -49,7 +49,7 @@ const byType = monthly({
 })
 
 const meta = preview.meta({
-  title: 'Charts/LineChart',
+  title: 'Graphiques/Courbes/LineChart',
   tags: ['beta'],
   component: LineChart,
   args: {

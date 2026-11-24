@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { FilterChips } from './filter-chips.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/FilterChips',
+  title: 'Filtres et recherche/FilterChips',
   component: FilterChips,
 })
 

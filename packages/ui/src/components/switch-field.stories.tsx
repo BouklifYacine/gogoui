@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { SwitchField } from './switch-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/SwitchField',
+  title: 'Formulaires/Champs prêts/SwitchField',
   component: SwitchField,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

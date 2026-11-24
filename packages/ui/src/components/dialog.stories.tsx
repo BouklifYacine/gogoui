@@ -14,7 +14,7 @@ import {
 } from './dialog.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Dialog',
+  title: 'Fenêtres/Dialog',
   component: Dialog,
 })
 

@@ -24,7 +24,7 @@ import {
 } from './dropdown-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ButtonGroup',
+  title: 'Actions/ButtonGroup',
   component: ButtonGroup,
 })
 

@@ -6,7 +6,7 @@ import { Label } from './label.tsx'
 import { TagInput } from './tag-input.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/TagInput',
+  title: 'Formulaires/Saisie/TagInput',
   tags: ['beta'],
   component: TagInput,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],

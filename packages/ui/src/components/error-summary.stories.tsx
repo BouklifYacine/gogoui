@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { ErrorSummary } from './error-summary.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/ErrorSummary',
+  title: 'Formulaires/Structure/ErrorSummary',
   component: ErrorSummary,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

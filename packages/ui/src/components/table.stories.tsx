@@ -17,7 +17,7 @@ const invoices = [
 ]
 
 const meta = preview.meta({
-  title: 'Composants/Table',
+  title: 'Listes et tableaux/Table',
   component: Table,
 })
 

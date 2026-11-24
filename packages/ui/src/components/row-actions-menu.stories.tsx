@@ -10,7 +10,7 @@ import preview from '#.storybook/preview'
 import { RowActionsMenu } from './row-actions-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/RowActionsMenu',
+  title: 'Menus/RowActionsMenu',
   component: RowActionsMenu,
 })
 

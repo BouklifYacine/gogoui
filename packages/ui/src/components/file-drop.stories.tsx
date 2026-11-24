@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { FileDrop } from './file-drop.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/FileDrop',
+  title: 'Formulaires/Fichiers/FileDrop',
   component: FileDrop,
   decorators: [(Story) => <div className="w-[28rem]">{Story()}</div>],
 })

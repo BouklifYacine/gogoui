@@ -4,7 +4,7 @@ import { ScrollArea } from './scroll-area.tsx'
 import { Separator } from './separator.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ScrollArea',
+  title: 'Mise en page/ScrollArea',
   component: ScrollArea,
 })
 

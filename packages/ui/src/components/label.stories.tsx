@@ -4,7 +4,7 @@ import { Input } from './input.tsx'
 import { Label } from './label.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Label',
+  title: 'Formulaires/Saisie/Label',
   component: Label,
 })
 

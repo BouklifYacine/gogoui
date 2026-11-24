@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { RangeSlider } from './range-slider.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/RangeSlider',
+  title: 'Formulaires/Champs prêts/RangeSlider',
   component: RangeSlider,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

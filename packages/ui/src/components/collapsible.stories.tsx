@@ -10,7 +10,7 @@ import {
 } from './collapsible.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Collapsible',
+  title: 'Mise en page/Collapsible',
   component: Collapsible,
 })
 

@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { PasswordField } from './password-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/PasswordField',
+  title: 'Formulaires/Champs prêts/PasswordField',
   component: PasswordField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

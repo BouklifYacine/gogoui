@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { ErrorAlert } from './error-alert.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ErrorAlert',
+  title: 'Retours/ErrorAlert',
   component: ErrorAlert,
 })
 

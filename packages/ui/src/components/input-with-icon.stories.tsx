@@ -6,7 +6,8 @@ import { InputWithIcon } from './input-with-icon.tsx'
 import { Label } from './label.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/InputWithIcon',
+  title: 'Formulaires/Saisie/InputWithIcon',
+  tags: ['deprecated'],
   component: InputWithIcon,
 })
 

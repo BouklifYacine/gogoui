@@ -14,8 +14,8 @@ import {
 } from './expanding-button-group.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ExpandingButtonGroup',
-  tags: ['beta'],
+  title: 'Actions/ExpandingButtonGroup',
+  tags: ['beta', 'deprecated'],
   component: ExpandingButtonGroup,
   args: {
     'aria-label': 'Actions de la demande',

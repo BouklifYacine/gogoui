@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { useAppForm } from './index.ts'
 
 const meta = preview.meta({
-  title: 'Formulaires/TanStack Form',
+  title: 'Formulaires/Structure/TanStack Form',
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })
 

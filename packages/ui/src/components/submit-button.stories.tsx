@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { SubmitButton } from './submit-button.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/SubmitButton',
+  title: 'Formulaires/Structure/SubmitButton',
   component: SubmitButton,
 })
 

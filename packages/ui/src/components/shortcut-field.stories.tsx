@@ -5,8 +5,8 @@ import preview from '#.storybook/preview'
 import { ShortcutField } from './shortcut-field.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ShortcutField',
-  tags: ['beta'],
+  title: 'Formulaires/Champs prêts/ShortcutField',
+  tags: ['beta', 'deprecated'],
   component: ShortcutField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

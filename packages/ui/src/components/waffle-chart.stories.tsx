@@ -22,7 +22,7 @@ const saturdays2025 = [
 ]
 
 const meta = preview.meta({
-  title: 'Charts/WaffleChart',
+  title: 'Graphiques/Barres/WaffleChart',
   tags: ['beta'],
   component: WaffleChart,
   parameters: { layout: 'padded' },

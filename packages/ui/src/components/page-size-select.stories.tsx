@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { PageSizeSelect } from './page-size-select.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/PageSizeSelect',
+  title: 'Listes et tableaux/PageSizeSelect',
   component: PageSizeSelect,
 })
 

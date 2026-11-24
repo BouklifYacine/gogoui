@@ -8,7 +8,7 @@ import {
 } from './accordion.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Accordion',
+  title: 'Mise en page/Accordion',
   component: Accordion,
   subcomponents: { AccordionItem, AccordionTrigger, AccordionContent },
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],

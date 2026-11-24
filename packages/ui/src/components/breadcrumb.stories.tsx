@@ -11,7 +11,7 @@ import {
 } from './breadcrumb.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Breadcrumb',
+  title: 'Navigation/Breadcrumb',
   component: Breadcrumb,
 })
 

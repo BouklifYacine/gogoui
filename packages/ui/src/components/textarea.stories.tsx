@@ -4,7 +4,7 @@ import { Label } from './label.tsx'
 import { Textarea } from './textarea.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Textarea',
+  title: 'Formulaires/Saisie/Textarea',
   component: Textarea,
 })
 

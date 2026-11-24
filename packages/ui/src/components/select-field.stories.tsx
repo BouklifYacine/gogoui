@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { SelectField } from './select-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/SelectField',
+  title: 'Formulaires/Champs prêts/SelectField',
   component: SelectField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

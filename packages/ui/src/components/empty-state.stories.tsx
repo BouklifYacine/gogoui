@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { EmptyState } from './empty-state.tsx'
 
 const meta = preview.meta({
-  title: 'Listes/EmptyState',
+  title: 'Retours/EmptyState',
   component: EmptyState,
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],
 })

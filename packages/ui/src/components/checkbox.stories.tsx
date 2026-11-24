@@ -7,7 +7,7 @@ import { Checkbox } from './checkbox.tsx'
 import { Label } from './label.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Checkbox',
+  title: 'Formulaires/Saisie/Checkbox',
   component: Checkbox,
   render: (args) => (
     <div className="flex items-center gap-3">

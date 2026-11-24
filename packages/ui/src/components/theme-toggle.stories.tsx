@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { ThemeToggle } from './theme-toggle.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ThemeToggle',
+  title: 'Actions/ThemeToggle',
   component: ThemeToggle,
 })
 

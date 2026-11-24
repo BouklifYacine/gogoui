@@ -7,7 +7,7 @@ import preview from '#.storybook/preview'
 import { Calendar, CalendarDayButton } from './calendar.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Calendar',
+  title: 'Formulaires/Dates et heures/Calendar',
   component: Calendar,
   args: { locale: fr, defaultMonth: new Date(2027, 5, 1) },
 })

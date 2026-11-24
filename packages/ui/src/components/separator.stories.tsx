@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Separator } from './separator.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Separator',
+  title: 'Mise en page/Separator',
   component: Separator,
 })
 

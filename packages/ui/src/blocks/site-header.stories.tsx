@@ -118,7 +118,7 @@ const actions = (
 )
 
 const meta = preview.meta({
-  title: 'Blocs/SiteHeader',
+  title: 'Blocs marketing/SiteHeader',
   tags: ['beta'],
   component: SiteHeader,
   parameters: { layout: 'padded' },

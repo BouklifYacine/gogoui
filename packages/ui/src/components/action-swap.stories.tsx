@@ -10,7 +10,7 @@ import preview from '#.storybook/preview'
 import { ActionSwap } from './action-swap.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ActionSwap',
+  title: 'Actions/ActionSwap',
   tags: ['beta'],
   component: ActionSwap,
   args: {

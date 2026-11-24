@@ -8,7 +8,7 @@ import {
 } from './skeleton.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Skeleton',
+  title: 'Retours/Skeleton',
   component: Skeleton,
 })
 

@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { ColorField } from './color-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/ColorField',
+  title: 'Formulaires/Champs prêts/ColorField',
   component: ColorField,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

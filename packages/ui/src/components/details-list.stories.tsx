@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { DetailsList } from './details-list.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/DetailsList',
+  title: 'Affichage/DetailsList',
   component: DetailsList,
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],
 })

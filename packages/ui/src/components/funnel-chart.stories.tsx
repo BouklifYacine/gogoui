@@ -10,7 +10,7 @@ const steps = [
 ]
 
 const meta = preview.meta({
-  title: 'Charts/FunnelChart',
+  title: 'Graphiques/Barres/FunnelChart',
   component: FunnelChart,
   parameters: { layout: 'padded' },
   render: (args) => (

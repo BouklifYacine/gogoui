@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Meter, MeterLabel, MeterValue } from './meter.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Meter',
+  title: 'Retours/Meter',
   component: Meter,
   subcomponents: { MeterLabel, MeterValue },
   decorators: [(Story) => <div className="w-80">{Story()}</div>],

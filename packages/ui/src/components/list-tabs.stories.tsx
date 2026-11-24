@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { ListTabs } from './list-tabs.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/ListTabs',
+  title: 'Navigation/ListTabs',
   component: ListTabs,
   parameters: { layout: 'padded' },
 })

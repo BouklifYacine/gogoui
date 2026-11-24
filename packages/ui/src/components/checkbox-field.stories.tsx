@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { CheckboxField } from './checkbox-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/CheckboxField',
+  title: 'Formulaires/Champs prêts/CheckboxField',
   component: CheckboxField,
   decorators: [(Story) => <div className="w-96">{Story()}</div>],
 })

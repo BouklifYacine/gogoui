@@ -42,7 +42,7 @@ const year2026 = season(2026, 1)
 const year2025 = season(2025, 0.7)
 
 const meta = preview.meta({
-  title: 'Charts/Streamgraph',
+  title: 'Graphiques/Courbes/Streamgraph',
   tags: ['beta'],
   component: Streamgraph,
   parameters: { layout: 'padded' },

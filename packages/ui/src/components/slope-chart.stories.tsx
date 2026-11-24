@@ -30,7 +30,7 @@ const euros = new Intl.NumberFormat('fr-FR', {
 })
 
 const meta = preview.meta({
-  title: 'Charts/SlopeChart',
+  title: 'Graphiques/Courbes/SlopeChart',
   tags: ['beta'],
   component: SlopeChart,
   parameters: { layout: 'padded' },

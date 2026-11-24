@@ -11,7 +11,7 @@ import {
 } from './pagination.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Pagination',
+  title: 'Navigation/Pagination',
   component: Pagination,
 })
 

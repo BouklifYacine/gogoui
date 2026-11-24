@@ -6,7 +6,7 @@ import { FieldShell } from './field-shell.tsx'
 import { RichTextEditor } from './rich-text-editor.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/RichTextEditor',
+  title: 'Formulaires/Champs prêts/RichTextEditor',
   component: RichTextEditor,
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],
 })

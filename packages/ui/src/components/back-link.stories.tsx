@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { BackLink } from './back-link.tsx'
 
 const meta = preview.meta({
-  title: 'Mise en page/BackLink',
+  title: 'Navigation/BackLink',
   component: BackLink,
 })
 

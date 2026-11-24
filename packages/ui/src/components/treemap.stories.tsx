@@ -134,7 +134,7 @@ const change = new Intl.NumberFormat('fr-FR', {
 })
 
 const meta = preview.meta({
-  title: 'Charts/Treemap',
+  title: 'Graphiques/Proportions/Treemap',
   tags: ['beta'],
   component: Treemap,
   parameters: { layout: 'padded' },

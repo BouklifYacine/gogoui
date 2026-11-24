@@ -17,7 +17,7 @@ import {
 } from './context-menu.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/ContextMenu',
+  title: 'Menus/ContextMenu',
   component: ContextMenu,
   subcomponents: { ContextMenuTrigger, ContextMenuContent, ContextMenuItem },
 })

@@ -8,7 +8,7 @@ const message =
   'Bonjour, nous nous marions le 12 septembre 2027 et cherchons un domaine pour environ 120 invités, avec un hébergement sur place pour la famille proche. Nous aimerions une cérémonie laïque en extérieur, un vin d’honneur dans le jardin puis un dîner assis. Pourriez-vous nous dire si la date est libre, ce que comprend la location du samedi au dimanche, et si un traiteur est imposé ? Nous pouvons venir visiter un samedi matin.'
 
 const meta = preview.meta({
-  title: 'Composants/ExpandableText',
+  title: 'Affichage/ExpandableText',
   tags: ['beta'],
   component: ExpandableText,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],

@@ -4,7 +4,7 @@ import { Button } from './button.tsx'
 import { Toaster, toast, useToastWithUndo } from './toaster.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Toaster',
+  title: 'Retours/Toaster',
   component: Toaster,
   parameters: { layout: 'padded' },
 })

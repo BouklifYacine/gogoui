@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { Toggle } from './toggle.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Toggle',
+  title: 'Actions/Toggle',
   component: Toggle,
   args: { variant: 'outline', size: 'default', color: 'primary' },
 })

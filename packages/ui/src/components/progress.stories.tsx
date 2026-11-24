@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Progress, ProgressLabel, ProgressValue } from './progress.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Progress',
+  title: 'Retours/Progress',
   component: Progress,
   args: { value: 60, color: 'primary' },
 })

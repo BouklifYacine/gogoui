@@ -56,7 +56,7 @@ const year2025 = venueYear(2025)
 const events = { one: 'événement', other: 'événements' }
 
 const meta = preview.meta({
-  title: 'Charts/ActivityHeatmap',
+  title: 'Graphiques/Calendrier/ActivityHeatmap',
   tags: ['beta'],
   component: ActivityHeatmap,
   args: {

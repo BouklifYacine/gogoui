@@ -4,7 +4,7 @@ import { Label } from './label.tsx'
 import { PasswordInput } from './password-input.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/PasswordInput',
+  title: 'Formulaires/Saisie/PasswordInput',
   component: PasswordInput,
 })
 

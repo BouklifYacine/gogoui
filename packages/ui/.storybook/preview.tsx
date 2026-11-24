@@ -15,6 +15,40 @@ export default definePreview({
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+    // The sidebar from « where to start » to « what you build with », then
+    // the bigger pieces; inside a category, alphabetical.
+    options: {
+      storySort: {
+        order: [
+          'Introduction',
+          'Démarrer',
+          'Fondations',
+          'Actions',
+          'Formulaires',
+          [
+            'Saisie',
+            'Champs prêts',
+            'Dates et heures',
+            'Fichiers',
+            'Structure',
+          ],
+          'Confirmations',
+          'Fenêtres',
+          'Menus',
+          'Navigation',
+          'Retours',
+          'Affichage',
+          'Listes et tableaux',
+          'Filtres et recherche',
+          'Mise en page',
+          'Texte animé',
+          'Graphiques',
+          'Réglages',
+          'Blocs marketing',
+        ],
+        method: 'alphabetical',
+      },
+    },
     // Only the props that change the look or the content: the HTML and
     // event props of every element would bury them.
     controls: {

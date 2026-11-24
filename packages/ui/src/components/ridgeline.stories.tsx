@@ -44,7 +44,7 @@ const season2026 = guestsByMonth(2026)
 const season2025 = guestsByMonth(2025)
 
 const meta = preview.meta({
-  title: 'Charts/Ridgeline',
+  title: 'Graphiques/Courbes/Ridgeline',
   tags: ['beta'],
   component: Ridgeline,
   parameters: { layout: 'padded' },

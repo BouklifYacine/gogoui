@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { Kbd, KbdGroup } from './kbd.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Kbd',
+  title: 'Affichage/Kbd',
   component: Kbd,
 })
 

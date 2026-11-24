@@ -10,7 +10,7 @@ import {
 } from './input-group.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/InputGroup',
+  title: 'Formulaires/Saisie/InputGroup',
   component: InputGroup,
 })
 

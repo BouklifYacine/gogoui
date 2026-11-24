@@ -10,7 +10,7 @@ import preview from '#.storybook/preview'
 import { Timeline } from './timeline.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Timeline',
+  title: 'Affichage/Timeline',
   component: Timeline,
   decorators: [(Story) => <div className="w-[28rem]">{Story()}</div>],
 })

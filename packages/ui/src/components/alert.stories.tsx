@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from './alert.tsx'
 import { Button } from './button.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Alert',
+  title: 'Retours/Alert',
   component: Alert,
   subcomponents: { AlertTitle, AlertDescription },
   decorators: [(Story) => <div className="w-[32rem]">{Story()}</div>],

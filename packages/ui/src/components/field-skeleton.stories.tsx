@@ -3,7 +3,7 @@ import preview from '#.storybook/preview'
 import { FieldSkeleton } from './field-skeleton.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/FieldSkeleton',
+  title: 'Formulaires/Structure/FieldSkeleton',
   component: FieldSkeleton,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

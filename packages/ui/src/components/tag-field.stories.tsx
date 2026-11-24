@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { TagField } from './tag-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/TagField',
+  title: 'Formulaires/Champs prêts/TagField',
   tags: ['beta'],
   component: TagField,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],

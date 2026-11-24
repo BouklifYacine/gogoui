@@ -12,7 +12,8 @@ import {
 } from './menubar.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Menubar',
+  title: 'Menus/Menubar',
+  tags: ['deprecated'],
   component: Menubar,
   subcomponents: { MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem },
 })

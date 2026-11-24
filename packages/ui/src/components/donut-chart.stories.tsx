@@ -30,7 +30,7 @@ const spaces = [
 ]
 
 const meta = preview.meta({
-  title: 'Charts/DonutChart',
+  title: 'Graphiques/Proportions/DonutChart',
   tags: ['beta'],
   component: DonutChart,
   args: {

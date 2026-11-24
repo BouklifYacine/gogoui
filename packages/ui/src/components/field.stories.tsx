@@ -10,7 +10,7 @@ import {
 import { Input } from './input.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Field',
+  title: 'Formulaires/Saisie/Field',
   component: Field,
 })
 

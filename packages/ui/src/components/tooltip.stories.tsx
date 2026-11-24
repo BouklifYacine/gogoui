@@ -11,7 +11,7 @@ import {
 } from './tooltip.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Tooltip',
+  title: 'Fenêtres/Tooltip',
   component: Tooltip,
 })
 

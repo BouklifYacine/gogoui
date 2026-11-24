@@ -6,7 +6,7 @@ import { Label } from './label.tsx'
 import { RadioGroup, RadioGroupItem } from './radio-group.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/RadioGroup',
+  title: 'Formulaires/Saisie/RadioGroup',
   component: RadioGroup,
 })
 

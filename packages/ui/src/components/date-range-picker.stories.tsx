@@ -5,7 +5,7 @@ import preview from '#.storybook/preview'
 import { DateRangePicker, useDateRangePresets } from './date-range-picker.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/DateRangePicker',
+  title: 'Formulaires/Dates et heures/DateRangePicker',
   component: DateRangePicker,
   decorators: [(Story) => <div className="w-80">{Story()}</div>],
 })

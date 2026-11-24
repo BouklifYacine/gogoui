@@ -22,7 +22,7 @@ const eventTypes = [
 ]
 
 const meta = preview.meta({
-  title: 'Composants/Select',
+  title: 'Formulaires/Saisie/Select',
   component: Select,
 })
 

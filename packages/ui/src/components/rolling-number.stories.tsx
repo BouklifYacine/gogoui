@@ -6,7 +6,7 @@ import { Button } from './button.tsx'
 import { RollingNumber } from './rolling-number.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/RollingNumber',
+  title: 'Texte animé/RollingNumber',
   tags: ['beta'],
   component: RollingNumber,
   args: { value: 1280 },

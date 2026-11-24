@@ -12,7 +12,7 @@ import {
 } from './sheet.tsx'
 
 const meta = preview.meta({
-  title: 'Composants/Sheet',
+  title: 'Fenêtres/Sheet',
   component: Sheet,
 })
 

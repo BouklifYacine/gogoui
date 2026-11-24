@@ -6,7 +6,7 @@ import { Label } from './label.tsx'
 import { NumberField, NumberFieldScrubArea } from './number-field.tsx'
 
 const meta = preview.meta({
-  title: 'Formulaires/NumberField',
+  title: 'Formulaires/Champs prêts/NumberField',
   component: NumberField,
 })
 
