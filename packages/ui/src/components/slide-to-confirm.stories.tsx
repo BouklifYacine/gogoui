@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -13,7 +14,7 @@ const meta = preview.meta({
 })
 
 /**
- * Slide the thumb to the end, or focus it and press Enter.
+ * Slide the thumb to the end, tap or click it, or focus it and press Enter.
  */
 export const Basic = meta.story({
   args: {
@@ -34,6 +35,34 @@ export const Danger = meta.story({
     doneLabel: 'Remboursé',
     color: 'danger',
     onConfirm: () => new Promise((resolve) => setTimeout(resolve, 1200)),
+  },
+})
+
+/**
+ * Sliding is never the only way: a single tap or click on the thumb
+ * confirms too, the thumb gliding to the end. A `confirmingLabel` already
+ * ending with « … » keeps its own dots.
+ */
+export const TapToConfirm = meta.story({
+  args: {
+    label: 'Glissez pour annuler la date',
+    confirmingLabel: 'Annulation…',
+    doneLabel: 'Date annulée',
+    color: 'danger',
+    onConfirm: () => new Promise((resolve) => setTimeout(resolve, 300)),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(
+      canvas.getByRole('button', { name: /Glissez pour annuler la date/ }),
+    )
+    const slider = canvasElement.querySelector('[data-slot="slide-to-confirm"]')
+    await expect(slider).toHaveAttribute('data-phase', 'confirming')
+    await expect(slider?.textContent).toContain('Annulation…')
+    await expect(slider?.textContent).not.toContain('……')
+    await waitFor(() => expect(slider).toHaveAttribute('data-phase', 'done'), {
+      timeout: 3000,
+    })
   },
 })
 

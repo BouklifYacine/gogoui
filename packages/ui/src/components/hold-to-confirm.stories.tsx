@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ImageIcon, TrashIcon } from '@phosphor-icons/react'
+import { expect, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -99,6 +100,52 @@ export const Controlled = meta.story({
         </Button>
       </div>
     )
+  },
+})
+
+/**
+ * Several buttons with the same words, one per photo: `srLabel` names each
+ * one for a screen reader, « Retirer la photo 2 ». A `confirmingLabel`
+ * already ending with « … » keeps its own dots. A screen reader's double
+ * tap confirms at once, VoiceOver's too (its click carries `detail` 1,
+ * after a press with no contact area).
+ */
+export const SharedWords = meta.story({
+  render: () => (
+    <div className="flex flex-wrap items-center gap-3">
+      {[1, 2, 3].map((photo) => (
+        <HoldToConfirm
+          key={photo}
+          size="sm"
+          label="Retirer"
+          srLabel={`Retirer la photo ${photo}`}
+          confirmingLabel="Retrait…"
+          doneLabel="Retirée"
+          color="danger"
+          iconStart={<ImageIcon />}
+          onConfirm={() => new Promise((resolve) => setTimeout(resolve, 600))}
+        />
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const second = canvas.getByRole('button', { name: 'Retirer la photo 2' })
+    // VoiceOver on iOS: a press with no contact area, then a real click.
+    const press = { bubbles: true, isPrimary: true, width: 0, height: 0 }
+    second.dispatchEvent(new PointerEvent('pointerdown', press))
+    second.dispatchEvent(new PointerEvent('pointerup', press))
+    second.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 1 }))
+    await waitFor(() =>
+      expect(second).toHaveAttribute('aria-label', 'Retrait…'),
+    )
+    await waitFor(
+      () => expect(second).toHaveAttribute('aria-label', 'Retirée'),
+      { timeout: 3000 },
+    )
+    await expect(
+      canvas.getByRole('button', { name: 'Retirer la photo 3' }),
+    ).toHaveAttribute('data-state', 'idle')
   },
 })
 

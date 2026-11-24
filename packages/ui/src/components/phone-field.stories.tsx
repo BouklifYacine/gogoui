@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { expect, userEvent, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -105,6 +106,48 @@ export const Invalid = meta.story({
         }
       />
     )
+  },
+})
+
+/**
+ * The country list with the keyboard alone: the button opens it with the
+ * focus in the search, the arrows move, Enter picks and goes back to the
+ * number, Escape closes it and gives the focus back to the button. On a
+ * phone, a tap on a country picks it; the close and clear buttons are
+ * 44 px there.
+ */
+export const KeyboardCountry = meta.story({
+  render: function Render() {
+    const [value, setValue] = useState('')
+    return (
+      <PhoneField label="Téléphone" value={value} onValueChange={setValue} />
+    )
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const trigger = canvas.getByRole('button', { name: /France/ })
+    trigger.focus()
+    await userEvent.keyboard('{Enter}')
+    const search = canvas.getByRole('combobox', {
+      name: 'Rechercher un pays ou un indicatif',
+    })
+    await expect(search).toHaveFocus()
+    await userEvent.keyboard('belg')
+    await userEvent.keyboard('{Enter}')
+    await expect(
+      canvas.getByRole('button', { name: /Belgique/ }),
+    ).toHaveAttribute('aria-expanded', 'false')
+    await expect(
+      canvas.getByRole('textbox', { name: 'Téléphone' }),
+    ).toHaveFocus()
+
+    canvas.getByRole('button', { name: /Belgique/ }).focus()
+    await userEvent.keyboard('{ArrowDown}')
+    await expect(search).toHaveFocus()
+    await userEvent.keyboard('{Escape}')
+    const back = canvas.getByRole('button', { name: /Belgique/ })
+    await expect(back).toHaveFocus()
+    await expect(back).toHaveAttribute('aria-expanded', 'false')
   },
 })
 

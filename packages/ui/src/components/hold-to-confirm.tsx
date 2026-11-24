@@ -4,7 +4,6 @@ import { useCallback, useId, useRef, useState } from 'react'
 import type {
   ComponentProps,
   KeyboardEvent,
-  MouseEvent,
   PointerEvent,
   ReactNode,
 } from 'react'
@@ -21,6 +20,8 @@ import { HoldFace } from '../internal/hold-face.tsx'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { duration as durations, spring } from '../internal/motion.ts'
 import { useLabelWidth } from '../internal/use-label-width.ts'
+import { isVirtualPointer } from '../internal/virtual-pointer.ts'
+import { withEllipsis } from '../internal/with-ellipsis.ts'
 import { cn } from '../lib/cn.ts'
 
 /** The fill and the words on it, per colour. */
@@ -60,6 +61,12 @@ type HoldToConfirmProps = Omit<
 > & {
   /** The instruction and the act: « Maintenir pour supprimer ». */
   label: string
+  /**
+   * The name a screen reader reads instead of `label`, when several
+   * buttons on one screen share their words: « Retirer la photo 3 ».
+   * `aria-label` does the same.
+   */
+  srLabel?: string
   /** Said once done: « Supprimé ». */
   doneLabel: string
   /** Said while a promise from `onConfirm` runs: « Suppression ». */
@@ -99,19 +106,24 @@ type HoldToConfirmProps = Omit<
  * disabled.
  *
  * **Key props**: `label`, `doneLabel`, `onConfirm` (may return a promise),
- * `confirmingLabel`, `duration` (1200 ms), `iconStart`, `color`
+ * `confirmingLabel` (« Suppression »: the dots are added, unless it already
+ * ends with « … »), `srLabel` (« Retirer la photo 3 » when several buttons
+ * share their words), `duration` (1200 ms), `iconStart`, `color`
  * (`primary`), `size`, `confirmed` (controlled), `onHoldChange`,
  * `labels` to change its words.
  *
  * **Accessibility**: Space or Enter held fills it too (a held key does not
- * repeat); a screen reader's double tap confirms at once. The way to hold
- * it is read as its description, and the result is announced. Phones
- * vibrate briefly at the end, unless motion is reduced.
+ * repeat); a screen reader's double tap (VoiceOver, TalkBack, a keyboard
+ * click) confirms at once. The way to hold it is read as its description,
+ * and the result is announced. Phones vibrate briefly at the end, unless
+ * motion is reduced.
  *
  * @summary A button that acts only once held.
  */
 function HoldToConfirm({
   label,
+  srLabel,
+  'aria-label': ariaLabel,
   doneLabel,
   confirmingLabel,
   onConfirm,
@@ -150,12 +162,16 @@ function HoldToConfirm({
   const press = useRef<AnimationPlaybackControls | null>(null)
   const button = useRef<HTMLButtonElement | null>(null)
   const runRef = useRef(0)
+  // A finger or a mouse (not a screen reader) pressed before the click.
+  const realPress = useRef(false)
 
   const words = done
     ? doneLabel
     : busy && confirmingLabel
-      ? `${confirmingLabel}…`
+      ? withEllipsis(confirmingLabel)
       : label
+  // Idle, the button says which one it is; busy or done, what happened.
+  const name = done || busy ? words : (srLabel ?? ariaLabel ?? label)
   const stage = done ? 'done' : busy ? 'busy' : 'idle'
   const seconds = new Intl.NumberFormat(messages.intlLocale, {
     maximumFractionDigits: 1,
@@ -280,7 +296,10 @@ function HoldToConfirm({
   }, [])
 
   const onPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
-    if (!event.isPrimary || event.button !== 0) {
+    // A screen reader's double tap also sends a press, with no contact
+    // area: it must not start a hold that its click would let go at once.
+    realPress.current = !isVirtualPointer(event.nativeEvent)
+    if (!realPress.current || !event.isPrimary || event.button !== 0) {
       return
     }
     pointerType.current = event.pointerType
@@ -334,10 +353,19 @@ function HoldToConfirm({
     }
   }
 
-  // A screen reader's double tap clicks without a press and cannot hold:
-  // it confirms at once, the fill running quickly to the end.
-  const onClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (event.detail !== 0 || locked || disabled || source.current) {
+  const onPointerCancel = () => {
+    realPress.current = false
+    onPointerEnd()
+  }
+
+  // A click that no finger or mouse pressed is a screen reader's double tap
+  // (VoiceOver's carries `detail` 1, so `detail` alone cannot tell) or a
+  // keyboard's click: it cannot hold, so it confirms at once, the fill
+  // running quickly to the end. A real press was already a hold.
+  const onClick = () => {
+    const fromPointer = realPress.current
+    realPress.current = false
+    if (fromPointer || locked || disabled || source.current) {
       return
     }
     source.current = 'key'
@@ -360,7 +388,7 @@ function HoldToConfirm({
         disabled={disabled}
         aria-disabled={locked || undefined}
         aria-busy={busy || undefined}
-        aria-label={words}
+        aria-label={name}
         aria-describedby={describedBy(ariaDescribedBy, !done && hintId)}
         style={{ scale }}
         className={cn(
@@ -375,7 +403,7 @@ function HoldToConfirm({
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerEnd}
-        onPointerCancel={onPointerEnd}
+        onPointerCancel={onPointerCancel}
         onLostPointerCapture={onPointerEnd}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}

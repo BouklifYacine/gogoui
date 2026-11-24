@@ -1,7 +1,7 @@
 // Slide to Confirm, after Kokonut UI (https://kokonutui.com, MIT licence,
 // kokonutUI), on GoGoUI's tokens and icons.
 import { useCallback, useRef, useState } from 'react'
-import type { MouseEvent, PointerEvent } from 'react'
+import type { PointerEvent } from 'react'
 import { animate, m, useMotionValue, useTransform } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 
@@ -24,6 +24,7 @@ import {
 } from '../internal/slide-motion.ts'
 import type { Phase } from '../internal/slide-motion.ts'
 import { SlideThumbIcon } from '../internal/slide-thumb-icon.tsx'
+import { withEllipsis } from '../internal/with-ellipsis.ts'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
@@ -65,8 +66,11 @@ type SlideToConfirmProps = {
  * takes something away), `confirmingLabel`,
  * `doneLabel`, `disabled`, `labels` to change its words.
  *
- * **Accessibility**: Enter, Space or a screen reader's double tap confirm
- * in one go, without sliding.
+ * **Accessibility**: sliding is never the only way. A tap or a click on
+ * the thumb, Enter, Space or a screen reader's double tap confirm in one
+ * go: the thumb glides to the end and the same confirming and done words
+ * are announced. `confirmingLabel` gets its dots, unless it already ends
+ * with « … ».
  *
  * @summary Slide a thumb to confirm what cannot be undone.
  */
@@ -232,29 +236,27 @@ function SlideToConfirm({
     }
   }
 
-  const onClick = async (event: MouseEvent<HTMLButtonElement>) => {
+  const onClick = () => {
     const { pressed, moved } = dragRef.current
     dragRef.current.pressed = false
+    dragRef.current.moved = false
     if (disabled || phase !== 'idle') {
       return
     }
-    // Enter, Space and a screen reader's double tap click without a
-    // pointer, and cannot slide: they confirm in one go.
-    if (event.detail === 0 || !pressed) {
-      void commit(0, true)
+    // A slide already ended in its release: it confirmed or went back.
+    if (pressed && moved) {
       return
     }
-    if (moved || reduceMotion) {
-      return
-    }
-    // A tap shows which way to go: a short nudge that springs back.
-    await animate(x, 28, { duration: 0.18, ease: EASE_OUT })
-    void animate(x, 0, spring())
+    // A tap or a click on the thumb, Enter, Space and a screen reader's
+    // double tap confirm in one go: sliding must not be the only way
+    // (WCAG 2.5.7). The thumb glides to the end the way a slide would.
+    void commit(0, true)
   }
 
   const done = phase === 'done'
   const busy = phase === 'confirming'
-  const stageLabel = busy ? `${confirmingLabel}…` : done ? doneLabel : label
+  const confirmingWords = withEllipsis(confirmingLabel)
+  const stageLabel = busy ? confirmingWords : done ? doneLabel : label
 
   return (
     <MotionFeatures>
@@ -298,7 +300,7 @@ function SlideToConfirm({
               phase === 'idle' && !disabled && 'cursor-grab',
               phase === 'dragging' && 'cursor-grabbing',
             )}
-            onClick={(event) => void onClick(event)}
+            onClick={onClick}
             onPointerCancel={onPointerUp}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -310,7 +312,7 @@ function SlideToConfirm({
         </div>
 
         <span aria-live="polite" className="sr-only">
-          {busy && `${confirmingLabel}…`}
+          {busy && confirmingWords}
           {done && doneLabel}
         </span>
       </div>

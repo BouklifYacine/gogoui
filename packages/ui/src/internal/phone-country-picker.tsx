@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
+import { flushSync } from 'react-dom'
 import { AnimatePresence, animate, m, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -156,7 +157,6 @@ export function PhoneCountryPicker({
 
   // Opening (from the button or from « + » in the number) starts on the
   // chosen country; the focus goes to the search once it shows.
-  const pendingFocus = useRef<'trigger' | 'number' | null>(null)
   const shownOpen = useRef(false)
   const scrollIntent = useRef(false)
   const keyNav = useRef(false)
@@ -233,41 +233,57 @@ export function PhoneCountryPicker({
     }
   }
 
-  // Runs after each render (a ref given anew each time): moves the focus
-  // the last action asked for, and hides the highlight when nothing is
+  // Runs after each render, on the list's scroller: a plain element, given
+  // a new ref each time, so React calls it on every commit (motion's
+  // elements call their ref once only). When the list has just opened it
+  // puts the focus in the search (also for « + » typed in the number) and
+  // the chosen country in view; it hides the highlight when nothing is
   // active.
   function afterRender(node: HTMLDivElement | null) {
+    scrollRef.current = node
     if (!node) {
       return
     }
     if (open && !shownOpen.current) {
       searchRef.current?.focus({ preventScroll: true })
-      // The chosen country in view.
       const row = node.querySelector<HTMLElement>('[data-active]')
-      const scroller = scrollRef.current
-      if (row && scroller) {
-        scroller.scrollTop = Math.max(
+      if (row) {
+        node.scrollTop = Math.max(
           0,
-          row.offsetTop - scroller.clientHeight / 2 + row.offsetHeight / 2,
+          row.offsetTop - node.clientHeight / 2 + row.offsetHeight / 2,
         )
       }
     }
     shownOpen.current = open
-    const target = pendingFocus.current
-    pendingFocus.current = null
-    if (target === 'trigger') {
-      triggerRef.current?.focus({ preventScroll: true })
-    } else if (target === 'number') {
-      onFocusNumber()
-    }
     if (!open || activeKey === null) {
       placed.current = null
       highlightOpacity.set(0)
     }
   }
 
+  /**
+   * Opens the list and puts the focus in its search, inside the press or
+   * the key itself: flushSync makes the search usable at once, and a
+   * phone opens its keyboard only for a focus given during the tap.
+   */
+  function openList(seed: string) {
+    flushSync(() => {
+      onQueryChange(seed)
+      onOpenChange(true)
+    })
+    searchRef.current?.focus({ preventScroll: true })
+  }
+
+  /**
+   * Closes the list. The focus moves first, to the country button or the
+   * number, so it never sits in the search once the search turns inert.
+   */
   function close(focus: 'trigger' | 'number' | null) {
-    pendingFocus.current = focus
+    if (focus === 'trigger') {
+      triggerRef.current?.focus({ preventScroll: true })
+    } else if (focus === 'number') {
+      onFocusNumber()
+    }
     onOpenChange(false)
   }
 
@@ -331,8 +347,7 @@ export function PhoneCountryPicker({
   function onTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault()
-      onQueryChange('')
-      onOpenChange(true)
+      openList('')
     } else if (
       event.key.length === 1 &&
       event.key !== ' ' &&
@@ -342,8 +357,7 @@ export function PhoneCountryPicker({
     ) {
       // A letter typed on the button starts the search with it.
       event.preventDefault()
-      onQueryChange(event.key)
-      onOpenChange(true)
+      openList(event.key)
     }
   }
 
@@ -426,29 +440,37 @@ export function PhoneCountryPicker({
       </span>
 
       <m.div
-        ref={afterRender}
         // Fills the anchor until it is measured, then springs its own size.
         className="absolute inset-0 z-10 overflow-clip bg-field transition-[background-color,box-shadow] duration-200 ease-standard group-data-open/picker:bg-floating group-data-open/picker:shadow-menu"
         initial={false}
         animate={triggerWidth && lidHeight ? shape : undefined}
         transition={reduce ? { duration: 0 } : open ? GROW : SHRINK}
       >
+        {/* A plain element for the outside listener: motion's elements
+            call their ref once only, when the list is still closed. */}
         <div
+          ref={open ? listenOutside : undefined}
           className="absolute inset-x-0 top-0 z-10"
           style={{ height: lidHeight || '100%' }}
         >
+          {/* Under the search while the list is open, out of the Tab
+              order but never inert: it holds the focus when the list
+              opens, and an inert focused button drops it to the page. */}
           <button
             ref={triggerRef}
             type="button"
             disabled={disabled}
-            inert={open || undefined}
+            tabIndex={open ? -1 : undefined}
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-controls={listId}
             aria-label={messages.phoneCountry(nameOf(country), country.dial)}
             onClick={() => {
-              onQueryChange('')
-              onOpenChange(!open)
+              if (open) {
+                close('trigger')
+              } else {
+                openList('')
+              }
             }}
             onKeyDown={onTriggerKeyDown}
             className="absolute inset-0.5 flex items-center rounded-[5px] pr-8.5 pl-2.5 text-sm font-medium text-fg outline-none transition-colors duration-150 ease-standard hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus disabled:cursor-not-allowed disabled:hover:bg-transparent"
@@ -491,7 +513,6 @@ export function PhoneCountryPicker({
           </button>
 
           <m.div
-            ref={open ? listenOutside : undefined}
             inert={!open || undefined}
             className="absolute inset-0 flex items-center gap-2 pr-0.5 pl-3"
             initial={false}
@@ -556,18 +577,23 @@ export function PhoneCountryPicker({
                     transition: { duration: duration.instant },
                   }}
                   transition={reduce ? { duration: 0 } : GROW}
-                  className="grid size-6 shrink-0 place-items-center rounded-full bg-hover text-fg-muted outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus [&_svg]:size-3.5"
+                  // A 24 px circle in a 44 px target on a phone; the 1 px
+                  // shift keeps the target inside the 42 px lid's clip.
+                  className="group/clear grid size-6 shrink-0 place-items-center rounded-full text-fg-muted outline-none hover:text-fg max-md:size-11 max-md:translate-y-px"
                 >
-                  <GoGoIcon name="close" aria-hidden="true" />
+                  <span className="grid size-6 place-items-center rounded-full bg-hover group-focus-visible/clear:outline-2 group-focus-visible/clear:outline-solid group-focus-visible/clear:outline-focus [&_svg]:size-3.5">
+                    <GoGoIcon name="close" aria-hidden="true" />
+                  </span>
                 </m.button>
               )}
             </AnimatePresence>
-            {/* Over the chevron: the chevron closes the list. */}
+            {/* Over the chevron: the chevron closes the list. 44 px on a
+                phone, the 1 px shift keeping it inside the lid's clip. */}
             <button
               type="button"
               aria-label={messages.phoneCloseList}
               onClick={() => close('trigger')}
-              className="size-8 shrink-0 rounded-full outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus"
+              className="size-8 shrink-0 rounded-full outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus max-md:size-11 max-md:translate-y-px"
             />
           </m.div>
 
@@ -617,7 +643,7 @@ export function PhoneCountryPicker({
           }
         >
           <div
-            ref={scrollRef}
+            ref={afterRender}
             className="max-h-70 overflow-y-auto overscroll-contain pt-1.5 [scrollbar-width:thin]"
           >
             <div

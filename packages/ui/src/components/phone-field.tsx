@@ -150,10 +150,13 @@ function caretAfterDigits(text: string, count: number) {
  * `labels` to change its words.
  *
  * **Accessibility**: a `tel` field (`autoComplete="tel"`) wired to its
- * label, help and error; the country list is a combobox (arrows, Enter,
- * Escape); a pasted « +44 … » picks its country and says so; « + » typed in
- * the number opens the list. Only the length is checked, not real
- * prefixes.
+ * label, help and error; the country button opens a combobox whose search
+ * takes the focus at once (also on a phone, its keyboard up): the arrows
+ * move through the countries, Enter or a tap picks one and goes back to
+ * the number, Escape closes it and gives the focus back to the button. Its
+ * close and clear buttons are 44 px on a phone. A pasted « +44 … » picks
+ * its country and says so; « + » typed in the number opens the list. Only
+ * the length is checked, not real prefixes.
  *
  * @summary A labelled phone number with its country.
  */
