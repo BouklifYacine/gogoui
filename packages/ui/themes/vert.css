@@ -1,0 +1,18 @@
+/*
+ * GoGoUI palette « vert »: a deep green. After GoGoUI's styles:
+ *
+ *   @import '@gogoui/ui/themes/vert.css';
+ *
+ * The primary, its hover, pressed and tinted states, the focus outline and
+ * the --brand-50…950 scale all follow --brand (tokens.css).
+ */
+:root,
+:where(.light) {
+  --brand: #15803d; /* white on it: 5.0:1 */
+  --brand-foreground: #ffffff;
+}
+
+.dark {
+  --brand: #4ade80; /* near black on it: 11.3:1 */
+  --brand-foreground: #0a0a0a;
+}

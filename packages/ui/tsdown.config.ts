@@ -4,8 +4,12 @@ import { defineConfig } from 'tsdown'
  * One file per component in dist/components, so a project only bundles
  * what it imports (`@gogoui/ui/button`). Every JS file starts with
  * "use client": the components hold state and effects, and a Next.js
- * server component may import them.
+ * server component may import them. The theme helpers (dist/theme) are
+ * plain functions a server may call, so they go without it.
  */
+const needsUseClient = (fileName: string) =>
+  fileName.endsWith('.js') && !fileName.startsWith('theme/')
+
 export default defineConfig({
   entry: [
     'src/components/*.tsx',
@@ -13,6 +17,7 @@ export default defineConfig({
     'src/i18n/index.ts',
     'src/tanstack-form/index.ts',
     'src/data-table/index.ts',
+    'src/theme/create-theme.ts',
     '!src/**/*.stories.tsx',
     '!src/**/*.test.tsx',
   ],
@@ -24,6 +29,6 @@ export default defineConfig({
   clean: true,
   unbundle: true,
   outputOptions: {
-    banner: (chunk) => (chunk.fileName.endsWith('.js') ? '"use client";' : ''),
+    banner: (chunk) => (needsUseClient(chunk.fileName) ? '"use client";' : ''),
   },
 })

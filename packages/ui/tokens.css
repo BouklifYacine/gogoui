@@ -6,19 +6,38 @@
  * Colour only means something: the main action, a state, the focus.
  *
  * The primary is neutral (near black by day, near white at night). A
- * project gives GoGoUI its brand by redefining the primary in both themes,
- * after importing GoGoUI:
+ * project gives GoGoUI its brand in one of three ways, after importing
+ * GoGoUI:
  *
- *   :root, :where(.light) {
- *     --primary: #1a66fe; --primary-hover: #1557db;
- *     --primary-active: #1249b8; --primary-foreground: #ffffff;
- *   }
- *   .dark {
- *     --primary: #1a66fe; --primary-hover: #3b7cff;
- *     --primary-active: #1557db; --primary-foreground: #ffffff;
- *   }
+ * 1. One colour, everything derived (hover, pressed, tints, focus outline,
+ *    the --brand-50…950 scale), in light and dark:
+ *
+ *      :root { --brand: #1a66fe; }
+ *
+ *    The text on it is white or near black, whichever reads at 4.5:1;
+ *    set --brand-foreground to choose it. Give `.dark` its own --brand
+ *    (a lighter one) for the night.
+ *
+ * 2. A ready palette: `@import '@gogoui/ui/themes/bleu.css';` (bleu, vert,
+ *    violet, ambre, rose, ardoise). Or `createTheme('#1a66fe').css` from
+ *    `@gogoui/ui/theme`, which picks the foreground and a dark variant.
+ *
+ * 3. By hand, every primary token in both themes, which still wins:
+ *
+ *      :root, :where(.light) {
+ *        --primary: #1a66fe; --primary-hover: #1557db;
+ *        --primary-active: #1249b8; --primary-foreground: #ffffff;
+ *      }
+ *      .dark {
+ *        --primary: #1a66fe; --primary-hover: #3b7cff;
+ *        --primary-active: #1557db; --primary-foreground: #ffffff;
+ *      }
  *
  * Every tint, ring and shadow of the primary is derived from them.
+ *
+ * How the brand switches on: each --brand-* helper below reads --brand.
+ * While --brand is unset, the helper is empty (CSS's "guaranteed-invalid"
+ * value) and `var(--brand-hover, #262626)` falls back to the neutral hex.
  *
  * Contrast (WCAG AA), checked by tokens.test.ts:
  * - fg-subtle (placeholders, meta, icons) 5.3:1 on white;
@@ -69,10 +88,30 @@
   --menu-highlight: var(--hover);
 
   /* ---------- primary: neutral, the brand is the project's ---------- */
-  --primary: #171717;
-  --primary-hover: #262626;
-  --primary-active: #404040;
-  --primary-foreground: #ffffff;
+  /* By day the brand darkens as it is hovered and pressed: more contrast
+     on the white page and under white text. */
+  --brand-hover: color-mix(in oklab, var(--brand) 88%, black);
+  --brand-active: color-mix(in oklab, var(--brand) 76%, black);
+  /* The focus outline: the brand, no lighter than 0.5 (3:1 on the canvas). */
+  --brand-focus: oklch(from var(--brand) min(l, 0.5) c h);
+  /* White when it reads at 4.5:1 on the brand (luminance up to 0.1833),
+     else near black #0a0a0a (from 0.1887), plain black in between. */
+  --brand-foreground-channel: calc(
+    clamp(0, (0.1833 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * 100000, 1) +
+      0.003035 *
+      clamp(0, (0.2126 * r + 0.7152 * g + 0.0722 * b - 0.1887) * 100000, 1)
+  );
+  --brand-foreground-auto: color(
+    from var(--brand) srgb-linear var(--brand-foreground-channel)
+      var(--brand-foreground-channel) var(--brand-foreground-channel)
+  );
+  --primary: var(--brand, #171717);
+  --primary-hover: var(--brand-hover, #262626);
+  --primary-active: var(--brand-active, #404040);
+  --primary-foreground: var(
+    --brand-foreground,
+    var(--brand-foreground-auto, #ffffff)
+  );
   --primary-subtle: color-mix(in srgb, var(--primary) 10%, transparent);
   --primary-subtle-strong: color-mix(in srgb, var(--primary) 16%, transparent);
   --primary-subtle-stronger: color-mix(
@@ -191,10 +230,32 @@
   /*
    * Focus, after Arc UI (https://uiarc.dev, MIT): a field answers with its
    * edge alone; everything else draws a softened outline, 2px at 2px, for
-   * the keyboard only. A project sets --focus-outline to its brand (keep it
-   * at 3:1 against the page).
+   * the keyboard only. With a --brand it is the brand (--brand-focus); a
+   * project may also set --focus-outline itself (keep it at 3:1 against
+   * the page).
    */
-  --focus-outline: color-mix(in srgb, var(--line-focus) 72%, transparent);
+  --focus-outline: var(
+    --brand-focus,
+    color-mix(in srgb, var(--line-focus) 72%, transparent)
+  );
+
+  /*
+   * The brand scale, 50 lightest to 950 darkest, for illustrations and
+   * charts (`bg-brand-100`, `fill-brand-500`): the brand's hue at fixed
+   * lightness steps, its chroma eased at both ends. Without a --brand it
+   * follows the primary (greys for the neutral one).
+   */
+  --brand-50: oklch(from var(--brand, var(--primary)) 0.975 calc(c * 0.12) h);
+  --brand-100: oklch(from var(--brand, var(--primary)) 0.945 calc(c * 0.25) h);
+  --brand-200: oklch(from var(--brand, var(--primary)) 0.89 calc(c * 0.45) h);
+  --brand-300: oklch(from var(--brand, var(--primary)) 0.82 calc(c * 0.7) h);
+  --brand-400: oklch(from var(--brand, var(--primary)) 0.72 calc(c * 0.92) h);
+  --brand-500: oklch(from var(--brand, var(--primary)) 0.63 c h);
+  --brand-600: oklch(from var(--brand, var(--primary)) 0.55 c h);
+  --brand-700: oklch(from var(--brand, var(--primary)) 0.49 calc(c * 0.9) h);
+  --brand-800: oklch(from var(--brand, var(--primary)) 0.43 calc(c * 0.78) h);
+  --brand-900: oklch(from var(--brand, var(--primary)) 0.37 calc(c * 0.65) h);
+  --brand-950: oklch(from var(--brand, var(--primary)) 0.28 calc(c * 0.5) h);
 
   /*
    * Motion, after Arc UI: an interface moves in under 300ms, an exit is
@@ -306,17 +367,33 @@
   --field-line: #6b6b6b; /* 3.7:1 on a card */
   --line-subtle: rgb(255 255 255 / 0.06);
   /* Declared again so a `.dark` subtree reads its own colours. */
-  --focus-outline: color-mix(in srgb, var(--line-focus) 72%, transparent);
+  --focus-outline: var(
+    --brand-focus,
+    color-mix(in srgb, var(--line-focus) 72%, transparent)
+  );
   --menu-highlight: var(--hover);
 
   /* The sidebar is the page's black, a hairline on its edge */
   --sidebar: var(--canvas);
 
-  /* Neutral primary at night: near white, dark text on it */
-  --primary: #fafafa;
-  --primary-hover: #e5e5e5;
-  --primary-active: #d4d4d4;
-  --primary-foreground: #0a0a0a;
+  /* Neutral primary at night: near white, dark text on it. A brand
+     lightens as it is hovered and pressed: more contrast on the black
+     page and under dark text. */
+  --brand-hover: color-mix(in oklab, var(--brand) 88%, white);
+  --brand-active: color-mix(in oklab, var(--brand) 76%, white);
+  /* The focus outline: the brand, no darker than 0.7 (3:1 on black). */
+  --brand-focus: oklch(from var(--brand) max(l, 0.7) c h);
+  --brand-foreground-auto: color(
+    from var(--brand) srgb-linear var(--brand-foreground-channel)
+      var(--brand-foreground-channel) var(--brand-foreground-channel)
+  );
+  --primary: var(--brand, #fafafa);
+  --primary-hover: var(--brand-hover, #e5e5e5);
+  --primary-active: var(--brand-active, #d4d4d4);
+  --primary-foreground: var(
+    --brand-foreground,
+    var(--brand-foreground-auto, #0a0a0a)
+  );
   --primary-subtle: color-mix(in srgb, var(--primary) 16%, transparent);
   --primary-subtle-strong: color-mix(in srgb, var(--primary) 24%, transparent);
   --primary-subtle-stronger: color-mix(

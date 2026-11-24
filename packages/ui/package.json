@@ -22,6 +22,7 @@
     "styles.css",
     "tokens.css",
     "theme.css",
+    "themes",
     "THIRD_PARTY_NOTICES.md"
   ],
   "sideEffects": [
@@ -38,6 +39,11 @@
     "./styles.css": "./styles.css",
     "./tokens.css": "./tokens.css",
     "./theme.css": "./theme.css",
+    "./themes/*": "./themes/*",
+    "./theme": {
+      "types": "./dist/theme/create-theme.d.ts",
+      "default": "./dist/theme/create-theme.js"
+    },
     "./provider": {
       "types": "./dist/i18n/index.d.ts",
       "default": "./dist/i18n/index.js"

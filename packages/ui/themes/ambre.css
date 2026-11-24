@@ -1,0 +1,18 @@
+/*
+ * GoGoUI palette « ambre »: a warm amber. After GoGoUI's styles:
+ *
+ *   @import '@gogoui/ui/themes/ambre.css';
+ *
+ * The primary, its hover, pressed and tinted states, the focus outline and
+ * the --brand-50…950 scale all follow --brand (tokens.css).
+ */
+:root,
+:where(.light) {
+  --brand: #b45309; /* white on it: 5.0:1 */
+  --brand-foreground: #ffffff;
+}
+
+.dark {
+  --brand: #fbbf24; /* near black on it: 11.8:1 */
+  --brand-foreground: #0a0a0a;
+}

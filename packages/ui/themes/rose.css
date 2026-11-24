@@ -1,0 +1,18 @@
+/*
+ * GoGoUI palette « rose »: a rose red. After GoGoUI's styles:
+ *
+ *   @import '@gogoui/ui/themes/rose.css';
+ *
+ * The primary, its hover, pressed and tinted states, the focus outline and
+ * the --brand-50…950 scale all follow --brand (tokens.css).
+ */
+:root,
+:where(.light) {
+  --brand: #e11d48; /* white on it: 4.6:1 */
+  --brand-foreground: #ffffff;
+}
+
+.dark {
+  --brand: #fb7185; /* near black on it: 7.3:1 */
+  --brand-foreground: #0a0a0a;
+}

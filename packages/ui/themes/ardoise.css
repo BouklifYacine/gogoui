@@ -1,0 +1,18 @@
+/*
+ * GoGoUI palette « ardoise »: a blue-grey slate. After GoGoUI's styles:
+ *
+ *   @import '@gogoui/ui/themes/ardoise.css';
+ *
+ * The primary, its hover, pressed and tinted states, the focus outline and
+ * the --brand-50…950 scale all follow --brand (tokens.css).
+ */
+:root,
+:where(.light) {
+  --brand: #334155; /* white on it: 10.3:1 */
+  --brand-foreground: #ffffff;
+}
+
+.dark {
+  --brand: #cbd5e1; /* near black on it: 13.3:1 */
+  --brand-foreground: #0a0a0a;
+}

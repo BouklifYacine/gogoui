@@ -1,0 +1,18 @@
+/*
+ * GoGoUI palette « violet »: a violet. After GoGoUI's styles:
+ *
+ *   @import '@gogoui/ui/themes/violet.css';
+ *
+ * The primary, its hover, pressed and tinted states, the focus outline and
+ * the --brand-50…950 scale all follow --brand (tokens.css).
+ */
+:root,
+:where(.light) {
+  --brand: #7c3aed; /* white on it: 5.6:1 */
+  --brand-foreground: #ffffff;
+}
+
+.dark {
+  --brand: #a78bfa; /* near black on it: 7.2:1 */
+  --brand-foreground: #0a0a0a;
+}

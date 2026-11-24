@@ -16,7 +16,11 @@ function block(selector: string): Record<string, string> {
   const close = css.indexOf('\n}', open)
   const body = css.slice(open + 1, close)
   const values: Record<string, string> = {}
-  for (const match of body.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6})\s*;/gi)) {
+  // A hex, or the neutral hex a brand token falls back to while --brand is
+  // unset: `var(--brand, #171717)`, `var(--a, var(--b, #ffffff))`.
+  const declaration =
+    /--([\w-]+):\s*(?:var\(\s*--[\w-]+,\s*)*(#[0-9a-f]{6})[\s)]*;/gi
+  for (const match of body.matchAll(declaration)) {
     values[match[1] as string] = (match[2] as string).toLowerCase()
   }
   return values

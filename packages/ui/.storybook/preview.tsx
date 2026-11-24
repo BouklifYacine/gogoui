@@ -8,6 +8,7 @@ import { definePreview } from '@storybook/react-vite'
 
 import { GoGoUIProvider } from '../src/i18n/gogoui-provider.tsx'
 import type { GoGoUILocale } from '../src/i18n/messages.ts'
+import { paletteCss, paletteToolbar } from './palettes.ts'
 
 export default definePreview({
   addons: [addonDocs(), addonA11y(), addonThemes()],
@@ -50,8 +51,9 @@ export default definePreview({
         dynamicTitle: true,
       },
     },
+    palette: paletteToolbar,
   },
-  initialGlobals: { locale: 'fr' },
+  initialGlobals: { locale: 'fr', palette: 'neutre' },
   decorators: [
     withThemeByClassName({
       themes: { clair: '', sombre: 'dark' },
@@ -70,5 +72,15 @@ export default definePreview({
         </div>
       </GoGoUIProvider>
     ),
+    // The « Palette » toolbar: the chosen theme file, as a style tag.
+    (Story, context) => {
+      const css = paletteCss[context.globals.palette as string]
+      return (
+        <>
+          {css ? <style>{css}</style> : null}
+          <Story />
+        </>
+      )
+    },
   ],
 })

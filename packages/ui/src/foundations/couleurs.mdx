@@ -1,0 +1,178 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+import { ColorSwatchGrid } from './color-swatch-grid.tsx'
+
+<Meta title="Fondations/Couleurs" />
+
+# Couleurs
+
+GoGoUI ne donne que des couleurs qui ont un sens : l'action principale (le
+_primary_), un état (danger, succès…), le focus. Tout passe par des variables
+CSS de `tokens.css`, que Tailwind lit sous le même nom (`bg-primary`,
+`text-fg-muted`, `border-line`…). Un thème ou une marque les change sans
+reconstruire le projet.
+
+Par défaut, le primary est neutre : presque noir le jour, presque blanc la
+nuit. La marque appartient au projet, qui la donne de l'une de ces trois
+façons.
+
+## 1. Une seule couleur : `--brand`
+
+Après les styles de GoGoUI :
+
+```css
+:root {
+  --brand: #1a66fe;
+}
+
+/* Facultatif : une marque plus claire la nuit. */
+.dark {
+  --brand: #6f9bff;
+}
+```
+
+Tout en découle, en clair et en sombre : le primary, son survol (plus foncé le
+jour, plus clair la nuit), son état pressé, ses teintes (`primary-subtle`…),
+le contour du focus (assez foncé le jour, assez clair la nuit pour 3:1 sur la
+page) et l'échelle `--brand-50` à `--brand-950`.
+
+Le texte posé sur la marque est blanc s'il s'y lit à 4.5:1, sinon presque noir.
+Pour le choisir soi-même : `--brand-foreground: #ffffff;`.
+
+Sans `--brand`, GoGoUI garde son primary neutre. L'ancienne façon (redéfinir
+`--primary`, `--primary-hover`, `--primary-active` et `--primary-foreground`
+dans les deux thèmes) marche toujours et l'emporte.
+
+## 2. Une palette prête
+
+Six palettes, chacune avec sa couleur de jour (texte blanc) et sa couleur de
+nuit (texte presque noir), toutes vérifiées à 4.5:1 par les tests :
+
+```css
+@import 'tailwindcss';
+@import '@gogoui/ui/styles.css';
+@import '@gogoui/ui/themes/bleu.css';
+```
+
+`bleu`, `vert`, `violet`, `ambre`, `rose`, `ardoise`. Le menu « Palette » de
+la barre d'outils de Storybook les essaie sur chaque composant.
+
+## 3. `createTheme`, pour une couleur choisie à l'exécution
+
+```ts
+import { createTheme } from '@gogoui/ui/theme'
+
+const theme = createTheme('#1a66fe')
+theme.css // les blocs clair et sombre, prêts à coller
+theme.light // { brand: '#1a66fe', foreground: '#ffffff', contrast: 4.79, readable: true }
+theme.dark // la même teinte, éclaircie si elle se perdait sur le noir
+```
+
+Utile pour une couleur par client, posée dans une balise `<style>` :
+`<style>{createTheme(venue.color).css}</style>`. La fonction ne dépend ni de
+React ni du navigateur : un serveur peut l'appeler.
+
+## Le primary
+
+<ColorSwatchGrid
+  tokens={[
+    'primary',
+    'primary-hover',
+    'primary-active',
+    'primary-foreground',
+    'primary-subtle',
+    'primary-subtle-strong',
+    'primary-subtle-stronger',
+    'focus-outline',
+  ]}
+/>
+
+## L'échelle de la marque
+
+Pour les illustrations et les graphiques : `bg-brand-100`, `fill-brand-500`,
+`text-brand-700`… La teinte de la marque à des clartés fixes. Sans `--brand`,
+elle suit le primary (des gris).
+
+<ColorSwatchGrid
+  tokens={[
+    'brand-50',
+    'brand-100',
+    'brand-200',
+    'brand-300',
+    'brand-400',
+    'brand-500',
+    'brand-600',
+    'brand-700',
+    'brand-800',
+    'brand-900',
+    'brand-950',
+  ]}
+/>
+
+## Les surfaces
+
+<ColorSwatchGrid
+  tokens={[
+    'canvas',
+    'surface',
+    'raised',
+    'floating',
+    'subtle',
+    'tray',
+    'field',
+    'control',
+    'inverse',
+    'track',
+    'hover',
+    'selected',
+    'overlay',
+  ]}
+/>
+
+## Le texte et les traits
+
+<ColorSwatchGrid
+  tokens={[
+    'fg',
+    'fg-muted',
+    'fg-subtle',
+    'fg-disabled',
+    'fg-inverse',
+    'line',
+    'line-strong',
+    'line-subtle',
+    'line-focus',
+    'field-line',
+  ]}
+/>
+
+## Les états
+
+Chaque état a sa couleur pleine, son texte (`-fg`), son trait (`-line`) et sa
+teinte (`-subtle`).
+
+<ColorSwatchGrid
+  tokens={['danger', 'danger-fg', 'danger-line', 'danger-subtle']}
+/>
+<ColorSwatchGrid
+  tokens={['warning', 'warning-fg', 'warning-line', 'warning-subtle']}
+/>
+<ColorSwatchGrid
+  tokens={['success', 'success-fg', 'success-line', 'success-subtle']}
+/>
+<ColorSwatchGrid tokens={['info', 'info-fg', 'info-line', 'info-subtle']} />
+<ColorSwatchGrid
+  tokens={['highlight', 'highlight-fg', 'highlight-line', 'highlight-subtle']}
+/>
+<ColorSwatchGrid
+  tokens={['caution', 'caution-fg', 'caution-line', 'caution-subtle']}
+/>
+<ColorSwatchGrid
+  tokens={['neutral', 'neutral-fg', 'neutral-line', 'neutral-subtle']}
+/>
+
+## Les graphiques
+
+<ColorSwatchGrid
+  tokens={['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5']}
+/>
