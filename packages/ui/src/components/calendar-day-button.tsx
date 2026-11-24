@@ -79,8 +79,9 @@ type CalendarDayButtonLabels = Partial<Pick<GoGoUIMessages, 'calendarDayRest'>>
  * **Accessibility**: a day is named by what it shows, so its name always
  * holds the number seen on screen (WCAG 2.5.3): the number, then hidden
  * words « juin 2027, lundi » (and « aujourd’hui », « sélectionné »), then
- * whatever was added under the number. The disc and the dot are drawn,
- * never read.
+ * whatever was added under the number. A Calendar given its own
+ * `labels.labelDayButton` is named by it instead (keep the day's number in
+ * it). The disc and the dot are drawn, never read.
  *
  * @summary One day of Calendar, round, with Arc UI's motion.
  */
@@ -97,8 +98,9 @@ function CalendarDayButton({
   onPointerDown,
   onPointerEnter,
   // react-day-picker's name (« lundi 31 mai 2027 ») does not hold what a
-  // composition adds under the number (a price): the content names the day.
-  'aria-label': _dayPickerLabel,
+  // composition adds under the number (a price): the content names the day,
+  // unless the calendar was given its own labelDayButton (below).
+  'aria-label': dayPickerLabel,
   children,
   labels,
   ...props
@@ -115,6 +117,12 @@ function CalendarDayButton({
   const messages = useGoGoUIMessages(labels)
   const color = dayColor ?? look.color
   const date = day.date
+  // A calendar given its own `labels.labelDayButton` says something the
+  // number cannot (« samedi 5 décembre 2026, encore libre »): its name wins,
+  // as the caller wrote it, its number included.
+  const ownName = dayPickerProps.labels?.labelDayButton
+    ? dayPickerLabel
+    : undefined
 
   // react-day-picker's number comes first; what a composition adds under
   // it (a price, dots) follows.
@@ -160,6 +168,7 @@ function CalendarDayButton({
   return (
     <button
       ref={focusWhenTold}
+      aria-label={ownName}
       data-day={date.toLocaleDateString(
         (locale ?? dayPickerProps.locale)?.code,
       )}

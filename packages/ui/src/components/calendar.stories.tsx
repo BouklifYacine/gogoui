@@ -2,6 +2,8 @@ import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { fr } from 'react-day-picker/locale'
 
+import { expect, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Calendar, CalendarDayButton } from './calendar.tsx'
@@ -213,4 +215,25 @@ export const Prices = meta.story({
       }}
     />
   ),
+})
+
+/**
+ * Its own day names (`labels.labelDayButton`): a booking calendar says
+ * whether each Saturday is free, and a screen reader hears it.
+ */
+export const OwnDayNames = meta.story({
+  args: {
+    mode: 'single',
+    modifiers: { free: (date: Date) => date.getDay() === 6 },
+    labels: {
+      labelDayButton: (date: Date, modifiers: Record<string, boolean>) =>
+        `${date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}${modifiers.free ? ', encore libre' : ''}`,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(
+      canvas.getByRole('button', { name: 'samedi 12 juin 2027, encore libre' }),
+    ).toBeVisible()
+  },
 })
