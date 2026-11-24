@@ -145,7 +145,8 @@ function PillTabsList<TValue extends string>({
       aria-label={label}
       data-slot="pill-tabs-list"
       className={cn(
-        'relative h-9! shrink-0 rounded-full max-md:h-11! dark:bg-surface',
+        // In dark mode a hairline keeps the tray's edge on a black page.
+        'relative h-9! shrink-0 rounded-full max-md:h-11! dark:bg-surface dark:ring-1 dark:ring-line-strong dark:ring-inset',
         className,
       )}
     >
