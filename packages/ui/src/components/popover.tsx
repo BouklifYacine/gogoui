@@ -1,5 +1,11 @@
 import * as React from 'react'
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover'
+import {
+  phoneSheetBackdrop,
+  phoneSheetPanel,
+  phoneSheetPositioner,
+  phoneSheetSafeArea,
+} from '../internal/phone-sheet.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -9,14 +15,18 @@ import { cn } from '../lib/cn.ts'
  * (a date, a colour, a quick filter). **Not for** a label (`Tooltip`) or a
  * list of actions (`DropdownMenu`).
  *
- * **Where**: under or beside its trigger button.
+ * **Where**: under or beside its trigger button. On a phone (under 768px)
+ * it rises from the screen's bottom edge instead, full width over a veil,
+ * within the thumb's reach; a tap on the veil closes it.
  *
- * **Key props** (on `PopoverContent`): `side`, `align`, `sideOffset`.
+ * **Key props** (on `PopoverContent`): `side`, `align`, `sideOffset`;
+ * `phoneSheet={false}` keeps it beside its trigger on a phone too.
  *
  * **Compose**: `Popover` > `PopoverTrigger` + `PopoverContent` >
  * `PopoverHeader` (`PopoverTitle`, `PopoverDescription`) + body.
  *
- * **Accessibility**: Escape closes it and gives the focus back.
+ * **Accessibility**: Escape closes it and gives the focus back. The sheet
+ * is the same dialog: Tab leaving it closes it, as beside its trigger.
  *
  * @summary A floating panel anchored to its trigger.
  */
@@ -36,6 +46,7 @@ function PopoverContent({
   sideOffset = 4,
   anchor,
   collisionPadding,
+  phoneSheet = true,
   ...props
 }: PopoverPrimitive.Popup.Props &
   Pick<
@@ -46,9 +57,22 @@ function PopoverContent({
     | 'sideOffset'
     | 'anchor'
     | 'collisionPadding'
-  >) {
+  > & {
+    /**
+     * Under 768px, the panel rises from the screen's bottom edge, full
+     * width over a veil, within the thumb's reach; beside its trigger as
+     * usual above. On by default; `false` keeps it beside its trigger.
+     */
+    phoneSheet?: boolean
+  }) {
   return (
     <PopoverPrimitive.Portal>
+      {phoneSheet && (
+        <PopoverPrimitive.Backdrop
+          data-slot="popover-backdrop"
+          className={phoneSheetBackdrop}
+        />
+      )}
       <PopoverPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -58,13 +82,18 @@ function PopoverContent({
         // calendar): it stands beside that element.
         anchor={anchor}
         collisionPadding={collisionPadding}
-        className="isolate z-50"
+        className={cn('isolate z-50', phoneSheet && phoneSheetPositioner)}
       >
         <PopoverPrimitive.Popup
           data-slot="popover-content"
+          // Its rise and fall on a phone live in styles.css (popover-content).
+          data-phone-sheet={phoneSheet || undefined}
           className={cn(
             'z-50 flex w-72 origin-(--transform-origin) flex-col gap-3 rounded-parent-2xl bg-floating p-3 text-sm text-fg shadow-md outline-hidden duration-150 ease-tactile data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+            // Before the caller's classes, so its own padding can win.
+            phoneSheet && phoneSheetSafeArea,
             className,
+            phoneSheet && cn(phoneSheetPanel, 'max-md:overflow-y-auto'),
           )}
           {...props}
         />

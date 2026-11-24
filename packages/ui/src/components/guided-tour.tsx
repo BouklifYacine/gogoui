@@ -5,6 +5,7 @@ import type { EventHandler, FloatingOptions, Step } from 'react-joyride'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GuideTooltip } from '../internal/guide-tooltip.tsx'
 import { LabelsScope } from '../internal/labels-scope.tsx'
+import { useIsMobile } from '../internal/use-is-mobile.ts'
 
 type GuideStep = {
   /** The `data-guide` attribute of the element the bubble points at. */
@@ -46,7 +47,7 @@ type GuidedTourProps = {
 
 // On a phone, a bubble beside its element hides what it points at: it
 // becomes a band at the bottom of the screen, the element lit above it.
-const PHONE = '(max-width: 639px)'
+// Its width is in styles.css (react-joyride__floater).
 const bottomBand: Partial<FloatingOptions> = {
   strategy: 'fixed',
   hideArrow: true,
@@ -71,6 +72,9 @@ const bottomBand: Partial<FloatingOptions> = {
  * title, content, action? }`, `target` the element's `data-guide`),
  * `onDone`, `onStart`, `onFinish`, `labels` to change its words.
  *
+ * **Where**: each bubble beside its element; on a phone (under 768px), a
+ * band across the screen's foot, the element lit above it.
+ *
  * **Accessibility**: each bubble is a dialog; Escape stops the tour.
  *
  * @summary A short guided tour of a page's elements.
@@ -82,8 +86,9 @@ function GuidedTour({
   onFinish,
   labels,
 }: GuidedTourProps) {
-  const phone =
-    typeof window !== 'undefined' && window.matchMedia(PHONE).matches
+  // The bubbles are placed once the tour runs, in the browser: the server's
+  // « no » never shows, and turning the phone moves them.
+  const phone = useIsMobile()
   const steps: Step[] = guide.steps.map((step) => ({
     target: `[data-guide="${step.target}"]`,
     title: step.title,
@@ -125,7 +130,7 @@ function GuidedTour({
           skipBeacon: true,
           // Only its buttons end it: a stray tap beside the bubble does not.
           overlayClickAction: false,
-          width: phone ? 'calc(100vw - 32px)' : 380,
+          width: 380,
           zIndex: 60,
         }}
       />

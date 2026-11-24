@@ -3,6 +3,11 @@ import { Menu as MenuPrimitive } from '@base-ui/react/menu'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { MenuHighlight } from '../internal/menu-highlight.tsx'
 import { menuPanel, menuRow } from '../internal/menu-styles.ts'
+import {
+  phoneSheetBackdrop,
+  phoneSheetPanel,
+  phoneSheetPositioner,
+} from '../internal/phone-sheet.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -12,7 +17,9 @@ import { cn } from '../lib/cn.ts'
  * « … » on a row (`RowActionsMenu` does it for a table row). **Not for**
  * navigation between pages (links) or one value in a form (`Select`).
  *
- * **Where**: under its trigger button.
+ * **Where**: under its trigger button. On a phone (under 768px) it rises
+ * from the screen's bottom edge instead, full width over a veil, within the
+ * thumb's reach; its sub-menus stay floating over it.
  *
  * **States**: items default, highlighted, disabled, destructive (last,
  * red), checked (checkbox and radio items), submenus.
@@ -21,7 +28,8 @@ import { cn } from '../lib/cn.ts'
  * > `DropdownMenuItem`s (+ `Label`, `Separator`, `Shortcut`, `Sub`…).
  *
  * **Key props**: `variant="destructive"` on an item; `align`, `side` on the
- * content.
+ * content; `phoneSheet={false}` on the content keeps a floating menu on a
+ * phone too (a menu drawn on purpose beside its button).
  *
  * **Accessibility**: arrows move, Enter chooses, Escape closes and returns
  * the focus.
@@ -45,7 +53,7 @@ function DropdownMenuContent({
   alignOffset = 0,
   side = 'bottom',
   sideOffset = 4,
-  phoneSheet = false,
+  phoneSheet = true,
   className,
   children,
   ...props
@@ -55,8 +63,9 @@ function DropdownMenuContent({
     'align' | 'alignOffset' | 'side' | 'sideOffset'
   > & {
     /**
-     * Under 640px, the menu rises from the screen's bottom edge, full
+     * Under 768px, the menu rises from the screen's bottom edge, full
      * width over a veil, within the thumb's reach; a menu as usual above.
+     * On by default; `false` keeps the floating menu on a phone too.
      */
     phoneSheet?: boolean
   }) {
@@ -65,15 +74,13 @@ function DropdownMenuContent({
       {phoneSheet && (
         <MenuPrimitive.Backdrop
           data-slot="dropdown-menu-backdrop"
-          className="fixed inset-0 z-50 bg-overlay transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 sm:hidden"
+          className={phoneSheetBackdrop}
         />
       )}
       <MenuPrimitive.Positioner
         className={cn(
           'isolate z-50 outline-none',
-          // The positioner's inline place gives way to the bottom edge.
-          phoneSheet &&
-            'max-sm:fixed! max-sm:inset-x-0! max-sm:top-auto! max-sm:bottom-0! max-sm:left-0! max-sm:w-auto! max-sm:transform-none!',
+          phoneSheet && phoneSheetPositioner,
         )}
         align={align}
         alignOffset={alignOffset}
@@ -88,7 +95,10 @@ function DropdownMenuContent({
             'w-(--anchor-width) min-w-48',
             className,
             phoneSheet &&
-              'max-sm:max-h-[85dvh] max-sm:w-full max-sm:max-w-none max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:px-2 max-sm:pt-2 max-sm:pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
+              cn(
+                phoneSheetPanel,
+                'max-md:px-2 max-md:pt-2 max-md:pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
+              ),
           )}
           {...props}
         >
@@ -179,11 +189,15 @@ function DropdownMenuSubTrigger({
   )
 }
 
+// A sub-menu stays floating on a phone too: beside its row, or over the
+// sheet when the screen has no room beside it. A second sheet would bury the
+// first under a second veil, and its row would no longer show where it came from.
 function DropdownMenuSubContent({
   align = 'start',
   alignOffset = -3,
   side = 'right',
   sideOffset = 0,
+  phoneSheet = false,
   className,
   ...props
 }: React.ComponentProps<typeof DropdownMenuContent>) {
@@ -195,6 +209,7 @@ function DropdownMenuSubContent({
       alignOffset={alignOffset}
       side={side}
       sideOffset={sideOffset}
+      phoneSheet={phoneSheet}
       {...props}
     />
   )

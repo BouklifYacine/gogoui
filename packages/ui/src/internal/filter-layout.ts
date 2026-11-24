@@ -17,9 +17,8 @@ export type FilterLayout =
 
 export const FilterLayoutContext = createContext<FilterLayout>({ mode: 'full' })
 
-// The same two objects every time: the filters never redraw for nothing.
+// The same object every time: the filters never redraw for nothing.
 export const PANEL_LAYOUT: FilterLayout = { mode: 'full', panel: true }
-export const PLAIN_LAYOUT: FilterLayout = { mode: 'full', panel: false }
 
 export function useFilterLayout(): FilterLayout {
   return use(FilterLayoutContext)

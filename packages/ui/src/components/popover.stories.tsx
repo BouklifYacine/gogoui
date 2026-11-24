@@ -61,3 +61,51 @@ export const Basic = meta.story({
     await waitFor(() => expect(trigger).toHaveFocus())
   },
 })
+
+// The sheet lies on the screen's bottom edge, as wide as the screen.
+async function expectSheet(popup: HTMLElement) {
+  await waitFor(() => {
+    const box = popup.getBoundingClientRect()
+    const view = popup.ownerDocument.documentElement
+    expect(Math.round(box.bottom)).toBe(view.clientHeight)
+    expect(Math.round(box.width)).toBe(view.clientWidth)
+  })
+}
+
+/**
+ * On a phone (under 768px), the panel rises from the screen's bottom edge,
+ * full width over a veil, within the thumb's reach; a tap on the veil
+ * closes it.
+ */
+export const OnAPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+  render: () => (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>
+        Conditions d'annulation
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverHeader>
+          <PopoverTitle>Annulation</PopoverTitle>
+          <PopoverDescription>
+            L'acompte est rendu jusqu'à 90 jours avant la date.
+          </PopoverDescription>
+        </PopoverHeader>
+      </PopoverContent>
+    </Popover>
+  ),
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: "Conditions d'annulation",
+    })
+    await userEvent.click(trigger)
+    const popover = await page.findByRole('dialog', { name: 'Annulation' })
+    await expectSheet(popover)
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('dialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
+})

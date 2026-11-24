@@ -195,3 +195,53 @@ export const Animations = meta.story({
     </Select>
   ),
 })
+
+// The sheet lies on the screen's bottom edge, as wide as the screen.
+async function expectSheet(popup: HTMLElement) {
+  await waitFor(() => {
+    const box = popup.getBoundingClientRect()
+    const view = popup.ownerDocument.documentElement
+    expect(Math.round(box.bottom)).toBe(view.clientHeight)
+    expect(Math.round(box.width)).toBe(view.clientWidth)
+  })
+}
+
+/**
+ * On a phone (under 768px), the list rises from the screen's bottom edge,
+ * full width over a veil, within the thumb's reach.
+ */
+export const OnAPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+  render: () => (
+    <Select items={eventTypes} defaultValue="wedding">
+      <SelectTrigger aria-label="Type d'événement" className="w-56">
+        <SelectValue placeholder="Choisir" />
+      </SelectTrigger>
+      <SelectContent>
+        {eventTypes.map((type) => (
+          <SelectItem key={type.value} value={type.value}>
+            {type.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  ),
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('combobox', {
+      name: "Type d'événement",
+    })
+    await userEvent.click(trigger)
+    const list = await page.findByRole('listbox')
+    const popup = list.closest<HTMLElement>("[data-slot='select-content']")
+    expect(popup).not.toBeNull()
+    if (popup) {
+      await expectSheet(popup)
+    }
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('listbox')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
+})

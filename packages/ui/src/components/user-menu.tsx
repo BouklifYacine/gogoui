@@ -79,9 +79,15 @@ type UserMenuProps = {
   status?: Presence
   /** The plan badge's colour; grey by default. */
   planColor?: Color
-  /** The name and a chevron beside the photo, from 640px up. */
+  /**
+   * The name and a chevron beside the photo, from 640px up: under it, a
+   * top bar has no room left for them.
+   */
   showName?: boolean
-  /** Under 640px, the menu rises from the bottom edge as a sheet. On by default. */
+  /**
+   * Under 768px, the menu rises from the bottom edge as a sheet. On by
+   * default; `false` keeps the floating menu on a phone too.
+   */
   phoneSheet?: boolean
   size?: 'sm' | 'default'
   align?: 'start' | 'center' | 'end'
@@ -104,7 +110,9 @@ type UserMenuProps = {
  * (`DropdownMenu`), or navigation between the app's sections (`Sidebar`).
  *
  * **Where**: the top bar's right end (`align="end"`), or the sidebar's
- * foot (`side="top"`, `showName`).
+ * foot (`side="top"`, `showName`). On a phone (under 768px) the menu rises
+ * from the screen's bottom edge, full width over a veil, within the
+ * thumb's reach; under 640px the trigger keeps the photo alone.
  *
  * **States**: closed, open, signing out (the row turns and says it, the
  * menu waits), with or without a presence dot.

@@ -3,6 +3,7 @@ import {
   CaretDownIcon,
   CopyIcon,
   DotsThreeIcon,
+  FolderIcon,
   PencilSimpleIcon,
   ShareIcon,
   TrashIcon,
@@ -147,4 +148,67 @@ export const Animations = meta.story({
       </DropdownMenuContent>
     </DropdownMenu>
   ),
+})
+
+// The sheet lies on the screen's bottom edge, as wide as the screen.
+async function expectSheet(popup: HTMLElement) {
+  await waitFor(() => {
+    const box = popup.getBoundingClientRect()
+    const view = popup.ownerDocument.documentElement
+    expect(Math.round(box.bottom)).toBe(view.clientHeight)
+    expect(Math.round(box.width)).toBe(view.clientWidth)
+  })
+}
+
+/**
+ * On a phone (under 768px), the menu rises from the screen's bottom edge,
+ * full width over a veil, within the thumb's reach; a sub-menu floats over
+ * it. A tap on the veil or Escape closes it.
+ */
+export const OnAPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="soft" size="icon" aria-label="Actions" />}
+      >
+        <DotsThreeIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <PencilSimpleIcon />
+          Modifier
+        </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <FolderIcon />
+            Déplacer vers
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem>Demandes</DropdownMenuItem>
+            <DropdownMenuItem>Archives</DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">
+          <TrashIcon />
+          Supprimer
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Actions',
+    })
+    await userEvent.click(trigger)
+    const menu = await page.findByRole('menu')
+    await expectSheet(menu)
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('menu')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })

@@ -222,6 +222,23 @@
   &[data-ending-style] [role='option'] {
     transition-delay: 0ms;
   }
+  /* On a phone, Select's sheet: it rises like the menus' (menu-content). */
+  @media (width < 48rem) {
+    &[data-phone-sheet] {
+      --menu-x: 0px;
+      --menu-y: 0px;
+      transform-origin: bottom;
+    }
+    &[data-phone-sheet][data-starting-style] {
+      opacity: 1;
+      transform: translateY(100%);
+    }
+    &[data-phone-sheet][data-ending-style] {
+      opacity: 1;
+      transform: translateY(100%);
+      transition: transform var(--motion-fast) var(--motion-ease-standard);
+    }
+  }
 }
 
 /*
@@ -452,7 +469,7 @@
       transform var(--motion-standard) var(--motion-ease-enter);
   }
   /* On a phone, a sheet: it rises from the bottom edge and sinks back. */
-  @media (width < 40rem) {
+  @media (width < 48rem) {
     &[data-phone-sheet] {
       --menu-x: 0px;
       --menu-y: 0px;
@@ -489,6 +506,26 @@
   }
 }
 
+/*
+ * A Popover on a phone: the menus' sheet (above), rising from the bottom
+ * edge on their spring and sinking back quicker, in place of the fade and
+ * zoom it has beside its trigger.
+ */
+@media (width < 48rem) {
+  [data-slot='popover-content'][data-phone-sheet] {
+    animation: none;
+    transform-origin: bottom;
+    transition: transform var(--motion-spring) var(--motion-ease-spring);
+
+    &:is([data-starting-style], [data-ending-style]) {
+      transform: translateY(100%);
+    }
+    &[data-ending-style] {
+      transition: transform var(--motion-fast) var(--motion-ease-standard);
+    }
+  }
+}
+
 /* A trigger's chevron turns over while its menu is open. */
 [data-slot='dropdown-menu-trigger'] [data-icon='inline-end'] > svg {
   transition: rotate var(--motion-spring) var(--motion-ease-spring);
@@ -497,4 +534,14 @@
   [data-icon='inline-end']
   > svg {
   rotate: 180deg;
+}
+
+/*
+ * GuidedTour's bubble on a phone: a band across the screen's foot (its
+ * place is set by GuidedTour), 16px from each edge.
+ */
+@media (width < 48rem) {
+  .react-joyride__floater:has(> [role='alertdialog']) {
+    width: calc(100vw - 32px);
+  }
 }

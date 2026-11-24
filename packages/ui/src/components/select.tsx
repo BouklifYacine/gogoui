@@ -5,12 +5,18 @@ import type { ComponentProps, MouseEvent, ReactNode, Ref } from 'react'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { MenuHighlight } from '../internal/menu-highlight.tsx'
 import { menuPanel, menuRow } from '../internal/menu-styles.ts'
+import {
+  phoneSheetBackdrop,
+  phoneSheetPanel,
+  phoneSheetPositioner,
+} from '../internal/phone-sheet.ts'
 import { SelectChipList } from '../internal/select-chip-list.tsx'
 import { SelectSharedContext } from '../internal/select-context.ts'
 import type { SelectPick, SelectShared } from '../internal/select-context.ts'
 import { SelectMorphLid } from '../internal/select-morph-lid.tsx'
 import type { SelectMorphLidLabels } from '../internal/select-morph-lid.tsx'
 import { SelectRollingValue } from '../internal/select-rolling-value.tsx'
+import { useIsMobile } from '../internal/use-is-mobile.ts'
 import { cn } from '../lib/cn.ts'
 
 /**
@@ -21,7 +27,9 @@ import { cn } from '../lib/cn.ts'
  * search (`Combobox`), under 5 options (`RadioGroup`), actions (`DropdownMenu`).
  * In a form, prefer `SelectField` or `MultiSelectField` (label, help, error).
  *
- * **Where**: in a form, a toolbar, a settings row.
+ * **Where**: in a form, a toolbar, a settings row. On a phone (under
+ * 768px) the list rises from the screen's bottom edge, full width over a
+ * veil, within the thumb's reach; `variant="morph"` stays on its trigger.
  *
  * **States**: placeholder, chosen, open, disabled, invalid; with
  * `multiple`, chips then « +N ».
@@ -33,7 +41,8 @@ import { cn } from '../lib/cn.ts'
  * **Key props**: on `Select` `value` + `onValueChange`, `items` (gives the
  * trigger each value's words), `multiple`; on `SelectTrigger` `size` (sm,
  * default, lg); on `SelectContent` `variant` (default, morph),
- * `alignItemWithTrigger`.
+ * `alignItemWithTrigger`, `phoneSheet={false}` to keep the list under its
+ * trigger on a phone too.
  *
  * **Motion**, after Arc UI (https://uiarc.dev, MIT): the list opens like the
  * menus, a highlight glides from row to row, the chosen value rolls in the
@@ -227,6 +236,13 @@ type SelectContentProps = SelectPrimitive.Popup.Props &
     variant?: 'default' | 'morph'
     /** Its words on this one only, over GoGoUIProvider's `messages`. */
     labels?: SelectContentLabels
+    /**
+     * Under 768px, the list rises from the screen's bottom edge, full width
+     * over a veil, within the thumb's reach; under its trigger as usual
+     * above. On by default; `false` keeps it under its trigger. A morph
+     * list stays on its trigger either way: it is the trigger grown.
+     */
+    phoneSheet?: boolean
   }
 
 /** The words SelectContent writes, to change on one list only. */
@@ -237,7 +253,8 @@ type SelectContentLabels = SelectMorphLidLabels
  * a highlight gliding from row to row. `variant="morph"` grows the trigger
  * itself into the list (Arc UI's morph select), and folds it back.
  *
- * **Key props**: `variant`, `side`, `align`, `labels` to change its words.
+ * **Key props**: `variant`, `side`, `align`, `phoneSheet`, `labels` to
+ * change its words.
  *
  * @summary The open list of items, positioned on its trigger.
  */
@@ -251,8 +268,12 @@ function SelectContent({
   alignItemWithTrigger = false,
   variant = 'default',
   labels,
+  phoneSheet = true,
   ...props
 }: SelectContentProps) {
+  // Read once the list is open (the positioner only renders then): laid
+  // over its trigger, Base UI would size and place the sheet itself.
+  const isMobile = useIsMobile()
   if (variant === 'morph') {
     return (
       <SelectPrimitive.Portal>
@@ -291,25 +312,38 @@ function SelectContent({
     )
   }
 
+  const alignOnTrigger = alignItemWithTrigger && !(phoneSheet && isMobile)
   return (
     <SelectPrimitive.Portal>
+      {phoneSheet && (
+        <SelectPrimitive.Backdrop
+          data-slot="select-backdrop"
+          className={phoneSheetBackdrop}
+        />
+      )}
       <SelectPrimitive.Positioner
         side={side}
         sideOffset={sideOffset}
         align={align ?? 'center'}
         alignOffset={alignOffset}
-        alignItemWithTrigger={alignItemWithTrigger}
-        className="isolate z-50"
+        alignItemWithTrigger={alignOnTrigger}
+        className={cn('isolate z-50', phoneSheet && phoneSheetPositioner)}
       >
         <SelectPrimitive.Popup
           data-slot="select-content"
           data-variant="default"
-          data-align-trigger={alignItemWithTrigger}
+          data-align-trigger={alignOnTrigger}
+          data-phone-sheet={phoneSheet || undefined}
           className={cn(
             // Its entrance and exit live in styles.css (select-content).
             menuPanel,
             'isolate w-(--anchor-width) min-w-36 origin-(--transform-origin)',
             className,
+            phoneSheet &&
+              cn(
+                phoneSheetPanel,
+                'max-md:px-2 max-md:pt-2 max-md:pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
+              ),
           )}
           {...props}
         >
