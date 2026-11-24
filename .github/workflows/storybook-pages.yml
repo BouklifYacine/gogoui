@@ -15,11 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -30,5 +27,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: packages/ui/storybook-static
+
+  # Its own job: in the build's job, deploy-pages asked for the artifact
+  # before GitHub had listed it (« Found 0 artifact(s) »).
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
