@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Button",
+    "path": "dist/components/button.js",
+    "entry": "button",
+    "limit": "44 kB"
+  },
+  {
+    "name": "Dialog",
+    "path": "dist/components/dialog.js",
+    "entry": "dialog",
+    "limit": "62 kB"
+  },
+  {
+    "name": "Select",
+    "path": "dist/components/select.js",
+    "entry": "select",
+    "limit": "102 kB"
+  },
+  {
+    "name": "Combobox",
+    "path": "dist/components/combobox.js",
+    "entry": "combobox",
+    "limit": "108.5 kB"
+  },
+  {
+    "name": "DataTable",
+    "path": "dist/data-table/index.js",
+    "entry": "index",
+    "limit": "136.5 kB"
+  },
+  {
+    "name": "Calendar",
+    "path": "dist/components/calendar.js",
+    "entry": "calendar",
+    "limit": "45 kB"
+  },
+  {
+    "name": "TextField",
+    "path": "dist/components/text-field.js",
+    "entry": "text-field",
+    "limit": "48 kB"
+  },
+  {
+    "name": "BarChart",
+    "path": "dist/components/bar-chart.js",
+    "entry": "bar-chart",
+    "limit": "64.5 kB"
+  },
+  {
+    "name": "Motion features (lazy, once per page)",
+    "path": "dist/internal/motion-feature-bundle.js",
+    "limit": "43 kB"
+  },
+  {
+    "name": "Shared CSS",
+    "path": ["styles.css", "tokens.css", "theme.css"],
+    "rolldown": false,
+    "limit": "10 kB"
+  }
+]

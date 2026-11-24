@@ -14,13 +14,22 @@
     "lint": "oxlint --deny-warnings",
     "format": "bun fmt . && oxlint --fix",
     "format:check": "bun fmt --check .",
+    "knip": "knip",
+    "check:package": "bun scripts/check-package.ts",
+    "size": "bun run --cwd packages/ui size-limit",
+    "audit": "bun audit --audit-level=high",
+    "secrets": "gitleaks git --redact --no-banner",
+    "changeset:status": "changeset status --since=origin/main",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "bun run build && cd packages/ui && bun pm pack && npm publish ./gogoui-ui-*.tgz && cd ../.. && changeset tag"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
     "@changesets/cli": "^3.0.3",
+    "knip": "6.45.1",
     "oxlint": "^1.94.0",
+    "publint": "0.3.25",
     "typescript": "^6.0.3"
   }
 }
