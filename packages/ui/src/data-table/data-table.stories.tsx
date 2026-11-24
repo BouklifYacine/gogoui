@@ -113,48 +113,59 @@ const meta = preview.meta({
   parameters: { layout: 'padded' },
 })
 
+// The clients' list, with every part: the stories below show it at a
+// computer's width and at a phone's.
+function ClientsList() {
+  const selection = useRowSelection('clients')
+  const table = useDataTable({
+    data: clients,
+    columns,
+    state: {
+      rowSelection: selection.rowSelection,
+    },
+    onRowSelectionChange: selection.onRowSelectionChange,
+    initialState: {
+      sorting: [{ id: 'date', desc: false }],
+      pagination: { pageIndex: 0, pageSize: 10 },
+    },
+  })
+  return (
+    <DataTable
+      table={table}
+      caption="Clients"
+      filterLabel="Filtrer les clients"
+      emptyState={<EmptyState title="Aucun client pour l'instant" />}
+      pagination={{
+        rowsLabel: (count) => `${count} client${count > 1 ? 's' : ''}`,
+      }}
+      selection={{
+        label: (count) =>
+          `${count} client${count > 1 ? 's' : ''} sélectionné${count > 1 ? 's' : ''}`,
+        actions: (
+          <Button variant="outline" size="sm">
+            <ArchiveIcon aria-hidden="true" />
+            Archiver
+          </Button>
+        ),
+      }}
+    />
+  )
+}
+
 /**
  * A whole list: search (« / »), sort by the headers, columns to hide, rows
- * to tick with their actions, pages. On a phone, dense rows and a sort
- * chip. Import from `@gogoui/ui/data-table`.
+ * to tick with their actions, pages. Import from `@gogoui/ui/data-table`.
  */
-export const Basic = meta.story({
-  render: function Render() {
-    const selection = useRowSelection('clients')
-    const table = useDataTable({
-      data: clients,
-      columns,
-      state: {
-        rowSelection: selection.rowSelection,
-      },
-      onRowSelectionChange: selection.onRowSelectionChange,
-      initialState: {
-        sorting: [{ id: 'date', desc: false }],
-        pagination: { pageIndex: 0, pageSize: 10 },
-      },
-    })
-    return (
-      <DataTable
-        table={table}
-        caption="Clients"
-        filterLabel="Filtrer les clients"
-        emptyState={<EmptyState title="Aucun client pour l'instant" />}
-        pagination={{
-          rowsLabel: (count) => `${count} client${count > 1 ? 's' : ''}`,
-        }}
-        selection={{
-          label: (count) =>
-            `${count} client${count > 1 ? 's' : ''} sélectionné${count > 1 ? 's' : ''}`,
-          actions: (
-            <Button variant="outline" size="sm">
-              <ArchiveIcon aria-hidden="true" />
-              Archiver
-            </Button>
-          ),
-        }}
-      />
-    )
-  },
+export const Basic = meta.story({ render: () => <ClientsList /> })
+
+/**
+ * On a phone, from the server's page on: one dense line per client, a
+ * « Trier » chip for the headers, « Voir plus » for the pages; no ticks,
+ * no « Colonnes ». The same rows, the screen's width choosing in CSS.
+ */
+export const OnPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+  render: () => <ClientsList />,
 })
 
 /**

@@ -14,15 +14,21 @@ export function DataTableCards<TData extends { id: string }>({
   table,
   caption,
   selectedRowId,
+  className,
 }: {
   table: DataTableInstance<TData>
   caption: string
   selectedRowId?: string | null
+  /** `md:hidden`: the rows show on a phone only. */
+  className?: string
 }) {
   return (
     <ul
       aria-label={caption}
-      className="flex flex-col divide-y divide-line rounded-2xl bg-card shadow-sm"
+      className={cn(
+        'flex flex-col divide-y divide-line rounded-2xl bg-card shadow-sm',
+        className,
+      )}
     >
       {table.getRowModel().rows.map((row) => {
         const cells = row

@@ -25,8 +25,11 @@ import type { DataTableInstance } from './table-hook.ts'
  */
 export function SortChip<TData extends { id: string }>({
   table,
+  className,
 }: {
   table: DataTableInstance<TData>
+  /** On the chip: `md:hidden` keeps it to a phone. */
+  className?: string
 }) {
   const messages = useGoGoUIMessages()
   const [open, setOpen] = useState(false)
@@ -58,7 +61,7 @@ export function SortChip<TData extends { id: string }>({
           <Button
             variant="outline"
             size="sm"
-            className="shrink-0 rounded-full"
+            className={cn('shrink-0 rounded-full', className)}
             aria-label={
               current && sorting
                 ? messages.sortedBy(

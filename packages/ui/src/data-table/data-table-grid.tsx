@@ -24,12 +24,15 @@ export function DataTableGrid<TData extends { id: string }>({
   selectable = false,
   onRowClick,
   selectedRowId,
+  className,
 }: {
   table: DataTableInstance<TData>
   caption: string
   selectable?: boolean
   onRowClick?: (row: TData) => void
   selectedRowId?: string | null
+  /** `max-md:hidden`: the table shows from a tablet up only. */
+  className?: string
 }) {
   const hasFooter = table
     .getAllLeafColumns()
@@ -44,7 +47,9 @@ export function DataTableGrid<TData extends { id: string }>({
 
   return (
     // overflow-hidden: the head follows the rounded corners.
-    <div className="overflow-hidden rounded-2xl bg-card shadow-sm">
+    <div
+      className={cn('overflow-hidden rounded-2xl bg-card shadow-sm', className)}
+    >
       {/* A fixed layout: the columns take their width from the headers,
           never from the rows shown, so a new page never resizes them.
           Never narrower than 672 px: it scrolls instead. */}

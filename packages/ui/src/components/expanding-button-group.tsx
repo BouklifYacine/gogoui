@@ -17,11 +17,12 @@ import type {
 import { ExpandingButtonGroupContext } from '../internal/expanding-button-group-context.ts'
 import type { ExpandingAction } from '../internal/expanding-button-group-context.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
-import { useIsMobile } from '../internal/use-is-mobile.ts'
 import { cn } from '../lib/cn.ts'
 
 // The buttons' geometry: the icon keeps the same inset closed and open, so
-// it never moves while the label shows. On a phone every button is 44px.
+// it never moves while the label shows. On a phone every button is 44px:
+// CSS says so (`max-md:[--ebg-h:44px]`), and the widths the motion runs
+// to follow the height the buttons really have.
 const metrics = {
   sm: { height: 28, icon: 14, gap: 5, end: 11 },
   default: { height: 36, icon: 16, gap: 7, end: 14 },
@@ -102,7 +103,10 @@ type ExpandingButtonGroupProps = {
  * **Accessibility**: `role="toolbar"`, one Tab stop, the arrows, Home and
  * End move between actions; each keeps its name whatever shows; the past
  * tense word is read by a live region. On touch, a first tap shows the
- * label, a second runs it. 44 px under a thumb on a phone.
+ * label, a second runs it.
+ *
+ * **On a phone** (under 48rem): every action is 44 px, a thumb's target,
+ * from the server's page on (CSS, `max-md:`); the same motion opens it.
  *
  * @deprecated Use `ButtonGroup` with `SimpleTooltip` labels. Removed in 0.4.0.
  *
@@ -118,8 +122,10 @@ function ExpandingButtonGroup({
   className,
   style,
 }: ExpandingButtonGroupProps) {
-  const mobile = useIsMobile()
   const root = useRef<HTMLDivElement>(null)
+  // The buttons' height as drawn (44 px on a phone, from the CSS), read
+  // once shown and each time it changes; the size's own until then.
+  const [drawnHeight, setDrawnHeight] = useState<number | null>(null)
   const [intent, setIntent] = useState<string | null>(null)
   const [done, setDone] = useState<{ value: string; run: number } | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
@@ -165,6 +171,15 @@ function ExpandingButtonGroup({
       return undefined
     }
     mounted.current = true
+    // The group's height changes with its buttons' (crossing 48rem).
+    const observer =
+      typeof ResizeObserver === 'undefined'
+        ? undefined
+        : new ResizeObserver(() => {
+            const item = node.querySelector<HTMLElement>(ITEM)
+            if (item) setDrawnHeight(item.offsetHeight)
+          })
+    observer?.observe(node)
     function onDown(event: globalThis.PointerEvent) {
       if (!touchOpen.current || node?.contains(event.target as Node)) {
         return
@@ -176,6 +191,7 @@ function ExpandingButtonGroup({
     return () => {
       mounted.current = false
       clearTimeout(timer.current)
+      observer?.disconnect()
       document.removeEventListener('pointerdown', onDown, true)
     }
   }, [])
@@ -371,7 +387,7 @@ function ExpandingButtonGroup({
   }
 
   const metric = metrics[size]
-  const height = mobile ? 44 : metric.height
+  const height = drawnHeight ?? metric.height
   const geometry = {
     height,
     icon: metric.icon,
@@ -379,10 +395,10 @@ function ExpandingButtonGroup({
     gap: metric.gap,
     end: metric.end,
   }
+  // The height and the icon's inset are in the classes, where a phone's
+  // width can change them; the rest never changes.
   const variables = {
-    '--ebg-h': `${geometry.height}px`,
     '--ebg-icon': `${geometry.icon}px`,
-    '--ebg-start': `${geometry.start}px`,
     '--ebg-gap': `${geometry.gap}px`,
     '--ebg-end': `${geometry.end}px`,
     ...style,
@@ -415,6 +431,8 @@ function ExpandingButtonGroup({
           style={variables}
           className={cn(
             'relative isolate inline-flex max-w-full flex-none items-center gap-0.5 rounded-full bg-control p-0.75 shadow-button',
+            size === 'sm' ? '[--ebg-h:28px]' : '[--ebg-h:36px]',
+            'max-md:[--ebg-h:44px] [--ebg-start:calc((var(--ebg-h)_-_var(--ebg-icon))_/_2)]',
             className,
           )}
           onKeyDown={onKeyDown}

@@ -17,7 +17,6 @@ import type { TableSelectRowLabels } from '../components/table-select-row.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { LabelsScope } from '../internal/labels-scope.tsx'
-import { useIsMobile } from '../internal/use-is-mobile.ts'
 import { DataTableCards } from './data-table-cards.tsx'
 import { DataTableColumnsMenu } from './data-table-columns-menu.tsx'
 import type { DataTableColumnsMenuLabels } from './data-table-columns-menu.tsx'
@@ -112,6 +111,14 @@ type DataTableProps<TData extends { id: string }> = {
  * result for the filters (chips + reset), rows ticked (bulk actions),
  * a row open (`selectedRowId`).
  *
+ * **On a phone** (under 48rem): one dense line per record instead of the
+ * table, a « Trier » chip instead of the headers, « Voir plus » instead of
+ * the pages; no « Colonnes », no ticks. Both views are drawn from the same
+ * rows and the screen's width shows one in CSS (`md:hidden` /
+ * `max-md:hidden`), so the server's page is right on a phone and nothing
+ * jumps; the hidden one is `display: none`, never read nor focused. A cell
+ * is drawn twice: never give what it renders a fixed `id`.
+ *
  * **Key props**: `table` (from `useDataTable({ data, columns })`, columns
  * from `createDataColumns<Row>()`), `caption`, `emptyState`, `filterLabel`
  * (the search), `filters` (a `FilterMenu`), `activeFilters` (`chips`,
@@ -142,7 +149,6 @@ export function DataTable<TData extends { id: string }>({
   labels?: DataTableLabels
 }) {
   const messages = useGoGoUIMessages(labels)
-  const mobile = useIsMobile()
   // Every row the filter keeps, on every page.
   const matching = table.getPrePaginatedRowModel().rows.length
   const filter = String(table.state.globalFilter ?? '')
@@ -160,8 +166,8 @@ export function DataTable<TData extends { id: string }>({
         ]
       : []),
   ]
-  const showColumns =
-    columnsMenu && !mobile && hideableColumns(table).length >= 2
+  // « Colonnes », from a tablet up (`max-md:hidden`).
+  const showColumns = columnsMenu && hideableColumns(table).length >= 2
   const selected = selection ? table.getSelectedRowIds().length : 0
   const selectAll =
     selection?.selectAll &&
@@ -184,22 +190,28 @@ export function DataTable<TData extends { id: string }>({
     <LabelsScope labels={labels}>
       <table.AppTable>
         <div data-slot="data-table" className="flex flex-col gap-4">
-          {(filterLabel || filters || mobile || showColumns) && (
-            <DataTableToolbar
-              table={table}
-              filterId={filterId}
-              filterLabel={filterLabel}
-              filters={
-                (filters || showColumns) && (
-                  <>
-                    {filters}
-                    {showColumns && <DataTableColumnsMenu table={table} />}
-                  </>
-                )
-              }
-              sortSelect={mobile}
-            />
-          )}
+          {/* On a phone always, for its « Trier » chip; from a tablet up
+            only with a search, filters or « Colonnes ». */}
+          <DataTableToolbar
+            table={table}
+            filterId={filterId}
+            filterLabel={filterLabel}
+            filters={
+              (filters || showColumns) && (
+                <>
+                  {filters}
+                  {showColumns && (
+                    <div className="contents max-md:hidden">
+                      <DataTableColumnsMenu table={table} />
+                    </div>
+                  )}
+                </>
+              )
+            }
+            className={
+              filterLabel || filters || showColumns ? undefined : 'md:hidden'
+            }
+          />
           <FilterChips
             chips={chips}
             onReset={() => {
@@ -214,12 +226,15 @@ export function DataTable<TData extends { id: string }>({
           {/* The ticked rows' bar lies over the head row: ticking a box
             never moves the list. */}
           <div className="@container relative flex flex-col gap-4">
-            {selection && !mobile && selected > 0 && (
-              <BulkActionsBar
-                label={selection.label(selected)}
-                actions={selection.actions}
-                selectAll={selectAll}
-              />
+            {/* No ticks on a phone, so no bar either. */}
+            {selection && selected > 0 && (
+              <div className="contents max-md:hidden">
+                <BulkActionsBar
+                  label={selection.label(selected)}
+                  actions={selection.actions}
+                  selectAll={selectAll}
+                />
+              </div>
             )}
             {nothingLoaded ? (
               emptyState
@@ -233,20 +248,24 @@ export function DataTable<TData extends { id: string }>({
                   </Button>
                 }
               />
-            ) : mobile ? (
-              <DataTableCards
-                table={table}
-                caption={caption}
-                selectedRowId={selectedRowId}
-              />
             ) : (
-              <DataTableGrid
-                table={table}
-                caption={caption}
-                selectable={selection !== undefined}
-                onRowClick={onRowClick}
-                selectedRowId={selectedRowId}
-              />
+              // The same rows twice, one shown by the screen's width.
+              <>
+                <DataTableCards
+                  table={table}
+                  caption={caption}
+                  selectedRowId={selectedRowId}
+                  className="md:hidden"
+                />
+                <DataTableGrid
+                  table={table}
+                  caption={caption}
+                  selectable={selection !== undefined}
+                  onRowClick={onRowClick}
+                  selectedRowId={selectedRowId}
+                  className="max-md:hidden"
+                />
+              </>
             )}
           </div>
           {pagination && !nothingLoaded && (
@@ -255,7 +274,6 @@ export function DataTable<TData extends { id: string }>({
               rowsLabel={pagination.rowsLabel}
               pageSizes={pagination.pageSizes}
               maxRows={pagination.maxRows}
-              compact={mobile}
             />
           )}
           {/* The count, read aloud as a filter is typed. */}

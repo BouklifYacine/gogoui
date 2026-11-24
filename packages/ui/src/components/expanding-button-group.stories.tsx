@@ -77,6 +77,14 @@ export const Small = meta.story({ args: { size: 'sm' } })
 export const DefaultValue = meta.story({ args: { defaultValue: 'archive' } })
 
 /**
+ * On a phone every action is 44 px, a thumb's target, from the server's
+ * page on: the CSS sets the height, the same spring opens the label.
+ */
+export const OnPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+})
+
+/**
  * Point along the bar: the width opens on a spring, the neighbours slide,
  * the label slips out from behind its icon. « Archiver » waits a second
  * (its icon pulses), then draws a tick and says « Archivée » on green.

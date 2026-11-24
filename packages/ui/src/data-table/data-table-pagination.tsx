@@ -9,19 +9,19 @@ const MORE_STEP = 20
 /**
  * Under a list that pages: « 1 à 10 sur 257 demandes », the page size and
  * the pages. On a phone, « Voir 20 de plus » instead: the rows already
- * read stay, the next ones come under them, up to `maxRows`.
+ * read stay, the next ones come under them, up to `maxRows`. Both are
+ * drawn, and the screen's width shows one (`md:hidden`, `max-md:hidden`):
+ * the server's page is right on a phone too.
  */
 export function DataTablePagination<TData extends { id: string }>({
   table,
   rowsLabel,
-  compact,
   pageSizes,
   maxRows = 100,
 }: {
   table: DataTableInstance<TData>
   /** The rows in all, in words: « 257 demandes ». */
   rowsLabel: (count: number) => string
-  compact: boolean
   pageSizes?: readonly number[]
   /** The most rows a phone shows at once (your API's page limit). */
   maxRows?: number
@@ -31,12 +31,12 @@ export function DataTablePagination<TData extends { id: string }>({
   const total = table.getRowCount()
   const first = total === 0 ? 0 : pageIndex * pageSize + 1
   const last = Math.min(total, (pageIndex + 1) * pageSize)
+  // Every row up to the end of this page.
+  const left = total - last
 
-  if (compact) {
-    // Every row up to the end of this page.
-    const left = total - last
-    return (
-      <div className="flex flex-col items-center gap-3">
+  return (
+    <>
+      <div className="flex flex-col items-center gap-3 md:hidden">
         <p role="status" className="text-fg-muted tabular-nums">
           {messages.rowsRange(first, last, rowsLabel(total))}
         </p>
@@ -60,18 +60,16 @@ export function DataTablePagination<TData extends { id: string }>({
             </p>
           ))}
       </div>
-    )
-  }
-
-  return (
-    <TablePagination
-      page={pageIndex + 1}
-      pageSize={pageSize}
-      total={total}
-      rowsLabel={rowsLabel}
-      pageSizes={pageSizes}
-      onPageChange={(page) => table.setPageIndex(page - 1)}
-      onPageSizeChange={(size) => table.setPageSize(size)}
-    />
+      <TablePagination
+        className="max-md:hidden"
+        page={pageIndex + 1}
+        pageSize={pageSize}
+        total={total}
+        rowsLabel={rowsLabel}
+        pageSizes={pageSizes}
+        onPageChange={(page) => table.setPageIndex(page - 1)}
+        onPageSizeChange={(size) => table.setPageSize(size)}
+      />
+    </>
   )
 }

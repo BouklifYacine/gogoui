@@ -132,6 +132,11 @@ function useTimeDirection(time: number | null) {
  * range (its length in days under the months), a shortcut chosen,
  * disabled days, too short or too long.
  *
+ * **On a phone** (under 48rem): one month instead of two, 44 px days, the
+ * shortcuts in a row above the month. The button looks the same on every
+ * screen; the count of months is chosen when the panel opens (never on
+ * the server's page), since the calendar's arrows must walk real months.
+ *
  * **Key props**: `from`, `to`, `onChange`, `placeholder`, `presets`
  * (`useDateRangePresets()` gives the usual ones: 7 days, this month…),
  * `minDays`, `maxDays`, `disabledDates`, `color`, `labels` to change its words.
@@ -158,6 +163,9 @@ function DateRangePicker({
   labels,
 }: DateRangePickerProps) {
   const messages = useGoGoUIMessages(labels)
+  // Read for the panel only, which exists once opened: the server's « no »
+  // never shows. Two months hidden by CSS would not do: the arrows would
+  // walk into a month nobody sees.
   const isMobile = useIsMobile()
   const highlightId = useId()
   const [open, setOpen] = useState(false)
