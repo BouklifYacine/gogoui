@@ -1,5 +1,11 @@
 # @gogoui/ui
 
+## 0.4.2
+
+### Patch Changes
+
+- 9fbcd9e: Calendar given its own `labels.labelDayButton` names its days with it again (« samedi 12 juin 2027, encore libre »), instead of GoGoUI's own words.
+
 ## 0.4.1
 
 ### Patch Changes
