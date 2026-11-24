@@ -27,6 +27,10 @@ export function Form({
   const form = useFormContext()
   return (
     <form
+      // Sent before the page's script is ready, a form without a method
+      // goes out as a GET: its fields, a password included, land in the
+      // address, the history and the server's logs. POST keeps them out.
+      method="post"
       noValidate
       className={className}
       onSubmit={(event) => {
