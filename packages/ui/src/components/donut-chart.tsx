@@ -759,6 +759,22 @@ function DonutChart({
           )
         : list.format(item.members.map((member) => member.label))
       : null
+  /**
+   * A legend row's name: its words and figures in the order they are seen,
+   * so a voice command that reads the row out hits it (WCAG 2.5.3), then
+   * « masqué » when the segment is hidden.
+   */
+  const rowName = (item: Slice, off: boolean) => {
+    const seen = [
+      item.label,
+      members(item),
+      formatNumber(item.value),
+      formatShare(off || !total ? 0 : item.value / total),
+    ]
+      .filter(Boolean)
+      .join(', ')
+    return off ? messages.chartHiddenItem(seen) : seen
+  }
 
   // Arrows walk the segments: in the legend, or on the ring without one.
   const rows = useRef<(HTMLButtonElement | null)[]>([])
@@ -996,11 +1012,7 @@ function DonutChart({
                       aria-pressed={
                         legendAction === 'toggle' ? !off : selected === item.key
                       }
-                      aria-label={
-                        off
-                          ? messages.chartHiddenItem(item.label)
-                          : describe(item)
-                      }
+                      aria-label={rowName(item, off)}
                       style={{ '--slice': colorFor(item) } as CSSProperties}
                       onClick={() =>
                         legendAction === 'toggle'
@@ -1032,18 +1044,19 @@ function DonutChart({
                           off ? 'bg-transparent' : 'bg-(--slice)',
                         )}
                       />
+                      {/* The spaces between the parts keep the row's text as separate words; a grid draws no gap for them. */}
                       <span className="grid min-w-0">
                         <span
                           className={cn('truncate', off && 'text-fg-subtle')}
                         >
                           {item.label}
-                        </span>
+                        </span>{' '}
                         {item.members && (
                           <span className="truncate text-xs text-fg-subtle">
                             {members(item)}
                           </span>
                         )}
-                      </span>
+                      </span>{' '}
                       <ChartCount
                         value={item.value}
                         format={formatNumber}
@@ -1051,7 +1064,7 @@ function DonutChart({
                           'justify-self-end tabular-nums',
                           off ? 'text-fg-subtle' : 'text-fg-muted',
                         )}
-                      />
+                      />{' '}
                       <ChartCount
                         value={off || !total ? 0 : item.value / total}
                         format={formatShare}

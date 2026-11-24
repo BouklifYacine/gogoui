@@ -293,6 +293,8 @@ export type GoGoUIMessages = {
   tagDuplicate: (tag: string) => string
   tagSelected: (tag: string) => string
   removeTag: (tag: string) => string
+  /** The × of a chip whose words are not plain text. */
+  removeChoice: string
   /** Read when a tag field is full. */
   tagLimit: (max: number) => string
   /** The name of a mention field's list of people. */
@@ -508,6 +510,16 @@ export type GoGoUIMessages = {
   today: string
   /** Its name, with today in full. */
   todayLabel: (day: string) => string
+  /**
+   * What a calendar day says after its number, for a screen reader:
+   * « juin 2027, lundi, aujourd’hui, sélectionné ».
+   */
+  calendarDayRest: (day: {
+    monthYear: string
+    weekday: string
+    today: boolean
+    selected: boolean
+  }) => string
   /** A period's length under the months: « 3 jours ». */
   dayCount: (count: number) => string
   /** Once a period's first day is picked. */

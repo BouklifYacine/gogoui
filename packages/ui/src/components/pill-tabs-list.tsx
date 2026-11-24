@@ -182,7 +182,8 @@ function PillTabsList<TValue extends string>({
                     'min-w-5 rounded-full px-1.5 text-center text-xs leading-5 font-medium tabular-nums transition-colors duration-250',
                     tab.countTone === 'success'
                       ? active
-                        ? 'bg-green-100 text-green-800'
+                        ? // On the inverted pill: the solid fill reads in both themes.
+                          'bg-success text-success-foreground'
                         : 'bg-success-subtle text-success-fg'
                       : active
                         ? 'bg-fg-inverse/15 text-fg-inverse'

@@ -488,7 +488,8 @@ export function Streamgraph({
                   activeKey !== null && activeKey !== line.key ? '' : undefined
                 }
                 style={{ '--series': colorOf(line) } as CSSProperties}
-                className="group/toggle inline-flex min-h-8 cursor-pointer items-center gap-2 rounded-full pr-2.5 pl-2 text-sm text-fg-muted transition-[color,background-color,opacity,scale] duration-150 ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:scale-[0.97] aria-[pressed=false]:text-fg-subtle data-active:bg-hover data-active:text-fg data-dim:opacity-56 motion-reduce:transition-none"
+                // Off or stepping back shows on the swatch and the strike; the words keep 4.5:1.
+                className="group/toggle inline-flex min-h-8 cursor-pointer items-center gap-2 rounded-full pr-2.5 pl-2 text-sm text-fg-muted transition-[color,background-color,scale] duration-150 ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:scale-[0.97] aria-[pressed=false]:text-fg-subtle data-active:bg-hover data-active:text-fg motion-reduce:transition-none"
                 onClick={() => toggle(line.key)}
                 onPointerEnter={(event) => {
                   if (event.pointerType === 'mouse') {
@@ -504,9 +505,9 @@ export function Streamgraph({
               >
                 <span
                   aria-hidden="true"
-                  className="size-2.5 flex-none rounded-[3px] bg-(--series) transition-[scale,opacity] duration-200 ease-standard group-aria-[pressed=false]/toggle:scale-60 group-aria-[pressed=false]/toggle:opacity-35 motion-reduce:transition-none"
+                  className="size-2.5 flex-none rounded-[3px] bg-(--series) transition-[scale,opacity] duration-200 ease-standard group-data-dim/toggle:opacity-40 group-aria-[pressed=false]/toggle:scale-60 group-aria-[pressed=false]/toggle:opacity-35 motion-reduce:transition-none"
                 />
-                <span className="whitespace-nowrap decoration-current/55 group-aria-[pressed=false]/toggle:line-through group-aria-[pressed=false]/toggle:opacity-72">
+                <span className="whitespace-nowrap decoration-current/55 group-aria-[pressed=false]/toggle:line-through">
                   {line.label}
                 </span>
               </button>
@@ -655,13 +656,13 @@ export function Streamgraph({
                         : undefined
                     }
                     style={{ '--series': colorOf(line) } as CSSProperties}
-                    className="group/row m-0 flex min-w-0 items-center gap-2 leading-tight transition-opacity duration-150 data-dim:opacity-50"
+                    className="group/row m-0 flex min-w-0 items-center gap-2 leading-tight"
                   >
-                    <span className="h-0.75 w-2.5 flex-none rounded-xs bg-(--series)" />
+                    <span className="h-0.75 w-2.5 flex-none rounded-xs bg-(--series) transition-opacity duration-150 group-data-dim/row:opacity-40" />
                     <span className="min-w-0 flex-1 truncate text-fg-muted group-data-active/row:text-fg">
                       {line.label}
                     </span>
-                    <span className="ml-2 flex-none font-medium whitespace-nowrap tabular-nums">
+                    <span className="ml-2 flex-none font-medium whitespace-nowrap tabular-nums group-data-dim/row:text-fg-muted">
                       {point ? format(point.values[line.key] ?? 0, line) : ''}
                     </span>
                   </p>

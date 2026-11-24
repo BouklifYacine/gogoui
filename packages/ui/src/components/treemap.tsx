@@ -751,19 +751,16 @@ export function Treemap({
                       >
                         {node.label}
                       </span>
+                      {/* The value stays opaque so it keeps 4.5:1 on the tile; a header's pale band takes the muted text instead. */}
                       <span
                         style={{
-                          opacity: header
-                            ? room === 'none'
-                              ? 0
-                              : 0.6
-                            : room === 'full'
-                              ? 0.72
-                              : 0,
+                          opacity: (header ? room !== 'none' : room === 'full')
+                            ? 1
+                            : 0,
                         }}
                         className={cn(
                           'truncate text-xs/4 tabular-nums transition-opacity duration-150 motion-reduce:transition-none',
-                          header && 'flex-none',
+                          header && 'flex-none text-fg-muted',
                         )}
                       >
                         {valueText(node.value)}

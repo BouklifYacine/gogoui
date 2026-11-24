@@ -965,6 +965,8 @@ function Slider({
                 key={index}
                 index={index}
                 data-slot="slider-thumb"
+                // The thumb is what gets the focus: the name goes on it.
+                aria-labelledby={ariaLabelledBy}
                 getAriaLabel={
                   isRange && label
                     ? (at) =>

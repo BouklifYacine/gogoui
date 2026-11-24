@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react'
+import { Children, useCallback, useContext } from 'react'
 import type { ComponentProps } from 'react'
 import { useDayPicker } from 'react-day-picker'
 import type { DayButton, Locale } from 'react-day-picker'
@@ -71,8 +71,11 @@ const KEYS = new Set([
  * **Key props**: what react-day-picker gives (`day`, `modifiers`…), plus
  * `dayColor` (the calendar's `color` by default).
  *
- * **Accessibility**: react-day-picker names each day and says if it is
- * chosen; the disc and the dot are drawn, never read.
+ * **Accessibility**: a day is named by what it shows, so its name always
+ * holds the number seen on screen (WCAG 2.5.3): the number, then hidden
+ * words « juin 2027, lundi » (and « aujourd’hui », « sélectionné »), then
+ * whatever was added under the number. The disc and the dot are drawn,
+ * never read.
  *
  * @summary One day of Calendar, round, with Arc UI's motion.
  */
@@ -99,6 +102,19 @@ function CalendarDayButton({
   const { dayPickerProps } = useDayPicker()
   const color = dayColor ?? look.color
   const date = day.date
+
+  // react-day-picker's number comes first; what a composition adds under
+  // it (a price, dots) follows.
+  const [number, ...added] = Children.toArray(children)
+  const rest = messages.calendarDayRest({
+    monthYear: date.toLocaleDateString(messages.intlLocale, {
+      month: 'long',
+      year: 'numeric',
+    }),
+    weekday: date.toLocaleDateString(messages.intlLocale, { weekday: 'long' }),
+    today: Boolean(modifiers.today),
+    selected: Boolean(modifiers.selected),
+  })
 
   // react-day-picker moves the focus by telling a day it is focused.
   const focused = Boolean(modifiers.focused)
@@ -164,7 +180,9 @@ function CalendarDayButton({
         // Today: a small dot under the number, in its colour, so it turns
         // with it when the disc arrives.
         'data-today:font-medium data-today:after:absolute data-today:after:bottom-[calc(50%-15px)] data-today:after:left-1/2 data-today:after:size-1 data-today:after:-translate-x-1/2 data-today:after:rounded-full data-today:after:bg-current',
-        '[&>span]:text-xs [&>span]:opacity-70',
+        // What is added under the number is quieter, but not outside the
+        // month, whose grey would then fall under 4.5:1.
+        '[&>span]:text-xs [&>span]:opacity-70 data-outside:[&>span]:opacity-100',
         onDisc && cn('font-medium before:hidden', onFill[color]),
         middle && onTint[color],
         picked && cn('font-medium', onFill[color], pickedFill[color]),
@@ -192,7 +210,11 @@ function CalendarDayButton({
         onPointerEnter?.(event)
       }}
       {...props}
-    />
+    >
+      {number}
+      <span className="sr-only">{rest}</span>
+      {added}
+    </button>
   )
 }
 

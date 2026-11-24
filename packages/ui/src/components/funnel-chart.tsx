@@ -7,7 +7,7 @@ import { cn } from '../lib/cn.ts'
 
 // Adapted from Bklit UI's funnel chart (MIT, Copyright (c) 2026 uixmat,
 // https://github.com/bklit/bklit-ui, see THIRD_PARTY_NOTICES.md): GoGoUI's
-// cn, French numbers by default, the highest value as scale (a zero first
+// cn, numbers in the provider's language by default, the highest value as scale (a zero first
 // step or a later step above it no longer breaks the shape) and no
 // animation under reduced motion.
 
@@ -116,9 +116,6 @@ export interface FunnelChartProps {
 }
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
-
-const fmtPct = (p: number) => `${Math.round(p)} %`
-const fmtVal = (v: number) => v.toLocaleString('fr-FR')
 
 const springConfig = { stiffness: 120, damping: 20, mass: 1 }
 const hoverSpring = { stiffness: 300, damping: 24 }
@@ -582,8 +579,8 @@ export function FunnelChart({
   showLabels = true,
   hoveredIndex: hoveredIndexProp,
   onHoverChange,
-  formatPercentage = fmtPct,
-  formatValue = fmtVal,
+  formatPercentage,
+  formatValue,
   staggerDelay = 0.12,
   gap = 4,
   renderPattern,
@@ -595,6 +592,17 @@ export function FunnelChart({
 }: FunnelChartProps) {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = useReduceMotion()
+  // Numbers in the provider's language by default.
+  const { intlLocale } = useGoGoUIMessages()
+  const writePercentage =
+    formatPercentage ??
+    ((pct: number) =>
+      new Intl.NumberFormat(intlLocale, {
+        style: 'percent',
+        maximumFractionDigits: 0,
+      }).format(pct / 100))
+  const writeValue =
+    formatValue ?? ((value: number) => value.toLocaleString(intlLocale))
   const [sz, setSz] = useState({ w: 0, h: 0 })
   const [internalHoveredIndex, setInternalHoveredIndex] = useState<
     number | null
@@ -666,42 +674,67 @@ export function FunnelChart({
               role="presentation"
               viewBox={`0 0 ${W} ${H}`}
             >
-              {showBands &&
-                data.map((stage, i) => {
-                  if (i % 2 !== 0) return null
-                  return horiz ? (
-                    <rect
-                      fill={bandColor}
-                      height={H}
-                      key={`band-${stage.label}`}
-                      width={segW}
-                      x={(segW + gap) * i}
-                      y={0}
-                    />
-                  ) : (
-                    <rect
-                      fill={bandColor}
-                      height={segH}
-                      key={`band-${stage.label}`}
-                      width={W}
-                      x={0}
-                      y={(segH + gap) * i}
+              {data.map((stage, i) => {
+                const firstStop = stage.gradient?.[0]
+                return (
+                  <Segment
+                    color={firstStop ? firstStop.color : (stage.color ?? color)}
+                    dimmed={hoveredIndex !== null && hoveredIndex !== i}
+                    fullSize={horiz ? H : W}
+                    gradientStops={stage.gradient}
+                    hovered={hoveredIndex === i}
+                    index={i}
+                    key={stage.label}
+                    layers={layers}
+                    normEnd={norms[Math.min(i + 1, n - 1)] ?? 0}
+                    normStart={norms[i] ?? 0}
+                    reduced={reduced}
+                    renderPattern={renderPattern}
+                    segSize={horiz ? segW : segH}
+                    staggerDelay={staggerDelay}
+                    straight={edges === 'straight'}
+                    vertical={!horiz}
+                  />
+                )
+              })}
+            </div>
+
+            {/* Grid lines */}
+            {gridEnabled && showGridLines && (
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
+                role="presentation"
+                viewBox={`0 0 ${W} ${H}`}
+              >
+                {Array.from({ length: n - 1 }, (_, i) => {
+                  const idx = i + 1
+                  const at = (horiz ? segW : segH) * idx + gap * i + gap / 2
+                  return (
+                    <line
+                      key={`grid-${idx}`}
+                      stroke={gridLineColor}
+                      strokeOpacity={gridLineOpacity}
+                      strokeWidth={gridLineWidth}
+                      x1={horiz ? at : 0}
+                      x2={horiz ? at : W}
+                      y1={horiz ? 0 : at}
+                      y2={horiz ? H : at}
                     />
                   )
                 })}
-            </svg>
-          )}
-
-          {/* Segments */}
-          <div
-            className={cn(
-              'absolute inset-0 flex overflow-visible',
-              horiz ? 'flex-row' : 'flex-col',
+              </svg>
             )}
-            style={{ gap }}
-          >
+
+            {/* Label overlays — hover triggers */}
             {data.map((stage, i) => {
-              const firstStop = stage.gradient?.[0]
+              const pct = (stage.value / max) * 100
+              const posStyle: CSSProperties = horiz
+                ? { left: (segW + gap) * i, width: segW, top: 0, height: H }
+                : { top: (segH + gap) * i, height: segH, left: 0, width: W }
+              const isDimmed = hoveredIndex !== null && hoveredIndex !== i
+
               return (
                 <Segment
                   color={firstStop ? firstStop.color : (stage.color ?? color)}

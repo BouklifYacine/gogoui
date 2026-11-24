@@ -805,13 +805,17 @@ function LineChart({
                       translateX: `${-share * 100}%`,
                     }}
                     className="absolute top-2 text-xs/none whitespace-nowrap text-fg-subtle tabular-nums"
-                    initial={{ opacity: 0 }}
+                    // Motion's reduced mode still fades opacity: with less motion the label is simply there, at full contrast.
+                    initial={reduce ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, transition: fadeQuick }}
-                    transition={{
-                      duration: duration.standard,
-                      ease: ease.standard,
-                    }}
+                    exit={
+                      reduce ? undefined : { opacity: 0, transition: fadeQuick }
+                    }
+                    transition={
+                      reduce
+                        ? { duration: 0 }
+                        : { duration: duration.standard, ease: ease.standard }
+                    }
                   >
                     {item.axisLabel}
                   </motion.span>

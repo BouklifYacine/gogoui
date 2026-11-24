@@ -445,7 +445,7 @@ function ShortcutRecorder({
           >
             <span className="sr-only">
               {recording
-                ? messages.shortcutRecording
+                ? `${messages.shortcutRecording}, ${messages.shortcutPressKeys}`
                 : shown
                   ? spoken(shown)
                   : (placeholder ?? messages.shortcutPlaceholder)}
@@ -477,13 +477,18 @@ function ShortcutRecorder({
                     }
                     className="inline-flex"
                   >
+                    {/* The cap's word is drawn with CSS: « Maj » on the cap,
+                        « Majuscule » in the name, and axe's label-in-name
+                        check would read the two as a mismatch. */}
                     <Kbd
                       data-pressed={
                         recording || (settled && !pending) ? '' : undefined
                       }
+                      data-cap={token.label}
                       className={cn(
                         capSize.default,
                         capPressed[color],
+                        'before:content-[attr(data-cap)]',
                         pending &&
                           'border-warning-line bg-warning-subtle text-fg',
                       )}

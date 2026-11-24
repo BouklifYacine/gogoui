@@ -80,7 +80,14 @@ export function DataTableSkeleton({
   const messages = useGoGoUIMessages()
   return (
     <div className="flex flex-col gap-4">
-      <div className="overflow-hidden rounded-2xl bg-card shadow-sm max-md:hidden">
+      {/* The grey table is not read; « Chargement » is, once. */}
+      <span role="status" className="sr-only">
+        {messages.loading}
+      </span>
+      <div
+        aria-hidden
+        className="overflow-hidden rounded-2xl bg-card shadow-sm max-md:hidden"
+      >
         <Table className="min-w-2xl table-fixed text-sm">
           <TableHeader>
             <TableRow>
@@ -158,7 +165,10 @@ export function DataTableSkeleton({
         </Table>
       </div>
 
-      <ul className="flex flex-col divide-y divide-line rounded-2xl bg-card shadow-sm md:hidden">
+      <ul
+        aria-hidden
+        className="flex flex-col divide-y divide-line rounded-2xl bg-card shadow-sm md:hidden"
+      >
         {rows.map((row, index) => {
           const shown = columns.filter((column) => !metaOf(column).phoneHidden)
           const title = shown.find((column) => metaOf(column).title)
@@ -197,7 +207,10 @@ export function DataTableSkeleton({
         })}
       </ul>
       {pagination && (
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div
+          aria-hidden
+          className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+        >
           <p>
             <SkeletonText>{pagination}</SkeletonText>
           </p>

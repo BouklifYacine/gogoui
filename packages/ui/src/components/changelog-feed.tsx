@@ -437,7 +437,9 @@ function ChangelogFeed({
                   <button
                     key={group.key}
                     type="button"
-                    aria-label={messages.changelogJumpTo(group.words.label)}
+                    // Starts with the words on the button (« Nov. »), so
+                    // voice control finds it (WCAG 2.5.3).
+                    aria-label={`${group.words.short}, ${messages.changelogJumpTo(group.words.label)}`}
                     aria-current={selected ? 'true' : undefined}
                     onClick={() => jumpTo(group.key)}
                     className="relative h-7 min-w-10.5 rounded-full px-2.5 text-xs font-medium text-fg-muted transition-colors duration-(--motion-standard) ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-solid aria-[current]:text-fg @max-[480px]:min-w-0 @max-[480px]:px-2"

@@ -184,11 +184,6 @@ function UserMenu({
     >
       <DropdownMenuTrigger
         data-size={size}
-        aria-label={
-          presence
-            ? `${messages.accountMenu(user.name)}, ${presence}`
-            : messages.accountMenu(user.name)
-        }
         className={cn(
           // It opens a menu, so it answers with colour, never with scale.
           'inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-full text-sm text-fg outline-none transition-colors duration-150 ease-standard select-none [-webkit-tap-highlight-color:transparent] hover:bg-hover active:bg-selected data-popup-open:bg-hover motion-reduce:transition-none',
@@ -198,7 +193,15 @@ function UserMenu({
           className,
         )}
       >
-        <span className="relative inline-flex shrink-0">
+        {/* Named by its words, not an aria-label: the initials and the name
+            on screen are drawn for the eye, so the name holds what is seen
+            (WCAG 2.5.3) even when the name is hidden on a phone. */}
+        <span className="sr-only">
+          {presence
+            ? `${messages.accountMenu(user.name)}, ${presence}`
+            : messages.accountMenu(user.name)}
+        </span>
+        <span aria-hidden="true" className="relative inline-flex shrink-0">
           <PersonAvatar
             name={user.name}
             src={user.avatarSrc}
@@ -214,7 +217,10 @@ function UserMenu({
         </span>
         {showName && (
           <>
-            <span className="max-w-44 truncate leading-none font-medium max-sm:hidden">
+            <span
+              aria-hidden="true"
+              className="max-w-44 truncate leading-none font-medium max-sm:hidden"
+            >
               {user.name}
             </span>
             <span

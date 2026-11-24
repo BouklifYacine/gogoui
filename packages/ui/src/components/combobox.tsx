@@ -365,10 +365,17 @@ function ComboboxChip({
   className,
   children,
   showRemove = true,
+  removeLabel,
   ...props
 }: ComboboxPrimitive.Chip.Props & {
   showRemove?: boolean
+  /** The name of the ×, read aloud. « Retirer <the chip's words> » by default. */
+  removeLabel?: string
 }) {
+  const { removeTag, removeChoice } = useGoGoUIMessages()
+  const removeName =
+    removeLabel ??
+    (typeof children === 'string' ? removeTag(children) : removeChoice)
   return (
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
@@ -384,6 +391,7 @@ function ComboboxChip({
           render={<Button variant="ghost" size="icon-xs" />}
           className="-ml-1 opacity-50 hover:opacity-100"
           data-slot="combobox-chip-remove"
+          aria-label={removeName}
         >
           <GoGoIcon name="close" className="pointer-events-none" />
         </ComboboxPrimitive.ChipRemove>

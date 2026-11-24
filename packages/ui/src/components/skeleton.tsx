@@ -28,6 +28,7 @@ function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="skeleton"
+      aria-hidden
       className={cn(pulse, 'rounded-md', className)}
       {...props}
     />
@@ -43,6 +44,7 @@ function SkeletonText({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
       data-slot="skeleton"
+      aria-hidden
       className={cn(
         pulse,
         'rounded-sm box-decoration-clone text-transparent select-none',
@@ -68,6 +70,7 @@ function SkeletonButton({
   return (
     <div
       data-slot="skeleton"
+      aria-hidden
       className={cn(
         buttonVariants({ variant: 'ghost', size }),
         pulse,
@@ -86,6 +89,7 @@ function SkeletonBadge({ children }: { children: React.ReactNode }) {
   return (
     <span
       data-slot="skeleton"
+      aria-hidden
       className={cn(
         pulse,
         'inline-flex min-h-6 w-fit shrink-0 items-center rounded-full px-2 py-1 text-xs font-medium whitespace-nowrap text-transparent',

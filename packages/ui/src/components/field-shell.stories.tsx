@@ -24,9 +24,10 @@ export const CustomControl = meta.story({
         label={`Invités : ${String(value)}`}
         description="De 20 à 300"
       >
-        {(control) => (
+        {(control, fieldLabel) => (
           <Slider
             {...control}
+            aria-labelledby={fieldLabel.id}
             min={20}
             max={300}
             value={value}

@@ -26,16 +26,17 @@ export const Basic = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <FieldShell name="template" label="Message au couple">
-          {(control) => (
+          {(control, fieldLabel) => (
             <RichTextEditor
               {...args}
               id={control.id}
+              aria-labelledby={fieldLabel.id}
               aria-describedby={control['aria-describedby']}
               onValueChange={setHtml}
             />
           )}
         </FieldShell>
-        <pre className="overflow-x-auto rounded-lg bg-tray p-3 text-xs text-fg-muted">
+        <pre className="rounded-lg bg-tray p-3 text-xs break-all whitespace-pre-wrap text-fg-muted">
           {html}
         </pre>
       </div>

@@ -1,4 +1,5 @@
 import preview from '#.storybook/preview'
+import { AnimatePresence } from 'motion/react'
 
 import { ChangelogEntry } from './changelog-entry.tsx'
 
@@ -7,6 +8,8 @@ const meta = preview.meta({
   tags: ['beta'],
   component: ChangelogEntry,
   parameters: { layout: 'padded' },
+  // Rows enter still on the first render, as in ChangelogFeed; only rows
+  // added later fade in.
   args: {
     date: '2026-11-12',
     version: '0.32.0',
@@ -18,12 +21,14 @@ const meta = preview.meta({
   },
   render: (args) => (
     <ul className="mx-auto w-full max-w-180 overflow-hidden rounded-3xl bg-surface shadow-sm">
-      <ChangelogEntry {...args}>
-        <ul className="grid max-w-[62ch] gap-1.5">
-          <li>Les totaux concernés ont été corrigés le 12 novembre.</li>
-          <li>Les reçus déjà envoyés aux couples restent valables.</li>
-        </ul>
-      </ChangelogEntry>
+      <AnimatePresence initial={false}>
+        <ChangelogEntry {...args}>
+          <ul className="grid max-w-[62ch] gap-1.5">
+            <li>Les totaux concernés ont été corrigés le 12 novembre.</li>
+            <li>Les reçus déjà envoyés aux couples restent valables.</li>
+          </ul>
+        </ChangelogEntry>
+      </AnimatePresence>
     </ul>
   ),
 })
@@ -40,25 +45,27 @@ export const Basic = meta.story({})
 export const Kinds = meta.story({
   render: () => (
     <ul className="mx-auto w-full max-w-180 overflow-hidden rounded-3xl bg-surface shadow-sm">
-      <ChangelogEntry
-        date="2026-11-18"
-        version="0.33.0"
-        kind="new"
-        title="Le formulaire de demande sur votre propre site"
-        summary="Les couples vous écrivent sans quitter votre site."
-      />
-      <ChangelogEntry
-        date="2026-11-18"
-        version="0.33.0"
-        kind="improved"
-        title="L’aperçu de la page publique suit vos réglages"
-      />
-      <ChangelogEntry
-        date="2026-11-12"
-        version="0.32.0"
-        kind="fixed"
-        title="Les acomptes ne sont plus comptés deux fois"
-      />
+      <AnimatePresence initial={false}>
+        <ChangelogEntry
+          date="2026-11-18"
+          version="0.33.0"
+          kind="new"
+          title="Le formulaire de demande sur votre propre site"
+          summary="Les couples vous écrivent sans quitter votre site."
+        />
+        <ChangelogEntry
+          date="2026-11-18"
+          version="0.33.0"
+          kind="improved"
+          title="L’aperçu de la page publique suit vos réglages"
+        />
+        <ChangelogEntry
+          date="2026-11-12"
+          version="0.32.0"
+          kind="fixed"
+          title="Les acomptes ne sont plus comptés deux fois"
+        />
+      </AnimatePresence>
     </ul>
   ),
 })

@@ -18,7 +18,12 @@ type FieldShellProps = {
   label: string
   description?: ReactNode
   error?: string
-  children: (control: FieldControlProps) => ReactNode
+  /**
+   * Draws the control. `label.id` names a control whose focusable part is
+   * not the element with `id`, such as a slider's thumb:
+   * `aria-labelledby={label.id}`.
+   */
+  children: (control: FieldControlProps, label: { id: string }) => ReactNode
 }
 
 /**
@@ -57,15 +62,20 @@ function FieldShell({
   return (
     <MotionScope>
       <Field data-invalid={error ? true : undefined}>
-        <FieldLabel htmlFor={ids.id}>{label}</FieldLabel>
-        {children({
-          id: ids.id,
-          'aria-invalid': error ? true : undefined,
-          'aria-describedby': describedBy(
-            description && ids.descriptionId,
-            error && ids.errorId,
-          ),
-        })}
+        <FieldLabel id={`${ids.id}-label`} htmlFor={ids.id}>
+          {label}
+        </FieldLabel>
+        {children(
+          {
+            id: ids.id,
+            'aria-invalid': error ? true : undefined,
+            'aria-describedby': describedBy(
+              description && ids.descriptionId,
+              error && ids.errorId,
+            ),
+          },
+          { id: `${ids.id}-label` },
+        )}
         <FieldMessage
           id={ids.descriptionId}
           tone="muted"

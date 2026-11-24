@@ -540,7 +540,8 @@ export function WaffleChart({
                     data-dim={
                       active !== null && active !== item.key ? '' : undefined
                     }
-                    className="grid min-h-9 w-full cursor-pointer grid-cols-[0.625rem_minmax(0,1fr)_auto] items-center gap-2.5 rounded-xl border-0 bg-transparent px-2.5 py-1 text-left text-sm text-fg-muted transition-[color,background-color,opacity,scale] duration-150 ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:scale-[0.98] aria-pressed:text-fg data-dim:opacity-50 data-on:bg-hover data-on:text-fg motion-reduce:transition-none"
+                    // A row that steps back fades its swatch and mutes its share: its words keep 4.5:1.
+                    className="group/row grid min-h-9 w-full cursor-pointer grid-cols-[0.625rem_minmax(0,1fr)_auto] items-center gap-2.5 rounded-xl border-0 bg-transparent px-2.5 py-1 text-left text-sm text-fg-muted transition-[color,background-color,scale] duration-150 ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:scale-[0.98] aria-pressed:text-fg data-on:bg-hover data-on:text-fg motion-reduce:transition-none"
                     onClick={() =>
                       setPinned(pinned === item.key ? null : item.key)
                     }
@@ -560,10 +561,10 @@ export function WaffleChart({
                       aria-hidden="true"
                       data-shape={shapeOf(item.key)}
                       style={{ '--cell': colorOf(item.key) } as CSSProperties}
-                      className="size-2.5 rounded-[3px] bg-(--cell) data-[shape=framed]:shadow-[inset_0_0_0_2px_var(--cell),inset_0_0_0_3px_var(--surface)] data-[shape=round]:rounded-full"
+                      className="size-2.5 rounded-[3px] bg-(--cell) transition-opacity duration-150 ease-standard group-data-dim/row:opacity-35 data-[shape=framed]:shadow-[inset_0_0_0_2px_var(--cell),inset_0_0_0_3px_var(--surface)] data-[shape=round]:rounded-full motion-reduce:transition-none"
                     />
                     <span className="min-w-0 truncate">{item.label}</span>
-                    <span className="min-w-[3.2em] text-right text-base font-medium text-fg tabular-nums">
+                    <span className="min-w-[3.2em] text-right text-base font-medium text-fg tabular-nums group-data-dim/row:text-fg-muted">
                       <RollingShare
                         value={share(item)}
                         locale={t.intlLocale}

@@ -11,6 +11,11 @@ import { CalendarLookContext, sameDay } from './calendar-state.ts'
  * after Arc UI (https://uiarc.dev, MIT): it slides back to today's month
  * and, in single mode, chooses today when it can be chosen.
  *
+ * The arrows are not a landmark: react-day-picker draws them in a `nav`
+ * with an empty name, and two calendars on a page would give two landmarks
+ * no one can tell apart. `role="none"` keeps a plain box; each arrow is
+ * named on its own.
+ *
  * @summary Internal: Calendar's `Nav`, with its « Today » button.
  */
 export function CalendarNav({ className, ...props }: NavProps) {
@@ -71,7 +76,7 @@ export function CalendarNav({ className, ...props }: NavProps) {
       >
         {messages.today}
       </button>
-      <Nav className="flex items-center gap-0.5" {...props} />
+      <Nav role="none" className="flex items-center gap-0.5" {...props} />
     </div>
   )
 }

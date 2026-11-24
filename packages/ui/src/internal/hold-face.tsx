@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import type { MotionValue, TargetAndTransition } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
+import { cn } from '../lib/cn.ts'
 import { CheckStroke } from './check-stroke.tsx'
 import { GoGoIcon } from './gogo-icon.tsx'
 import { blur, duration, ease, spring } from './motion.ts'
@@ -60,6 +61,7 @@ export function HoldFace({
   text,
   width,
   measure,
+  mirror = false,
 }: {
   icon: ReactNode
   stage: 'idle' | 'busy' | 'done'
@@ -67,6 +69,11 @@ export function HoldFace({
   width: MotionValue<number | 'auto'>
   /** Only on the copy that measures the words. */
   measure?: (node: HTMLSpanElement | null) => (() => void) | undefined
+  /**
+   * The copy inside the fill: its words are drawn with CSS, so the button
+   * holds them once and its visible text matches its name (WCAG 2.5.3).
+   */
+  mirror?: boolean
 }) {
   const reduce = useReduceMotion()
   const showIcon = icon !== undefined || stage !== 'idle'
@@ -126,7 +133,11 @@ export function HoldFace({
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span
             key={text}
-            className="block whitespace-nowrap"
+            data-text={mirror ? text : undefined}
+            className={cn(
+              'block whitespace-nowrap',
+              mirror && 'before:content-[attr(data-text)]',
+            )}
             initial={reduce ? fadeIn : textIn}
             animate={rest}
             exit={reduce ? fadeOut : textOut}

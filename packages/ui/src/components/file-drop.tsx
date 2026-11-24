@@ -28,7 +28,7 @@ type FileDropProps = {
   busyTitle: string
   /** Once it is in: « Fichier lu ». */
   doneTitle: string
-  /** The zone's name for a screen reader and a keyboard. */
+  /** Read after the title by a screen reader: what the file is for. */
   label: string
   /** Why a file was refused, from react-dropzone's refusals. */
   refusal: (rejections: FileRejection[]) => string
@@ -122,14 +122,17 @@ function FileDrop({
 
   return (
     <MotionScope>
+      {/* Beside the zone, not in it: a button holds no other control. */}
+      <input {...getInputProps()} />
       <div
         ref={zone}
         data-slot="file-drop"
         {...getRootProps({
           // react-dropzone calls its zone « presentation »: it is a button
           // that opens the file picker, so it says so.
+          // Named by its own words (title, then `label`, then hint), so a
+          // voice command that says what is written finds it.
           role: 'button',
-          'aria-label': label,
           className: cn(
             'relative flex min-h-56 w-full cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-[28px] bg-subtle px-6 py-8 text-center outline-none transition-transform duration-300 ease-out select-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus aria-disabled:cursor-progress motion-reduce:transition-none',
             over && 'scale-[1.025]',
@@ -236,17 +239,17 @@ function FileDrop({
             text={titleText}
             className="text-base font-semibold text-fg"
           />
+          <span className="sr-only">{label}</span>
           <RollingLine
             text={subText}
             twoLines
             className="text-sm/5 text-fg-muted tabular-nums"
           />
         </span>
-
-        <span role="status" className="sr-only">
-          {busy ? busyTitle : done ? doneTitle : ''}
-        </span>
       </div>
+      <span role="status" className="sr-only">
+        {busy ? busyTitle : done ? doneTitle : ''}
+      </span>
     </MotionScope>
   )
 }

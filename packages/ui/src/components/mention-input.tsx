@@ -542,13 +542,12 @@ function MentionInput({
             disabled={disabled}
             rows={minRows}
             spellCheck
-            role="combobox"
+            // A textarea keeps its own role (textbox): ARIA forbids combobox
+            // on it. The list still follows it through activedescendant.
             aria-label={ariaLabel}
             aria-describedby={ariaDescribedBy}
             aria-invalid={invalid || undefined}
             aria-autocomplete="list"
-            aria-haspopup="listbox"
-            aria-expanded={open}
             aria-controls={open ? listId : undefined}
             aria-activedescendant={
               open && suggestions.length > 0 ? optionId(activeIndex) : undefined

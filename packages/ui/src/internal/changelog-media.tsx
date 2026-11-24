@@ -37,7 +37,9 @@ export function ChangelogMediaView({ media }: { media: ChangelogMediaData }) {
         <span className="truncate font-mono">{media.file}</span>
         <CopyButton text={media.code} className="h-8 max-md:h-9" />
       </div>
-      <pre className="overflow-x-auto px-4 pt-3.5 pb-4 font-mono text-xs leading-[1.7] text-fg [tab-size:2]">
+      {/* A long line wraps instead of scrolling: no hidden part to reach
+          with the keyboard, and the copy button gives the code as is. */}
+      <pre className="px-4 pt-3.5 pb-4 font-mono text-xs leading-[1.7] break-words whitespace-pre-wrap text-fg [tab-size:2]">
         <code>{media.code}</code>
       </pre>
     </div>

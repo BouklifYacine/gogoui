@@ -28,6 +28,8 @@ type RichTextEditorProps = {
   /** The editor's id, for a label's `htmlFor` (use FieldShell). */
   id?: string
   'aria-label'?: string
+  /** The id of the label that names it (FieldShell gives it). */
+  'aria-labelledby'?: string
   'aria-describedby'?: string
   'aria-invalid'?: boolean
   disabled?: boolean
@@ -58,6 +60,7 @@ function RichTextEditor({
   placeholder,
   id,
   'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
   'aria-invalid': ariaInvalid,
   disabled = false,
@@ -80,6 +83,7 @@ function RichTextEditor({
         role: 'textbox',
         'aria-multiline': 'true',
         ...(ariaLabel ? { 'aria-label': ariaLabel } : {}),
+        ...(ariaLabelledBy ? { 'aria-labelledby': ariaLabelledBy } : {}),
         ...(ariaDescribedBy ? { 'aria-describedby': ariaDescribedBy } : {}),
         ...(ariaInvalid ? { 'aria-invalid': 'true' } : {}),
         class:
