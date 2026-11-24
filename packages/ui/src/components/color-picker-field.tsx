@@ -1,5 +1,6 @@
 import type { ColorFormat } from '../internal/color-math.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
   ColorPicker,
   ColorPickerContent,
@@ -39,9 +40,10 @@ type ColorPickerFieldProps = FieldValueProps<string> & {
  * **States**: closed, open, invalid (`error` under it, the button edged in
  * red), disabled.
  *
- * **Key props**: `label`, `value` + `onValueChange` (hex), `error`,
- * `description`, `disabled`, `colorName`, `contrastWith`, `formats`,
- * `alpha`, `swatches` + `onSwatchesChange`, `size`.
+ * **Key props**: `label`, `value` + `onValueChange` (hex, controlled) or
+ * `defaultValue` (uncontrolled), `error`, `description`, `disabled`,
+ * `colorName`, `contrastWith`, `formats`, `alpha`, `swatches` +
+ * `onSwatchesChange`, `size`.
  *
  * **Accessibility**: the label names the button; help and error are wired
  * with `aria-describedby` and `aria-invalid`; the panel works from the
@@ -55,7 +57,8 @@ function ColorPickerField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '#000000',
   onValueChange,
   onBlur,
   colorName,
@@ -68,6 +71,12 @@ function ColorPickerField({
   onSwatchesChange,
   maxSwatches,
 }: ColorPickerFieldProps) {
+  // The field keeps the colour itself: the hidden input sends it too.
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   return (
     <FieldShell
       id={id}
@@ -79,7 +88,7 @@ function ColorPickerField({
       {(control) => (
         <ColorPicker
           value={value}
-          onValueChange={onValueChange}
+          onValueChange={setValue}
           label={colorName ?? label}
           disabled={disabled}
           size={size}

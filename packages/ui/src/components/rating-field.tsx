@@ -29,8 +29,8 @@ type RatingFieldProps = FieldValueProps<number> & {
  *
  * **States**: empty, rated, help, error, disabled.
  *
- * **Key props**: `label`, `value` (0 = none) + `onValueChange`,
- * `description`, `error`, and Rating's `max`, `size`, `color`,
+ * **Key props**: `label`, `value` (0 = none) + `onValueChange` (controlled)
+ * or `defaultValue` (uncontrolled), `description`, `error`, and Rating's `max`, `size`, `color`,
  * `allowHalf`, `allowClear`, `showValue`, `valueLabels`.
  *
  * **Accessibility**: the label names the group of stars; the help and the
@@ -45,6 +45,7 @@ function RatingField({
   description,
   error,
   value,
+  defaultValue,
   onValueChange,
   onBlur,
   ...rating
@@ -61,6 +62,7 @@ function RatingField({
           id={ids.id}
           name={name}
           value={value}
+          defaultValue={defaultValue}
           onValueChange={onValueChange}
           onBlur={onBlur}
           aria-labelledby={labelId}

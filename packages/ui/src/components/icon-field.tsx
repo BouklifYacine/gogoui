@@ -2,6 +2,7 @@ import type { Icon } from '@phosphor-icons/react'
 
 import { useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldError, FieldLegend, FieldSet } from './field.tsx'
 import { RadioGroup, RadioGroupItem } from './radio-group.tsx'
@@ -20,7 +21,7 @@ type IconFieldProps<TValue extends string> = Omit<
  * **Use it for** giving a category, a space or a resource its icon.
  *
  * **Key props**: `legend`, `options` (`{ value, label, icon }[]`), `value`
- * + `onValueChange`, `error`.
+ * + `onValueChange` (controlled) or `defaultValue` (uncontrolled), `error`.
  *
  * **Accessibility**: each tile is named by its `label`, not its picture.
  *
@@ -31,12 +32,19 @@ function IconField<TValue extends string>({
   name,
   legend,
   error,
-  value,
+  value: valueProp,
+  defaultValue,
   onValueChange,
   onBlur,
   options,
 }: IconFieldProps<TValue>) {
   const ids = useFieldIds(id, name)
+  // '' while no icon is chosen: the radio group stays controlled.
+  const [value, setValue] = useControllableState<TValue | ''>({
+    value: valueProp,
+    defaultValue: defaultValue ?? '',
+    onChange: (next) => onValueChange?.(next as TValue),
+  })
   const legendId = `${ids.id}-legend`
 
   return (
@@ -55,7 +63,7 @@ function IconField<TValue extends string>({
         name={name}
         aria-labelledby={legendId}
         value={value}
-        onValueChange={(next) => onValueChange(next as TValue)}
+        onValueChange={(next) => setValue(next as TValue)}
         className="mx-auto grid w-fit grid-cols-6 gap-2"
       >
         {options.map((option) => {

@@ -3,6 +3,7 @@ import type { ComponentProps } from 'react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
 import { RollingNumber } from './rolling-number.tsx'
@@ -11,7 +12,7 @@ import { Textarea } from './textarea.tsx'
 type TextareaFieldProps = FieldValueProps<string> &
   Omit<
     ComponentProps<typeof Textarea>,
-    'id' | 'name' | 'value' | 'onChange' | 'onBlur'
+    'id' | 'name' | 'value' | 'defaultValue' | 'onChange' | 'onBlur'
   > & {
     label: string
     /**
@@ -47,7 +48,8 @@ function TextareaField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   maxLength,
@@ -78,7 +80,7 @@ function TextareaField({
             maxLength={maxLength}
             value={value}
             onBlur={onBlur}
-            onChange={(event) => onValueChange(event.target.value)}
+            onChange={(event) => setValue(event.target.value)}
           />
           {left !== null && (
             <p

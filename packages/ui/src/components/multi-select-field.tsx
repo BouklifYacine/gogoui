@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { blur, duration, ease, spring } from '../internal/motion.ts'
@@ -68,7 +69,8 @@ function MultiSelectField<TValue extends string>({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = [],
   onValueChange,
   onBlur,
   options,
@@ -80,6 +82,11 @@ function MultiSelectField<TValue extends string>({
 }: MultiSelectFieldProps<TValue>) {
   const { choose, clearAll } = useGoGoUIMessages()
   const reduce = useReduceMotion()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const clearable = value.length > 0 && !disabled
 
   return (
@@ -97,7 +104,7 @@ function MultiSelectField<TValue extends string>({
             items={options}
             name={name}
             value={value}
-            onValueChange={(next) => onValueChange(next as TValue[])}
+            onValueChange={(next) => setValue(next as TValue[])}
             required={required}
             disabled={disabled}
           >
@@ -137,7 +144,7 @@ function MultiSelectField<TValue extends string>({
                   type="button"
                   aria-label={clearAll}
                   onClick={() => {
-                    onValueChange([])
+                    setValue([])
                     document.getElementById(control.id)?.focus()
                   }}
                   initial={

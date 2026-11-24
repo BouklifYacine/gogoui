@@ -4,6 +4,7 @@ import type { Icon } from '@phosphor-icons/react'
 import type { Color } from '../internal/colors.ts'
 import { useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { RadioCardRing } from '../internal/radio-card-ring.tsx'
 import { cn } from '../lib/cn.ts'
 import {
@@ -66,8 +67,9 @@ type RadioCardFieldProps<TValue extends string> = Omit<
  *
  * **Key props**: `legend`, `options` (`{ value, label, icon?,
  * description?, meta?, disabled?, disabledReason? }[]`), `value` +
- * `onValueChange`, `error`, `required`, `hideLegend`, `inline` (in a row),
- * `list` (stacked lines), `minColumnWidth` (a responsive grid), `color`.
+ * `onValueChange` (controlled) or `defaultValue` (uncontrolled), `error`,
+ * `required`, `hideLegend`, `inline` (in a row), `list` (stacked lines),
+ * `minColumnWidth` (a responsive grid), `color`.
  *
  * **Motion** (after Arc UI, https://uiarc.dev, MIT): one ring glides from
  * the chosen card to the next, over its edge so no card changes size; the
@@ -84,7 +86,8 @@ function RadioCardField<TValue extends string>({
   name,
   legend,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   options,
@@ -96,6 +99,11 @@ function RadioCardField<TValue extends string>({
   color = 'primary',
 }: RadioCardFieldProps<TValue>) {
   const ids = useFieldIds(id, name)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const legendId = `${ids.id}-legend`
   const grid = !inline && !list && minColumnWidth !== undefined
 
@@ -116,7 +124,7 @@ function RadioCardField<TValue extends string>({
         aria-labelledby={legendId}
         required={required}
         value={value}
-        onValueChange={(next) => onValueChange(next as TValue)}
+        onValueChange={(next) => setValue(next as TValue)}
         style={
           grid
             ? {

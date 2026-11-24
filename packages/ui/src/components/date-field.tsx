@@ -16,6 +16,7 @@ import {
 } from '../internal/days.ts'
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { RollingDate } from '../internal/rolling-date.tsx'
 import { cn } from '../lib/cn.ts'
 import { buttonVariants } from './button.tsx'
@@ -75,7 +76,8 @@ function DateField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = null,
   onValueChange,
   onBlur,
   placeholder,
@@ -90,6 +92,11 @@ function DateField({
   const messages = useGoGoUIMessages()
   const reduce = useReduceMotion()
   const ids = useFieldIds(id, name)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const dayId = `${ids.id}-day`
   const [open, setOpen] = useState(false)
   const closing = useRef<number | undefined>(undefined)
@@ -118,7 +125,7 @@ function DateField({
     if (draft === null) return
     if (draft.trim() === '') {
       clearDraft()
-      onValueChange(null)
+      setValue(null)
       return
     }
     const day = parseTypedDay(draft, messages.dayOrder)
@@ -132,7 +139,7 @@ function DateField({
       return
     }
     clearDraft()
-    onValueChange(day)
+    setValue(day)
   }
 
   const selectedDate = parseDay(value)
@@ -202,7 +209,7 @@ function DateField({
               defaultMonth={selectedDate}
               onSelect={(date: Date | undefined) => {
                 clearDraft()
-                onValueChange(date ? toDay(date) : null)
+                setValue(date ? toDay(date) : null)
                 window.clearTimeout(closing.current)
                 if (reduce || !date) {
                   setOpen(false)

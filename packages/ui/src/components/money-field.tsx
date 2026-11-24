@@ -8,6 +8,7 @@ import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
   caretAfter,
   moneyCents,
@@ -83,7 +84,8 @@ function MoneyField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   // None by default: a grey amount in an empty field reads as one already
@@ -101,6 +103,11 @@ function MoneyField({
   const reduce = useReduceMotion()
   const symbols = moneySymbols(messages.intlLocale)
   const rangeId = `${useId()}-range`
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
 
   const draft = readMoney(value, value.length, symbols)?.draft ?? ''
   const cents = moneyCents(draft)
@@ -153,7 +160,7 @@ function MoneyField({
   function send(nextDraft: string, from: 'type' | 'other') {
     const text = moneyText(nextDraft, symbols)
     setSent({ text, typed: from === 'type' })
-    onValueChange(text)
+    setValue(text)
     return text
   }
 

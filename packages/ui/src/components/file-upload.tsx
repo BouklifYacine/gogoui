@@ -20,6 +20,7 @@ import type {
 import { fileSize } from '../internal/file-size.ts'
 import { stagger } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 
 export { FileUploadDropzone } from './file-upload-dropzone.tsx'
@@ -49,12 +50,21 @@ type FileUploadProps = {
   maxSize?: number
   /** Sends each added file; without it, the list only shows the choice. */
   onUpload?: FileUploadHandler
-  /** The rows it opens with: files sent earlier. Give a new `key` to start over. */
+  /**
+   * The rows, when the page owns them (controlled). Give back the very
+   * array `onItemsChange` sent: uploads keep patching the latest rows
+   * meanwhile. Another array (a reset, a row removed elsewhere) replaces
+   * the rows.
+   */
+  items?: FileUploadEntry[]
+  /**
+   * The rows it opens with when the list owns them (uncontrolled): files
+   * sent earlier. Give a new `key` to start over.
+   */
   defaultItems?: FileUploadEntry[]
   /**
-   * Every change of the rows: added, progressing, sent, failed, removed.
-   * The list keeps its rows itself: uploads patch them long after a
-   * render, which a list held by the page would receive late.
+   * Every change of the rows, controlled or not: added, progressing, sent,
+   * failed, removed.
    */
   onItemsChange?: (items: FileUploadEntry[]) => void
   /** Once the list holds this many files, the zone folds to a slim bar. */
@@ -106,6 +116,7 @@ function FileUpload({
   maxFiles = 5,
   maxSize,
   onUpload,
+  items: itemsProp,
   defaultItems,
   onItemsChange,
   compactAt,
@@ -118,9 +129,11 @@ function FileUpload({
   const messages = useGoGoUIMessages()
   const reduce = useReduceMotion()
   const errorId = useId()
-  const [items, setItems] = useState<FileUploadEntry[]>(
-    () => defaultItems ?? [],
-  )
+  const [items, setItems] = useControllableState({
+    value: itemsProp,
+    defaultValue: defaultItems ?? [],
+    onChange: onItemsChange,
+  })
   const [batchStart, setBatchStart] = useState(0)
   const [error, setError] = useState('')
   const [announcement, setAnnouncement] = useState('')
@@ -133,13 +146,25 @@ function FileUpload({
   const nextId = useRef(0)
 
   // Uploads patch the rows long after this render: each patch starts from
-  // the latest rows, kept here and changed only by `update`.
+  // the latest rows, kept here and changed by `update`.
   const latestRef = useRef<FileUploadEntry[]>(items)
+  // The rows this list sent: given back by the page, they are not news.
+  const [sentRows] = useState(() => new WeakSet<FileUploadEntry[]>())
+  // Rows the page set itself (a reset) are where the next patch starts. A
+  // new ref each time the page's rows change: React calls it again.
+  const followPageRows = useCallback(
+    (node: HTMLSpanElement | null) => {
+      if (node && itemsProp !== undefined && !sentRows.has(itemsProp)) {
+        latestRef.current = itemsProp
+      }
+    },
+    [itemsProp, sentRows],
+  )
   function update(change: (current: FileUploadEntry[]) => FileUploadEntry[]) {
     const next = change(latestRef.current)
     latestRef.current = next
+    sentRows.add(next)
     setItems(next)
-    onItemsChange?.(next)
   }
   function patch(
     id: string,
@@ -369,7 +394,7 @@ function FileUpload({
           className={cn('relative grid min-w-0 text-fg', className)}
         >
           {children}
-          <span role="status" className="sr-only">
+          <span ref={followPageRows} role="status" className="sr-only">
             {announcement}
           </span>
         </div>

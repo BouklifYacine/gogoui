@@ -33,9 +33,9 @@ type MentionFieldProps = FieldValueProps<MentionValue> &
  * (`error`), disabled. The help and the error slide in (FieldShell); the
  * rest moves as MentionInput does.
  *
- * **Key props**: `label`, `value` + `onValueChange` (`{ text, mentions }`),
- * `people`, `error`, `description`, `onMentionAdd`, `minRows`, `maxRows`.
- * Store `serializeMentions(value)`.
+ * **Key props**: `label`, `value` + `onValueChange` (`{ text, mentions }`,
+ * controlled) or `defaultValue` (uncontrolled), `people`, `error`,
+ * `description`, `onMentionAdd`, `minRows`, `maxRows`. Store `serializeMentions(value)`.
  *
  * **Accessibility**: label, help and error are wired with
  * `aria-describedby`; the list is a combobox's listbox (see MentionInput).
@@ -49,6 +49,7 @@ function MentionField({
   description,
   error,
   value,
+  defaultValue,
   onValueChange,
   onBlur,
   ...inputProps
@@ -67,6 +68,7 @@ function MentionField({
           {...control}
           name={name}
           value={value}
+          defaultValue={defaultValue}
           onValueChange={onValueChange}
           onBlur={onBlur}
         />

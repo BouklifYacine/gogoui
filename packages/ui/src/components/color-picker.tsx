@@ -36,14 +36,20 @@ import { blur, duration, ease, spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { SpringNumber } from '../internal/spring-number.tsx'
 import { useColorPad } from '../internal/use-color-pad.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import { TextMorph } from './text-morph.tsx'
 
 type ColorPickerProps = {
-  /** The colour: hex, rgb(), hsl() or oklch(). */
-  value: string
+  /**
+   * The colour, when the parent owns it (controlled): hex, rgb(), hsl() or
+   * oklch().
+   */
+  value?: string
+  /** The first colour when the picker owns it (uncontrolled); black by default. */
+  defaultValue?: string
   /** The new colour, as hex (two more digits when it is not opaque). */
-  onValueChange: (hex: string) => void
+  onValueChange?: (hex: string) => void
   /** The colour's name, shown on the button (« Accent »). */
   label?: string
   /** The button's height: sm, default or lg. */
@@ -115,9 +121,10 @@ type EyeDropperConstructor = new () => { open: () => Promise<EyeDropperResult> }
  * children, the button and every part are there (opacity with `alpha`,
  * contrast with `contrastWith`).
  *
- * **Key props**: `value` + `onValueChange` (hex), `label`, `size`,
- * `contrastWith`, `formats`, `alpha`, `swatches` + `onSwatchesChange`,
- * `maxSwatches`, `disabled`.
+ * **Key props**: `value` + `onValueChange` (hex, controlled) or
+ * `defaultValue` (uncontrolled), `label`, `size`, `contrastWith`,
+ * `formats`, `alpha`, `swatches` + `onSwatchesChange`, `maxSwatches`,
+ * `disabled`.
  *
  * **Accessibility**: the panel opens on the area's thumb; every thumb moves
  * with the arrows (Shift: by ten), Home and End; the area reads both its
@@ -128,7 +135,8 @@ type EyeDropperConstructor = new () => { open: () => Promise<EyeDropperResult> }
  * @summary A free colour in a panel that grows out of its swatch.
  */
 function ColorPicker({
-  value,
+  value: valueProp,
+  defaultValue = '#000000',
   onValueChange,
   label,
   size = 'default',
@@ -145,6 +153,11 @@ function ColorPicker({
   children,
 }: ColorPickerProps) {
   const messages = useGoGoUIMessages()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   // The picker holds HSV, so a grey keeps the hue it had.
   const [hsva, setHsva] = useState<Hsva>(
     () => parseColor(value) ?? { h: 0, s: 0, v: 0, a: 1 },
@@ -174,7 +187,7 @@ function ColorPicker({
           setHsva(next)
           const nextHex = toHex(next)
           if (nextHex !== hex) {
-            onValueChange(nextHex)
+            setValue(nextHex)
           }
         },
         label: label ?? messages.colorPickerLabel,

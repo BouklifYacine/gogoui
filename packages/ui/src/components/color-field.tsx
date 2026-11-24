@@ -3,6 +3,7 @@ import { CheckIcon } from '@phosphor-icons/react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import {
   FieldDescription,
@@ -37,7 +38,8 @@ function ColorField({
   legend,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   options,
@@ -68,7 +70,7 @@ function ColorField({
         name={name}
         aria-labelledby={legendId}
         value={value}
-        onValueChange={(next) => onValueChange(next as string)}
+        onValueChange={(next) => setValue(next as string)}
         className="flex flex-wrap gap-2"
       >
         {options.map((color, index) => {

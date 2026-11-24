@@ -34,9 +34,10 @@ type TagFieldProps = FieldValueProps<string[]> &
  * the text changes), invalid (`error`), disabled. The help and the error
  * slide in (FieldShell).
  *
- * **Key props**: `label`, `value` + `onValueChange` (an array of words),
- * `error`, `description`, `max`, `validate`, `placeholder`, `size`.
- * With TanStack Form, give it the array field.
+ * **Key props**: `label`, `value` + `onValueChange` (an array of words,
+ * controlled) or `defaultValue` (uncontrolled), `error`, `description`,
+ * `max`, `validate`, `placeholder`, `size`. With TanStack Form, give it
+ * the array field.
  *
  * **Accessibility**: label, help and error are wired with
  * `aria-describedby`; adding, removing and picking are read politely (see
@@ -51,6 +52,7 @@ function TagField({
   description,
   error,
   value,
+  defaultValue,
   onValueChange,
   onBlur,
   onRefusalChange,
@@ -72,6 +74,7 @@ function TagField({
           {...control}
           name={name}
           value={value}
+          defaultValue={defaultValue}
           onValueChange={onValueChange}
           onBlur={onBlur}
           onRefusalChange={(reason) => {

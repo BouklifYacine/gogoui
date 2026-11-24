@@ -24,8 +24,11 @@ type ShortcutFieldProps = Omit<
     | 'aria-invalid'
   > & {
     label: string
-    /** `replaced`: the binding it was taken from, to unbind it. */
-    onValueChange: (
+    /**
+     * Called on every change, controlled or not. `replaced`: the binding
+     * it was taken from, to unbind it.
+     */
+    onValueChange?: (
       value: string | null,
       details: { replaced?: ShortcutBinding },
     ) => void
@@ -41,9 +44,10 @@ type ShortcutFieldProps = Omit<
  * **States**: those of `ShortcutRecorder`, plus invalid (`error` shown
  * under it and linked to it).
  *
- * **Key props**: `label`, `value` + `onValueChange` (controlled), `error`,
- * `description`, and the recorder's `bindings`, `resetValue`,
- * `requireModifier`, `warnReserved`, `size`, `color`.
+ * **Key props**: `label`, `value` + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled), `error`, `description`, and the
+ * recorder's `bindings`, `resetValue`, `requireModifier`, `warnReserved`,
+ * `size`, `color`.
  *
  * **Accessibility**: the recorder is named by the label and its shortcut
  * read in full; help and error are wired with `aria-describedby` and
@@ -58,6 +62,7 @@ function ShortcutField({
   description,
   error,
   value,
+  defaultValue,
   onValueChange,
   onBlur,
   ...recorderProps
@@ -74,6 +79,7 @@ function ShortcutField({
         {...recorderProps}
         id={ids.id}
         value={value}
+        defaultValue={defaultValue}
         onValueChange={onValueChange}
         onBlur={onBlur}
         aria-labelledby={labelId}

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
   TYPED_NAME_FONT,
   signatureToPng,
@@ -69,7 +70,8 @@ function SignatureField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   signer,
@@ -85,6 +87,11 @@ function SignatureField({
   const messages = useGoGoUIMessages()
   const ids = useFieldIds(id, name)
   const labelId = `${ids.id}-label`
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const [mode, setMode] = useState<'draw' | 'type'>('draw')
   const [typed, setTyped] = useState(signer ?? '')
   const [padKey, setPadKey] = useState(0)
@@ -100,7 +107,7 @@ function SignatureField({
 
   function send(next: string) {
     setSent(next)
-    onValueChange(next)
+    setValue(next)
   }
 
   function fromStrokes(strokes: SignatureStroke[]) {

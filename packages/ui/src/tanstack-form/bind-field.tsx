@@ -4,8 +4,19 @@ import type { FieldValueProps } from '../internal/field-props.ts'
 import { firstErrorMessage } from './first-error-message.ts'
 import { useFieldContext } from './form-context.ts'
 
-/** What the form gives the field; the rest stays the field's props. */
-type FromForm = 'id' | 'name' | 'value' | 'onValueChange' | 'onBlur' | 'error'
+/**
+ * What the form gives the field; the rest stays the field's props. The
+ * form owns the value, so a bound field takes no `defaultValue`: set it in
+ * the form's `defaultValues`.
+ */
+type FromForm =
+  | 'id'
+  | 'name'
+  | 'value'
+  | 'defaultValue'
+  | 'onValueChange'
+  | 'onBlur'
+  | 'error'
 
 /**
  * Turns a GoGoUI field (or one of yours taking `value`, `onValueChange`,
@@ -19,7 +30,7 @@ type FromForm = 'id' | 'name' | 'value' | 'onValueChange' | 'onBlur' | 'error'
 // oxlint-disable-next-line typescript/no-explicit-any
 type BindableProps = Omit<FieldValueProps<any>, 'onValueChange'> & {
   // oxlint-disable-next-line typescript/no-explicit-any
-  onValueChange: (value: any, ...details: never[]) => void
+  onValueChange?: (value: any, ...details: never[]) => void
 }
 
 export function bindField<TProps extends BindableProps>(

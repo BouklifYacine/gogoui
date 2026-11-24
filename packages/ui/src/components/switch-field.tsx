@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { Field, FieldDescription, FieldError, FieldLabel } from './field.tsx'
 import { Switch } from './switch.tsx'
 
@@ -17,8 +18,8 @@ type SwitchFieldProps = Omit<FieldValueProps<boolean>, 'description'> & {
  * button. **Prefer** `SettingSwitchRow` for a setting that applies at
  * once, `CheckboxField` for a consent.
  *
- * **Key props**: `label`, `value` (boolean) + `onValueChange`,
- * `description`, `error`.
+ * **Key props**: `label`, `value` (boolean) + `onValueChange` (controlled)
+ * or `defaultValue` (uncontrolled), `description`, `error`.
  *
  * @summary A labelled on/off switch inside a form.
  */
@@ -28,11 +29,17 @@ function SwitchField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = false,
   onValueChange,
   onBlur,
 }: SwitchFieldProps) {
   const ids = useFieldIds(id, name)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
 
   return (
     <Field data-invalid={error ? true : undefined}>
@@ -51,7 +58,7 @@ function SwitchField({
           id={ids.id}
           name={name}
           checked={value}
-          onCheckedChange={(checked) => onValueChange(checked)}
+          onCheckedChange={(checked) => setValue(checked)}
           onBlur={onBlur}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy(

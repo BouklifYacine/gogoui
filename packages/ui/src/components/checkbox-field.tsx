@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { Checkbox } from './checkbox.tsx'
 import { Field, FieldDescription, FieldError, FieldLabel } from './field.tsx'
 
@@ -18,8 +19,8 @@ type CheckboxFieldProps = Omit<FieldValueProps<boolean>, 'description'> & {
  * with the form. **Prefer** `SwitchField` for an on / off feature,
  * `CheckboxCardField` for several choices.
  *
- * **Key props**: `label`, `value` (boolean) + `onValueChange`,
- * `description`, `error`.
+ * **Key props**: `label`, `value` (boolean) + `onValueChange` (controlled)
+ * or `defaultValue` (uncontrolled), `description`, `error`.
  *
  * **Accessibility**: the whole label ticks it; the error is read with it.
  *
@@ -31,11 +32,17 @@ function CheckboxField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = false,
   onValueChange,
   onBlur,
 }: CheckboxFieldProps) {
   const ids = useFieldIds(id, name)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
 
   return (
     <Field data-invalid={error ? true : undefined}>
@@ -44,7 +51,7 @@ function CheckboxField({
           id={ids.id}
           name={name}
           checked={value}
-          onCheckedChange={(checked) => onValueChange(checked)}
+          onCheckedChange={(checked) => setValue(checked)}
           onBlur={onBlur}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy(

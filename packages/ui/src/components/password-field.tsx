@@ -55,7 +55,8 @@ function PasswordField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   autoComplete,
@@ -65,6 +66,11 @@ function PasswordField({
   className,
 }: PasswordFieldProps) {
   const reduce = useReduceMotion()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const shake = useMotionValue(0)
   const lastError = useRef(error)
 

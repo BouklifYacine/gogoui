@@ -2,6 +2,7 @@ import type { ChangeEvent, ComponentProps } from 'react'
 import type { Icon } from '@phosphor-icons/react'
 
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { FieldShell } from './field-shell.tsx'
 import { Input } from './input.tsx'
 import { InputWithIcon } from './input-with-icon.tsx'
@@ -9,7 +10,7 @@ import { InputWithIcon } from './input-with-icon.tsx'
 type TextFieldProps = FieldValueProps<string> &
   Omit<
     ComponentProps<typeof Input>,
-    'id' | 'name' | 'value' | 'onChange' | 'onBlur'
+    'id' | 'name' | 'value' | 'defaultValue' | 'onChange' | 'onBlur'
   > & {
     label: string
     /** A Phosphor icon at the start of the field, decorative. */
@@ -30,9 +31,10 @@ type TextFieldProps = FieldValueProps<string> &
  * it and linked to it). The help and the error slide in, their words
  * rising into place (FieldShell, after Arc UI).
  *
- * **Key props**: `label`, `value` + `onValueChange` (controlled), `error`
- * (the message, shown after a blur or a submit), `description` (help under
- * the label), `icon`, plus `type`, `autoComplete`, `inputMode`, `size`.
+ * **Key props**: `label`, `value` + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled, no state to write), `error` (the message,
+ * shown after a blur or a submit), `description` (help under the label),
+ * `icon`, plus `type`, `autoComplete`, `inputMode`, `size`.
  * With TanStack Form: `<field.TextField label="…" />`.
  *
  * **Accessibility**: label, help and error are wired with `aria-describedby`
@@ -46,12 +48,18 @@ function TextField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   icon,
   ...inputProps
 }: TextFieldProps) {
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   return (
     <FieldShell
       id={id}
@@ -68,7 +76,7 @@ function TextField({
           value,
           onBlur,
           onChange: (event: ChangeEvent<HTMLInputElement>) =>
-            onValueChange(event.target.value),
+            setValue(event.target.value),
         }
         return icon ? (
           <InputWithIcon icon={icon} {...props} />

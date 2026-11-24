@@ -1,5 +1,6 @@
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import { Checkbox } from './checkbox.tsx'
 import {
@@ -28,7 +29,8 @@ type CheckboxCardFieldProps<TValue extends string> = Omit<
  * **Use it for** services offered, days open, rooms included.
  *
  * **Key props**: `legend`, `options` (`{ value, label }[]`), `value` (an
- * array) + `onValueChange`, `description`, `error`.
+ * array) + `onValueChange` (controlled) or `defaultValue` (uncontrolled),
+ * `description`, `error`.
  *
  * **Accessibility**: a fieldset with its legend; each card is a checkbox.
  *
@@ -40,20 +42,24 @@ function CheckboxCardField<TValue extends string>({
   legend,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = [],
   onValueChange,
   onBlur,
   options,
 }: CheckboxCardFieldProps<TValue>) {
   const ids = useFieldIds(id, name)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
 
   function toggle(choice: TValue, checked: boolean) {
     const ticked = new Set(value)
     if (checked) ticked.add(choice)
     else ticked.delete(choice)
-    onValueChange(
-      options.map((option) => option.value).filter((v) => ticked.has(v)),
-    )
+    setValue(options.map((option) => option.value).filter((v) => ticked.has(v)))
   }
 
   return (

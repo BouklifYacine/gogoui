@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
 
@@ -32,7 +33,8 @@ type CodeFieldProps = FieldValueProps<string> & {
  * `attempt`).
  *
  * **Key props**: `label`, `length` (6 by default), `value` +
- * `onValueChange` (submit when full), `status` (error, success), `attempt`
+ * `onValueChange` (controlled; submit when full) or `defaultValue`
+ * (uncontrolled), `status` (error, success), `attempt`
  * (bump it after a wrong code to replay the shake).
  *
  * **Accessibility**: one field for the screen reader; paste and the phone's
@@ -46,7 +48,8 @@ function CodeField({
   label,
   description,
   error,
-  value: rawValue,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   length = 6,
@@ -54,6 +57,11 @@ function CodeField({
   attempt = 0,
 }: CodeFieldProps) {
   const [focused, setFocused] = useState(false)
+  const [rawValue, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const value = rawValue.replace(/\D/g, '').slice(0, length)
   const full = value.length === length
   const invalid = Boolean(error) || status === 'error'
@@ -142,9 +150,7 @@ function CodeField({
               // its digits, the rest is dropped.
               value={value}
               onChange={(event) =>
-                onValueChange(
-                  event.target.value.replace(/\D/g, '').slice(0, length),
-                )
+                setValue(event.target.value.replace(/\D/g, '').slice(0, length))
               }
               onFocus={() => setFocused(true)}
               onBlur={() => {

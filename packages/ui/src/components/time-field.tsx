@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
   QUARTER_HOURS,
   maskTime,
@@ -47,7 +48,8 @@ function TimeField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
 }: TimeFieldProps) {
@@ -65,7 +67,7 @@ function TimeField({
   function takeTyped() {
     const time = typing ? typedTime(text) : null
     setTyping(false)
-    if (time) onValueChange(time)
+    if (time) setValue(time)
     setText(time ?? value)
   }
 
@@ -84,7 +86,7 @@ function TimeField({
           value={value || null}
           onValueChange={(time: string | null) => {
             setTyping(false)
-            if (time) onValueChange(time)
+            if (time) setValue(time)
           }}
           inputValue={text}
           onInputValueChange={(next, details) => {

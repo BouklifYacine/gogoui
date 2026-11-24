@@ -1,5 +1,6 @@
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { FieldShell } from './field-shell.tsx'
 import {
   Select,
@@ -30,8 +31,8 @@ type SelectFieldProps<TValue extends string> = FieldValueProps<TValue | ''> & {
  * **States**: placeholder, chosen, open, disabled, invalid.
  *
  * **Key props**: `label`, `options` (`{ value, label }[]`), `value` +
- * `onValueChange`, `placeholder`, `required`, `error`, `description`,
- * `size`.
+ * `onValueChange` (controlled) or `defaultValue` (uncontrolled),
+ * `placeholder`, `required`, `error`, `description`, `size`.
  *
  * **Accessibility**: label and error wired; letters jump to options.
  *
@@ -43,7 +44,8 @@ function SelectField<TValue extends string>({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   options,
@@ -52,6 +54,11 @@ function SelectField<TValue extends string>({
   size,
 }: SelectFieldProps<TValue>) {
   const { choose } = useGoGoUIMessages()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
 
   return (
     <FieldShell
@@ -67,7 +74,7 @@ function SelectField<TValue extends string>({
           items={options}
           name={name}
           value={value === '' ? null : value}
-          onValueChange={(next) => onValueChange((next as TValue | null) ?? '')}
+          onValueChange={(next) => setValue((next as TValue | null) ?? '')}
           required={required}
         >
           <SelectTrigger

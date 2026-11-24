@@ -9,12 +9,15 @@ import { stagger } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { RatingStar } from '../internal/rating-star.tsx'
 import { RollingWords } from '../internal/rolling-words.tsx'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
 
 type RatingProps = {
-  /** The chosen value; 0 when none. */
-  value: number
-  /** The new value; 0 when cleared. */
+  /** The chosen value, when the parent owns it (controlled); 0 when none. */
+  value?: number
+  /** The first value when the stars own it (uncontrolled); 0 by default. */
+  defaultValue?: number
+  /** The new value, controlled or not; 0 when cleared. */
   onValueChange?: (value: number) => void
   onBlur?: () => void
   /** How many stars, 5 by default. */
@@ -97,7 +100,8 @@ type Gesture = { last: number; scrub: boolean; touch: boolean }
  * @summary A rating in stars, with half stars and a rolling word.
  */
 function Rating({
-  value,
+  value: valueProp,
+  defaultValue = 0,
   onValueChange,
   onBlur,
   max = 5,
@@ -119,6 +123,11 @@ function Rating({
 }: RatingProps) {
   const messages = useGoGoUIMessages()
   const reduce = useReduceMotion()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const step = allowHalf ? 0.5 : 1
   const normalize = (next: number) =>
     Math.max(0, Math.min(max, Math.round(next / step) * step))
@@ -211,7 +220,7 @@ function Rating({
       setAnnouncement(chosen === 0 ? messages.ratingCleared : spokenFor(chosen))
     }
     if (chosen !== current) {
-      onValueChange?.(chosen)
+      setValue(chosen)
     }
   }
 

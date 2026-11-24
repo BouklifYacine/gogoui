@@ -16,7 +16,14 @@ import { useFieldContext } from './form-context.ts'
 export function BoundCodeField(
   props: Omit<
     ComponentProps<typeof CodeField>,
-    'id' | 'name' | 'value' | 'onValueChange' | 'onBlur' | 'error' | 'attempt'
+    | 'id'
+    | 'name'
+    | 'value'
+    | 'defaultValue'
+    | 'onValueChange'
+    | 'onBlur'
+    | 'error'
+    | 'attempt'
   >,
 ) {
   const field = useFieldContext<string>()

@@ -66,6 +66,22 @@ export const WithError = meta.story({
 })
 
 /**
+ * Uncontrolled: `defaultValue` and no state to write. The field keeps what
+ * is typed; the form sends it by its `name`, and `onValueChange` (optional)
+ * still hears each change.
+ */
+export const Uncontrolled = meta.story({
+  render: () => (
+    <TextField
+      name="city"
+      label="Ville"
+      autoComplete="address-level2"
+      defaultValue="Lyon"
+    />
+  ),
+})
+
+/**
  * The help and the error slide in under the field: the row opens on a
  * spring, the words rise into place, and only the changed words move as
  * the message changes (the count rolls).

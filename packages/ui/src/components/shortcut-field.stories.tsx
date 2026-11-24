@@ -22,7 +22,7 @@ export const Basic = meta.story({
     onValueChange: () => undefined,
   },
   render: function Render(args) {
-    const [value, setValue] = useState<string | null>(args.value)
+    const [value, setValue] = useState<string | null>(args.value ?? null)
     return (
       <ShortcutField
         {...args}

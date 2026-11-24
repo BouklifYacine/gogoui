@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { blur, duration, spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
@@ -42,9 +43,10 @@ type PhoneFieldProps = Omit<FieldValueProps<string>, 'onValueChange'> & {
   /**
    * The number as written with its code, « +33 6 12 34 56 78 »; a number
    * without a code (« 06 12 34 56 78 ») is read in the current country.
-   * `details.e164` gives « +33612345678 ».
+   * `details.e164` gives « +33612345678 ». Called on every change,
+   * controlled or not.
    */
-  onValueChange: (value: string, details: PhoneValueDetails) => void
+  onValueChange?: (value: string, details: PhoneValueDetails) => void
   required?: boolean
   /** Its height: sm 32 px, default 36 px, lg 44 px; 44 px on a phone. */
   size?: 'sm' | 'default' | 'lg'
@@ -130,7 +132,8 @@ function caretAfterDigits(text: string, count: number) {
  * country found, invalid (`error`).
  *
  * **Key props**: `label`, `value` (« +33 6 12 34 56 78 ») + `onValueChange`
- * (its second argument gives `e164`, `country`, `status`), `error`,
+ * (controlled; its second argument gives `e164`, `country`, `status`) or
+ * `defaultValue` (uncontrolled), `error`,
  * `description`, `defaultCountry` (FR), `country` + `onCountryChange`,
  * `countries`, `preferredCountries` (FR), `size`, `required`. Exported
  * helpers: `phoneStatus()` and `toE164()` for a form's schema.
@@ -149,7 +152,8 @@ function PhoneField({
   label,
   description,
   error,
-  value,
+  value: valueProp,
+  defaultValue = '',
   onValueChange,
   onBlur,
   required,
@@ -162,6 +166,11 @@ function PhoneField({
 }: PhoneFieldProps) {
   const messages = useGoGoUIMessages()
   const reduce = useReduceMotion()
+  // onValueChange is called in send(), with the number's details.
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+  })
   const pool = countries?.length
     ? PHONE_COUNTRIES.filter((entry) => countries.includes(entry.iso))
     : PHONE_COUNTRIES
@@ -227,7 +236,8 @@ function PhoneField({
   function send(entry: PhoneCountry, nextDigits: string) {
     const text = internationalText(entry, nextDigits)
     setSent(text)
-    onValueChange(text, {
+    setValue(text)
+    onValueChange?.(text, {
       e164: nationalE164(entry, nextDigits),
       country: entry.iso,
       status: nationalStatus(entry, nextDigits),
