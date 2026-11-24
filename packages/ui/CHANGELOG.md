@@ -1,5 +1,29 @@
 # @gogoui/ui
 
+## 0.4.0
+
+### Minor Changes
+
+#### The phone is responsive CSS
+
+One threshold for the whole system: `md` (48rem, 768px). Nothing changes at 768px and wider.
+
+- **Menus, Select and Popover rise from the bottom edge as a sheet on a phone**, by default; `phoneSheet={false}` keeps one floating. The menus' sheet now starts under 768px instead of 640px. Combobox stays anchored, so the phone's keyboard cannot cover it.
+- **FilterMenu** is one popover, a sheet on a phone, instead of a Drawer chosen in JavaScript.
+- **DataTable** draws its phone cards and its table from the same rows, each shown by CSS: a phone gets its cards from the first paint, without the table first and a jump.
+- **New `SettingsSection`**: folds on a phone and stays open from 768px, in CSS. `MobileSettingsSection` becomes its deprecated alias.
+- **ExpandingButtonGroup** takes its 44px phone height from CSS, with the same animation.
+- **GuidedTour** reads the phone threshold safely on the server.
+
+#### Lighter
+
+- Only French is built into `GoGoUIProvider`: English comes in with `messages={en}` from `@gogoui/ui/locales/en`, so a French app never downloads it. `locale="en"` now falls back to French.
+- New entry `@gogoui/ui/tanstack-form/core`: `bindField`, the contexts and `formComponents` without the 22 fields, for an app that binds only its own. `@gogoui/ui/tanstack-form` is unchanged.
+
+### Patch Changes
+
+- A bound `Form` focuses its own error summary, so two forms on a page no longer share one.
+
 ## 0.3.1
 
 ### Patch Changes
