@@ -161,6 +161,8 @@ export const en: GoGoUIMessages = {
   carousel: 'Carousel',
   previousSlide: 'Previous slide',
   nextSlide: 'Next slide',
+  carouselRole: 'carousel',
+  slide: 'slide',
   slideOf: (current, total) => `${current} of ${total}`,
   bold: 'Bold',
   italic: 'Italic',

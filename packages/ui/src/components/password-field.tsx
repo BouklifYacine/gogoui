@@ -2,6 +2,7 @@ import { useCallback, useRef } from 'react'
 import { animate, m, useMotionValue } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
+import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { MotionFeatures } from '../internal/motion-features.tsx'
 import { useControllableState } from '../internal/use-controllable-state.ts'
@@ -58,7 +59,9 @@ const nudge = {
  * words.
  *
  * **Accessibility**: the show button says what it will do; password
- * managers fill it thanks to `autoComplete`. No nudge with reduced motion.
+ * managers fill it thanks to `autoComplete`. A new password is described
+ * by its help, its error and its list of conditions, so they are read
+ * with the field. No nudge with reduced motion.
  *
  * @summary A labelled password, with its strength when new.
  */
@@ -87,6 +90,7 @@ function PasswordField({
   })
   const shake = useMotionValue(0)
   const lastError = useRef(error)
+  const isNew = autoComplete === 'new-password'
 
   // A new ref each time the error changes: React calls it again, and a
   // new message (not the one there at load) nudges the field.
@@ -119,6 +123,12 @@ function PasswordField({
               <m.div style={{ x: shake }}>
                 <PasswordInput
                   {...control}
+                  // The conditions are part of the field's instructions:
+                  // read after its help and its error.
+                  aria-describedby={describedBy(
+                    control['aria-describedby'],
+                    isNew && `${control.id}-rules`,
+                  )}
                   name={name}
                   autoComplete={autoComplete}
                   autoCapitalize="off"
@@ -135,11 +145,12 @@ function PasswordField({
               </m.div>
             </MotionFeatures>
           </div>
-          {autoComplete === 'new-password' && (
+          {isNew && (
             <PasswordStrength
               password={value}
               minLength={minLength}
               rules={rules}
+              rulesId={`${control.id}-rules`}
               labels={labels}
             />
           )}

@@ -145,10 +145,15 @@ type PasswordStrengthProps = {
   minLength?: number
   /**
    * The list under the bars; by default the four conditions of the score
-   * (the minimum, 14 and 18 characters, three kinds of characters). The
-   * bars always follow GoGoUI's score.
+   * (the minimum, 14 and 18 characters, three kinds of characters). With
+   * your own, there is one bar per condition.
    */
   rules?: PasswordRule[]
+  /**
+   * The list's id, for the field's `aria-describedby`: the password is
+   * then read with its conditions. `PasswordField` sets it.
+   */
+  rulesId?: string
   /** Its words on this one only, over GoGoUIProvider's `messages`. */
   labels?: PasswordStrengthLabels
 }
@@ -172,7 +177,8 @@ type PasswordStrengthProps = {
  * met: the bars and the ticks always agree.
  *
  * **Key props**: `password`, `minLength`, `rules` (`{ id, label, test,
- * remaining? }[]`), `labels` to change its words.
+ * remaining? }[]`), `rulesId` (to describe the field by the list),
+ * `labels` to change its words.
  *
  * **Accessibility**: the bars are a `meter` with the level in words; the
  * list says « remplie » or « non remplie » after each condition; the level
@@ -184,6 +190,7 @@ function PasswordStrength({
   password,
   minLength = 10,
   rules: rulesProp,
+  rulesId,
   labels,
 }: PasswordStrengthProps) {
   const messages = useGoGoUIMessages(labels)
@@ -308,7 +315,11 @@ function PasswordStrength({
             </AnimatePresence>
           </span>
         </div>
-        <ul aria-label={messages.passwordRules} className="grid gap-1.5">
+        <ul
+          id={rulesId}
+          aria-label={messages.passwordRules}
+          className="grid gap-1.5"
+        >
           {rules.map((rule) => {
             const ok = met.has(rule.id)
             const order = changed.indexOf(rule.id)

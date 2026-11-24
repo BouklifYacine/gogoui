@@ -1,10 +1,18 @@
-import { createContext, use, useCallback, useSyncExternalStore } from 'react'
+import {
+  Children,
+  createContext,
+  isValidElement,
+  use,
+  useCallback,
+  useSyncExternalStore,
+} from 'react'
 import type { ComponentProps, KeyboardEvent } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import type { UseEmblaCarouselType } from 'embla-carousel-react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
+import { useReduceMotion } from '../i18n/motion-context.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
@@ -19,9 +27,19 @@ type CarouselState = {
   vertical: boolean
   canPrevious: boolean
   canNext: boolean
+  /** Reduced motion: the arrows jump to the slide instead of scrolling. */
+  jump: boolean
+  /** The slides' words, so a Carousel's `labels` reach them. */
+  messages: Pick<GoGoUIMessages, 'slide' | 'slideOf'>
 }
 
 const CarouselContext = createContext<CarouselState | null>(null)
+
+// Each slide's place among its siblings, for its « 2 sur 5 ».
+const SlidePositionContext = createContext<{
+  index: number
+  total: number
+} | null>(null)
 
 function useCarousel(): CarouselState {
   const state = use(CarouselContext)
@@ -34,7 +52,7 @@ function useCarousel(): CarouselState {
 const idle = 'false|false|0|0'
 
 /** The words Carousel writes, to change on one Carousel only. */
-type CarouselLabels = Partial<Pick<GoGoUIMessages, 'slideOf'>>
+type CarouselLabels = Partial<Pick<GoGoUIMessages, 'slide' | 'slideOf'>>
 
 type CarouselProps = ComponentProps<'section'> & {
   /** Embla's options: `loop`, `align`, `slidesToScroll`… */
@@ -69,6 +87,10 @@ type CarouselProps = ComponentProps<'section'> & {
  * `CarouselPrevious` + `CarouselNext`.
  *
  * **Accessibility**: named region; arrow keys move; « 2 sur 5 » read aloud.
+ * Each slide is a group, a « diapositive » named « 2 sur 5 » (pass
+ * `aria-label` to a `CarouselItem` to name it yourself). At either end
+ * the disabled arrow keeps the focus. With reduced motion the arrows and
+ * the keys jump to the slide instead of scrolling.
  *
  * @summary Slides to swipe or step through.
  */
@@ -84,6 +106,7 @@ function Carousel({
   ...props
 }: CarouselProps) {
   const messages = useGoGoUIMessages(labels)
+  const reduce = useReduceMotion()
   const vertical = orientation === 'vertical'
   const [viewport, api] = useEmblaCarousel(
     { ...opts, axis: vertical ? 'y' : 'x' },
@@ -118,22 +141,24 @@ function Carousel({
     vertical,
     canPrevious: previous === 'true',
     canNext: next === 'true',
+    jump: reduce,
+    messages,
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLElement>) {
     if (event.key === (vertical ? 'ArrowUp' : 'ArrowLeft')) {
       event.preventDefault()
-      api?.scrollPrev()
+      api?.scrollPrev(reduce)
     } else if (event.key === (vertical ? 'ArrowDown' : 'ArrowRight')) {
       event.preventDefault()
-      api?.scrollNext()
+      api?.scrollNext(reduce)
     }
   }
 
   return (
     <CarouselContext value={state}>
       <section
-        aria-roledescription="carousel"
+        aria-roledescription={messages.carouselRole}
         aria-label={label ?? messages.carousel}
         data-slot="carousel"
         onKeyDownCapture={onKeyDown}
@@ -151,8 +176,14 @@ function Carousel({
   )
 }
 
-function CarouselContent({ className, ...props }: ComponentProps<'div'>) {
+function CarouselContent({
+  className,
+  children,
+  ...props
+}: ComponentProps<'div'>) {
   const { viewport, vertical } = useCarousel()
+  // Empty slots (a `cond && <CarouselItem>`) are not slides.
+  const slides = Children.toArray(children)
   return (
     <div
       ref={viewport}
@@ -162,17 +193,33 @@ function CarouselContent({ className, ...props }: ComponentProps<'div'>) {
       <div
         className={cn('flex', vertical ? '-mt-4 flex-col' : '-ml-4', className)}
         {...props}
-      />
+      >
+        {slides.map((slide, index) => (
+          <SlidePositionContext
+            // toArray has already keyed each slide.
+            key={isValidElement(slide) ? slide.key : index}
+            value={{ index, total: slides.length }}
+          >
+            {slide}
+          </SlidePositionContext>
+        ))}
+      </div>
     </div>
   )
 }
 
 function CarouselItem({ className, ...props }: ComponentProps<'div'>) {
-  const { vertical } = useCarousel()
+  const { vertical, messages } = useCarousel()
+  const position = use(SlidePositionContext)
   return (
     <div
       role="group"
-      aria-roledescription="slide"
+      aria-roledescription={messages.slide}
+      aria-label={
+        position
+          ? messages.slideOf(position.index + 1, position.total)
+          : undefined
+      }
       data-slot="carousel-item"
       className={cn(
         'min-w-0 shrink-0 grow-0 basis-full',
@@ -196,7 +243,7 @@ function CarouselPrevious({
   /** Its words on this one only, over GoGoUIProvider's `messages`. */
   labels?: CarouselPreviousLabels
 }) {
-  const { api, vertical, canPrevious } = useCarousel()
+  const { api, vertical, canPrevious, jump } = useCarousel()
   const { previousSlide } = useGoGoUIMessages(labels)
   return (
     <Button
@@ -205,9 +252,12 @@ function CarouselPrevious({
       data-slot="carousel-previous"
       aria-label={previousSlide}
       disabled={!canPrevious}
-      onClick={() => api?.scrollPrev()}
+      // At the end the arrow turns off under the focus: it keeps it
+      // (aria-disabled) rather than dropping it on the page.
+      focusableWhenDisabled
+      onClick={() => api?.scrollPrev(jump)}
       className={cn(
-        'absolute rounded-full',
+        'absolute rounded-full data-disabled:pointer-events-none data-disabled:opacity-60',
         vertical
           ? '-top-12 left-1/2 -translate-x-1/2 rotate-90'
           : 'top-1/2 -left-12 -translate-y-1/2',
@@ -232,7 +282,7 @@ function CarouselNext({
   /** Its words on this one only, over GoGoUIProvider's `messages`. */
   labels?: CarouselNextLabels
 }) {
-  const { api, vertical, canNext } = useCarousel()
+  const { api, vertical, canNext, jump } = useCarousel()
   const { nextSlide } = useGoGoUIMessages(labels)
   return (
     <Button
@@ -241,9 +291,12 @@ function CarouselNext({
       data-slot="carousel-next"
       aria-label={nextSlide}
       disabled={!canNext}
-      onClick={() => api?.scrollNext()}
+      // At the end the arrow turns off under the focus: it keeps it
+      // (aria-disabled) rather than dropping it on the page.
+      focusableWhenDisabled
+      onClick={() => api?.scrollNext(jump)}
       className={cn(
-        'absolute rounded-full',
+        'absolute rounded-full data-disabled:pointer-events-none data-disabled:opacity-60',
         vertical
           ? '-bottom-12 left-1/2 -translate-x-1/2 rotate-90'
           : 'top-1/2 -right-12 -translate-y-1/2',

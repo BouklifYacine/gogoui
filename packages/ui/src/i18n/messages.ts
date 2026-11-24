@@ -261,6 +261,10 @@ export type GoGoUIMessages = {
   carousel: string
   previousSlide: string
   nextSlide: string
+  /** What one slide is, for a screen reader (its role description). */
+  /** What a screen reader calls the carousel's region (« carrousel »). */
+  carouselRole: string
+  slide: string
   /** Where one is in a carousel. */
   slideOf: (current: number, total: number) => string
   /** A rich text editor's buttons. */

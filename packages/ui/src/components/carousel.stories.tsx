@@ -1,4 +1,8 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
+
+import { GoGoUIProvider } from '../i18n/gogoui-provider.tsx'
 
 import { AspectRatio } from './aspect-ratio.tsx'
 import {
@@ -72,4 +76,42 @@ export const Several = meta.story({
       <CarouselNext />
     </Carousel>
   ),
+})
+
+/**
+ * With reduced motion (here `motion="off"`), the arrows jump to the slide.
+ * Each slide is a « diapositive » named « 1 sur 5 »; at the last one,
+ * « Diapositive suivante » turns off and keeps the focus.
+ */
+export const ReducedMotion = meta.story({
+  render: () => (
+    <GoGoUIProvider motion="off">
+      <Carousel label="Les espaces du domaine" className="w-80">
+        <CarouselContent>
+          {rooms.map((room) => (
+            <CarouselItem key={room}>
+              <AspectRatio ratio={4 / 3} className="rounded-2xl">
+                <div className="flex items-center justify-center bg-tray text-sm font-medium text-fg-muted">
+                  {room}
+                </div>
+              </AspectRatio>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </GoGoUIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const first = canvas.getByRole('group', { name: '1 sur 5' })
+    await expect(first).toHaveAttribute('aria-roledescription', 'diapositive')
+    const next = canvas.getByRole('button', { name: 'Diapositive suivante' })
+    for (let step = 1; step < rooms.length; step += 1) {
+      await userEvent.click(next)
+    }
+    await waitFor(() => expect(next).toHaveAttribute('aria-disabled', 'true'))
+    await expect(next).toHaveFocus()
+  },
 })

@@ -212,3 +212,50 @@ export const OnAPhone = meta.story({
     await waitFor(() => expect(trigger).toHaveFocus())
   },
 })
+
+/**
+ * From the keyboard, the highlighted row also wears the focus outline's
+ * colour as a ring, so it reads at 3:1; under the pointer the fill stays
+ * light.
+ */
+export const KeyboardHighlight = meta.story({
+  render: () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="soft" size="icon" aria-label="Actions" />}
+      >
+        <DotsThreeIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-48">
+        <DropdownMenuItem>
+          <PencilSimpleIcon />
+          Modifier
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <ArchiveIcon />
+          Archiver
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">
+          <TrashIcon />
+          Supprimer
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+  // The arrows ring the highlight; the pointer takes the ring away.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    within(canvasElement).getByRole('button', { name: 'Actions' }).focus()
+    await userEvent.keyboard('{Enter}')
+    const menu = await page.findByRole('menu')
+    await userEvent.keyboard('{ArrowDown}')
+    const highlight = menu.querySelector('[data-slot="menu-highlight"]')
+    await waitFor(() => expect(highlight).toHaveAttribute('data-keyboard'))
+    await userEvent.hover(
+      within(menu).getByRole('menuitem', { name: 'Modifier' }),
+    )
+    await waitFor(() => expect(highlight).not.toHaveAttribute('data-keyboard'))
+    await userEvent.keyboard('{Escape}')
+  },
+})

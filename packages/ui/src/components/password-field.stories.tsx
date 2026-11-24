@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { expect, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
@@ -125,6 +127,37 @@ export const Animations = meta.story({
           Valider
         </Button>
       </form>
+    )
+  },
+})
+
+/**
+ * A new password is described by its help, its error and its list of
+ * conditions: a screen reader reads them all with the field.
+ */
+export const DescribedByItsConditions = meta.story({
+  render: function Render() {
+    const [value, setValue] = useState('chênes')
+    return (
+      <PasswordField
+        name="new"
+        label="Nouveau mot de passe"
+        autoComplete="new-password"
+        description="Pas celui d’un autre site."
+        error="Encore 4 caractères."
+        value={value}
+        onValueChange={setValue}
+      />
+    )
+  },
+  play: async ({ canvasElement }) => {
+    const input = within(canvasElement).getByLabelText('Nouveau mot de passe')
+    await expect(input).toHaveAttribute(
+      'aria-describedby',
+      'new-description new-error new-rules',
+    )
+    await expect(input).toHaveAccessibleDescription(
+      expect.stringContaining('Au moins 10 caractères'),
     )
   },
 })

@@ -32,7 +32,11 @@ type ActionSwapState = {
   color?: Color
   /** Shown while `onAction` runs on the way into this state (« Envoi… »); without it, the pill folds into a turning circle. */
   pendingLabel?: string
-  /** Moves on by itself after this many ms (a brief « Envoyé »). */
+  /**
+   * Moves on by itself after this many ms (a brief « Envoyé »). Silently:
+   * the return to rest is not read, and while it holds the button keeps
+   * the name of the state it returns to.
+   */
   holdFor?: number
 }
 
@@ -55,6 +59,7 @@ type ActionSwapProps = {
   /** `default`: filled. `outline`: the white button. */
   variant?: 'default' | 'outline'
   size?: 'sm' | 'default' | 'lg'
+  /** Greyed and inert, but it keeps the focus: disabling it after a press does not throw the focus to the page. */
   disabled?: boolean
   className?: string
 }
@@ -140,9 +145,13 @@ const confirming = (color?: Color) =>
  * `onValueChange`, `onAction` (a promise for the working phase),
  * `failedLabel`, `variant` (default, outline), `size` (sm, default, lg).
  *
- * **Accessibility**: named by its current words; each new state, the
- * working phase and a failure are read once by a live region. While
- * working it keeps the focus and says `aria-busy`.
+ * **Accessibility**: named by its state's words (`srLabel` first). One
+ * voice speaks: a live region reads the working phase, the state reached
+ * and a failure, once each; the return of a `holdFor` state is silent.
+ * While it works, fails or holds, the name stays the resting state's, so
+ * the focused button is not read again under the region. While working
+ * it says `aria-busy`; disabled, it stays focusable (`aria-disabled`), so
+ * the focus never falls to the page.
  *
  * @summary A button that moves through the states of one action.
  */
@@ -178,10 +187,12 @@ function ActionSwap({
   const working = phase.kind === 'working'
   const folded = working && !phase.target.pendingLabel
 
-  function commit(target: ActionSwapState) {
+  // `quietly`: a holdFor state going back to rest. The region empties
+  // without speaking, so the next « Envoyé » is a change it reads again.
+  function commit(target: ActionSwapState, quietly = false) {
     setPhase(IDLE)
     if (value === undefined) setOwnValue(target.value)
-    setSpoken(target.label)
+    setSpoken(quietly ? '' : target.label)
     onValueChange?.(target.value, target)
   }
 
@@ -234,7 +245,7 @@ function ActionSwap({
       if (!node || !holdFor || !next) {
         return undefined
       }
-      const timer = window.setTimeout(() => commit(next), holdFor)
+      const timer = window.setTimeout(() => commit(next, true), holdFor)
       return () => window.clearTimeout(timer)
     },
     [holdFor, active?.value],
@@ -295,6 +306,10 @@ function ActionSwap({
   const tinted = confirming(view.color)
   const gap = Boolean(view.icon) && view.label.length > 0
   const metric = sizes[size]
+  // The name the focused button keeps through the passing phases: the
+  // state before while it works or fails, the state it returns to while
+  // a holdFor state shows. The live region says what is happening.
+  const named = active.holdFor && next ? next : active
 
   return (
     <MotionScope>
@@ -305,11 +320,15 @@ function ActionSwap({
         color={view.color}
         size={metric.size}
         disabled={inactive}
-        focusableWhenDisabled={working}
+        // Disabled while it has the focus (a banner's « Renvoyer » after
+        // one send): the focus stays on it instead of falling to the page.
+        focusableWhenDisabled
         aria-busy={working || undefined}
         onClick={advance}
         className={cn(
-          'overflow-clip rounded-full px-0 aria-busy:opacity-100!',
+          // Kept focusable, a disabled one is aria-disabled, which the
+          // Button's native :disabled look does not catch.
+          'overflow-clip rounded-full px-0 aria-busy:opacity-100! data-disabled:pointer-events-none data-disabled:opacity-60',
           metric.circle,
           className,
         )}
@@ -368,12 +387,7 @@ function ActionSwap({
             </span>
           </m.span>
         </m.span>
-        <span className="sr-only">
-          {(view.label === active.label && active.srLabel) ||
-            view.label ||
-            active.srLabel ||
-            active.label}
-        </span>
+        <span className="sr-only">{named.srLabel || named.label}</span>
       </Button>
       <span role="status" aria-live="polite" className="sr-only">
         {spoken}

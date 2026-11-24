@@ -5,6 +5,7 @@ import {
   StarIcon,
 } from '@phosphor-icons/react'
 
+import { useState } from 'react'
 import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
@@ -109,5 +110,85 @@ export const Animations = meta.story({
       },
     ],
     onAction: () => new Promise((resolve) => setTimeout(resolve, 800)),
+  },
+})
+
+/**
+ * What a screen reader hears: « Envoi… », then « Envoyé », once each, from
+ * one live region. The button keeps its name, « Renvoyer l’e-mail », the
+ * whole time, and the return to rest is silent.
+ */
+export const Announcements = meta.story({
+  args: {
+    states: [
+      {
+        value: 'idle',
+        label: 'Renvoyer',
+        srLabel: 'Renvoyer l’e-mail',
+        icon: <PaperPlaneTiltIcon />,
+      },
+      {
+        value: 'sent',
+        label: 'Envoyé',
+        icon: <CheckIcon />,
+        color: 'success',
+        pendingLabel: 'Envoi…',
+        holdFor: 800,
+      },
+    ],
+    onAction: () => new Promise((resolve) => setTimeout(resolve, 300)),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole('button', { name: 'Renvoyer l’e-mail' })
+    const status = canvas.getByRole('status')
+    await userEvent.click(button)
+    await waitFor(() => expect(status).toHaveTextContent('Envoi…'))
+    await expect(button).toHaveAccessibleName('Renvoyer l’e-mail')
+    await waitFor(() => expect(status).toHaveTextContent('Envoyé'))
+    await expect(button).toHaveAccessibleName('Renvoyer l’e-mail')
+    await waitFor(() => expect(status).toBeEmptyDOMElement(), {
+      timeout: 2000,
+    })
+    await expect(button).toHaveAccessibleName('Renvoyer l’e-mail')
+  },
+})
+
+/**
+ * Disabled after one send, as a banner's « Renvoyer » is: it greys, and
+ * the focus stays on it instead of falling to the page.
+ */
+export const DisabledKeepsFocus = meta.story({
+  render: function Render() {
+    const [sent, setSent] = useState(false)
+    return (
+      <ActionSwap
+        disabled={sent}
+        states={[
+          {
+            value: 'idle',
+            label: 'Renvoyer',
+            srLabel: 'Renvoyer l’e-mail',
+            icon: <PaperPlaneTiltIcon />,
+          },
+          {
+            value: 'sent',
+            label: 'Envoyé',
+            icon: <CheckIcon />,
+            color: 'success',
+          },
+        ]}
+        onValueChange={() => setSent(true)}
+      />
+    )
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Renvoyer l’e-mail' }),
+    )
+    const button = await canvas.findByRole('button', { name: 'Envoyé' })
+    await waitFor(() => expect(button).toHaveAttribute('aria-disabled', 'true'))
+    await expect(button).toHaveFocus()
   },
 })

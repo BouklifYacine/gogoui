@@ -165,3 +165,33 @@ export const Animations = meta.story({
     onSignOut: () => new Promise((resolve) => setTimeout(resolve, 1600)),
   },
 })
+
+/**
+ * The theme's choices from the keyboard: the chosen one wears the focus
+ * outline, as the rail behind is already grey. 44 px each on a phone.
+ */
+export const ThemeFromTheKeyboard = meta.story({
+  args: {
+    user: USER,
+    items: ITEMS,
+    onSignOut: () => undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    within(canvasElement)
+      .getByRole('button', { name: 'Menu du compte, Camille Durand' })
+      .focus()
+    await userEvent.keyboard('{Enter}')
+    await page.findByRole('menu')
+    // Down through the rows until a theme choice has the focus.
+    for (let step = 0; step < 8; step += 1) {
+      if (document.activeElement?.getAttribute('role') === 'menuitemradio') {
+        break
+      }
+      await userEvent.keyboard('{ArrowDown}')
+    }
+    const choice = document.activeElement as HTMLElement
+    await expect(choice).toHaveAttribute('role', 'menuitemradio')
+    await expect(getComputedStyle(choice).outlineStyle).toBe('solid')
+  },
+})
