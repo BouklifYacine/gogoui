@@ -3,7 +3,7 @@ import type { CSSProperties, DragEvent, HTMLAttributes, ReactNode } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   AnimatePresence,
-  motion,
+  m,
   useMotionTemplate,
   useMotionValue,
   useSpring,
@@ -212,7 +212,7 @@ function FileUploadDropzone({
       data-slot="file-upload-dropzone"
       className={cn('grid min-w-0', className)}
     >
-      <motion.div
+      <m.div
         className="grid min-w-0"
         animate={
           dragging && !upload.reduce ? { scale: [1, 1.012, 1] } : { scale: 1 }
@@ -238,7 +238,7 @@ function FileUploadDropzone({
           )}
         >
           {!upload.reduce && (
-            <motion.span
+            <m.span
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-(--motion-standard) ease-standard group-data-dragging/zone:opacity-100"
               style={{ backgroundImage: washLight }}
@@ -258,14 +258,14 @@ function FileUploadDropzone({
             />
           </svg>
           {!upload.reduce && (
-            <motion.span
+            <m.span
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-(--motion-standard) ease-standard group-data-dragging/zone:opacity-100"
               style={{ ...ringMask, backgroundImage: edgeLight }}
             />
           )}
 
-          <motion.button
+          <m.button
             ref={registerTrigger}
             type="button"
             onClick={open}
@@ -291,7 +291,7 @@ function FileUploadDropzone({
           >
             <AnimatePresence initial={false}>
               {(!upload.compact || dragging) && (
-                <motion.span
+                <m.span
                   key="sheets"
                   className="flex flex-col overflow-hidden"
                   animate={{ height: 'auto', opacity: 1 }}
@@ -311,12 +311,12 @@ function FileUploadDropzone({
                       />
                     </span>
                   </span>
-                </motion.span>
+                </m.span>
               )}
             </AnimatePresence>
             <strong className="relative block text-sm font-medium text-fg">
               <AnimatePresence mode="popLayout" initial={false}>
-                <motion.span
+                <m.span
                   key={label}
                   className="inline-block max-w-full truncate align-top"
                   initial={
@@ -352,13 +352,13 @@ function FileUploadDropzone({
                   }
                 >
                   {label}
-                </motion.span>
+                </m.span>
               </AnimatePresence>
             </strong>
             <span id={hintId} className="mt-1.5 text-sm text-fg-muted">
               {hint ?? messages.fileUploadHint}
             </span>
-          </motion.button>
+          </m.button>
 
           <input
             {...getInputProps({
@@ -373,11 +373,11 @@ function FileUploadDropzone({
             </FileUploadContext>
           )}
         </div>
-      </motion.div>
+      </m.div>
 
       <AnimatePresence initial={false}>
         {upload.error && (
-          <motion.div
+          <m.div
             key="error"
             className="overflow-hidden"
             initial={upload.reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
@@ -410,7 +410,7 @@ function FileUploadDropzone({
               <GoGoIcon name="danger" className="mt-0.5 size-3.5 shrink-0" />
               {upload.error}
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

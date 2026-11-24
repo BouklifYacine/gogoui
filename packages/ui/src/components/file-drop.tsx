@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import type { Accept, FileRejection } from 'react-dropzone'
-import { AnimatePresence, motion, useAnimate } from 'motion/react'
+import { AnimatePresence, m, useAnimate } from 'motion/react'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { ArrowUpIcon } from '@phosphor-icons/react'
 
@@ -147,8 +147,7 @@ function FileDrop({
           ),
         })}
       >
-        <input {...getInputProps()} />
-        <motion.span
+        <m.span
           aria-hidden="true"
           className={cn(
             'pointer-events-none absolute inset-0',
@@ -159,14 +158,14 @@ function FileDrop({
           transition={{ duration: 0.2 }}
         />
 
-        <motion.span
+        <m.span
           ref={core}
           aria-hidden="true"
           animate={{ y: over ? -5 : 0 }}
           transition={settle}
           className="relative flex size-18 items-center justify-center rounded-full bg-control text-fg shadow-button"
         >
-          <motion.span
+          <m.span
             className="absolute inset-0 rounded-full bg-success"
             initial={false}
             animate={{ scale: done ? 1 : 0 }}
@@ -174,7 +173,7 @@ function FileDrop({
           />
           <AnimatePresence>
             {busy && (
-              <motion.svg
+              <m.svg
                 key="ring"
                 viewBox="0 0 72 72"
                 initial={{ opacity: 0 }}
@@ -197,7 +196,7 @@ function FileDrop({
                   className="stroke-fg"
                   strokeDasharray="60 148"
                 />
-              </motion.svg>
+              </m.svg>
             )}
           </AnimatePresence>
 
@@ -211,7 +210,7 @@ function FileDrop({
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <motion.path
+              <m.path
                 d="M5 12.5l4.5 4.5L19 7.5"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -219,7 +218,7 @@ function FileDrop({
               />
             </svg>
           ) : (
-            <motion.span
+            <m.span
               className="relative flex"
               animate={
                 busy
@@ -237,9 +236,9 @@ function FileDrop({
               }
             >
               <ArrowUpIcon weight="bold" className="size-6.5" />
-            </motion.span>
+            </m.span>
           )}
-        </motion.span>
+        </m.span>
 
         <span className="relative flex w-full max-w-sm flex-col gap-0.5">
           <RollingLine

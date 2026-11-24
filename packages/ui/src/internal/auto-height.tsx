@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 import type { ReactNode, RefObject } from 'react'
-import { animate, motion, useMotionValue } from 'motion/react'
+import { animate, m, useMotionValue } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { spring } from './motion.ts'
@@ -68,7 +68,7 @@ export function AutoHeight({
   )
 
   return (
-    <motion.div
+    <m.div
       ref={clipRef}
       className="min-w-0 data-[clip]:overflow-hidden"
       style={{ height }}
@@ -76,6 +76,6 @@ export function AutoHeight({
       <div ref={measure} className={className}>
         {children}
       </div>
-    </motion.div>
+    </m.div>
   )
 }

@@ -1,5 +1,5 @@
 import type { KeyboardEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -66,7 +66,7 @@ function FileUploadList({ className, labels }: FileUploadListProps) {
   }
 
   return (
-    <motion.ul
+    <m.ul
       data-slot="file-upload-list"
       aria-label={messages.fileUploadList}
       aria-hidden={count ? undefined : true}
@@ -100,7 +100,7 @@ function FileUploadList({ className, labels }: FileUploadListProps) {
           />
         ))}
       </AnimatePresence>
-    </motion.ul>
+    </m.ul>
   )
 }
 

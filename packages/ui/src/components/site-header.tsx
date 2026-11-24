@@ -1,6 +1,6 @@
 import { useCallback, useId, useState } from 'react'
 import type { ReactElement, ReactNode } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, LayoutGroup, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -216,7 +216,7 @@ function SiteHeader({
   // The current page's mark: a line under the words, or a raised pill on
   // the centred tray. One per header: it glides from page to page.
   const mark = (
-    <motion.span
+    <m.span
       layoutId="current"
       aria-hidden="true"
       className={
@@ -446,7 +446,7 @@ function SiteHeader({
                       />
                     }
                   >
-                    <motion.span
+                    <m.span
                       className="grid place-items-center"
                       initial={
                         reduce
@@ -468,7 +468,7 @@ function SiteHeader({
                         aria-hidden="true"
                         className="size-5"
                       />
-                    </motion.span>
+                    </m.span>
                   </SheetClose>
                 </div>
                 <nav aria-label={name} className="px-4">
@@ -479,7 +479,7 @@ function SiteHeader({
                       const isExpanded = expanded === item.value
                       const groupId = `${uid}-group-${item.value}`
                       return (
-                        <motion.li
+                        <m.li
                           key={item.value}
                           className="border-b border-line-subtle"
                           initial={reduce ? false : { opacity: 0, y: -6 }}
@@ -518,7 +518,7 @@ function SiteHeader({
                               </button>
                               <AnimatePresence initial={false}>
                                 {isExpanded && (
-                                  <motion.div
+                                  <m.div
                                     key="group"
                                     id={groupId}
                                     className="overflow-hidden"
@@ -566,7 +566,7 @@ function SiteHeader({
                                         </li>
                                       ))}
                                     </ul>
-                                  </motion.div>
+                                  </m.div>
                                 )}
                               </AnimatePresence>
                             </>
@@ -587,12 +587,12 @@ function SiteHeader({
                               )}
                             </RenderLink>
                           )}
-                        </motion.li>
+                        </m.li>
                       )
                     })}
                   </ul>
                   {actions && (
-                    <motion.div
+                    <m.div
                       className="mt-5 grid auto-cols-fr grid-flow-col gap-2 *:w-full"
                       initial={reduce ? false : { opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -603,7 +603,7 @@ function SiteHeader({
                       }}
                     >
                       {actions}
-                    </motion.div>
+                    </m.div>
                   )}
                 </nav>
               </SheetContent>

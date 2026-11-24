@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -45,7 +45,7 @@ export function ChangelogChip({
       onClick={() => onPressedChange(!pressed)}
       className="group/chip inline-flex h-9 items-center gap-2 rounded-full pr-3.5 pl-3 text-sm font-medium text-fg-muted ring-1 ring-line ring-inset transition-[background-color,color,box-shadow,scale] duration-(--motion-standard) ease-standard outline-none not-aria-pressed:hover:text-fg not-aria-pressed:hover:ring-line-strong focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-solid active:scale-[0.97] active:duration-(--motion-instant) aria-pressed:bg-inverse aria-pressed:text-fg-inverse aria-pressed:ring-inverse motion-reduce:active:scale-100 max-md:h-11"
     >
-      <motion.span
+      <m.span
         aria-hidden="true"
         className={cn(
           'grid shrink-0 place-items-center overflow-hidden rounded-full',
@@ -55,7 +55,7 @@ export function ChangelogChip({
         animate={{ width: pressed ? 16 : 7, height: pressed ? 16 : 7 }}
         transition={reduce ? { duration: 0 } : spring.morph}
       >
-        <motion.span
+        <m.span
           className={cn('grid place-items-center', tickOn[color])}
           initial={false}
           animate={{ opacity: pressed ? 1 : 0, scale: pressed ? 1 : 0.7 }}
@@ -66,8 +66,8 @@ export function ChangelogChip({
           }
         >
           <GoGoIcon name="check" weight="bold" className="size-2.5" />
-        </motion.span>
-      </motion.span>
+        </m.span>
+      </m.span>
       <span>{label}</span>
       <span className="text-xs text-fg-subtle tabular-nums transition-colors duration-(--motion-standard) group-aria-pressed/chip:text-fg-inverse/65">
         {count}

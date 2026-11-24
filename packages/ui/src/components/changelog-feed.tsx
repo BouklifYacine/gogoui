@@ -1,6 +1,6 @@
 import { useCallback, useId, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, LayoutGroup, m } from 'motion/react'
 import type { Transition, Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -347,7 +347,7 @@ function ChangelogFeed({
             ))}
             <AnimatePresence initial={false}>
               {filters.length > 0 && (
-                <motion.button
+                <m.button
                   key="clear"
                   type="button"
                   onClick={() => setFilters([])}
@@ -367,7 +367,7 @@ function ChangelogFeed({
                   transition={reduce ? still : spring.snappy}
                 >
                   {messages.changelogShowAll}
-                </motion.button>
+                </m.button>
               )}
             </AnimatePresence>
           </div>
@@ -376,15 +376,15 @@ function ChangelogFeed({
             aria-hidden="true"
             className="inline-flex items-baseline gap-1 text-sm whitespace-nowrap text-fg-subtle tabular-nums @max-[480px]:hidden"
           >
-            <motion.span
+            <m.span
               layout="position"
               transition={layout}
               className="inline-flex"
             >
               <RollingCount value={visible.length} />
-            </motion.span>
+            </m.span>
             <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
+              <m.span
                 key={filters.length === 0 ? 'all' : 'some'}
                 className="inline-block"
                 initial={{ opacity: 0, filter: `blur(${blur.subtle}px)` }}
@@ -398,7 +398,7 @@ function ChangelogFeed({
                 {filters.length === 0
                   ? messages.changelogUpdates(visible.length)
                   : messages.changelogOfTotal(total)}
-              </motion.span>
+              </m.span>
             </AnimatePresence>
           </p>
           <p role="status" className="sr-only">
@@ -414,7 +414,7 @@ function ChangelogFeed({
                 initial={false}
                 custom={active.direction}
               >
-                <motion.span
+                <m.span
                   key={current?.key ?? 'none'}
                   className="inline-block"
                   custom={active.direction}
@@ -435,18 +435,18 @@ function ChangelogFeed({
                   ) : (
                     messages.changelogNoUpdates
                   )}
-                </motion.span>
+                </m.span>
               </AnimatePresence>
             </span>
             {current && (
-              <motion.span
+              <m.span
                 layout="position"
                 transition={layout}
                 className="inline-flex items-baseline gap-1 text-sm whitespace-nowrap text-fg-subtle tabular-nums @max-[480px]:hidden"
               >
                 <RollingCount value={current.items.length} />
                 {messages.changelogUpdates(current.items.length)}
-              </motion.span>
+              </m.span>
             )}
           </div>
           <LayoutGroup id={`${uid}-months`}>
@@ -468,7 +468,7 @@ function ChangelogFeed({
                     className="relative h-7 min-w-10.5 rounded-full px-2.5 text-xs font-medium text-fg-muted transition-colors duration-(--motion-standard) ease-standard outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-solid aria-[current]:text-fg @max-[480px]:min-w-0 @max-[480px]:px-2"
                   >
                     {selected && (
-                      <motion.span
+                      <m.span
                         layoutId="month-pill"
                         className="absolute inset-0 rounded-full bg-surface shadow-xs ring-1 ring-line"
                         transition={reduce ? still : spring.morph}
@@ -482,7 +482,7 @@ function ChangelogFeed({
           </LayoutGroup>
         </div>
 
-        <motion.div
+        <m.div
           layoutScroll
           ref={scrollRef}
           onScroll={schedule}
@@ -499,7 +499,7 @@ function ChangelogFeed({
           <div ref={watchList} className="relative">
             <AnimatePresence mode="popLayout" initial={false}>
               {groups.map((group, index) => (
-                <motion.section
+                <m.section
                   key={group.key}
                   data-month={group.key}
                   layout="position"
@@ -566,20 +566,20 @@ function ChangelogFeed({
                       ))}
                     </AnimatePresence>
                   </ul>
-                </motion.section>
+                </m.section>
               ))}
             </AnimatePresence>
             {endNote && (
-              <motion.p
+              <m.p
                 layout="position"
                 transition={{ layout }}
                 className="px-7 pt-8 pb-14 text-center text-sm text-fg-subtle @max-[640px]:px-5"
               >
                 {endNote}
-              </motion.p>
+              </m.p>
             )}
           </div>
-        </motion.div>
+        </m.div>
       </section>
     </MotionScope>
   )

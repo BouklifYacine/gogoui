@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import type { FocusEvent } from 'react'
 import { flushSync } from 'react-dom'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
@@ -154,7 +154,7 @@ function ExpandingSearch({
         data-slot="expanding-search"
         className="max-w-full min-w-0 shrink-0"
       >
-        <motion.div
+        <m.div
           layout
           transition={{ layout: reduce ? { duration: 0 } : stretch }}
           // Corners in style: Motion keeps them round while it stretches.
@@ -166,7 +166,7 @@ function ExpandingSearch({
         >
           <AnimatePresence mode="popLayout" initial={false}>
             {open ? (
-              <motion.div
+              <m.div
                 key="field"
                 {...enter}
                 className="relative flex w-full items-center gap-2 ps-3 pe-1.5"
@@ -221,9 +221,9 @@ function ExpandingSearch({
                     {messages.escapeKey}
                   </Kbd>
                 )}
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.button
+              <m.button
                 key="pill"
                 ref={glass}
                 id={`${id}-glass`}
@@ -264,10 +264,10 @@ function ExpandingSearch({
                 <span className="sr-only">
                   {query ? messages.searchQuery(query) : (glassLabel ?? label)}
                 </span>
-              </motion.button>
+              </m.button>
             )}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
       </search>
     </MotionScope>
   )

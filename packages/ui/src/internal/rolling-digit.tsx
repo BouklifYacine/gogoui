@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, useMotionValue } from 'motion/react'
+import { m, useMotionValue } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { duration, spring } from './motion.ts'
@@ -71,7 +71,7 @@ export function RollingDigit({
   }
 
   return (
-    <motion.span
+    <m.span
       initial={{ width: 0, opacity: 0 }}
       animate={{ width: 'auto', opacity: 1 }}
       exit={{ width: 0, opacity: 0 }}
@@ -80,7 +80,7 @@ export function RollingDigit({
     >
       {/* Sizes the wheel, and carries its turn: motion springs this
           variable, and each frame moves the wheel's position. */}
-      <motion.span
+      <m.span
         className="invisible"
         initial={false}
         animate={{ '--wheel': wheel.target }}
@@ -94,7 +94,7 @@ export function RollingDigit({
         onUpdate={(latest) => position.set(Number(latest['--wheel']))}
       >
         0
-      </motion.span>
+      </m.span>
       {reduce ? (
         <span className="absolute inset-x-0 inset-y-(--feather) text-center">
           {digit}
@@ -104,6 +104,6 @@ export function RollingDigit({
           <RollingGlyph key={figure} position={position} digit={figure} />
         ))
       )}
-    </motion.span>
+    </m.span>
   )
 }

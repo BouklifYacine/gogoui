@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
 import type { ReactNode, Ref } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -155,7 +155,7 @@ function ChangelogEntry({
 
   return (
     <MotionScope>
-      <motion.li
+      <m.li
         ref={ref}
         layout="position"
         data-slot="changelog-entry"
@@ -202,7 +202,7 @@ function ChangelogEntry({
             )}
           >
             {content}
-            <motion.span
+            <m.span
               aria-hidden="true"
               className="mt-px grid size-5 place-items-center text-fg-subtle transition-colors duration-(--motion-standard) group-hover/changelog-entry:text-fg group-data-[open]/changelog-entry:text-fg @max-[640px]:col-start-2 @max-[640px]:row-start-1 @max-[640px]:mt-0"
               initial={false}
@@ -210,14 +210,14 @@ function ChangelogEntry({
               transition={reduce ? still : spring.snappy}
             >
               <GoGoIcon name="chevronDown" className="size-4" />
-            </motion.span>
+            </m.span>
           </button>
         ) : (
           <div className={rowClass}>{content}</div>
         )}
         <AnimatePresence initial={false}>
           {opens && isOpen && (
-            <motion.div
+            <m.div
               key="panel"
               id={panelId}
               className="overflow-hidden"
@@ -226,7 +226,7 @@ function ChangelogEntry({
               exit={{ height: 0, transition: reduce ? still : spring.smooth }}
               transition={reduce ? still : spring.smooth}
             >
-              <motion.div
+              <m.div
                 className="pr-18 pb-7 pl-39 text-sm text-fg-muted @max-[640px]:px-5 @max-[640px]:pb-6"
                 initial={{ opacity: 0, y: 8, filter: `blur(${blur.soft}px)` }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -245,11 +245,11 @@ function ChangelogEntry({
                 }
               >
                 {children}
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
-      </motion.li>
+      </m.li>
     </MotionScope>
   )
 }

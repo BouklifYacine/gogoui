@@ -1,6 +1,6 @@
 import { useCallback, useId, useRef, useState } from 'react'
 import type { ChangeEvent, KeyboardEvent, ReactNode, Ref, UIEvent } from 'react'
-import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
+import { AnimatePresence, animate, m, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -525,7 +525,7 @@ function MentionInput({
         data-disabled={disabled || undefined}
         className={cn('relative w-full data-disabled:opacity-60', className)}
       >
-        <motion.div
+        <m.div
           ref={fieldRef}
           style={{ height }}
           data-invalid={invalid || undefined}
@@ -577,13 +577,13 @@ function MentionInput({
               'absolute inset-0 block h-full resize-none overflow-y-auto bg-transparent text-transparent caret-fg outline-none [-webkit-text-fill-color:transparent] [scrollbar-width:none] selection:bg-primary/25 placeholder:text-fg-subtle placeholder:[-webkit-text-fill-color:var(--color-fg-subtle)] disabled:cursor-not-allowed [&::-webkit-scrollbar]:hidden',
             )}
           />
-        </motion.div>
+        </m.div>
         <span aria-live="polite" className="sr-only">
           {countLabel}
         </span>
         <AnimatePresence>
           {open && anchor ? (
-            <motion.div
+            <m.div
               key={trigger?.start}
               data-above={anchor.above || undefined}
               style={{
@@ -671,7 +671,7 @@ function MentionInput({
                   {messages.mentionNoMatch(trigger?.query ?? '')}
                 </p>
               )}
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
       </div>

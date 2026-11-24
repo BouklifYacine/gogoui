@@ -4,6 +4,7 @@ import { IconContext } from '@phosphor-icons/react'
 import type { IconWeight } from '@phosphor-icons/react'
 import { MotionConfig } from 'motion/react'
 
+import { MotionFeatures } from '../internal/motion-features.tsx'
 import { defaultIcons } from './icons.ts'
 import type { GoGoUIIcons } from './icons.ts'
 import { IconsContext } from './icons-context.ts'
@@ -89,7 +90,9 @@ export function GoGoUIProvider({
           </style>
         )}
         <MessagesContext value={words}>
-          <IconsContext value={drawn}>{children}</IconsContext>
+          <IconsContext value={drawn}>
+            <MotionFeatures>{children}</MotionFeatures>
+          </IconsContext>
         </MessagesContext>
       </MotionConfig>
     </MotionPreferenceContext>

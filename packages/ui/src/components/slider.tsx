@@ -4,7 +4,7 @@ import { Slider as SliderPrimitive } from '@base-ui/react/slider'
 import {
   AnimatePresence,
   animate,
-  motion,
+  m,
   useMotionValue,
   useSpring,
   useTransform,
@@ -720,7 +720,7 @@ function Slider({
   const tick = 'absolute top-1/2 -mt-0.5 -ml-0.5 size-1 rounded-full'
   // The drawn thumb: it grows while held, rings while focused by keys.
   const thumbDot = (index: number, grow: number) => (
-    <motion.span
+    <m.span
       aria-hidden="true"
       data-focused={keyFocus === index ? '' : undefined}
       className="absolute top-1/2 right-0 size-(--thumb) translate-x-1/2 -translate-y-1/2 rounded-full bg-control shadow-button outline-offset-2 data-focused:outline-2 data-focused:outline-solid data-focused:outline-focus"
@@ -788,13 +788,13 @@ function Slider({
         )}
         <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center">
           {start && (
-            <motion.span
+            <m.span
               aria-hidden={elastic || undefined}
               className="col-start-1 mr-3 flex text-fg-muted"
               style={elastic ? { x: startShift } : undefined}
             >
               {start}
-            </motion.span>
+            </m.span>
           )}
           <SliderPrimitive.Control
             onPointerDown={onPointerDown}
@@ -814,7 +814,7 @@ function Slider({
                 elastic ? 'h-2' : sizing.track,
               )}
             >
-              <motion.div
+              <m.div
                 className="absolute inset-0 rounded-full bg-track"
                 style={elastic ? { scaleX, scaleY, originX } : undefined}
               >
@@ -826,7 +826,7 @@ function Slider({
                       style={{ left: `${pct(mark.value)}%` }}
                     />
                   ))}
-                <motion.div
+                <m.div
                   className={cn('absolute inset-0 rounded-full', fill[color])}
                   style={{ clipPath }}
                 >
@@ -838,8 +838,8 @@ function Slider({
                         style={{ left: `${pct(mark.value)}%` }}
                       />
                     ))}
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
               {elastic &&
                 ticks.map((mark) => (
                   <span
@@ -868,11 +868,11 @@ function Slider({
             <div className="pointer-events-none absolute inset-y-0 inset-x-[calc(var(--thumb)/2)] @container">
               {elastic ? (
                 <>
-                  <motion.div
+                  <m.div
                     className="absolute inset-0"
                     style={{ x: reduce ? x0 : tagX }}
                   >
-                    <motion.span
+                    <m.span
                       className={bubbleAnchor}
                       style={
                         {
@@ -883,7 +883,7 @@ function Slider({
                     >
                       <AnimatePresence>
                         {showBubble(0) && (
-                          <motion.span
+                          <m.span
                             key="bubble"
                             aria-hidden="true"
                             className={cn(bubbleBody, 'origin-[50%_130%]')}
@@ -903,25 +903,22 @@ function Slider({
                             }
                           >
                             {text(values[0] ?? min)}
-                          </motion.span>
+                          </m.span>
                         )}
                       </AnimatePresence>
-                    </motion.span>
-                  </motion.div>
-                  <motion.div className="absolute inset-0" style={{ x: x0 }}>
-                    <motion.div
-                      className="absolute inset-0"
-                      style={{ x: over }}
-                    >
+                    </m.span>
+                  </m.div>
+                  <m.div className="absolute inset-0" style={{ x: x0 }}>
+                    <m.div className="absolute inset-0" style={{ x: over }}>
                       {thumbDot(0, 1.28)}
-                    </motion.div>
-                  </motion.div>
+                    </m.div>
+                  </m.div>
                 </>
               ) : (
                 values.map((item, index) => {
                   const thumb = thumbs[index]
                   return thumb ? (
-                    <motion.div
+                    <m.div
                       key={index}
                       className="absolute inset-0"
                       style={{
@@ -930,13 +927,13 @@ function Slider({
                       }}
                     >
                       {thumbDot(index, 1.16)}
-                      <motion.span
+                      <m.span
                         className={bubbleAnchor}
                         style={{ '--at': thumb.shown } as MotionStyle}
                       >
                         <AnimatePresence>
                           {showBubble(index) && (
-                            <motion.span
+                            <m.span
                               key="bubble"
                               aria-hidden="true"
                               className={bubbleBody}
@@ -959,11 +956,11 @@ function Slider({
                               }
                             >
                               <RollingNumber value={item} format={format} />
-                            </motion.span>
+                            </m.span>
                           )}
                         </AnimatePresence>
-                      </motion.span>
-                    </motion.div>
+                      </m.span>
+                    </m.div>
                   ) : null
                 })
               )}
@@ -996,13 +993,13 @@ function Slider({
             ))}
           </SliderPrimitive.Control>
           {end && (
-            <motion.span
+            <m.span
               aria-hidden={elastic || undefined}
               className="col-start-3 ml-3 flex text-fg-muted"
               style={elastic ? { x: endShift } : undefined}
             >
               {end}
-            </motion.span>
+            </m.span>
           )}
           {labelled.length > 0 && (
             <div

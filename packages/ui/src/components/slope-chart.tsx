@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { motion, useInView } from 'motion/react'
+import { m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -459,7 +459,7 @@ export function SlopeChart({
                         data-dim={active !== null && !on ? '' : undefined}
                         className="[--ink:color-mix(in_oklab,var(--fg)_36%,var(--surface))] transition-opacity duration-200 ease-standard data-accent:[--ink:var(--slope-accent)] data-dim:opacity-14 data-on:not-data-accent:[--ink:var(--fg)] motion-reduce:transition-none"
                       >
-                        <motion.path
+                        <m.path
                           className="fill-none stroke-line-strong"
                           initial={false}
                           animate={{
@@ -467,7 +467,7 @@ export function SlopeChart({
                           }}
                           transition={settle}
                         />
-                        <motion.path
+                        <m.path
                           className="fill-none stroke-line-strong"
                           initial={false}
                           animate={{
@@ -475,7 +475,7 @@ export function SlopeChart({
                           }}
                           transition={settle}
                         />
-                        <motion.line
+                        <m.line
                           x1={x0}
                           x2={x1}
                           className="fill-none stroke-(--ink) stroke-2 transition-[stroke] duration-150 [stroke-linecap:round]"
@@ -501,7 +501,7 @@ export function SlopeChart({
                                 },
                           }}
                         />
-                        <motion.circle
+                        <m.circle
                           cx={x0}
                           r={4}
                           className="origin-center fill-(--ink) stroke-surface stroke-2 transition-[fill] duration-150 [transform-box:fill-box]"
@@ -514,7 +514,7 @@ export function SlopeChart({
                               : { ...spring.snappy, delay },
                           }}
                         />
-                        <motion.circle
+                        <m.circle
                           cx={x1}
                           r={4}
                           className="origin-center fill-(--ink) stroke-surface stroke-2 transition-[fill] duration-150 [transform-box:fill-box]"
@@ -544,7 +544,7 @@ export function SlopeChart({
                       data-dim={active !== null && !on ? '' : undefined}
                       className="group/label transition-opacity duration-200 ease-standard data-dim:opacity-30 motion-reduce:transition-none"
                     >
-                      <motion.span
+                      <m.span
                         className="pointer-events-none absolute top-0 -mt-2.5 flex h-5 max-w-full items-center justify-end gap-2 text-sm leading-5 whitespace-nowrap group-data-narrow/slope:gap-1.5 group-data-narrow/slope:text-xs"
                         style={{ right: width - x0 + 10, maxWidth: x0 - 10 }}
                         initial={reduce ? false : { y: row.l0, opacity: 0 }}
@@ -562,8 +562,8 @@ export function SlopeChart({
                         <span className="text-fg tabular-nums group-data-accent/label:font-medium">
                           {format(row.item.start)}
                         </span>
-                      </motion.span>
-                      <motion.span
+                      </m.span>
+                      <m.span
                         className="pointer-events-none absolute top-0 -mt-2.5 flex h-5 items-center gap-2 text-sm leading-5 whitespace-nowrap group-data-narrow/slope:gap-1.5 group-data-narrow/slope:text-xs"
                         style={{ left: x1 + 10 }}
                         initial={reduce ? false : { y: row.l1, opacity: 0 }}
@@ -579,7 +579,7 @@ export function SlopeChart({
                           {format(row.item.end)}
                         </span>
                         {ranks && <SlopeRank move={row.rank0 - row.rank1} />}
-                      </motion.span>
+                      </m.span>
                     </div>
                   )
                 })}

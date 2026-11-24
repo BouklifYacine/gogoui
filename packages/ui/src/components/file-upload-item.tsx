@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { TargetAndTransition, Transition } from 'motion/react'
 
 import type { GoGoUIIcons } from '../i18n/icons.ts'
@@ -125,7 +125,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
   const fade = { duration: duration.instant }
 
   return (
-    <motion.li
+    <m.li
       data-slot="file-upload-item"
       className="min-w-0 overflow-hidden"
       initial={reduce ? { opacity: 0 } : { height: 0 }}
@@ -150,7 +150,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
         reduce ? fade : { height: { ...spring.smooth, delay }, opacity: fade }
       }
     >
-      <motion.div
+      <m.div
         ref={rowRef}
         data-slot="file-upload-row"
         data-failed={failed || undefined}
@@ -231,7 +231,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                 </span>
                 <span className="relative flex min-w-0 flex-1">
                   <AnimatePresence mode="popLayout" initial={false}>
-                    <motion.span
+                    <m.span
                       key={phase}
                       className={cn(
                         'inline-flex min-w-0 items-center gap-1.5',
@@ -263,7 +263,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                             aria-hidden="true"
                             className="size-3.5 shrink-0 text-success-fg"
                           >
-                            <motion.path
+                            <m.path
                               d="M12 2.5a9.5 9.5 0 1 1 0 19a9.5 9.5 0 1 1 0-19"
                               initial={reduce ? false : { pathLength: 0 }}
                               animate={{ pathLength: 1 }}
@@ -272,7 +272,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                                 ease: [...ease.enter],
                               }}
                             />
-                            <motion.path
+                            <m.path
                               d="m8.2 12.4 2.6 2.6 5-5.2"
                               initial={reduce ? false : { pathLength: 0 }}
                               animate={{ pathLength: 1 }}
@@ -296,7 +296,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                           </span>
                         </>
                       )}
-                    </motion.span>
+                    </m.span>
                   </AnimatePresence>
                 </span>
               </>
@@ -307,7 +307,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
               away just after the tick draws. */}
           <AnimatePresence initial={false}>
             {phase === 'uploading' && (
-              <motion.span
+              <m.span
                 key="bar"
                 className="block overflow-hidden"
                 initial={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
@@ -351,7 +351,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                   {/* It slides in from the left rather than scaling, so its
                       rounded end keeps its shape at every value. One spring
                       moves the bar and counts the percentage. */}
-                  <motion.span
+                  <m.span
                     className="block size-full rounded-full bg-(--upload-accent)"
                     initial={{ x: '-100%' }}
                     animate={{ x: `${target - 100}%` }}
@@ -370,7 +370,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                     }}
                   />
                 </span>
-              </motion.span>
+              </m.span>
             )}
           </AnimatePresence>
         </span>
@@ -378,7 +378,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
         <span className="flex items-center">
           <AnimatePresence initial={false}>
             {canRetry && (
-              <motion.span
+              <m.span
                 key="retry"
                 className="flex overflow-hidden"
                 initial={reduce ? { opacity: 0 } : { width: 0, opacity: 0 }}
@@ -404,7 +404,7 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                       }
                 }
               >
-                <motion.span
+                <m.span
                   className="flex py-[3px] pr-1.5 pl-[3px]"
                   initial={
                     reduce
@@ -429,8 +429,8 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
                       {messages.fileRetry}
                     </span>
                   </Button>
-                </motion.span>
-              </motion.span>
+                </m.span>
+              </m.span>
             )}
           </AnimatePresence>
           <Button
@@ -447,8 +447,8 @@ function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
             <GoGoIcon name="close" className="size-4" />
           </Button>
         </span>
-      </motion.div>
-    </motion.li>
+      </m.div>
+    </m.li>
   )
 }
 

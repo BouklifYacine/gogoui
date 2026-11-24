@@ -3,7 +3,7 @@ import type { CSSProperties, RefObject } from 'react'
 import {
   AnimatePresence,
   animate,
-  motion,
+  m,
   useInView,
   useMotionValue,
   useMotionValueEvent,
@@ -771,7 +771,7 @@ function LineChart({
             </ChartTooltip>
             <AnimatePresence initial={false}>
               {(empty || allHidden) && !loading && (
-                <motion.p
+                <m.p
                   key={empty ? 'empty' : 'hidden'}
                   className="pointer-events-none absolute inset-0 m-0 grid place-items-center text-sm text-fg-subtle"
                   initial={{ opacity: 0 }}
@@ -779,10 +779,10 @@ function LineChart({
                   exit={{ opacity: 0, transition: fadeQuick }}
                 >
                   {empty ? emptyText : messages.chartChooseSeries}
-                </motion.p>
+                </m.p>
               )}
               {loading && empty && (
-                <motion.span
+                <m.span
                   key="skeleton"
                   aria-hidden="true"
                   className="absolute inset-x-0 top-[30%] bottom-1/4 rounded-xl bg-linear-to-b from-transparent to-[color-mix(in_oklab,var(--fg)_6%,transparent)] motion-safe:animate-pulse"
@@ -817,7 +817,7 @@ function LineChart({
                 const share = last > 0 ? at / last : 0.5
                 const item = data[at]!
                 return (
-                  <motion.span
+                  <m.span
                     key={`${item.key}:${item.axisLabel}`}
                     style={{
                       left: `${share * 100}%`,
@@ -837,7 +837,7 @@ function LineChart({
                     }
                   >
                     {item.axisLabel}
-                  </motion.span>
+                  </m.span>
                 )
               })}
             </AnimatePresence>

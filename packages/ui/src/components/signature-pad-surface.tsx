@@ -4,7 +4,7 @@ import type {
   KeyboardEvent as ReactKeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -238,7 +238,7 @@ function SignaturePadSurface({
         )}
         <AnimatePresence initial={false}>
           {showHint && (
-            <motion.span
+            <m.span
               key="hint"
               className="absolute top-[72%] left-1/2 -translate-x-1/2 -translate-y-[calc(100%+8px)] text-lg whitespace-nowrap text-fg-subtle"
               initial={hintHidden}
@@ -256,7 +256,7 @@ function SignaturePadSurface({
               }}
             >
               {pad.hint}
-            </motion.span>
+            </m.span>
           )}
         </AnimatePresence>
       </div>
@@ -270,7 +270,7 @@ function SignaturePadSurface({
         >
           <AnimatePresence initial={false}>
             {visible.map(({ stroke, d }) => (
-              <motion.path
+              <m.path
                 key={stroke.id}
                 className={inkFill[stroke.ink]}
                 d={d}
@@ -303,7 +303,7 @@ function SignaturePadSurface({
       </div>
 
       {pad.wiping && (
-        <motion.span
+        <m.span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 before:absolute before:inset-y-[8%] before:-left-px before:w-0.5 before:rounded-full before:bg-fg/50 after:absolute after:inset-y-0 after:-left-7 after:w-7 after:bg-linear-to-r after:from-transparent after:to-fg/5"
           initial={{ x: '0%', opacity: 0 }}

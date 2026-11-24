@@ -5,7 +5,7 @@ import type {
   FocusEvent,
   ReactNode,
 } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 import type { AnimationPlaybackControls } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -241,7 +241,7 @@ function ExpandableText({
           className,
         )}
       >
-        <motion.div
+        <m.div
           ref={contentRef}
           id={contentId}
           data-clamped={clamped || undefined}
@@ -259,7 +259,7 @@ function ExpandableText({
           <div ref={measure} className="[&_p+p]:mt-3">
             {children}
           </div>
-        </motion.div>
+        </m.div>
         {overflowing && (
           <button
             type="button"
@@ -287,13 +287,13 @@ function ExpandableText({
                 {less}
               </span>
             </span>
-            <motion.span
+            <m.span
               aria-hidden="true"
               style={{ rotate }}
               className="inline-flex text-fg-subtle"
             >
               <GoGoIcon name="chevronDown" className="size-4" />
-            </motion.span>
+            </m.span>
           </button>
         )}
       </div>

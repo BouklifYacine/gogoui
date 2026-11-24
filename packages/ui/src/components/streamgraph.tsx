@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { motion, useInView } from 'motion/react'
+import { m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -587,7 +587,7 @@ export function Streamgraph({
               {width > 0 &&
                 !empty &&
                 series.map((line, at) => (
-                  <motion.path
+                  <m.path
                     key={line.key}
                     data-active={activeKey === line.key ? '' : undefined}
                     style={{ '--series': colorOf(line) } as CSSProperties}
@@ -602,7 +602,7 @@ export function Streamgraph({
                     }}
                   />
                 ))}
-              <motion.line
+              <m.line
                 ref={(node) => {
                   if (node) {
                     cross.moveTo(index === null ? null : xAt(index))
@@ -638,7 +638,7 @@ export function Streamgraph({
                   const x = clamp(xs[best], room / 2 + 6, width - room / 2 - 6)
                   const y = frame.toY((top[best] + bottom[best]) / 2)
                   return (
-                    <motion.text
+                    <m.text
                       key={line.key}
                       textAnchor="middle"
                       dominantBaseline="central"
@@ -652,7 +652,7 @@ export function Streamgraph({
                       transition={reduce ? { duration: 0 } : chartMorph}
                     >
                       {line.label}
-                    </motion.text>
+                    </m.text>
                   )
                 })}
             </svg>

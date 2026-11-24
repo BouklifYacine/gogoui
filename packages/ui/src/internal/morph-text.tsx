@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { TargetAndTransition } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -97,7 +97,7 @@ export function MorphText({ text }: { text: string }) {
     >
       <AnimatePresence mode="popLayout" initial={false}>
         {glyphs.map((glyph) => (
-          <motion.span
+          <m.span
             key={glyph.id}
             className="inline-block"
             layout={reduce ? false : 'position'}
@@ -118,7 +118,7 @@ export function MorphText({ text }: { text: string }) {
             }
           >
             {glyph.char}
-          </motion.span>
+          </m.span>
         ))}
       </AnimatePresence>
     </span>

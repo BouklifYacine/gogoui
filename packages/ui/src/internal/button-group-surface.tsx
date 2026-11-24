@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import type { ComponentProps, Ref } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -150,7 +150,7 @@ export function ButtonGroupSurface({
       )}
       {...props}
     >
-      <motion.span
+      <m.span
         aria-hidden="true"
         data-slot="button-group-highlight"
         style={{

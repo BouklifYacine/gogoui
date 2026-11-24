@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -61,7 +61,7 @@ export function ChartSwap({
   return (
     <span className={cn('relative block min-w-0', className)}>
       <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-        <motion.span
+        <m.span
           key={text}
           custom={direction}
           variants={reduce ? fade : rise}
@@ -71,7 +71,7 @@ export function ChartSwap({
           className="block truncate"
         >
           {text || ' '}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   )

@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { AnimatePresence, motion, useInView } from 'motion/react'
+import { AnimatePresence, m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -597,7 +597,7 @@ export function Treemap({
             <ol className="relative m-0 flex min-h-8 min-w-0 list-none flex-wrap items-center p-0">
               <AnimatePresence initial={false} mode="popLayout">
                 {trail.map((node, index) => (
-                  <motion.li
+                  <m.li
                     key={node.id}
                     layout={reduce ? false : 'position'}
                     className="inline-flex min-w-0 items-center"
@@ -644,7 +644,7 @@ export function Treemap({
                         {node.label}
                       </span>
                     )}
-                  </motion.li>
+                  </m.li>
                 ))}
               </AnimatePresence>
             </ol>
@@ -705,7 +705,7 @@ export function Treemap({
                         opacity: 0,
                       }
                   return (
-                    <motion.div
+                    <m.div
                       key={node.id}
                       custom={zoom.toNew}
                       data-branch={node.children.length > 0 ? '' : undefined}
@@ -783,7 +783,7 @@ export function Treemap({
                       >
                         {valueText(node.value)}
                       </span>
-                    </motion.div>
+                    </m.div>
                   )
                 })}
             </AnimatePresence>

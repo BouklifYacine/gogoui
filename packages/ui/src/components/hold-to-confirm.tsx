@@ -8,7 +8,7 @@ import type {
   PointerEvent,
   ReactNode,
 } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 import type { AnimationPlaybackControls } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -351,7 +351,7 @@ function HoldToConfirm({
 
   return (
     <MotionScope>
-      <motion.button
+      <m.button
         {...props}
         ref={holdButton}
         type="button"
@@ -391,7 +391,7 @@ function HoldToConfirm({
           measure={measure}
         />
         {/* The same face, inverted, cut at the fill's edge. */}
-        <motion.span
+        <m.span
           aria-hidden="true"
           className={cn(
             'pointer-events-none absolute inset-0 flex items-center justify-center rounded-[inherit]',
@@ -399,9 +399,15 @@ function HoldToConfirm({
           )}
           style={{ clipPath }}
         >
-          <HoldFace icon={iconStart} stage={stage} text={words} width={width} />
-        </motion.span>
-      </motion.button>
+          <HoldFace
+            icon={iconStart}
+            stage={stage}
+            text={words}
+            width={width}
+            mirror
+          />
+        </m.span>
+      </m.button>
       <span id={hintId} className="sr-only">
         {messages.holdHint(seconds)}
       </span>

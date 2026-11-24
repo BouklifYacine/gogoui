@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import {
   animate,
-  motion,
+  m,
   useInView,
   useMotionValue,
   useMotionValueEvent,
@@ -226,7 +226,7 @@ function Gauge({
               strokeLinecap="round"
               className="stroke-[color-mix(in_oklab,var(--gauge)_13%,transparent)] transition-[stroke] duration-200 ease-standard motion-reduce:transition-none"
             />
-            <motion.path
+            <m.path
               d={path}
               fill="none"
               strokeWidth={9}
@@ -248,7 +248,7 @@ function Gauge({
             >
               {/* The digits sit right aligned in a box as wide as the target, so the ones never jump. */}
               <span className="inline-grid justify-items-end">
-                <motion.span className="[grid-area:1/1]">{digits}</motion.span>
+                <m.span className="[grid-area:1/1]">{digits}</m.span>
                 <span className="invisible [grid-area:1/1]">{percent}</span>
               </span>
               <span className="ml-0.5 text-[0.5em] font-normal tracking-normal text-fg-muted">

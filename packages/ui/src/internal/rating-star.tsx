@@ -1,5 +1,5 @@
 import type { Ref } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -64,7 +64,7 @@ export function RatingStar({
   const reduce = useReduceMotion()
   const soft = rated && fill === 0
   return (
-    <motion.span
+    <m.span
       aria-hidden="true"
       initial={false}
       animate={{ scale: pressed && !reduce ? 0.86 : soft ? 0.9 : 1 }}
@@ -80,23 +80,23 @@ export function RatingStar({
             rated ? 'text-line' : 'text-fg-subtle',
           )}
         />
-        <motion.span
+        <m.span
           initial={false}
           animate={{ '--fill': value }}
           transition={reduce ? still : spring.smooth}
           className={cn(SWEEP, kept[color])}
         >
           <GoGoIcon name="star" weight="fill" className="size-full" />
-        </motion.span>
-        <motion.span
+        </m.span>
+        <m.span
           initial={false}
           animate={{ '--fill': fill }}
           transition={reduce ? still : { ...spring.snappy, delay }}
           className={cn(SWEEP, live[color])}
         >
           <GoGoIcon name="star" weight="fill" className="size-full" />
-        </motion.span>
+        </m.span>
       </span>
-    </motion.span>
+    </m.span>
   )
 }

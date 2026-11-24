@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'motion/react'
+import { m, useTransform } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { blur } from './motion.ts'
@@ -35,11 +35,11 @@ export function RollingGlyph({
       : `blur(${(Math.abs(current) * blur.subtle).toFixed(2)}px)`,
   )
   return (
-    <motion.span
+    <m.span
       style={{ y, opacity, filter, visibility }}
       className="absolute inset-x-0 inset-y-(--feather) text-center"
     >
       {digit}
-    </motion.span>
+    </m.span>
   )
 }

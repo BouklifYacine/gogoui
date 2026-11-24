@@ -1,6 +1,6 @@
 import { useCallback, useId, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { animate, motion, useInView } from 'motion/react'
+import { animate, m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -857,7 +857,7 @@ export function BrushChart({
             >
               <defs>
                 <clipPath id={`${uid}-plot`}>
-                  <motion.rect
+                  <m.rect
                     x={0}
                     y={-8}
                     height={height + 16}

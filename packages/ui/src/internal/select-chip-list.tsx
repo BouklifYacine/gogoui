@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import type { HTMLAttributes, Ref } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -137,7 +137,7 @@ export function SelectChipList({
       <MotionScope>
         <AnimatePresence initial={false}>
           {visible.map((value) => (
-            <motion.span
+            <m.span
               key={`chip-${String(value)}`}
               aria-hidden="true"
               className="flex min-w-0 shrink overflow-hidden"
@@ -146,16 +146,16 @@ export function SelectChipList({
               animate="shown"
               exit="gone"
             >
-              <motion.span
+              <m.span
                 className={cn(pill, 'mr-1.5')}
                 variants={reduce ? still : chip}
               >
                 {labelOfValue(shared, value)}
-              </motion.span>
-            </motion.span>
+              </m.span>
+            </m.span>
           ))}
           {remaining > 0 && (
-            <motion.span
+            <m.span
               key="more"
               aria-hidden="true"
               className="flex shrink-0 overflow-hidden"
@@ -164,14 +164,14 @@ export function SelectChipList({
               animate="shown"
               exit="gone"
             >
-              <motion.span
+              <m.span
                 className={cn(pill, 'inline-flex text-fg-muted tabular-nums')}
                 variants={reduce ? still : chip}
               >
                 +
                 <span className="inline-grid">
                   <AnimatePresence initial={false} custom={count.direction}>
-                    <motion.span
+                    <m.span
                       key={remaining}
                       className="col-start-1 row-start-1"
                       custom={count.direction}
@@ -181,14 +181,14 @@ export function SelectChipList({
                       exit="gone"
                     >
                       {remaining}
-                    </motion.span>
+                    </m.span>
                   </AnimatePresence>
                 </span>
-              </motion.span>
-            </motion.span>
+              </m.span>
+            </m.span>
           )}
           {isPlaceholder && (
-            <motion.span
+            <m.span
               key="placeholder"
               aria-hidden="true"
               className="absolute inset-0 flex items-center truncate text-fg-subtle"
@@ -198,7 +198,7 @@ export function SelectChipList({
               exit="gone"
             >
               {children}
-            </motion.span>
+            </m.span>
           )}
         </AnimatePresence>
       </MotionScope>

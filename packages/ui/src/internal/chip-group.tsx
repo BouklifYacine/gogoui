@@ -1,7 +1,7 @@
 import { Children, isValidElement, useId, useState } from 'react'
 import type { ReactElement } from 'react'
 import { ToggleGroup as ToggleGroupPrimitive } from '@base-ui/react/toggle-group'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, LayoutGroup, m } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -111,7 +111,7 @@ export function ChipGroup({
             >
               <AnimatePresence initial={false} mode="popLayout">
                 {shown.map((item, index) => (
-                  <motion.span
+                  <m.span
                     key={item.key}
                     layout="position"
                     className="relative z-10 inline-flex max-w-full"
@@ -137,12 +137,12 @@ export function ChipGroup({
                     transition={enter(index)}
                   >
                     {item}
-                  </motion.span>
+                  </m.span>
                 ))}
                 {foldable && (expanded || hidden > 0) && (
                   // It travels under the chips it reveals, so they seem to
                   // come out of it.
-                  <motion.span
+                  <m.span
                     key="more"
                     layout="position"
                     className="inline-flex"
@@ -162,7 +162,7 @@ export function ChipGroup({
                         setExpanded(!expanded)
                       }}
                     />
-                  </motion.span>
+                  </m.span>
                 )}
               </AnimatePresence>
             </ToggleGroupPrimitive>

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import {
   animate,
-  motion,
+  m,
   useMotionValue,
   usePresence,
   useTransform,
@@ -129,7 +129,7 @@ export function BarChartBar({
     // Plain groups carry the springs: motion's own elements never re-run a changed ref.
     <g ref={attach}>
       <g ref={grow}>
-        <motion.path
+        <m.path
           d={d}
           className={cn(
             'transition-[fill] duration-150 ease-standard motion-reduce:transition-none',

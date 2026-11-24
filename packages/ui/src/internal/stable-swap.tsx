@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -40,7 +40,7 @@ export function StableSwap({
         </span>
       ))}
       <AnimatePresence initial={false}>
-        <motion.span
+        <m.span
           key={text}
           variants={reduce ? swapFade : swapRise}
           initial="hidden"
@@ -49,7 +49,7 @@ export function StableSwap({
           className="inline-block [grid-area:1/1]"
         >
           {text}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   )

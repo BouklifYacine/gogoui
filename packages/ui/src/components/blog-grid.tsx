@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import type { ReactElement, ReactNode } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, LayoutGroup, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -284,7 +284,7 @@ function BlogGrid({
               initial={false}
               custom={{ direction, reduce }}
             >
-              <motion.div
+              <m.div
                 key={`${category ?? ALL}-${safePage}`}
                 className="grid gap-12 @max-[680px]:gap-10"
                 custom={{ direction, reduce }}
@@ -308,7 +308,7 @@ function BlogGrid({
                     {messages.blogEmpty}
                   </p>
                 )}
-              </motion.div>
+              </m.div>
             </AnimatePresence>
 
             {pageCount > 1 && (
@@ -335,7 +335,7 @@ function BlogGrid({
                           className="relative isolate aria-[current=page]:text-fg"
                         >
                           {isCurrent && (
-                            <motion.span
+                            <m.span
                               layoutId="page-pill"
                               aria-hidden="true"
                               className="absolute inset-0 -z-10 rounded-[inherit] bg-selected"

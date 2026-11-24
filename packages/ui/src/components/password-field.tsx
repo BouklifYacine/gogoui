@@ -1,8 +1,10 @@
 import { useCallback, useRef } from 'react'
-import { animate, motion, useMotionValue } from 'motion/react'
+import { animate, m, useMotionValue } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
+import { MotionFeatures } from '../internal/motion-features.tsx'
+import { useControllableState } from '../internal/use-controllable-state.ts'
 import { FieldShell } from './field-shell.tsx'
 import { PasswordInput } from './password-input.tsx'
 import type { PasswordInputLabels } from './password-input.tsx'
@@ -113,22 +115,25 @@ function PasswordField({
       {(control) => (
         <>
           <div ref={nudgeOnNewError}>
-            <motion.div style={{ x: shake }}>
-              <PasswordInput
-                {...control}
-                name={name}
-                autoComplete={autoComplete}
-                autoCapitalize="off"
-                autoCorrect="off"
-                spellCheck={false}
-                size={size}
-                className={className}
-                required
-                value={value}
-                onBlur={onBlur}
-                onChange={(event) => onValueChange(event.target.value)}
-              />
-            </motion.div>
+            <MotionFeatures>
+              <m.div style={{ x: shake }}>
+                <PasswordInput
+                  {...control}
+                  name={name}
+                  autoComplete={autoComplete}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  size={size}
+                  className={className}
+                  required
+                  labels={labels}
+                  value={value}
+                  onBlur={onBlur}
+                  onChange={(event) => setValue(event.target.value)}
+                />
+              </m.div>
+            </MotionFeatures>
           </div>
           {autoComplete === 'new-password' && (
             <PasswordStrength

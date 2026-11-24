@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 import {
   AnimatePresence,
   animate,
-  motion,
+  m,
   useInView,
   useMotionValue,
   useTransform,
@@ -509,7 +509,7 @@ function BarChart({
               </AnimatePresence>
               {/* Plain groups carry the springs: motion's own elements never re-run a changed ref. */}
               <g ref={glide}>
-                <motion.line
+                <m.line
                   x1={cursorX}
                   x2={cursorX}
                   y1={TOP}
@@ -550,7 +550,7 @@ function BarChart({
               />
               {showAverage && (
                 <g ref={settleMean}>
-                  <motion.line
+                  <m.line
                     x1={0}
                     x2="100%"
                     y1={meanY}
@@ -585,7 +585,7 @@ function BarChart({
               ))}
             </AnimatePresence>
             {showAverage && (
-              <motion.span
+              <m.span
                 style={{ y: meanY }}
                 className="pointer-events-none absolute top-0 left-2.5 block h-0 whitespace-nowrap"
                 initial={false}
@@ -596,10 +596,10 @@ function BarChart({
                     : { duration: duration.standard, delay: 0.12 }
                 }
               >
-                <motion.span className="block -translate-y-1/2 text-xs/none font-medium text-fg tabular-nums">
+                <m.span className="block -translate-y-1/2 text-xs/none font-medium text-fg tabular-nums">
                   {meanText}
-                </motion.span>
-              </motion.span>
+                </m.span>
+              </m.span>
             )}
           </div>
           <div

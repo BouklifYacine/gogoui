@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -85,7 +85,7 @@ export function ChartTooltip({
   }
 
   return (
-    <motion.div
+    <m.div
       ref={place}
       aria-hidden="true"
       data-shown={anchor ? '' : undefined}
@@ -98,6 +98,6 @@ export function ChartTooltip({
       )}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }

@@ -1,5 +1,5 @@
 import { useCallback, useState, useSyncExternalStore } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { Button } from '../components/button.tsx'
@@ -97,7 +97,7 @@ export function ThemeButton({
           className="relative inline-grid size-4 flex-none place-items-center"
         >
           <AnimatePresence initial={false} mode="popLayout">
-            <motion.span
+            <m.span
               key={dark ? 'dark' : 'light'}
               className="col-start-1 row-start-1 grid place-items-center [&_svg]:size-4"
               initial={
@@ -129,7 +129,7 @@ export function ThemeButton({
               transition={still ? { duration: duration.instant } : turn}
             >
               <GoGoIcon name={dark ? 'themeDark' : 'themeLight'} />
-            </motion.span>
+            </m.span>
           </AnimatePresence>
         </span>
         {!compact && (

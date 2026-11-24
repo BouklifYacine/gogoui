@@ -2,7 +2,7 @@ import { use, useCallback, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
-import { animate, motion, useMotionValue } from 'motion/react'
+import { animate, m, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -152,7 +152,7 @@ function BillingToggle({
           )}
         >
           <span ref={followChoice} hidden />
-          <motion.span
+          <m.span
             aria-hidden="true"
             style={{ x, width }}
             className={cn(

@@ -1,6 +1,6 @@
 import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { checked } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -70,7 +70,7 @@ function RadioGroupItem({
           className="flex size-4 items-center justify-center"
           render={(indicatorProps, state) => (
             <span {...indicatorProps}>
-              <motion.span
+              <m.span
                 initial={false}
                 animate={
                   state.checked

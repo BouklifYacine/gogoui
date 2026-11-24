@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -69,7 +69,7 @@ export function RollingWords({
               mode="popLayout"
               custom={direction}
             >
-              <motion.span
+              <m.span
                 key={word}
                 custom={direction}
                 variants={reduce ? fade : roll}
@@ -79,7 +79,7 @@ export function RollingWords({
                 className="inline-block"
               >
                 {word}
-              </motion.span>
+              </m.span>
             </AnimatePresence>
           </span>
         ))}

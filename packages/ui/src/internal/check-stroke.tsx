@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -34,7 +34,7 @@ export function CheckStroke({
       strokeLinejoin="round"
       className={cn('block overflow-visible', className)}
     >
-      <motion.path
+      <m.path
         d="M5 12.5l4.5 4.5L19 7.5"
         initial={reduce ? false : { pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 1 }}

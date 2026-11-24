@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
 import type { FieldValueProps } from '../internal/field-props.ts'
@@ -87,7 +87,7 @@ function CodeField({
       {(control) => (
         <MotionScope>
           <div className="relative w-fit">
-            <motion.div
+            <m.div
               aria-hidden="true"
               className="flex"
               variants={moves}
@@ -98,7 +98,7 @@ function CodeField({
                 const digit = value[index]
                 const caret = focused && !full && index === value.length
                 return (
-                  <motion.span
+                  <m.span
                     key={index}
                     initial={false}
                     animate={{
@@ -118,14 +118,14 @@ function CodeField({
                     )}
                   >
                     {digit && (
-                      <motion.span
+                      <m.span
                         key={digit}
                         initial={{ y: -14, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={land}
                       >
                         {digit}
-                      </motion.span>
+                      </m.span>
                     )}
                     {caret && (
                       <span
@@ -135,10 +135,10 @@ function CodeField({
                         )}
                       />
                     )}
-                  </motion.span>
+                  </m.span>
                 )
               })}
-            </motion.div>
+            </m.div>
             <input
               {...control}
               name={name}

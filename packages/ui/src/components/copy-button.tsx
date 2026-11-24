@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -174,7 +174,7 @@ function CopyButton({
           )}
         >
           <AnimatePresence initial={false}>
-            <motion.span
+            <m.span
               key={state === 'copied' ? `copied-${pulse}` : state}
               className="col-start-1 row-start-1 grid place-items-center [&_svg]:size-3.5 [&_svg]:text-current!"
               {...icons}
@@ -186,7 +186,7 @@ function CopyButton({
               ) : (
                 <GoGoIcon name="copy" />
               )}
-            </motion.span>
+            </m.span>
           </AnimatePresence>
         </span>
         {/* The three words in one cell: the longest holds the width, the
@@ -202,7 +202,7 @@ function CopyButton({
               </span>
             ))}
             <AnimatePresence initial={false}>
-              <motion.span
+              <m.span
                 key={shown}
                 className={cn(
                   'col-start-1 row-start-1 block',
@@ -211,7 +211,7 @@ function CopyButton({
                 {...words}
               >
                 {shown}
-              </motion.span>
+              </m.span>
             </AnimatePresence>
           </span>
         )}

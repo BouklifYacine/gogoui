@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { ComponentProps, ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { MotionScope } from './motion-scope.tsx'
 import { CheckIcon } from '@phosphor-icons/react'
 
@@ -59,7 +59,7 @@ export function MorphingButton({
 
   return (
     <MotionScope>
-      <motion.div
+      <m.div
         initial={false}
         animate={{ width }}
         transition={morph}
@@ -93,7 +93,7 @@ export function MorphingButton({
               'bg-success text-white shadow-none hover:bg-success',
           )}
         >
-          <motion.span
+          <m.span
             className="flex items-center justify-center gap-2 px-4 whitespace-nowrap"
             initial={false}
             animate={
@@ -102,8 +102,8 @@ export function MorphingButton({
             transition={rise}
           >
             {children}
-          </motion.span>
-          <motion.span
+          </m.span>
+          <m.span
             aria-hidden="true"
             className="absolute inset-0 flex items-center justify-center"
             initial={false}
@@ -115,8 +115,8 @@ export function MorphingButton({
             transition={rise}
           >
             <Spinner className="size-4.5" />
-          </motion.span>
-          <motion.span
+          </m.span>
+          <m.span
             aria-hidden={phase !== 'saved'}
             className="absolute inset-0 flex items-center justify-center gap-2 px-4 whitespace-nowrap"
             initial={false}
@@ -141,7 +141,7 @@ export function MorphingButton({
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <motion.path
+              <m.path
                 d="M5 12.5l4.5 4.5L19 7.5"
                 initial={false}
                 animate={{ pathLength: phase === 'saved' ? 1 : 0 }}
@@ -149,9 +149,9 @@ export function MorphingButton({
               />
             </svg>
             {savedText}
-          </motion.span>
+          </m.span>
         </Button>
-      </motion.div>
+      </m.div>
     </MotionScope>
   )
 }

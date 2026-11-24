@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { TargetAndTransition, Transition, Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -140,7 +140,7 @@ function ExpandingButtonGroupItem({
     : height
 
   return (
-    <motion.button
+    <m.button
       type="button"
       data-slot="expanding-button-group-item"
       data-value={value}
@@ -169,7 +169,7 @@ function ExpandingButtonGroupItem({
         'aria-busy:cursor-progress aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
       )}
     >
-      <motion.span
+      <m.span
         aria-hidden="true"
         className="relative grid size-(--ebg-icon) flex-none place-items-center transition-[scale] duration-(--motion-spring) ease-spring group-[:active:not([aria-disabled=true])]/ebg:scale-[0.86] group-[:active:not([aria-disabled=true])]/ebg:duration-100 group-[:active:not([aria-disabled=true])]/ebg:ease-standard motion-reduce:scale-100! [&_svg]:size-full"
         initial={false}
@@ -187,7 +187,7 @@ function ExpandingButtonGroupItem({
         }
       >
         <AnimatePresence initial={false}>
-          <motion.span
+          <m.span
             key={done ? `done-${group.done?.run}` : 'icon'}
             className="col-start-1 row-start-1 grid size-full place-items-center"
             initial={reduce ? fadeIn : iconIn}
@@ -196,10 +196,10 @@ function ExpandingButtonGroupItem({
             transition={reduce ? instant : iconEnter}
           >
             {done ? <CheckStroke delay={stagger.word} /> : icon}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
-      </motion.span>
-      <motion.span
+      </m.span>
+      <m.span
         aria-hidden="true"
         className="inline-grid flex-none items-center justify-items-start"
         variants={reduce ? stillLabelVariants : labelVariants}
@@ -207,7 +207,7 @@ function ExpandingButtonGroupItem({
         animate={expanded ? 'shown' : 'hidden'}
       >
         <AnimatePresence initial={false}>
-          <motion.span
+          <m.span
             key={shown}
             className="col-start-1 row-start-1 whitespace-nowrap"
             initial={reduce ? fadeIn : wordIn}
@@ -220,7 +220,7 @@ function ExpandingButtonGroupItem({
             }
           >
             {shown}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
         <span
           ref={measureWords}
@@ -231,8 +231,8 @@ function ExpandingButtonGroupItem({
             <span className="col-start-1 row-start-1">{doneLabel}</span>
           )}
         </span>
-      </motion.span>
-    </motion.button>
+      </m.span>
+    </m.button>
   )
 }
 

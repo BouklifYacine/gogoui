@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { cn } from '../lib/cn.ts'
@@ -45,7 +45,7 @@ export function SlideInk({
   const done = phase === 'done'
   const stage = phase === 'confirming' ? 'busy' : done ? 'done' : 'slide'
   return (
-    <motion.div
+    <m.div
       aria-hidden="true"
       className={cn(
         'absolute inset-0 transition-colors duration-300 ease-out motion-reduce:transition-none',
@@ -54,7 +54,7 @@ export function SlideInk({
       style={{ clipPath: fillClip, opacity: fillOpacity }}
     >
       <AnimatePresence initial={false} mode="popLayout">
-        <motion.span
+        <m.span
           key={stage}
           initial={{ opacity: 0, y: 8, filter: 'blur(2px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -73,8 +73,8 @@ export function SlideInk({
           )}
         >
           {stageLabel}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   )
 }

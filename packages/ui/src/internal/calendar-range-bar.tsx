@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { cn } from '../lib/cn.ts'
 import type { Color } from './colors.ts'
@@ -37,7 +37,7 @@ export function CalendarRangeBar({
   const stretch = instant ? { duration: 0 } : spring.morph
   const at = { left: `${left}%`, width: `${width}%` }
   return (
-    <motion.span
+    <m.span
       aria-hidden="true"
       className={cn('absolute rounded-full', tint[color])}
       // A row is a seventh of the layer's width tall (cqw: the layer is a

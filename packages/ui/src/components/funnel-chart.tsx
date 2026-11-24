@@ -1,8 +1,10 @@
-import { motion, useSpring, useTransform } from 'motion/react'
+import { m, useSpring, useTransform } from 'motion/react'
+import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 
+import { MotionFeatures } from '../internal/motion-features.tsx'
 import { cn } from '../lib/cn.ts'
 
 // Adapted from Bklit UI's funnel chart (MIT, Copyright (c) 2026 uixmat,
@@ -211,7 +213,7 @@ function useRingScale({
 function HRing({ d, color, fill, opacity, ...rest }: RingProps) {
   const scaleY = useRingScale(rest)
   return (
-    <motion.path
+    <m.path
       d={d}
       fill={fill ?? color}
       opacity={opacity}
@@ -223,7 +225,7 @@ function HRing({ d, color, fill, opacity, ...rest }: RingProps) {
 function VRing({ d, color, fill, opacity, ...rest }: RingProps) {
   const scaleX = useRingScale(rest)
   return (
-    <motion.path
+    <m.path
       d={d}
       fill={fill ?? color}
       opacity={opacity}
@@ -349,11 +351,11 @@ function Segment({
   })
 
   return (
-    <motion.div
+    <m.div
       className="pointer-events-none relative shrink-0 overflow-visible"
       style={{ width, height, zIndex: hovered ? 10 : 1, opacity: dimOpacity }}
     >
-      <motion.div
+      <m.div
         className="absolute inset-0 overflow-visible"
         style={{
           scaleX: entranceScale,
@@ -401,8 +403,8 @@ function Segment({
             )
           })}
         </svg>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   )
 }
 
@@ -468,7 +470,7 @@ function SegmentLabel({
 
   if (layout === 'spread') {
     return (
-      <motion.div
+      <m.div
         animate={{ opacity: 1 }}
         className={cn(
           'absolute inset-0 flex',
@@ -502,7 +504,7 @@ function SegmentLabel({
             </div>
           </>
         )}
-      </motion.div>
+      </m.div>
     )
   }
 
@@ -523,7 +525,7 @@ function SegmentLabel({
   } as const
 
   return (
-    <motion.div
+    <m.div
       animate={{ opacity: 1 }}
       className={cn(
         'absolute inset-0 flex',
@@ -547,7 +549,7 @@ function SegmentLabel({
         {pctEl}
         {labelEl}
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -658,21 +660,59 @@ export function FunnelChart({
   const gridLineWidth = gridCfg.lineWidth ?? 1
 
   return (
-    <div
-      className={cn('relative w-full select-none overflow-visible', className)}
-      ref={ref}
-      style={{ aspectRatio: horiz ? '2.2 / 1' : '1 / 1.8', ...style }}
-    >
-      {W > 0 && H > 0 && (
-        <>
-          {/* Grid background bands */}
-          {gridEnabled && (
-            <svg
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 h-full w-full"
-              preserveAspectRatio="none"
-              role="presentation"
-              viewBox={`0 0 ${W} ${H}`}
+    <MotionFeatures>
+      <div
+        className={cn(
+          'relative w-full select-none overflow-visible',
+          className,
+        )}
+        ref={ref}
+        style={{ aspectRatio: horiz ? '2.2 / 1' : '1 / 1.8', ...style }}
+      >
+        {W > 0 && H > 0 && (
+          <>
+            {/* Grid background bands */}
+            {gridEnabled && (
+              <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
+                role="presentation"
+                viewBox={`0 0 ${W} ${H}`}
+              >
+                {showBands &&
+                  data.map((stage, i) => {
+                    if (i % 2 !== 0) return null
+                    return horiz ? (
+                      <rect
+                        fill={bandColor}
+                        height={H}
+                        key={`band-${stage.label}`}
+                        width={segW}
+                        x={(segW + gap) * i}
+                        y={0}
+                      />
+                    ) : (
+                      <rect
+                        fill={bandColor}
+                        height={segH}
+                        key={`band-${stage.label}`}
+                        width={W}
+                        x={0}
+                        y={(segH + gap) * i}
+                      />
+                    )
+                  })}
+              </svg>
+            )}
+
+            {/* Segments */}
+            <div
+              className={cn(
+                'absolute inset-0 flex overflow-visible',
+                horiz ? 'flex-row' : 'flex-col',
+              )}
+              style={{ gap }}
             >
               {data.map((stage, i) => {
                 const firstStop = stage.gradient?.[0]
@@ -736,99 +776,41 @@ export function FunnelChart({
               const isDimmed = hoveredIndex !== null && hoveredIndex !== i
 
               return (
-                <Segment
-                  color={firstStop ? firstStop.color : (stage.color ?? color)}
-                  dimmed={hoveredIndex !== null && hoveredIndex !== i}
-                  fullSize={horiz ? H : W}
-                  gradientStops={stage.gradient}
-                  hovered={hoveredIndex === i}
-                  index={i}
-                  key={stage.label}
-                  layers={layers}
-                  normEnd={norms[Math.min(i + 1, n - 1)] ?? 0}
-                  normStart={norms[i] ?? 0}
-                  reduced={reduced}
-                  renderPattern={renderPattern}
-                  segSize={horiz ? segW : segH}
-                  staggerDelay={staggerDelay}
-                  straight={edges === 'straight'}
-                  vertical={!horiz}
-                />
+                <m.div
+                  animate={{ opacity: isDimmed ? 0.4 : 1 }}
+                  className="absolute cursor-pointer"
+                  key={`lbl-${stage.label}`}
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  style={{ ...posStyle, zIndex: 20 }}
+                  transition={
+                    reduced
+                      ? { duration: 0 }
+                      : { type: 'spring', stiffness: 300, damping: 24 }
+                  }
+                >
+                  <SegmentLabel
+                    align={labelAlign}
+                    formatPercentage={writePercentage}
+                    formatValue={writeValue}
+                    index={i}
+                    isHorizontal={horiz}
+                    layout={labelLayout}
+                    orientation={labelOrientation}
+                    pct={pct}
+                    reduced={reduced}
+                    showLabels={showLabels}
+                    showPercentage={showPercentage}
+                    showValues={showValues}
+                    stage={stage}
+                    staggerDelay={staggerDelay}
+                  />
+                </m.div>
               )
             })}
-          </div>
-
-          {/* Grid lines */}
-          {gridEnabled && showGridLines && (
-            <svg
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 h-full w-full"
-              preserveAspectRatio="none"
-              role="presentation"
-              viewBox={`0 0 ${W} ${H}`}
-            >
-              {Array.from({ length: n - 1 }, (_, i) => {
-                const idx = i + 1
-                const at = (horiz ? segW : segH) * idx + gap * i + gap / 2
-                return (
-                  <line
-                    key={`grid-${idx}`}
-                    stroke={gridLineColor}
-                    strokeOpacity={gridLineOpacity}
-                    strokeWidth={gridLineWidth}
-                    x1={horiz ? at : 0}
-                    x2={horiz ? at : W}
-                    y1={horiz ? 0 : at}
-                    y2={horiz ? H : at}
-                  />
-                )
-              })}
-            </svg>
-          )}
-
-          {/* Label overlays — hover triggers */}
-          {data.map((stage, i) => {
-            const pct = (stage.value / max) * 100
-            const posStyle: CSSProperties = horiz
-              ? { left: (segW + gap) * i, width: segW, top: 0, height: H }
-              : { top: (segH + gap) * i, height: segH, left: 0, width: W }
-            const isDimmed = hoveredIndex !== null && hoveredIndex !== i
-
-            return (
-              <motion.div
-                animate={{ opacity: isDimmed ? 0.4 : 1 }}
-                className="absolute cursor-pointer"
-                key={`lbl-${stage.label}`}
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                style={{ ...posStyle, zIndex: 20 }}
-                transition={
-                  reduced
-                    ? { duration: 0 }
-                    : { type: 'spring', stiffness: 300, damping: 24 }
-                }
-              >
-                <SegmentLabel
-                  align={labelAlign}
-                  formatPercentage={formatPercentage}
-                  formatValue={formatValue}
-                  index={i}
-                  isHorizontal={horiz}
-                  layout={labelLayout}
-                  orientation={labelOrientation}
-                  pct={pct}
-                  reduced={reduced}
-                  showLabels={showLabels}
-                  showPercentage={showPercentage}
-                  showValues={showValues}
-                  stage={stage}
-                  staggerDelay={staggerDelay}
-                />
-              </motion.div>
-            )
-          })}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </MotionFeatures>
   )
 }

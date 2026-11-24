@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion, useInView } from 'motion/react'
+import { AnimatePresence, m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -96,7 +96,7 @@ function RollingNumber({
                   delay={Math.min(part.order * stagger.item, 0.25)}
                 />
               ) : (
-                <motion.span
+                <m.span
                   key={part.key}
                   initial={{ width: 0, opacity: 0 }}
                   animate={{ width: 'auto', opacity: 1 }}
@@ -105,7 +105,7 @@ function RollingNumber({
                   className="inline-block overflow-x-clip whitespace-pre"
                 >
                   {part.text}
-                </motion.span>
+                </m.span>
               ),
             )}
           </AnimatePresence>

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import type { HTMLAttributes, Ref } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -74,7 +74,7 @@ export function SelectMorphValue({
     >
       <MotionScope>
         <AnimatePresence initial={false}>
-          <motion.span
+          <m.span
             key={shown.key}
             data-placeholder={isPlaceholder || undefined}
             className="col-start-1 row-start-1 block truncate data-placeholder:text-fg-subtle"
@@ -96,7 +96,7 @@ export function SelectMorphValue({
             transition={transition}
           >
             {children}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </MotionScope>
     </span>

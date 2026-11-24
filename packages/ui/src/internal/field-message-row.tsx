@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import type { ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -50,7 +50,7 @@ export function FieldMessageRow({
   }, [])
 
   return (
-    <motion.div
+    <m.div
       className="-mt-2 overflow-hidden"
       // Still, the row is there at full height at once: a zero-length
       // opening would still paint one closed frame.
@@ -82,7 +82,7 @@ export function FieldMessageRow({
           '[&_a]:underline [&_a]:underline-offset-4',
         )}
       >
-        <motion.div
+        <m.div
           initial={
             reduce ? false : { y: '0.35em', filter: `blur(${blur.soft}px)` }
           }
@@ -98,8 +98,8 @@ export function FieldMessageRow({
           ) : (
             children
           )}
-        </motion.div>
+        </m.div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }

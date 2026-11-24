@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { ClipboardEvent, KeyboardEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -462,7 +462,7 @@ function PhoneField({
               />
               <AnimatePresence initial={false}>
                 {status === 'valid' && (
-                  <motion.span
+                  <m.span
                     key="valid"
                     aria-hidden="true"
                     className="pointer-events-none absolute top-1/2 right-3 z-1 -mt-2 grid size-4 place-items-center text-success-fg [&_svg]:size-4"
@@ -486,7 +486,7 @@ function PhoneField({
                     }
                   >
                     <GoGoIcon name="check" weight="bold" />
-                  </motion.span>
+                  </m.span>
                 )}
               </AnimatePresence>
             </div>

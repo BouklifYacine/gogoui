@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
+import { MotionFeatures } from './motion-features.tsx'
 import { spring } from './motion.ts'
 
 // The rows a menu can highlight: items, checkbox and radio items, and the
@@ -87,9 +88,9 @@ export function MenuHighlight() {
   )
 
   return (
-    <>
+    <MotionFeatures>
       <span ref={followRows} hidden />
-      <motion.span
+      <m.span
         aria-hidden="true"
         data-slot="menu-highlight"
         style={{ y: top, height, opacity }}
@@ -98,6 +99,6 @@ export function MenuHighlight() {
           danger ? 'bg-danger-subtle' : 'bg-menu-highlight',
         )}
       />
-    </>
+    </MotionFeatures>
   )
 }

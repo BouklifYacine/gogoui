@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { RollingNumber } from '../components/rolling-number.tsx'
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -29,7 +29,7 @@ export function MotionWords({ text }: { text: string }) {
       <span aria-hidden="true" className="relative block">
         <AnimatePresence initial={false} mode="popLayout">
           {words.map((word, index) => (
-            <motion.span
+            <m.span
               // A count keeps its key so its digits roll in place.
               key={`${index}:${isCount(word) ? '#' : word}`}
               className="inline-block whitespace-pre"
@@ -60,7 +60,7 @@ export function MotionWords({ text }: { text: string }) {
             >
               {isCount(word) ? <RollingNumber value={Number(word)} /> : word}
               {index < words.length - 1 ? ' ' : null}
-            </motion.span>
+            </m.span>
           ))}
         </AnimatePresence>
       </span>

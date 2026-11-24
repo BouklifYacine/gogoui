@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
 import { CalendarDotsIcon } from '@phosphor-icons/react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import type { DateRange, Matcher } from 'react-day-picker'
 import { fr } from 'react-day-picker/locale'
 
@@ -271,7 +271,7 @@ function DateRangePicker({
                       {/* One highlight for the rail: it glides to the
                           shortcut chosen. */}
                       {chosen && (
-                        <motion.span
+                        <m.span
                           layoutId={highlightId}
                           aria-hidden="true"
                           className="absolute inset-0 -z-10 rounded-xl bg-selected"

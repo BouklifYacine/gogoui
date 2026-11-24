@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -55,7 +55,7 @@ function StepProgress({
         </p>
         <div aria-hidden="true" className="relative mx-4 h-8">
           <span className="absolute inset-x-0 top-3.5 h-1 rounded-full bg-tray" />
-          <motion.span
+          <m.span
             className="absolute start-0 top-3.5 h-1 rounded-full bg-success"
             initial={false}
             animate={{ width: `${(index / last) * 100}%` }}
@@ -65,7 +65,7 @@ function StepProgress({
             const done = step < index
             const here = step === index
             return (
-              <motion.span
+              <m.span
                 key={name}
                 initial={false}
                 animate={{ scale: here ? [0.7, 1] : 1 }}
@@ -88,7 +88,7 @@ function StepProgress({
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <motion.path
+                    <m.path
                       d="M5 12.5l4.5 4.5L19 7.5"
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
@@ -98,7 +98,7 @@ function StepProgress({
                 ) : (
                   step + 1
                 )}
-              </motion.span>
+              </m.span>
             )
           })}
         </div>

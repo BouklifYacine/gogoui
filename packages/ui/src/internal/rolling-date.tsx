@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -87,7 +87,7 @@ export function RollingDate({
       <span aria-hidden="true" className="inline-flex whitespace-pre">
         <MotionScope>
           {parts.map((part, index) => (
-            <motion.span
+            <m.span
               key={`${index}-${part.type}`}
               layout="position"
               layoutDependency={time}
@@ -102,7 +102,7 @@ export function RollingDate({
                   initial={false}
                   custom={direction}
                 >
-                  <motion.span
+                  <m.span
                     key={words[index]}
                     custom={direction}
                     variants={reduce ? fade : roll}
@@ -112,10 +112,10 @@ export function RollingDate({
                     className="inline-block whitespace-pre"
                   >
                     {words[index]}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               )}
-            </motion.span>
+            </m.span>
           ))}
         </MotionScope>
       </span>

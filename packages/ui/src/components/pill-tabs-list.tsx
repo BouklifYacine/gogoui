@@ -1,10 +1,11 @@
 import { useCallback, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 
 import { fill, onFill } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
+import { MotionFeatures } from '../internal/motion-features.tsx'
 import { cn } from '../lib/cn.ts'
 import { TabsList, TabsTrigger } from './tabs.tsx'
 
@@ -151,15 +152,17 @@ function PillTabsList<TValue extends string>({
       )}
     >
       <span ref={followChosenTab} hidden />
-      <motion.span
-        aria-hidden="true"
-        style={{ x: left, width }}
-        className={cn(
-          'pointer-events-none absolute top-1 bottom-1 left-0 rounded-full bg-inverse will-change-[transform,width]',
-          color && fill[color],
-          !placed && 'invisible',
-        )}
-      />
+      <MotionFeatures>
+        <m.span
+          aria-hidden="true"
+          style={{ x: left, width }}
+          className={cn(
+            'pointer-events-none absolute top-1 bottom-1 left-0 rounded-full bg-inverse will-change-[transform,width]',
+            color && fill[color],
+            !placed && 'invisible',
+          )}
+        />
+      </MotionFeatures>
       {tabs.map((tab) => {
         const active = value === tab.value
         return (

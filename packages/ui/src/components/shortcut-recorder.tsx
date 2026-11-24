@@ -2,7 +2,7 @@
 // Kuratli), on GoGoUI's Kbd, tokens and words.
 import { useCallback, useId, useRef, useState } from 'react'
 import type { KeyboardEvent, MouseEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -495,7 +495,7 @@ function ShortcutRecorder({
               )}
               <AnimatePresence initial={false} mode="popLayout">
                 {tokens.map((token, index) => (
-                  <motion.span
+                  <m.span
                     key={token.id}
                     layout={reduce ? false : 'position'}
                     custom={recording ? 0 : index}
@@ -523,13 +523,11 @@ function ShortcutRecorder({
                         pending &&
                           'border-warning-line bg-warning-subtle text-fg',
                       )}
-                    >
-                      {token.label}
-                    </Kbd>
-                  </motion.span>
+                    />
+                  </m.span>
                 ))}
                 {tokens.length === 0 && (
-                  <motion.span
+                  <m.span
                     key={recording ? 'prompt' : 'placeholder'}
                     className={cn(
                       'pl-0.75 text-sm whitespace-nowrap',
@@ -554,7 +552,7 @@ function ShortcutRecorder({
                     {recording
                       ? messages.shortcutPressKeys
                       : (placeholder ?? messages.shortcutPlaceholder)}
-                  </motion.span>
+                  </m.span>
                 )}
               </AnimatePresence>
             </span>
@@ -563,7 +561,7 @@ function ShortcutRecorder({
           <span className="flex shrink-0 items-center gap-0.5 pr-0.5">
             <AnimatePresence initial={false}>
               {canReset && (
-                <motion.button
+                <m.button
                   key="reset"
                   type="button"
                   className={smallButton}
@@ -579,10 +577,10 @@ function ShortcutRecorder({
                     aria-hidden="true"
                     className="size-4"
                   />
-                </motion.button>
+                </m.button>
               )}
               {canClear && (
-                <motion.button
+                <m.button
                   key="clear"
                   type="button"
                   className={smallButton}
@@ -598,7 +596,7 @@ function ShortcutRecorder({
                     aria-hidden="true"
                     className="size-4"
                   />
-                </motion.button>
+                </m.button>
               )}
             </AnimatePresence>
           </span>
@@ -606,7 +604,7 @@ function ShortcutRecorder({
 
         <AnimatePresence initial={false}>
           {message && (
-            <motion.div
+            <m.div
               key="slot"
               className="relative overflow-hidden"
               initial={reduce ? false : { height: 0, opacity: 0 }}
@@ -632,7 +630,7 @@ function ShortcutRecorder({
             >
               <div ref={measureMessage}>
                 <AnimatePresence initial={false} mode="popLayout">
-                  <motion.div
+                  <m.div
                     key={message.key}
                     id={messageId}
                     className={cn(
@@ -709,10 +707,10 @@ function ShortcutRecorder({
                         </button>
                       </span>
                     )}
-                  </motion.div>
+                  </m.div>
                 </AnimatePresence>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
         <span role="status" aria-live="polite" className="sr-only">

@@ -2,7 +2,7 @@ import { useId, useRef, useState } from 'react'
 import type { KeyboardEvent, PointerEvent } from 'react'
 import {
   animate,
-  motion,
+  m,
   useMotionValue,
   useMotionValueEvent,
   useSpring,
@@ -382,7 +382,7 @@ function RangeSlider({
             <div className="absolute inset-0 flex items-end gap-0.5 *:bg-track">
               {bars}
             </div>
-            <motion.div
+            <m.div
               className={cn(
                 'absolute inset-0 flex items-end gap-0.5',
                 color ? litBars[color] : '*:bg-inverse',
@@ -390,7 +390,7 @@ function RangeSlider({
               style={{ clipPath: barsClip }}
             >
               {bars}
-            </motion.div>
+            </m.div>
           </div>
         )}
         <div
@@ -413,7 +413,7 @@ function RangeSlider({
           className="relative h-7 cursor-pointer touch-none"
         >
           <span className="absolute inset-x-0 top-3 h-1 rounded-full bg-tray" />
-          <motion.span
+          <m.span
             className={cn(
               'absolute top-3 h-1 rounded-full bg-inverse',
               color && fill[color],
@@ -422,7 +422,7 @@ function RangeSlider({
           />
 
           {([0, 1] as const).map((thumb) => (
-            <motion.span
+            <m.span
               key={thumb}
               aria-hidden="true"
               className={bubble}
@@ -439,9 +439,9 @@ function RangeSlider({
               }}
             >
               {shown(values[thumb], thumb)}
-            </motion.span>
+            </m.span>
           ))}
-          <motion.span
+          <m.span
             aria-hidden="true"
             className={bubble}
             style={{
@@ -453,10 +453,10 @@ function RangeSlider({
             animate={{ opacity: merged ? 1 : 0, scale: merged ? 1 : 0.8 }}
           >
             {`${format(lo)} – ${shown(hi, 1)}`}
-          </motion.span>
+          </m.span>
 
           {([0, 1] as const).map((thumb) => (
-            <motion.span
+            <m.span
               key={thumb}
               id={thumbId(thumb)}
               role="slider"
@@ -497,7 +497,7 @@ function RangeSlider({
                   className="pointer-events-none absolute bottom-1/2 left-1/2 h-[calc(50%+0.5rem+4.75rem)] w-px -translate-x-1/2 origin-bottom scale-y-60 bg-fg-subtle opacity-0 transition-[opacity,scale] duration-200 ease-enter data-on:scale-y-100 data-on:opacity-100 motion-reduce:scale-y-100"
                 />
               )}
-            </motion.span>
+            </m.span>
           ))}
         </div>
       </div>

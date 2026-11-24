@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'motion/react'
+import { m, useTransform } from 'motion/react'
 
 import { duration, ease } from './motion.ts'
 import { barCenter, useBarSlot } from './use-bar-slot.ts'
@@ -31,7 +31,7 @@ export function BarChartAxisLabel({
   const { slot, attach } = useBarSlot(place, reduce)
   const x = useTransform(() => barCenter(frame, slot.get()) - size / 2 + shift)
   return (
-    <motion.span
+    <m.span
       style={{ x }}
       className="absolute top-2 left-0 text-xs/none whitespace-nowrap text-fg-subtle tabular-nums"
       initial={{ opacity: 0 }}
@@ -44,6 +44,6 @@ export function BarChartAxisLabel({
     >
       {/* A plain element carries the slot's spring: motion's own elements never re-run a changed ref. */}
       <span ref={attach}>{text}</span>
-    </motion.span>
+    </m.span>
   )
 }

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -27,7 +27,7 @@ export function FollowHeight({
 
   return (
     <MotionScope>
-      <motion.div
+      <m.div
         data-slot="follow-height"
         initial={false}
         animate={{ height: size?.height ?? 'auto' }}
@@ -35,7 +35,7 @@ export function FollowHeight({
         className={cn('overflow-hidden', className)}
       >
         <div ref={measure}>{children}</div>
-      </motion.div>
+      </m.div>
     </MotionScope>
   )
 }

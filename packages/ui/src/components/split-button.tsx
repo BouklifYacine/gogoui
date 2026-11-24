@@ -1,6 +1,6 @@
 import { isValidElement } from 'react'
 import type { ReactNode } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { TargetAndTransition, Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -175,7 +175,7 @@ function SplitButton({
             ) : (
               <>
                 {/* The words morph inside a window whose width springs to them. */}
-                <motion.span
+                <m.span
                   aria-hidden="true"
                   style={{ width }}
                   className="inline-flex min-w-0 items-center data-morphing:[clip-path:inset(-50%_-0.5rem)]"
@@ -188,7 +188,7 @@ function SplitButton({
                     {iconStart && !loading && (
                       <span data-icon="inline-start" className="inline-grid">
                         <AnimatePresence initial={false}>
-                          <motion.span
+                          <m.span
                             key={glyph}
                             className="col-start-1 row-start-1 inline-flex items-center justify-center"
                             initial={reduce ? fadeIn : iconIn}
@@ -201,13 +201,13 @@ function SplitButton({
                             }
                           >
                             {iconStart}
-                          </motion.span>
+                          </m.span>
                         </AnimatePresence>
                       </span>
                     )}
                     <MorphText text={words} />
                   </span>
-                </motion.span>
+                </m.span>
                 <span className="sr-only" aria-live="polite">
                   {words}
                 </span>

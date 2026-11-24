@@ -11,7 +11,7 @@ import {
   animate,
   cancelFrame,
   frame,
-  motion,
+  m,
   motionValue,
   useInView,
 } from 'motion/react'
@@ -973,7 +973,7 @@ function DonutChart({
             className="pointer-events-none absolute top-1/2 left-1/2 grid w-[calc(var(--inner)-1rem)] -translate-x-1/2 -translate-y-1/2"
           >
             {readouts.map((item, index) => (
-              <motion.span
+              <m.span
                 key={item.key}
                 initial={false}
                 {...drum(index - activeIndex, reduce)}
@@ -1001,7 +1001,7 @@ function DonutChart({
                     unit || ' '
                   )}
                 </span>
-              </motion.span>
+              </m.span>
             ))}
           </div>
         </div>
@@ -1019,7 +1019,7 @@ function DonutChart({
                 const off = hidden.has(item.key)
                 return (
                   // A row that joins or leaves opens or closes its height, so the rows below glide.
-                  <motion.li
+                  <m.li
                     key={item.key}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
@@ -1097,7 +1097,7 @@ function DonutChart({
                         )}
                       />
                     </button>
-                  </motion.li>
+                  </m.li>
                 )
               })}
             </AnimatePresence>

@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { TargetAndTransition, Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -315,7 +315,7 @@ function ActionSwap({
         )}
       >
         {/* The padding eases to nothing as the pill folds round its spinner. */}
-        <motion.span
+        <m.span
           className="inline-flex items-center justify-center"
           style={
             {
@@ -326,7 +326,7 @@ function ActionSwap({
           animate={{ '--fold': folded ? 1 : 0 }}
           transition={reduce ? { duration: 0 } : spring.morph}
         >
-          <motion.span
+          <m.span
             aria-hidden="true"
             className="relative grid h-4 flex-none place-items-center"
             initial={false}
@@ -335,7 +335,7 @@ function ActionSwap({
           >
             <AnimatePresence initial={false}>
               {view.icon ? (
-                <motion.span
+                <m.span
                   key={view.key}
                   className="col-start-1 row-start-1 inline-flex items-center justify-center [&_svg]:size-4"
                   initial={reduce ? fadeIn : wipe ? successIn : iconIn}
@@ -350,11 +350,11 @@ function ActionSwap({
                   }
                 >
                   {view.icon}
-                </motion.span>
+                </m.span>
               ) : null}
             </AnimatePresence>
-          </motion.span>
-          <motion.span
+          </m.span>
+          <m.span
             aria-hidden="true"
             style={{ width }}
             className="inline-flex min-w-0"
@@ -366,8 +366,8 @@ function ActionSwap({
             >
               <MorphText text={view.label} />
             </span>
-          </motion.span>
-        </motion.span>
+          </m.span>
+        </m.span>
         <span className="sr-only">
           {(view.label === active.label && active.srLabel) ||
             view.label ||

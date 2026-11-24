@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'motion/react'
+import { m, useTransform } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 import type { Icon } from '@phosphor-icons/react'
 
@@ -106,7 +106,7 @@ export function SwipeActionLayer({
   const iconScale = useTransform(iconReveal, (value) => 0.6 + 0.4 * value)
 
   return (
-    <motion.button
+    <m.button
       type="button"
       tabIndex={-1}
       aria-hidden="true"
@@ -119,7 +119,7 @@ export function SwipeActionLayer({
       style={{ x: shift, zIndex: rank + 1 }}
       onClick={onPress}
     >
-      <motion.span
+      <m.span
         className={cn(
           'absolute inset-y-0 w-0',
           side === 'trailing' ? 'left-0' : 'right-0',
@@ -131,21 +131,21 @@ export function SwipeActionLayer({
           style={{ left: -ACTION / 2, width: ACTION }}
         >
           {ActionIcon && (
-            <motion.span
+            <m.span
               className="grid place-items-center"
               style={{ opacity: iconReveal, scale: iconScale }}
             >
               <ActionIcon aria-hidden="true" className="size-5" />
-            </motion.span>
+            </m.span>
           )}
-          <motion.span
+          <m.span
             className="text-xs font-medium whitespace-nowrap"
             style={{ opacity: labelReveal }}
           >
             {label}
-          </motion.span>
+          </m.span>
         </span>
-      </motion.span>
-    </motion.button>
+      </m.span>
+    </m.button>
   )
 }

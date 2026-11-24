@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import type { HTMLAttributes, Ref } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -90,7 +90,7 @@ export function SelectRollingValue({
       <span className="sr-only">{children}</span>
       <MotionScope>
         <AnimatePresence initial={false} custom={shown.direction}>
-          <motion.span
+          <m.span
             key={shown.key}
             aria-hidden="true"
             data-placeholder={isPlaceholder || undefined}
@@ -102,7 +102,7 @@ export function SelectRollingValue({
             className="col-start-1 row-start-1 block truncate data-placeholder:text-fg-subtle"
           >
             {children}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </MotionScope>
     </span>

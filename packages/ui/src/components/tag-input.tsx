@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react'
-import { AnimatePresence, animate, motion } from 'motion/react'
+import { AnimatePresence, animate, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -347,7 +347,7 @@ function TagInput({
 
   return (
     <MotionScope>
-      <motion.div
+      <m.div
         data-slot="tag-input"
         data-size={size}
         data-invalid={invalid || undefined}
@@ -391,7 +391,7 @@ function TagInput({
                 // The keyboard picks a tag with the arrows; the click is a
                 // shortcut for the mouse.
                 // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                <motion.li
+                <m.li
                   key={tag}
                   layout={reduce ? false : 'position'}
                   data-tag={tag}
@@ -467,11 +467,11 @@ function TagInput({
                       className="size-3.5"
                     />
                   </button>
-                </motion.li>
+                </m.li>
               ))}
             </AnimatePresence>
           </ul>
-          <motion.span
+          <m.span
             layout={reduce ? false : 'position'}
             transition={{ layout: move }}
             className="relative flex min-w-20 flex-1 basis-24"
@@ -480,7 +480,7 @@ function TagInput({
                 tag leaves; the field's own stays for screen readers. */}
             <AnimatePresence initial={false}>
               {!draft && tags.length === 0 && placeholder ? (
-                <motion.span
+                <m.span
                   key="placeholder"
                   aria-hidden="true"
                   initial={
@@ -502,7 +502,7 @@ function TagInput({
                   className="pointer-events-none absolute inset-0 flex items-center overflow-hidden px-1.5 text-sm whitespace-nowrap text-fg-subtle max-md:text-[16px]"
                 >
                   {placeholder}
-                </motion.span>
+                </m.span>
               ) : null}
             </AnimatePresence>
             <input
@@ -537,7 +537,7 @@ function TagInput({
                 sized.item,
               )}
             />
-          </motion.span>
+          </m.span>
         </div>
         {name
           ? tags.map((tag) => (
@@ -547,7 +547,7 @@ function TagInput({
         <span aria-live="polite" className="sr-only">
           {notice}
         </span>
-      </motion.div>
+      </m.div>
     </MotionScope>
   )
 }

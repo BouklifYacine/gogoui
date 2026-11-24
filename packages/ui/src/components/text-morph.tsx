@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
-import { AnimatePresence, animate, motion } from 'motion/react'
+import { AnimatePresence, animate, m } from 'motion/react'
 import type { AnimationPlaybackControls } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -153,7 +153,7 @@ function TextMorph({ children, className, render, ...props }: TextMorphProps) {
                     {glyphs.map(({ char, key }) => {
                       const order = Math.max(0, arriving.indexOf(key))
                       return (
-                        <motion.span
+                        <m.span
                           key={key}
                           layout="position"
                           className="inline-block origin-[50%_60%] whitespace-pre"
@@ -203,7 +203,7 @@ function TextMorph({ children, className, render, ...props }: TextMorphProps) {
                           }
                         >
                           {char === ' ' ? ' ' : char}
-                        </motion.span>
+                        </m.span>
                       )
                     })}
                   </AnimatePresence>

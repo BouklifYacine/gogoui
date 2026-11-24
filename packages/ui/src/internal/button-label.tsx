@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { MotionScope } from './motion-scope.tsx'
 import { duration, ease } from './motion.ts'
@@ -18,7 +18,7 @@ export function ButtonLabel({ children }: { children: ReactNode }) {
   return (
     <MotionScope>
       <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
+        <m.span
           key={children}
           data-slot="button-label"
           className="inline-block"
@@ -34,7 +34,7 @@ export function ButtonLabel({ children }: { children: ReactNode }) {
           }}
         >
           {children}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </MotionScope>
   )

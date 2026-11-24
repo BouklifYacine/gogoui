@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -101,7 +101,7 @@ function BillingPrice({
         <span className="inline-flex items-baseline pb-0.5 text-sm whitespace-nowrap text-fg-muted">
           <AnimatePresence initial={false}>
             {showWas && (
-              <motion.span
+              <m.span
                 key="was"
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: 'auto' }}
@@ -124,11 +124,11 @@ function BillingPrice({
                   </span>
                   <span aria-hidden="true">{wasText}</span>
                 </del>
-              </motion.span>
+              </m.span>
             )}
           </AnimatePresence>
           {period && (
-            <motion.span
+            <m.span
               initial={false}
               animate={periodSize ? { width: periodSize.width } : undefined}
               transition={reduce ? { duration: 0 } : spring.smooth}
@@ -142,7 +142,7 @@ function BillingPrice({
                 {period}
               </span>
               <AnimatePresence initial={false}>
-                <motion.span
+                <m.span
                   key={period}
                   variants={reduce ? swapFade : swapRise}
                   initial="hidden"
@@ -151,9 +151,9 @@ function BillingPrice({
                   className="absolute top-0 left-0 inline-block"
                 >
                   {period}
-                </motion.span>
+                </m.span>
               </AnimatePresence>
-            </motion.span>
+            </m.span>
           )}
         </span>
       </span>

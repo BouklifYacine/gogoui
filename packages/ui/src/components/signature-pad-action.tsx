@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -87,7 +87,7 @@ function SignaturePadAction({
     >
       {action === 'replay' ? (
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
+          <m.span
             key={playing ? 'stop' : 'play'}
             className="grid place-items-center"
             initial={{ opacity: 0, scale: 0.6 }}
@@ -98,7 +98,7 @@ function SignaturePadAction({
             }
           >
             <GoGoIcon name={playing ? 'stop' : 'play'} className="size-4" />
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       ) : (
         <GoGoIcon

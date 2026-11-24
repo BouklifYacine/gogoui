@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { motion, useInView } from 'motion/react'
+import { m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -575,7 +575,7 @@ export function Ridgeline({
               className="pointer-events-none absolute inset-x-0 top-0"
             >
               {ticks.map((value) => (
-                <motion.div
+                <m.div
                   key={value}
                   style={{ top: top - rowHeight * 0.5 }}
                   className="absolute bottom-0 left-0 w-px bg-line-subtle"
@@ -586,7 +586,7 @@ export function Ridgeline({
                   <span className="absolute bottom-0 left-0 -translate-x-1/2 text-xs/none whitespace-nowrap text-fg-subtle tabular-nums">
                     {format(value)}
                   </span>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           )}
@@ -628,7 +628,7 @@ export function Ridgeline({
                     }
                     className="transition-opacity duration-200 ease-standard group-data-active/ridge:data-dim:opacity-38 data-lifted:opacity-0 data-lifted:duration-100 motion-reduce:transition-none"
                   >
-                    <motion.path
+                    <m.path
                       className="fill-[color-mix(in_oklab,var(--ridge)_34%,var(--surface))] stroke-none"
                       initial={
                         reduce ? false : { d: curvePath(shape, true, true) }
@@ -636,7 +636,7 @@ export function Ridgeline({
                       animate={{ d: curvePath(shape, true, !shown) }}
                       transition={motionFor(shape.row)}
                     />
-                    <motion.line
+                    <m.line
                       className="stroke-[color-mix(in_oklab,var(--ridge)_55%,var(--surface))] stroke-1"
                       initial={
                         reduce
@@ -653,7 +653,7 @@ export function Ridgeline({
                       }}
                       transition={motionFor(shape.row)}
                     />
-                    <motion.path
+                    <m.path
                       className="fill-none stroke-(--ridge) [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:1.5]"
                       initial={
                         reduce ? false : { d: curvePath(shape, false, true) }

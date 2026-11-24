@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
-import { animate, motion, useMotionValue } from 'motion/react'
+import { animate, m, useMotionValue } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
 import type { Color } from './colors.ts'
+import { MotionFeatures } from './motion-features.tsx'
 import { duration, ease } from './motion.ts'
 
 // Arc's morph spring written as physics (0.3s, no bounce), so a glide
@@ -123,9 +124,9 @@ export function RadioCardRing({
   )
 
   return (
-    <>
+    <MotionFeatures>
       <span ref={followChoice} hidden />
-      <motion.span
+      <m.span
         aria-hidden="true"
         data-slot="radio-card-ring"
         style={{ x, y, width, height, opacity }}
@@ -135,6 +136,6 @@ export function RadioCardRing({
           edge[color],
         )}
       />
-    </>
+    </MotionFeatures>
   )
 }

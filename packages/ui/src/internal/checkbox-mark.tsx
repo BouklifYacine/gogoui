@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -46,7 +46,7 @@ export function CheckboxMark({
   const still = { duration: 0 }
   return (
     <>
-      <motion.span
+      <m.span
         aria-hidden="true"
         initial={false}
         animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.6 }}
@@ -60,7 +60,7 @@ export function CheckboxMark({
         focusable="false"
         className={cn('relative size-full overflow-visible', onFill[color])}
       >
-        <motion.path
+        <m.path
           initial={false}
           animate={{
             d: indeterminate ? DASH : TICK,

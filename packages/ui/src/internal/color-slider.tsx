@@ -1,5 +1,5 @@
 import type { CSSProperties, KeyboardEvent } from 'react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -74,7 +74,7 @@ export function ColorSlider({
       style={{ '--track': track } as CSSProperties}
       {...(disabled ? {} : pad)}
     >
-      <motion.div
+      <m.div
         role="slider"
         tabIndex={disabled ? -1 : 0}
         aria-label={label}

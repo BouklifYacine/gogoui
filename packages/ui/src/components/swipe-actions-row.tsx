@@ -2,7 +2,7 @@
 // Kuratli), on GoGoUI's tokens, colours and RowActionsMenu.
 import { useCallback, useContext, useId, useRef, useState } from 'react'
 import type { FocusEvent, MouseEvent, PointerEvent, ReactNode } from 'react'
-import { animate, motion, useIsPresent, useMotionValue } from 'motion/react'
+import { animate, m, useIsPresent, useMotionValue } from 'motion/react'
 import type { AnimationPlaybackControls } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -526,7 +526,7 @@ function SwipeActionsRow({
       }
 
   return (
-    <motion.li
+    <m.li
       ref={watchRow}
       data-slot="swipe-actions-row"
       className={cn(
@@ -573,7 +573,7 @@ function SwipeActionsRow({
           )
         }),
       )}
-      <motion.div
+      <m.div
         className={cn(
           'relative z-10 flex min-h-16 touch-pan-y items-center gap-2 bg-surface py-3 pr-2 pl-4 select-none [-webkit-touch-callout:none] pointer-fine:cursor-grab group-data-dragging/swipe-row:cursor-grabbing',
           // The line under each row, tucked under the frame on the last.
@@ -603,8 +603,8 @@ function SwipeActionsRow({
             <RowActionsMenu name={name} actions={menuActions} />
           </span>
         )}
-      </motion.div>
-    </motion.li>
+      </m.div>
+    </m.li>
   )
 }
 

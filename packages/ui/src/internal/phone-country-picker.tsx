@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
-import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
+import { AnimatePresence, animate, m, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -429,7 +429,7 @@ export function PhoneCountryPicker({
         {face(country)}
       </span>
 
-      <motion.div
+      <m.div
         ref={afterRender}
         // Fills the anchor until it is measured, then springs its own size.
         className="absolute inset-0 z-10 overflow-clip bg-field transition-[background-color,box-shadow] duration-200 ease-standard group-data-open/picker:bg-floating group-data-open/picker:shadow-menu"
@@ -464,7 +464,7 @@ export function PhoneCountryPicker({
               )}
             >
               <AnimatePresence initial={false} custom={trail.roll}>
-                <motion.span
+                <m.span
                   key={country.iso}
                   custom={trail.roll}
                   variants={reduce ? layerFade : layer}
@@ -489,12 +489,12 @@ export function PhoneCountryPicker({
                   className="absolute inset-0 flex items-center gap-1.5"
                 >
                   {face(country)}
-                </motion.span>
+                </m.span>
               </AnimatePresence>
             </span>
           </button>
 
-          <motion.div
+          <m.div
             ref={open ? listenOutside : undefined}
             inert={!open || undefined}
             className="absolute inset-0 flex items-center gap-2 pr-0.5 pl-3"
@@ -543,7 +543,7 @@ export function PhoneCountryPicker({
             />
             <AnimatePresence initial={false}>
               {query && (
-                <motion.button
+                <m.button
                   key="clear"
                   type="button"
                   aria-label={messages.clearSearch}
@@ -563,7 +563,7 @@ export function PhoneCountryPicker({
                   className="grid size-6 shrink-0 place-items-center rounded-full bg-hover text-fg-muted outline-none hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus [&_svg]:size-3.5"
                 >
                   <GoGoIcon name="close" aria-hidden="true" />
-                </motion.button>
+                </m.button>
               )}
             </AnimatePresence>
             {/* Over the chevron: the chevron closes the list. */}
@@ -573,9 +573,9 @@ export function PhoneCountryPicker({
               onClick={() => close('trigger')}
               className="size-8 shrink-0 rounded-full outline-none hover:bg-hover focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus"
             />
-          </motion.div>
+          </m.div>
 
-          <motion.span
+          <m.span
             aria-hidden="true"
             className="pointer-events-none absolute top-1/2 right-3 grid size-4 -translate-y-1/2 place-items-center text-fg-subtle [&_svg]:size-4"
             initial={false}
@@ -583,10 +583,10 @@ export function PhoneCountryPicker({
             transition={reduce ? { duration: 0 } : GROW}
           >
             <GoGoIcon name="chevronDown" />
-          </motion.span>
+          </m.span>
         </div>
 
-        <motion.div
+        <m.div
           ref={faceRef}
           inert={!open || undefined}
           aria-hidden={!open || undefined}
@@ -630,7 +630,7 @@ export function PhoneCountryPicker({
               aria-label={messages.phoneCountries}
               className="relative grid gap-0.5"
             >
-              <motion.span
+              <m.span
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-x-0 top-0 rounded-[10px] bg-menu-highlight"
                 style={{
@@ -733,8 +733,8 @@ export function PhoneCountryPicker({
               )}
             </div>
           </div>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
       <span className="sr-only" role="status" aria-live="polite">
         {open && count !== null
           ? count === 0

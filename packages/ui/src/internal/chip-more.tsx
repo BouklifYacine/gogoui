@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -43,7 +43,7 @@ export function ChipMore({
     >
       <span className="inline-grid">
         <AnimatePresence initial={false} mode="popLayout">
-          <motion.span
+          <m.span
             key={text}
             className="col-start-1 row-start-1 whitespace-nowrap"
             initial={
@@ -71,7 +71,7 @@ export function ChipMore({
             }}
           >
             {text}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </span>
     </button>

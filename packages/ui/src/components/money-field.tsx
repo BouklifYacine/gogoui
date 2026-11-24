@@ -2,7 +2,7 @@ import { useId, useRef, useState } from 'react'
 import type { ClipboardEvent, KeyboardEvent } from 'react'
 import { CurrencyEurIcon } from '@phosphor-icons/react'
 import type { Icon } from '@phosphor-icons/react'
-import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
+import { AnimatePresence, animate, m, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -369,7 +369,7 @@ function MoneyField({
                 }
               }}
             >
-              <motion.div
+              <m.div
                 ref={groupRef}
                 className={cn(
                   'origin-left items-center whitespace-nowrap tabular-nums',
@@ -389,7 +389,7 @@ function MoneyField({
                   <span aria-hidden="true" className="inline-flex">
                     <AnimatePresence initial={false} custom={direction}>
                       {parts.map((part) => (
-                        <motion.span
+                        <m.span
                           key={part.key}
                           custom={direction}
                           variants={instant || reduce ? cut : column}
@@ -403,7 +403,7 @@ function MoneyField({
                         >
                           <span className="invisible">{part.char}</span>
                           <AnimatePresence initial={false} custom={direction}>
-                            <motion.span
+                            <m.span
                               key={part.char}
                               custom={direction}
                               variants={instant || reduce ? glyphCut : glyph}
@@ -413,9 +413,9 @@ function MoneyField({
                               className="absolute inset-x-0 inset-y-(--feather) text-center whitespace-pre"
                             >
                               {part.char}
-                            </motion.span>
+                            </m.span>
                           </AnimatePresence>
-                        </motion.span>
+                        </m.span>
                       ))}
                     </AnimatePresence>
                   </span>
@@ -453,7 +453,7 @@ function MoneyField({
                     )}
                   />
                 </span>
-              </motion.div>
+              </m.div>
             </div>
           </div>
           {(chips.length > 0 || range) && (

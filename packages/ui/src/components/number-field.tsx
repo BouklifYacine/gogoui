@@ -1,7 +1,7 @@
 import { createContext, useContext, useId, useRef, useState } from 'react'
 import type { KeyboardEvent, PointerEvent, ReactNode } from 'react'
 import { NumberField as NumberFieldPrimitive } from '@base-ui/react/number-field'
-import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
+import { AnimatePresence, animate, m, useMotionValue } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -302,7 +302,7 @@ function NumberField({
   const affixChars = (text: string) => (
     <AnimatePresence initial={false} custom={trail.direction}>
       {[...text].map((char, index) => (
-        <motion.span
+        <m.span
           key={`${index}:${char}`}
           className="inline-block overflow-x-clip whitespace-pre"
           initial={
@@ -319,7 +319,7 @@ function NumberField({
           }
         >
           {char}
-        </motion.span>
+        </m.span>
       ))}
     </AnimatePresence>
   )
@@ -345,7 +345,7 @@ function NumberField({
         <div className="relative">
           <AnimatePresence initial={false}>
             {noteEdge !== 0 && (
-              <motion.span
+              <m.span
                 key="limit"
                 id={limitId}
                 className="pointer-events-none absolute right-0 bottom-full mb-2 text-xs font-medium whitespace-nowrap text-warning-fg tabular-nums"
@@ -373,7 +373,7 @@ function NumberField({
                 }
               >
                 {noteText}
-              </motion.span>
+              </m.span>
             )}
           </AnimatePresence>
           <NumberFieldPrimitive.Group
@@ -411,7 +411,7 @@ function NumberField({
                 }
               }}
             >
-              <motion.span
+              <m.span
                 layout={reduce ? false : 'position'}
                 transition={spring.morph}
                 style={{ x: scrubX, y: bumpY }}
@@ -470,7 +470,7 @@ function NumberField({
                     {affixChars(suffixText)}
                   </span>
                 )}
-              </motion.span>
+              </m.span>
             </div>
             <span
               data-strain={straining > 0 ? '' : undefined}

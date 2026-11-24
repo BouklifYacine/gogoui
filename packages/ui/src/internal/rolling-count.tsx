@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -51,7 +51,7 @@ export function RollingCount({
       )}
     >
       <AnimatePresence mode="popLayout" initial={false} custom={last.direction}>
-        <motion.span
+        <m.span
           key={value}
           className="inline-block"
           custom={last.direction}
@@ -62,7 +62,7 @@ export function RollingCount({
           transition={reduce ? { duration: 0 } : spring.snappy}
         >
           {value}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   )

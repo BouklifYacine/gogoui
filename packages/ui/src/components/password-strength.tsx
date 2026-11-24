@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
@@ -238,7 +238,7 @@ function PasswordStrength({
                 >
                   {/* The fill slides in its clipped track, so its round
                       ends keep their shape at every frame. */}
-                  <motion.span
+                  <m.span
                     className={cn(
                       'absolute inset-0 rounded-full transition-colors duration-200 ease-standard motion-reduce:transition-none',
                       colours.bar,
@@ -269,7 +269,7 @@ function PasswordStrength({
               custom={track.direction}
             >
               {password ? (
-                <motion.span
+                <m.span
                   key={word}
                   custom={track.direction}
                   variants={reduce ? fade : rise}
@@ -279,7 +279,7 @@ function PasswordStrength({
                   className={cn('inline-block', colours.text)}
                 >
                   {word}
-                </motion.span>
+                </m.span>
               ) : null}
             </AnimatePresence>
           </span>
@@ -316,7 +316,7 @@ function PasswordStrength({
                 >
                   <AnimatePresence mode="popLayout" initial={false} custom={1}>
                     {remaining > 0 ? (
-                      <motion.span
+                      <m.span
                         key="remaining"
                         custom={1}
                         variants={reduce ? fade : rise}
@@ -330,7 +330,7 @@ function PasswordStrength({
                         {at >= 0
                           ? words.slice(at + String(remaining).length)
                           : null}
-                      </motion.span>
+                      </m.span>
                     ) : null}
                   </AnimatePresence>
                 </span>

@@ -2,7 +2,8 @@ import { useId, useRef, useState, useSyncExternalStore } from 'react'
 import type { ComponentProps, KeyboardEvent, ReactNode } from 'react'
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover'
 import { cva } from 'class-variance-authority'
-import { AnimatePresence, Reorder, animate, motion } from 'motion/react'
+import { AnimatePresence, animate, m } from 'motion/react'
+import { Reorder } from 'motion/react-m'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -440,7 +441,7 @@ function ColorPickerArea({
       {...(disabled ? {} : pad)}
     >
       <MotionScope>
-        <motion.div
+        <m.div
           role="slider"
           tabIndex={disabled ? -1 : 0}
           aria-label={messages.colorArea}
@@ -792,7 +793,7 @@ function ColorPickerContrast({
       >
         <MotionScope>
           <AnimatePresence mode="popLayout" initial={false}>
-            <motion.span
+            <m.span
               key={grade}
               initial={hidden}
               animate={{ opacity: 1, y: '0em', filter: 'blur(0px)' }}
@@ -804,7 +805,7 @@ function ColorPickerContrast({
               }
             >
               {messages.contrastGrade(grade)}
-            </motion.span>
+            </m.span>
           </AnimatePresence>
         </MotionScope>
       </span>

@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { duration, ease } from './motion.ts'
 import { useChartRowY } from './use-chart-row-y.ts'
@@ -24,7 +24,7 @@ export function ChartGridline({
 }) {
   const y = useChartRowY(value, axis, height, top)
   return (
-    <motion.line
+    <m.line
       x1={0}
       x2="100%"
       y1={y}

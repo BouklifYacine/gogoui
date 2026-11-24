@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { cn } from '../lib/cn.ts'
 
@@ -34,7 +34,7 @@ function RollingLine({ text, twoLines = false, className }: RollingLineProps) {
       )}
     >
       <AnimatePresence initial={false} mode="popLayout">
-        <motion.span
+        <m.span
           key={text}
           initial={{ y: 16, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -46,7 +46,7 @@ function RollingLine({ text, twoLines = false, className }: RollingLineProps) {
           )}
         >
           {text}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   )

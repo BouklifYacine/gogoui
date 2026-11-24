@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -30,7 +30,7 @@ export function PasswordRuleMark({
         met ? 'border-transparent' : 'border-line-strong',
       )}
     >
-      <motion.span
+      <m.span
         className="absolute -inset-[1.25px] rounded-full bg-success/16"
         initial={false}
         animate={{ scale: met ? 1 : 0.7, opacity: met ? 1 : 0 }}
@@ -55,7 +55,7 @@ export function PasswordRuleMark({
         strokeLinejoin="round"
         className="absolute -inset-[1.25px] size-4 text-success-fg"
       >
-        <motion.path
+        <m.path
           d="M4.75 8.25 7 10.5l4.25-4.75"
           initial={false}
           animate={{ pathLength: met ? 1 : 0, opacity: met ? 1 : 0 }}

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { spring } from './motion.ts'
@@ -39,7 +39,7 @@ export function SlopeRank({ move }: { move: number }) {
       )}
       <span className="relative inline-flex overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
+          <m.span
             key={text}
             initial={{ opacity: 0, y: reduce ? 0 : rise }}
             animate={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export function SlopeRank({ move }: { move: number }) {
             transition={reduce ? { duration: 0 } : spring.snappy}
           >
             {text}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </span>
     </span>

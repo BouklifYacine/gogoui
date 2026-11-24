@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 import type { ReactNode } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
@@ -108,7 +108,7 @@ export function ChipBody({ pressed, color, size, children }: ChipBodyProps) {
           size === 'sm' ? 'h-7 px-2.5 max-md:h-9' : 'h-8 px-3 max-md:h-10',
         )}
       >
-        <motion.span
+        <m.span
           aria-hidden="true"
           style={{ right: edge }}
           className={cn(
@@ -118,7 +118,7 @@ export function ChipBody({ pressed, color, size, children }: ChipBodyProps) {
               : 'bg-surface ring-line group-hover/chip:ring-line-strong',
           )}
         />
-        <motion.span
+        <m.span
           aria-hidden="true"
           style={{ scale: tickScale, opacity: tickOpacity }}
           className={cn(
@@ -136,19 +136,19 @@ export function ChipBody({ pressed, color, size, children }: ChipBodyProps) {
             strokeLinejoin="round"
             className="block size-3.5 overflow-visible"
           >
-            <motion.path
+            <m.path
               d="M4 12.5 9.5 18 20 6.5"
               style={{ pathLength: tickDraw }}
             />
           </svg>
-        </motion.span>
+        </m.span>
         <span
           aria-hidden="true"
           className={cn('shrink-0', pressed ? 'w-4.5' : 'w-0')}
         />
-        <motion.span style={{ x: lag }} className="truncate">
+        <m.span style={{ x: lag }} className="truncate">
           {children}
-        </motion.span>
+        </m.span>
       </span>
     </MotionScope>
   )

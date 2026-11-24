@@ -2,7 +2,7 @@ import { useCallback, useId, useMemo, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import {
   animate,
-  motion,
+  m,
   useInView,
   useMotionValue,
   useMotionValueEvent,
@@ -381,10 +381,10 @@ function Sparkline({
           >
             <defs>
               <clipPath id={`${uid}-lit`} clipPathUnits="userSpaceOnUse">
-                <motion.rect x={-16} y={-16} width={lit} height={height + 32} />
+                <m.rect x={-16} y={-16} width={lit} height={height + 32} />
               </clipPath>
               <clipPath id={`${uid}-dim`} clipPathUnits="userSpaceOnUse">
-                <motion.rect
+                <m.rect
                   x={dim}
                   y={-16}
                   width={width + 32}
@@ -392,16 +392,11 @@ function Sparkline({
                 />
               </clipPath>
               <clipPath id={`${uid}-wash`} clipPathUnits="userSpaceOnUse">
-                <motion.rect
-                  x={-16}
-                  y={-16}
-                  width={reveal}
-                  height={height + 32}
-                />
+                <m.rect x={-16} y={-16} width={reveal} height={height + 32} />
               </clipPath>
             </defs>
             {area && (
-              <motion.path
+              <m.path
                 d={wash}
                 clipPath={`url(#${uid}-wash)`}
                 className="fill-[color-mix(in_oklab,var(--spark)_9%,transparent)]"
@@ -419,7 +414,7 @@ function Sparkline({
             />
             <g ref={morph}>
               {/* Exploring dims the stretch after the cursor, as if those points have not happened yet. */}
-              <motion.path
+              <m.path
                 d={trail}
                 clipPath={`url(#${uid}-dim)`}
                 fill="none"
@@ -431,7 +426,7 @@ function Sparkline({
                 animate={{ opacity: scrubbing && landed ? 1 : 0 }}
                 transition={still}
               />
-              <motion.polyline
+              <m.polyline
                 points={line}
                 clipPath={`url(#${uid}-lit)`}
                 fill="none"
@@ -442,7 +437,7 @@ function Sparkline({
                 className="stroke-(--spark) transition-[stroke] duration-200 motion-reduce:transition-none"
               />
             </g>
-            <motion.line
+            <m.line
               x1={cursorX}
               x2={cursorX}
               y1={0}
@@ -454,7 +449,7 @@ function Sparkline({
               transition={still}
             />
             {/* A zero-length round-capped stroke is a true circle in the line's colour: it rests on the latest point and becomes the handle. */}
-            <motion.polyline
+            <m.polyline
               points={dot}
               fill="none"
               strokeLinecap="round"

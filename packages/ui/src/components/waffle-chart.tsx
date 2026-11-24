@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
-import { motion, useInView } from 'motion/react'
+import { m, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -442,7 +442,7 @@ export function WaffleChart({
                   // out of one block and landing in another.
                   const dip = travel ? [1, 0.62 + (version % 2) * 0.001, 1] : 1
                   return (
-                    <motion.span
+                    <m.span
                       key={cell.id}
                       aria-hidden="true"
                       data-on={

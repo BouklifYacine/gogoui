@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
@@ -148,7 +148,7 @@ function MultiSelectField<TValue extends string>({
           <MotionScope>
             <AnimatePresence initial={false}>
               {clearable && (
-                <motion.button
+                <m.button
                   key="clear"
                   type="button"
                   aria-label={clearAll}
@@ -190,7 +190,7 @@ function MultiSelectField<TValue extends string>({
                   className="absolute inset-y-0 right-8 my-auto flex size-6 items-center justify-center rounded-full text-fg-subtle outline-none hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus max-md:size-8 [&_svg]:size-3.5"
                 >
                   <GoGoIcon name="close" aria-hidden="true" />
-                </motion.button>
+                </m.button>
               )}
             </AnimatePresence>
           </MotionScope>

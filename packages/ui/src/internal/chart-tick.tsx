@@ -1,4 +1,4 @@
-import { motion, useTransform } from 'motion/react'
+import { m, useTransform } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { clamp } from './chart-scale.ts'
@@ -34,7 +34,7 @@ export function ChartTick({
     avoid ? clamp((Math.abs(y.get() - avoid.get()) - 10) / 6, 0, 1) : 1,
   )
   return (
-    <motion.span
+    <m.span
       style={{ y }}
       className="pointer-events-none absolute top-0 left-2.5 block h-0 whitespace-nowrap"
       initial={{ opacity: 0 }}
@@ -45,12 +45,12 @@ export function ChartTick({
       }}
       transition={{ duration: duration.standard, ease: ease.standard }}
     >
-      <motion.span
+      <m.span
         style={{ opacity }}
         className="block -translate-y-1/2 text-xs/none text-fg-subtle tabular-nums"
       >
         {text}
-      </motion.span>
-    </motion.span>
+      </m.span>
+    </m.span>
   )
 }

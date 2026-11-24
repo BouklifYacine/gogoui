@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import type { MotionValue, TargetAndTransition } from 'motion/react'
 
 import { useReduceMotion } from '../i18n/motion-context.ts'
@@ -80,7 +80,7 @@ export function HoldFace({
 
   return (
     <span className="inline-flex items-center whitespace-nowrap">
-      <motion.span
+      <m.span
         aria-hidden="true"
         className="grid shrink-0 justify-start overflow-hidden"
         initial={false}
@@ -89,7 +89,7 @@ export function HoldFace({
       >
         <span className="grid size-4.5 place-items-center">
           <AnimatePresence initial={false}>
-            <motion.span
+            <m.span
               key={stage}
               className="col-start-1 row-start-1 grid place-items-center [&_svg:not([class*='size-'])]:size-4.5"
               initial={reduce ? fadeIn : iconIn}
@@ -112,13 +112,13 @@ export function HoldFace({
               ) : (
                 icon
               )}
-            </motion.span>
+            </m.span>
           </AnimatePresence>
         </span>
-      </motion.span>
+      </m.span>
       {/* Clips the leaving words while the frame narrows, with room for
           their rise and their blur. */}
-      <motion.span
+      <m.span
         className="relative inline-flex min-w-0 [clip-path:inset(-0.6em_-3px)]"
         style={{ width }}
       >
@@ -131,7 +131,7 @@ export function HoldFace({
           </span>
         )}
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
+          <m.span
             key={text}
             data-text={mirror ? text : undefined}
             className={cn(
@@ -146,10 +146,10 @@ export function HoldFace({
               ease: ease.enter,
             }}
           >
-            {text}
-          </motion.span>
+            {mirror ? null : text}
+          </m.span>
         </AnimatePresence>
-      </motion.span>
+      </m.span>
     </span>
   )
 }

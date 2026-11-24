@@ -2,12 +2,13 @@
 // kokonutUI), on GoGoUI's tokens and icons.
 import { useCallback, useRef, useState } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
-import { animate, motion, useMotionValue, useTransform } from 'motion/react'
+import { animate, m, useMotionValue, useTransform } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { SlideInk } from '../internal/slide-ink.tsx'
+import { MotionFeatures } from '../internal/motion-features.tsx'
 import {
   COMMIT_AT,
   EASE_IN_OUT,
@@ -256,62 +257,64 @@ function SlideToConfirm({
   const stageLabel = busy ? `${confirmingLabel}…` : done ? doneLabel : label
 
   return (
-    <div
-      data-slot="slide-to-confirm"
-      className={cn('relative w-full select-none', className)}
-      data-phase={phase}
-    >
+    <MotionFeatures>
       <div
-        ref={watchTrack}
-        className={cn(
-          'relative overflow-hidden rounded-full bg-tray',
-          disabled && 'opacity-50',
-        )}
-        style={{ height: HEIGHT }}
+        data-slot="slide-to-confirm"
+        className={cn('relative w-full select-none', className)}
+        data-phase={phase}
       >
-        {/* The label on the empty track, nudged off the thumb. */}
-        <motion.span
-          aria-hidden="true"
-          className="absolute inset-0 flex items-center justify-center pl-6 text-sm font-medium whitespace-nowrap text-fg-muted"
-          style={{ opacity: labelOpacity }}
-        >
-          {label}
-        </motion.span>
-
-        <SlideInk
-          phase={phase}
-          stageLabel={stageLabel}
-          color={color}
-          reduceMotion={reduceMotion}
-          fillClip={fillClip}
-          fillOpacity={fillOpacity}
-        />
-
-        <motion.button
-          type="button"
-          aria-disabled={disabled || phase !== 'idle'}
-          aria-label={`${label}. ${slideKeyboardHint}`}
+        <div
+          ref={watchTrack}
           className={cn(
-            'absolute flex touch-none items-center justify-center rounded-full bg-control text-fg shadow-button outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
-            phase === 'idle' && !disabled && 'cursor-grab',
-            phase === 'dragging' && 'cursor-grabbing',
+            'relative overflow-hidden rounded-full bg-tray',
+            disabled && 'opacity-50',
           )}
-          onClick={(event) => void onClick(event)}
-          onPointerCancel={onPointerUp}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          style={{ x, left: INSET, top: INSET, width: THUMB, height: THUMB }}
+          style={{ height: HEIGHT }}
         >
-          <SlideThumbIcon armed={armed} busy={busy} done={done} />
-        </motion.button>
-      </div>
+          {/* The label on the empty track, nudged off the thumb. */}
+          <m.span
+            aria-hidden="true"
+            className="absolute inset-0 flex items-center justify-center pl-6 text-sm font-medium whitespace-nowrap text-fg-muted"
+            style={{ opacity: labelOpacity }}
+          >
+            {label}
+          </m.span>
 
-      <span aria-live="polite" className="sr-only">
-        {busy && `${confirmingLabel}…`}
-        {done && doneLabel}
-      </span>
-    </div>
+          <SlideInk
+            phase={phase}
+            stageLabel={stageLabel}
+            color={color}
+            reduceMotion={reduceMotion}
+            fillClip={fillClip}
+            fillOpacity={fillOpacity}
+          />
+
+          <m.button
+            type="button"
+            aria-disabled={disabled || phase !== 'idle'}
+            aria-label={`${label}. ${slideKeyboardHint}`}
+            className={cn(
+              'absolute flex touch-none items-center justify-center rounded-full bg-control text-fg shadow-button outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-focus',
+              phase === 'idle' && !disabled && 'cursor-grab',
+              phase === 'dragging' && 'cursor-grabbing',
+            )}
+            onClick={(event) => void onClick(event)}
+            onPointerCancel={onPointerUp}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            style={{ x, left: INSET, top: INSET, width: THUMB, height: THUMB }}
+          >
+            <SlideThumbIcon armed={armed} busy={busy} done={done} />
+          </m.button>
+        </div>
+
+        <span aria-live="polite" className="sr-only">
+          {busy && `${confirmingLabel}…`}
+          {done && doneLabel}
+        </span>
+      </div>
+    </MotionFeatures>
   )
 }
 

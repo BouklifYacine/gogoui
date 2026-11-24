@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 
 import { cn } from '../lib/cn.ts'
 import type { Cell } from './calendar-state.ts'
@@ -30,7 +30,7 @@ export function CalendarDisc({
   const at = { x: `${cell.col * 100}%`, y: `${cell.row * 100}%` }
   const glide = instant ? { duration: 0 } : spring.morph
   return (
-    <motion.span
+    <m.span
       aria-hidden="true"
       className={cn(
         'absolute top-0 left-0 aspect-square w-[calc(100%/7)]',
@@ -60,6 +60,6 @@ export function CalendarDisc({
           fill[color],
         )}
       />
-    </motion.span>
+    </m.span>
   )
 }
