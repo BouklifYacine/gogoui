@@ -8,7 +8,8 @@ import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
 import { GoGoIcon } from './gogo-icon.tsx'
 import { blur, duration, ease } from './motion.ts'
-import { flagOf, onlyDigits } from './phone-countries.ts'
+import { onlyDigits } from './phone-countries.ts'
+import { PhoneFlag } from './phone-flag.tsx'
 import type { PhoneCountry } from './phone-countries.ts'
 import { useElementSize } from './use-element-size.ts'
 
@@ -373,12 +374,7 @@ export function PhoneCountryPicker({
   const count = needle && needle !== '+' ? rows.length : null
   const face = (entry: PhoneCountry) => (
     <>
-      <span
-        aria-hidden="true"
-        className="inline-grid w-5 shrink-0 place-items-center font-[family-name:Apple_Color_Emoji,Segoe_UI_Emoji,Noto_Color_Emoji,sans-serif] text-[17px] leading-none font-normal"
-      >
-        {flagOf(entry.iso)}
-      </span>
+      <PhoneFlag iso={entry.iso} />
       <span className="tabular-nums">+{entry.dial}</span>
     </>
   )
@@ -674,12 +670,7 @@ export function PhoneCountryPicker({
                       }}
                       className="relative flex min-h-9 cursor-default items-center gap-2.5 rounded-[10px] px-2.5 text-sm text-fg-muted transition-colors duration-150 ease-standard select-none data-active:text-fg aria-selected:text-fg max-md:min-h-11"
                     >
-                      <span
-                        aria-hidden="true"
-                        className="inline-grid w-5 shrink-0 place-items-center font-[family-name:Apple_Color_Emoji,Segoe_UI_Emoji,Noto_Color_Emoji,sans-serif] text-[17px] leading-none"
-                      >
-                        {flagOf(row.entry.iso)}
-                      </span>
+                      <PhoneFlag iso={row.entry.iso} />
                       <span className="min-w-0 flex-1 truncate font-medium">
                         {nameOf(row.entry)}
                       </span>

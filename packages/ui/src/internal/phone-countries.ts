@@ -1,6 +1,6 @@
 // Fifty countries written by hand for PhoneField (France first), after Arc UI's phone
-// input (https://uiarc.dev, MIT licence, Elia Kuratli): no library, no
-// metadata to download. A number is checked on its length only, not on
+// input (https://uiarc.dev, MIT licence, Elia Kuratli): no phone library,
+// no metadata to download; the flags are pictures (phone-flag.tsx). A number is checked on its length only, not on
 // its real prefixes. Names come from Intl.DisplayNames, in the reader's
 // language.
 
@@ -117,12 +117,6 @@ export function phoneLengths(entry: PhoneCountry): number[] {
 }
 
 export const onlyDigits = (text: string) => text.replace(/\D/g, '')
-
-/** The flag as an emoji; Windows shows its two letters, which still read. */
-export const flagOf = (iso: string) =>
-  String.fromCodePoint(
-    ...[...iso.toUpperCase()].map((char) => 0x1f1e6 + char.charCodeAt(0) - 65),
-  )
 
 /** The trunk typed first, and the rest. */
 export function splitTrunk(
