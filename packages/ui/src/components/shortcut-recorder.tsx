@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { Color } from '../internal/colors.ts'
 import { describedBy } from '../internal/field-props.ts'
@@ -28,6 +29,33 @@ import { Kbd } from './kbd.tsx'
 
 /** A shortcut already bound, and what it does. */
 type ShortcutBinding = { shortcut: string; label: string }
+
+/** The words ShortcutRecorder writes, to change on one ShortcutRecorder only. */
+type ShortcutRecorderLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'shortcutCaps'
+    | 'shortcutSpoken'
+    | 'shortcutNone'
+    | 'shortcutSet'
+    | 'shortcutCleared'
+    | 'shortcutRecordingStarted'
+    | 'shortcutReserved'
+    | 'shortcutCanceled'
+    | 'shortcutNeedsModifier'
+    | 'shortcutConflict'
+    | 'shortcutRecording'
+    | 'shortcutPressKeys'
+    | 'shortcutReset'
+    | 'shortcutClear'
+    | 'shortcutReservedFor'
+    | 'shortcutUsedBy'
+    | 'shortcutRecordingHint'
+    | 'shortcutUseAnyway'
+    | 'shortcutKeptPrevious'
+    | 'cancel'
+  >
+>
 
 type ShortcutRecorderProps = {
   /** The shortcut (« mod+shift+k »), or null for none; controlled. */
@@ -62,6 +90,8 @@ type ShortcutRecorderProps = {
   'aria-invalid'?: boolean
   onBlur?: () => void
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ShortcutRecorderLabels
 }
 
 type Pending = {
@@ -151,7 +181,7 @@ const textButton =
  *
  * **Key props**: `value` + `onValueChange` (or `defaultValue`),
  * `resetValue`, `bindings`, `warnReserved`, `requireModifier`, `platform`,
- * `size`, `color`.
+ * `size`, `color`, `labels` to change its words.
  *
  * **Accessibility**: a button (`aria-pressed` while it listens) named by
  * its label and its shortcut read in full (« Commande Majuscule K »). Tab
@@ -180,8 +210,9 @@ function ShortcutRecorder({
   'aria-invalid': ariaInvalid,
   onBlur,
   className,
+  labels,
 }: ShortcutRecorderProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const platform = usePlatform(platformProp)
   const words = {
@@ -699,4 +730,4 @@ export {
   normalizeShortcut,
 } from '../internal/shortcut-model.ts'
 export type { Platform, ShortcutWords } from '../internal/shortcut-model.ts'
-export type { ShortcutBinding, ShortcutRecorderProps }
+export type { ShortcutBinding, ShortcutRecorderProps, ShortcutRecorderLabels }

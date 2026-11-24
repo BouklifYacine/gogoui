@@ -2,6 +2,7 @@ import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import {
   dialogOverlayMotion,
   dialogPopupMotion,
@@ -82,15 +83,22 @@ function DialogOverlay({
   )
 }
 
+/** The words DialogContent writes, to change on one DialogContent only. */
+type DialogContentLabels = Partial<Pick<GoGoUIMessages, 'close'>>
+
 type DialogContentProps = DialogPrimitive.Popup.Props & {
   /** The round × in the corner. Hide it only when the footer has a way out. */
   showCloseButton?: boolean
   /** Its width: sm 384 px, default 440 px, lg 672 px, xl 896 px, full the screen. */
   size?: 'sm' | 'default' | 'lg' | 'xl' | 'full'
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DialogContentLabels
 }
 
 /**
  * The window itself, 440px wide at most, centred, with its veil and its ×.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary The dialog's window, its veil and its close button.
  */
@@ -99,9 +107,10 @@ function DialogContent({
   children,
   showCloseButton = true,
   size = 'default',
+  labels,
   ...props
 }: DialogContentProps) {
-  const { close } = useGoGoUIMessages()
+  const { close } = useGoGoUIMessages(labels)
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -148,14 +157,21 @@ function DialogHeader({ className, ...props }: ComponentProps<'div'>) {
   )
 }
 
+/** The words DialogFooter writes, to change on one DialogFooter only. */
+type DialogFooterLabels = Partial<Pick<GoGoUIMessages, 'close'>>
+
 type DialogFooterProps = ComponentProps<'div'> & {
   /** Adds a « Fermer » button (in the provider's language) after the actions. */
   showCloseButton?: boolean
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DialogFooterLabels
 }
 
 /**
  * The actions, on a band under a hairline: stacked on a phone, the main
  * one on top; in a row on a computer, the main one on the right.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary The dialog's actions, main action last.
  */
@@ -163,9 +179,10 @@ function DialogFooter({
   className,
   showCloseButton = false,
   children,
+  labels,
   ...props
 }: DialogFooterProps) {
-  const { close } = useGoGoUIMessages()
+  const { close } = useGoGoUIMessages(labels)
   return (
     <div
       data-slot="dialog-footer"
@@ -225,4 +242,9 @@ export {
   DialogTitle,
   DialogTrigger,
 }
-export type { DialogContentProps, DialogFooterProps }
+export type {
+  DialogContentProps,
+  DialogFooterProps,
+  DialogContentLabels,
+  DialogFooterLabels,
+}

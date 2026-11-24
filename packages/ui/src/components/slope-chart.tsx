@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -25,6 +26,24 @@ export type SlopeItem = {
   /** The value in the second period. */
   end: number
 }
+
+/** The words SlopeChart writes, to change on one SlopeChart only. */
+type SlopeChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'slopeRankSame'
+    | 'slopeRankUp'
+    | 'slopeRankDown'
+    | 'chartSpan'
+    | 'chartRange'
+    | 'slopeRole'
+    | 'slopeKeys'
+    | 'slopeItem'
+    | 'slopeChange'
+    | 'slopeRank'
+    | 'slopeRankMove'
+  >
+>
 
 export type SlopeChartProps = {
   data: SlopeItem[]
@@ -51,6 +70,8 @@ export type SlopeChartProps = {
   /** Shown when there is no item; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SlopeChartLabels
 }
 
 type Row = {
@@ -133,7 +154,8 @@ function spread(wanted: number[], gap: number, low: number, high: number) {
  *
  * **Key props**: `data` (key, label, start, end), `label`, `startLabel`,
  * `endLabel`, `formatValue`, `formatChange`, `highlightKey` + `color`,
- * `activeKey` + `onActiveChange`, `ranks`, `height`.
+ * `activeKey` + `onActiveChange`, `ranks`, `height`,
+ * `labels` to change its words.
  *
  * **Motion**: the lines draw from left to right the first time the chart
  * is seen, their dots landing as each line ends; new data moves lines,
@@ -161,8 +183,9 @@ export function SlopeChart({
   ranks = true,
   emptyLabel,
   className,
+  labels,
 }: SlopeChartProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const figure = useRef<HTMLElement>(null)
   const inView = useInView(figure, { once: true, amount: 0.3 })
@@ -625,3 +648,4 @@ export function SlopeChart({
     </MotionScope>
   )
 }
+export type { SlopeChartLabels }

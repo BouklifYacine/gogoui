@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import type { UseEmblaCarouselType } from 'embla-carousel-react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
@@ -32,6 +33,9 @@ function useCarousel(): CarouselState {
 
 const idle = 'false|false|0|0'
 
+/** The words Carousel writes, to change on one Carousel only. */
+type CarouselLabels = Partial<Pick<GoGoUIMessages, 'slideOf'>>
+
 type CarouselProps = ComponentProps<'section'> & {
   /** Embla's options: `loop`, `align`, `slidesToScroll`… */
   opts?: CarouselOptions
@@ -41,6 +45,8 @@ type CarouselProps = ComponentProps<'section'> & {
   label?: string
   /** Embla's API, to drive it from outside (a counter, thumbnails). */
   setApi?: (api: CarouselApi) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CarouselLabels
 }
 
 /**
@@ -56,7 +62,8 @@ type CarouselProps = ComponentProps<'section'> & {
  *
  * **Key props**: `opts` (loop, align, slidesToScroll), `orientation`,
  * `label` (what the slides show), `setApi` (to drive it from outside).
- * `basis-1/3` on `CarouselItem` shows three at once.
+ * `basis-1/3` on `CarouselItem` shows three at once,
+ * `labels` to change its words.
  *
  * **Compose**: `Carousel` > `CarouselContent` > `CarouselItem`s +
  * `CarouselPrevious` + `CarouselNext`.
@@ -73,9 +80,10 @@ function Carousel({
   setApi,
   className,
   children,
+  labels,
   ...props
 }: CarouselProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const vertical = orientation === 'vertical'
   const [viewport, api] = useEmblaCarousel(
     { ...opts, axis: vertical ? 'y' : 'x' },
@@ -176,12 +184,20 @@ function CarouselItem({ className, ...props }: ComponentProps<'div'>) {
   )
 }
 
+/** The words CarouselPrevious writes, to change on one CarouselPrevious only. */
+type CarouselPreviousLabels = Partial<Pick<GoGoUIMessages, 'previousSlide'>>
+
+/** **Key props**: `labels` to change its words. */
 function CarouselPrevious({
   className,
+  labels,
   ...props
-}: ComponentProps<typeof Button>) {
+}: ComponentProps<typeof Button> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CarouselPreviousLabels
+}) {
   const { api, vertical, canPrevious } = useCarousel()
-  const { previousSlide } = useGoGoUIMessages()
+  const { previousSlide } = useGoGoUIMessages(labels)
   return (
     <Button
       variant="outline"
@@ -204,9 +220,20 @@ function CarouselPrevious({
   )
 }
 
-function CarouselNext({ className, ...props }: ComponentProps<typeof Button>) {
+/** The words CarouselNext writes, to change on one CarouselNext only. */
+type CarouselNextLabels = Partial<Pick<GoGoUIMessages, 'nextSlide'>>
+
+/** **Key props**: `labels` to change its words. */
+function CarouselNext({
+  className,
+  labels,
+  ...props
+}: ComponentProps<typeof Button> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CarouselNextLabels
+}) {
   const { api, vertical, canNext } = useCarousel()
-  const { nextSlide } = useGoGoUIMessages()
+  const { nextSlide } = useGoGoUIMessages(labels)
   return (
     <Button
       variant="outline"
@@ -236,4 +263,10 @@ export {
   CarouselPrevious,
   CarouselNext,
 }
-export type { CarouselApi, CarouselProps }
+export type {
+  CarouselApi,
+  CarouselProps,
+  CarouselLabels,
+  CarouselPreviousLabels,
+  CarouselNextLabels,
+}

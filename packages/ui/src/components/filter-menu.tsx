@@ -2,6 +2,7 @@ import { Children, isValidElement, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { FilterDrawer } from '../internal/filter-drawer.tsx'
 import { FilterLayoutContext, PANEL_LAYOUT } from '../internal/filter-layout.ts'
 import { FilterRowProvider } from '../internal/filter-row-provider.tsx'
@@ -16,6 +17,20 @@ import {
   PopoverTrigger,
 } from './popover.tsx'
 
+/** The words FilterMenu writes, to change on one FilterMenu only. */
+type FilterMenuLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'filterCategories'
+    | 'resetAllFilters'
+    | 'allFilters'
+    | 'resetFilters'
+    | 'seeResults'
+    | 'filter'
+    | 'activeFilterCount'
+  >
+>
+
 type FilterMenuProps = {
   /** The menu's name, for screen readers: « Filtrer les clients ». */
   title: string
@@ -24,6 +39,8 @@ type FilterMenuProps = {
   onReset: () => void
   /** The groups: FilterCheckboxGroup, FilterDateRange, FilterNumberRange… */
   children: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterMenuLabels
 }
 
 /**
@@ -35,7 +52,8 @@ type FilterMenuProps = {
  * **Where**: in the list's toolbar, beside the search.
  *
  * **Key props**: `activeCount` (shown on the button), `onReset`, `title`,
- * children (`FilterSection`s, `FilterCheckbox`, ranges).
+ * children (`FilterSection`s, `FilterCheckbox`, ranges),
+ * `labels` to change its words.
  *
  * **Accessibility**: the count is in the button's name.
  *
@@ -46,8 +64,9 @@ function FilterMenu({
   activeCount,
   onReset,
   children,
+  labels,
 }: FilterMenuProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const isMobile = useIsMobile()
   const [active, setActive] = useState(0)
   const groups = Children.toArray(children)
@@ -56,7 +75,12 @@ function FilterMenu({
 
   if (isMobile) {
     return (
-      <FilterDrawer title={title} activeCount={activeCount} onReset={onReset}>
+      <FilterDrawer
+        title={title}
+        activeCount={activeCount}
+        onReset={onReset}
+        labels={labels}
+      >
         {children}
       </FilterDrawer>
     )
@@ -71,7 +95,7 @@ function FilterMenu({
       <PopoverTrigger
         render={<Button variant="outline" size="sm" className="shrink-0" />}
       >
-        <FilterTriggerLabel activeCount={activeCount} />
+        <FilterTriggerLabel activeCount={activeCount} labels={labels} />
       </PopoverTrigger>
       <PopoverContent
         align="end"
@@ -151,4 +175,4 @@ function FilterMenu({
 }
 
 export { FilterMenu }
-export type { FilterMenuProps }
+export type { FilterMenuProps, FilterMenuLabels }

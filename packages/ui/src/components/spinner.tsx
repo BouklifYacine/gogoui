@@ -1,10 +1,14 @@
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { text } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
+
+/** The words Spinner writes, to change on one Spinner only. */
+type SpinnerLabels = Partial<Pick<GoGoUIMessages, 'loading'>>
 
 /**
  * A turning circle while something loads.
@@ -13,7 +17,8 @@ import { cn } from '../lib/cn.ts'
  * small zone. **Prefer** `Skeleton` for a page's first load, `Progress`
  * when the end is known.
  *
- * **Key props**: `color`, size through `className`.
+ * **Key props**: `color`, size through `className`,
+ * `labels` to change its words.
  *
  * **Accessibility**: alone, it says « Chargement »; inside a button the
  * button's `aria-busy` says it.
@@ -23,12 +28,15 @@ import { cn } from '../lib/cn.ts'
 function Spinner({
   className,
   color,
+  labels,
   ...props
 }: Omit<ComponentProps<'svg'>, 'color'> & {
   /** Its colour; the words around it by default. */
   color?: Color
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SpinnerLabels
 }) {
-  const { loading } = useGoGoUIMessages()
+  const { loading } = useGoGoUIMessages(labels)
   return (
     <GoGoIcon
       role="status"
@@ -41,3 +49,4 @@ function Spinner({
 }
 
 export { Spinner }
+export type { SpinnerLabels }

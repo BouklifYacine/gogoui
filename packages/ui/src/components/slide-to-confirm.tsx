@@ -6,6 +6,7 @@ import { animate, motion, useMotionValue, useTransform } from 'motion/react'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { SlideInk } from '../internal/slide-ink.tsx'
 import {
   COMMIT_AT,
@@ -25,6 +26,9 @@ import { SlideThumbIcon } from '../internal/slide-thumb-icon.tsx'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
 
+/** The words SlideToConfirm writes, to change on one SlideToConfirm only. */
+type SlideToConfirmLabels = Partial<Pick<GoGoUIMessages, 'slideKeyboardHint'>>
+
 type SlideToConfirmProps = {
   /** « Glissez pour retenir 350,00 € ». */
   label: string
@@ -41,6 +45,8 @@ type SlideToConfirmProps = {
   color?: Color
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SlideToConfirmLabels
 }
 
 /**
@@ -56,7 +62,7 @@ type SlideToConfirmProps = {
  * **Key props**: `label`, `onConfirm` (returns a promise: the thumb waits
  * for it, a refusal sends it back), `color` (`danger` for an act that
  * takes something away), `confirmingLabel`,
- * `doneLabel`, `disabled`.
+ * `doneLabel`, `disabled`, `labels` to change its words.
  *
  * **Accessibility**: Enter, Space or a screen reader's double tap confirm
  * in one go, without sliding.
@@ -71,8 +77,9 @@ function SlideToConfirm({
   color,
   disabled = false,
   className,
+  labels,
 }: SlideToConfirmProps) {
-  const { slideKeyboardHint } = useGoGoUIMessages()
+  const { slideKeyboardHint } = useGoGoUIMessages(labels)
   const [phase, setPhase] = useState<Phase>('idle')
   const [armed, setArmed] = useState(false)
   const reduceMotion = useReduceMotion()
@@ -309,4 +316,4 @@ function SlideToConfirm({
 }
 
 export { SlideToConfirm }
-export type { SlideToConfirmProps }
+export type { SlideToConfirmProps, SlideToConfirmLabels }

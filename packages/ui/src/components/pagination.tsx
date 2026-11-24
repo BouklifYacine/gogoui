@@ -5,8 +5,12 @@ import {
   DotsThreeIcon,
 } from '@phosphor-icons/react'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
+
+/** The words Pagination writes, to change on one Pagination only. */
+type PaginationLabels = Partial<Pick<GoGoUIMessages, 'pages'>>
 
 /**
  * Links to the pages of a long list.
@@ -20,12 +24,21 @@ import { Button } from './button.tsx'
  * `PaginationPrevious`, `PaginationButton isActive`, `PaginationEllipsis`,
  * `PaginationNext`.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * **Accessibility**: a `nav`; the current page has `aria-current="page"`.
  *
  * @summary Move between the pages of a long list.
  */
-function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
-  const { pages } = useGoGoUIMessages()
+function Pagination({
+  className,
+  labels,
+  ...props
+}: React.ComponentProps<'nav'> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PaginationLabels
+}) {
+  const { pages } = useGoGoUIMessages(labels)
   return (
     <nav
       aria-label={pages}
@@ -78,11 +91,19 @@ function PaginationButton({
   )
 }
 
+/** The words PaginationPrevious writes, to change on one PaginationPrevious only. */
+type PaginationPreviousLabels = Partial<Pick<GoGoUIMessages, 'previous'>>
+
+/** **Key props**: `labels` to change its words. */
 function PaginationPrevious({
   className,
+  labels,
   ...props
-}: React.ComponentProps<typeof PaginationButton>) {
-  const { previous } = useGoGoUIMessages()
+}: React.ComponentProps<typeof PaginationButton> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PaginationPreviousLabels
+}) {
+  const { previous } = useGoGoUIMessages(labels)
   return (
     <PaginationButton
       size="default"
@@ -96,11 +117,19 @@ function PaginationPrevious({
   )
 }
 
+/** The words PaginationNext writes, to change on one PaginationNext only. */
+type PaginationNextLabels = Partial<Pick<GoGoUIMessages, 'next'>>
+
+/** **Key props**: `labels` to change its words. */
 function PaginationNext({
   className,
+  labels,
   ...props
-}: React.ComponentProps<typeof PaginationButton>) {
-  const { next } = useGoGoUIMessages()
+}: React.ComponentProps<typeof PaginationButton> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PaginationNextLabels
+}) {
+  const { next } = useGoGoUIMessages(labels)
   return (
     <PaginationButton
       size="default"
@@ -142,3 +171,4 @@ export {
   PaginationNext,
   PaginationPrevious,
 }
+export type { PaginationLabels, PaginationPreviousLabels, PaginationNextLabels }

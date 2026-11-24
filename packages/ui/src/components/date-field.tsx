@@ -5,6 +5,7 @@ import type { Locale as CalendarLocale, Matcher } from 'react-day-picker'
 import { fr } from 'react-day-picker/locale'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { Color } from '../internal/colors.ts'
 import { DatePopup } from '../internal/date-popup.tsx'
@@ -28,6 +29,19 @@ import { Popover, PopoverTrigger } from './popover.tsx'
 // A picked day closes the calendar a beat later, once its disc has glided.
 const CLOSE_DELAY = 300
 
+/** The words DateField writes, to change on one DateField only. */
+type DateFieldLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'dateTypedError'
+    | 'dateUnavailable'
+    | 'pickDate'
+    | 'todayLabel'
+    | 'today'
+    | 'calendarDayRest'
+  >
+>
+
 type DateFieldProps = FieldValueProps<string | null> & {
   label: string
   placeholder?: string
@@ -42,6 +56,8 @@ type DateFieldProps = FieldValueProps<string | null> & {
   /** The chosen day's colour in the calendar; the primary by default. */
   color?: Color
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DateFieldLabels
 }
 
 /**
@@ -59,9 +75,10 @@ type DateFieldProps = FieldValueProps<string | null> & {
  * disabled days, invalid (typed wrong, or a day that cannot be chosen).
  *
  * **Key props**: `label`, `value` ("YYYY-MM-DD" or null) +
- * `onValueChange`, `error`, `placeholder`, `required`, `disabledDates` (a
- * react-day-picker matcher: past days, Mondays), `calendarLocale`, `size`,
- * `color`.
+ * `onValueChange` (controlled) or `defaultValue` (uncontrolled), `error`,
+ * `placeholder`, `required`, `disabledDates` (a react-day-picker matcher:
+ * past days, Mondays), `calendarLocale`, `size`, `color`,
+ * `labels` to change its words.
  *
  * **Accessibility**: typed in the local format; the calendar button is
  * named; the calendar opens on the chosen day (arrows work at once) and
@@ -88,8 +105,9 @@ function DateField({
   size,
   color,
   className,
+  labels,
 }: DateFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const ids = useFieldIds(id, name)
   const [value, setValue] = useControllableState({
@@ -203,6 +221,7 @@ function DateField({
           <DatePopup align="end">
             <Calendar
               mode="single"
+              labels={labels}
               required={required}
               selected={selectedDate}
               // Opens on the month of the day already chosen.
@@ -249,4 +268,4 @@ function DateField({
 }
 
 export { DateField }
-export type { DateFieldProps }
+export type { DateFieldProps, DateFieldLabels }

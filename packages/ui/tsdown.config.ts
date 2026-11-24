@@ -15,6 +15,7 @@ export default defineConfig({
     'src/components/*.tsx',
     'src/lib/cn.ts',
     'src/i18n/index.ts',
+    'src/i18n/locales/*.ts',
     'src/tanstack-form/index.ts',
     'src/data-table/index.ts',
     'src/theme/create-theme.ts',

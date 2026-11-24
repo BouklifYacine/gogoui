@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { ReactElement, ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { ButtonLabel } from '../internal/button-label.tsx'
 import type { Color } from '../internal/colors.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
@@ -11,6 +12,7 @@ import { PresenceDot } from '../internal/presence-dot.tsx'
 import type { Presence } from '../internal/presence-dot.tsx'
 import { UserMenuHeader } from '../internal/user-menu-header.tsx'
 import { UserMenuTheme } from '../internal/user-menu-theme.tsx'
+import type { UserMenuThemeLabels } from '../internal/user-menu-theme.tsx'
 import type { Theme } from '../internal/theme-store.ts'
 import { cn } from '../lib/cn.ts'
 import {
@@ -46,6 +48,20 @@ type UserMenuItem = {
   disabled?: boolean
 }
 
+/** The words UserMenu writes, to change on one UserMenu only. */
+type UserMenuLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'presenceAvailable'
+    | 'presenceBusy'
+    | 'presenceAway'
+    | 'accountMenu'
+    | 'signingOut'
+    | 'signOut'
+  >
+> &
+  UserMenuThemeLabels
+
 type UserMenuProps = {
   user: UserMenuUser
   /** The account's pages and tools; three or four. */
@@ -75,6 +91,8 @@ type UserMenuProps = {
   onOpenChange?: (open: boolean) => void
   /** On the trigger. */
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: UserMenuLabels
 }
 
 /**
@@ -97,7 +115,8 @@ type UserMenuProps = {
  * **Key props**: `user` (`name`, `email`, `plan`, `avatarSrc`), `items`
  * (`label`, `icon`, `shortcut`, `href`, `render` or `onSelect`),
  * `onSignOut`, `showTheme`, `theme` + `onThemeChange`, `status`,
- * `showName`, `phoneSheet`, `size`, `align`, `side`.
+ * `showName`, `phoneSheet`, `size`, `align`, `side`,
+ * `labels` to change its words.
  *
  * **Accessibility**: the trigger is named « Menu du compte, {nom} »; arrows
  * move through the rows and the theme's choices, left and right choose a
@@ -125,8 +144,9 @@ function UserMenu({
   defaultOpen = false,
   onOpenChange,
   className,
+  labels,
 }: UserMenuProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const [storedTheme, storeTheme] = useTheme()
   const [innerOpen, setInnerOpen] = useState(defaultOpen)
   const [signingOut, setSigningOut] = useState(false)
@@ -277,7 +297,11 @@ function UserMenu({
         {showTheme && (
           <>
             <DropdownMenuSeparator />
-            <UserMenuTheme theme={theme} onThemeChange={changeTheme} />
+            <UserMenuTheme
+              theme={theme}
+              onThemeChange={changeTheme}
+              labels={labels}
+            />
           </>
         )}
         {onSignOut && (
@@ -308,4 +332,4 @@ function UserMenu({
 }
 
 export { UserMenu }
-export type { UserMenuItem, UserMenuProps, UserMenuUser }
+export type { UserMenuItem, UserMenuProps, UserMenuUser, UserMenuLabels }

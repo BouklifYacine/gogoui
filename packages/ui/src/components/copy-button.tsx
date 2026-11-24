@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { CheckStroke } from '../internal/check-stroke.tsx'
 import type { Color } from '../internal/colors.ts'
@@ -51,6 +52,9 @@ const stillMotion = {
   transition: { duration: 0 },
 }
 
+/** The words CopyButton writes, to change on one CopyButton only. */
+type CopyButtonLabels = Partial<Pick<GoGoUIMessages, 'copyRefused'>>
+
 type CopyButtonProps = {
   /** What lands on the clipboard. */
   text: string
@@ -78,6 +82,8 @@ type CopyButtonProps = {
   color?: Color
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CopyButtonLabels
 }
 
 /**
@@ -95,7 +101,7 @@ type CopyButtonProps = {
  *
  * **Key props**: `text`, `label` / `copiedLabel` / `failedLabel`,
  * `onResult`, `announce`, `variant`, `size` (an `icon` size for the icon
- * alone), `color`.
+ * alone), `color`, `labels` to change its words.
  *
  * **Accessibility**: named by `label` whatever it shows; the result is
  * read by its own live region. Where the Clipboard API is refused (an
@@ -115,8 +121,9 @@ function CopyButton({
   color,
   disabled,
   className,
+  labels,
 }: CopyButtonProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const idleWord = label ?? messages.copy
   const copiedWord = copiedLabel ?? messages.copied
@@ -227,4 +234,4 @@ function CopyButton({
 }
 
 export { CopyButton }
-export type { CopyButtonProps }
+export type { CopyButtonProps, CopyButtonLabels }

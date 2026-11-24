@@ -48,6 +48,14 @@
       "types": "./dist/i18n/index.d.ts",
       "default": "./dist/i18n/index.js"
     },
+    "./locales/fr": {
+      "types": "./dist/i18n/locales/fr.d.ts",
+      "default": "./dist/i18n/locales/fr.js"
+    },
+    "./locales/en": {
+      "types": "./dist/i18n/locales/en.d.ts",
+      "default": "./dist/i18n/locales/en.js"
+    },
     "./cn": {
       "types": "./dist/lib/cn.d.ts",
       "default": "./dist/lib/cn.js"

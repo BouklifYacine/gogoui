@@ -3,6 +3,7 @@ import type { ChangeEvent, KeyboardEvent, ReactNode, Ref, UIEvent } from 'react'
 import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { subtle } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -26,6 +27,11 @@ import { duration, ease, spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { cn } from '../lib/cn.ts'
 import { PersonAvatar } from './person-avatar.tsx'
+
+/** The words MentionInput writes, to change on one MentionInput only. */
+type MentionInputLabels = Partial<
+  Pick<GoGoUIMessages, 'mentionCount' | 'mentionNoMatch' | 'mentionPeople'>
+>
 
 type MentionInputProps = {
   /** The text and its mentions, when the page keeps them. */
@@ -59,6 +65,8 @@ type MentionInputProps = {
   'aria-describedby'?: string
   'aria-invalid'?: boolean | 'true' | 'false'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: MentionInputLabels
 }
 
 const LIST_WIDTH = 272
@@ -89,7 +97,8 @@ type Anchor = { x: number; y: number; above: boolean }
  * **Key props**: `value` + `onValueChange` (`{ text, mentions }`),
  * `people` (`{ id, name, description?, avatarSrc? }`), `onMentionAdd`,
  * `onSubmit` + `submitOnEnter`, `minRows`, `maxRows`, `side`, `color`.
- * `serializeMentions(value)` writes `<@id>` for storage.
+ * `serializeMentions(value)` writes `<@id>` for storage,
+ * `labels` to change its words.
  *
  * **Accessibility**: the text area is a combobox: ↑ ↓ move in the list,
  * Enter or Tab chooses, Escape closes; the number of people is read
@@ -120,8 +129,9 @@ function MentionInput({
   'aria-describedby': ariaDescribedBy,
   'aria-invalid': ariaInvalid,
   className,
+  labels,
 }: MentionInputProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const listId = `${uid}-list`
@@ -670,4 +680,10 @@ function MentionInput({
 }
 
 export { MentionInput, serializeMentions }
-export type { Mention, MentionInputProps, MentionPerson, MentionValue }
+export type {
+  Mention,
+  MentionInputProps,
+  MentionPerson,
+  MentionValue,
+  MentionInputLabels,
+}

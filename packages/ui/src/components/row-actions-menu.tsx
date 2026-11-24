@@ -1,6 +1,7 @@
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { RowActionItem } from '../internal/row-action-item.tsx'
 import type { RowAction } from '../internal/row-action-item.tsx'
 import { Button } from './button.tsx'
@@ -11,12 +12,17 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu.tsx'
 
+/** The words RowActionsMenu writes, to change on one RowActionsMenu only. */
+type RowActionsMenuLabels = Partial<Pick<GoGoUIMessages, 'rowActions'>>
+
 type RowActionsMenuProps = {
   /** What the row is called, for a screen reader (« Actions « Grange » »). */
   name: string
   actions: RowAction[]
   /** While an action runs (« Archivage… »): the button spins and says it. */
   pending?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: RowActionsMenuLabels
 }
 
 /**
@@ -32,12 +38,18 @@ type RowActionsMenuProps = {
  * it).
  *
  * **Key props**: `name` (the row's name for screen readers), `actions`
- * (`{ label, onSelect, icon?, destructive?, disabled? }`), `pending`.
+ * (`{ label, onSelect, icon?, destructive?, disabled? }`), `pending`,
+ * `labels` to change its words.
  *
  * @summary The « … » menu of a table row's actions.
  */
-function RowActionsMenu({ name, actions, pending }: RowActionsMenuProps) {
-  const { rowActions } = useGoGoUIMessages()
+function RowActionsMenu({
+  name,
+  actions,
+  pending,
+  labels,
+}: RowActionsMenuProps) {
+  const { rowActions } = useGoGoUIMessages(labels)
   const kept = actions.filter((action) => !action.destructive)
   const destructive = actions.filter((action) => action.destructive)
 
@@ -72,4 +84,4 @@ function RowActionsMenu({ name, actions, pending }: RowActionsMenuProps) {
 }
 
 export { RowActionsMenu }
-export type { RowAction, RowActionsMenuProps }
+export type { RowAction, RowActionsMenuProps, RowActionsMenuLabels }

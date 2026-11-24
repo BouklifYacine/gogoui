@@ -1,11 +1,20 @@
 import { CalendarDotsIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { formatTypedDay, parseDay } from '../internal/days.ts'
 import { useFilterLayout } from '../internal/filter-layout.ts'
 import { FilterRow } from '../internal/filter-row.tsx'
 import { DateField } from './date-field.tsx'
 import { DateRangePicker } from './date-range-picker.tsx'
+
+/** The words FilterDateRange writes, to change on one FilterDateRange only. */
+type FilterDateRangeLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'dateRange' | 'fromDay' | 'untilDay' | 'wholePeriod' | 'activeSummary'
+  >
+>
 
 type FilterDateRangeProps = {
   /** Prefix of the fields' ids. */
@@ -15,12 +24,15 @@ type FilterDateRangeProps = {
   from: string | undefined
   to: string | undefined
   onChange: (range: { from?: string; to?: string }) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterDateRangeLabels
 }
 
 /**
  * A filter on a period (« Date de l'événement »).
  *
- * **Key props**: `legend`, `from`, `to`, `onChange`.
+ * **Key props**: `legend`, `from`, `to`, `onChange`,
+ * `labels` to change its words.
  *
  * @summary A filter on a period.
  */
@@ -30,14 +42,16 @@ function FilterDateRange({
   from,
   to,
   onChange,
+  labels,
 }: FilterDateRangeProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const layout = useFilterLayout()
   if (layout.mode === 'row') {
     const typed = (day: string | undefined) =>
       day ? formatTypedDay(day, messages.dayOrder) : undefined
     return (
       <FilterRow
+        labels={labels}
         label={legend}
         summary={messages.dateRange(typed(from), typed(to))}
         onOpen={layout.open}
@@ -82,4 +96,4 @@ function FilterDateRange({
 }
 
 export { FilterDateRange }
-export type { FilterDateRangeProps }
+export type { FilterDateRangeProps, FilterDateRangeLabels }

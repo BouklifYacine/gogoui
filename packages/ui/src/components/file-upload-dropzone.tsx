@@ -10,6 +10,7 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import {
   FileUploadContext,
   useFileUpload,
@@ -45,6 +46,11 @@ const pose = {
     'group-hover/zone:-translate-y-0.5 group-data-dragging/zone:-translate-y-2',
 } as const
 
+/** The words FileUploadDropzone writes, to change on one FileUploadDropzone only. */
+type FileUploadDropzoneLabels = Partial<
+  Pick<GoGoUIMessages, 'fileUploadDrop' | 'fileUploadDropAdd'>
+>
+
 type FileUploadDropzoneProps = {
   /** « Ajoutez des fichiers » by default. */
   title?: string
@@ -55,6 +61,8 @@ type FileUploadDropzoneProps = {
   className?: string
   /** A `FileUploadList` to draw inside the zone's edge. */
   children?: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FileUploadDropzoneLabels
 }
 
 /**
@@ -62,6 +70,8 @@ type FileUploadDropzoneProps = {
  * target for files dragged from the desktop or pasted. Its dashed edge
  * closes into a line under a file, a light follows the pointer, it
  * breathes while it waits; three sheets fan out when it is pointed at.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary The zone files are dropped on, or picked from.
  */
@@ -71,9 +81,10 @@ function FileUploadDropzone({
   dropTitle,
   className,
   children,
+  labels,
 }: FileUploadDropzoneProps) {
   const upload = useFileUpload()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const hintId = useId()
   const edge = useRef<SVGRectElement>(null)
 
@@ -407,4 +418,4 @@ function FileUploadDropzone({
 }
 
 export { FileUploadDropzone }
-export type { FileUploadDropzoneProps }
+export type { FileUploadDropzoneProps, FileUploadDropzoneLabels }

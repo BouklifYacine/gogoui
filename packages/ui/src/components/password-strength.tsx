@@ -107,6 +107,24 @@ const fade: Variants = {
   exit: { opacity: 0, transition: { duration: duration.instant } },
 }
 
+/** The words PasswordStrength writes, to change on one PasswordStrength only. */
+type PasswordStrengthLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'passwordLevels'
+    | 'passwordMeter'
+    | 'passwordEmpty'
+    | 'passwordRules'
+    | 'passwordRemaining'
+    | 'passwordRuleMet'
+    | 'passwordRuleNotMet'
+    | 'passwordStatus'
+    | 'passwordRuleMin'
+    | 'passwordRuleLength'
+    | 'passwordRuleKinds'
+  >
+>
+
 type PasswordStrengthProps = {
   password: string
   /** Below it the password is refused: match your API's minimum. */
@@ -117,6 +135,8 @@ type PasswordStrengthProps = {
    * bars always follow GoGoUI's score.
    */
   rules?: PasswordRule[]
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PasswordStrengthLabels
 }
 
 /**
@@ -135,7 +155,7 @@ type PasswordStrengthProps = {
  * missing characters rolls.
  *
  * **Key props**: `password`, `minLength`, `rules` (`{ id, label, test,
- * remaining? }[]`).
+ * remaining? }[]`), `labels` to change its words.
  *
  * **Accessibility**: the bars are a `meter` with the level in words; the
  * list says « remplie » or « non remplie » after each condition; the level
@@ -147,8 +167,9 @@ function PasswordStrength({
   password,
   minLength = 10,
   rules: rulesProp,
+  labels,
 }: PasswordStrengthProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const rules = rulesProp ?? passwordRules(minLength, messages)
   const score = passwordScore(password, minLength)
@@ -328,4 +349,4 @@ function PasswordStrength({
 }
 
 export { PasswordStrength, passwordScore }
-export type { PasswordRule, PasswordStrengthProps }
+export type { PasswordRule, PasswordStrengthProps, PasswordStrengthLabels }

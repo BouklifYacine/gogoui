@@ -15,6 +15,7 @@ import {
   TableRow,
 } from '../components/table.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { hideBelowClasses } from './table-hook.ts'
 import type { DataColumnMeta } from './table-hook.ts'
@@ -51,13 +52,18 @@ function sample(value: ReactNode) {
 // The « … » of a row: 44 px under a thumb, 32 at a desk.
 const actionsSample = <Skeleton className="size-11 rounded-lg md:size-8" />
 
+/** The words DataTableSkeleton writes, to change on one DataTableSkeleton only. */
+type DataTableSkeletonLabels = Partial<
+  Pick<GoGoUIMessages, 'loading' | 'rowsPerPage' | 'previous' | 'next'>
+>
+
 /**
  * A list while its rows load.
  *
  * **Use it for** the route's pending state, before `DataTable` has data.
  *
  * **Key props**: `columns` (the same as the table, so widths match),
- * `rows`, `selectable`.
+ * `rows`, `selectable`, `labels` to change its words.
  *
  * @summary A list while its rows load.
  */
@@ -67,6 +73,7 @@ export function DataTableSkeleton({
   selectable,
   pagination,
   pages = 4,
+  labels,
 }: {
   columns: readonly SkeletonColumn[]
   rows: SkeletonRow[]
@@ -76,8 +83,10 @@ export function DataTableSkeleton({
   pagination?: string
   /** The page buttons between previous and next. */
   pages?: number
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DataTableSkeletonLabels
 }) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   return (
     <div className="flex flex-col gap-4">
       {/* The grey table is not read; « Chargement » is, once. */}
@@ -242,3 +251,4 @@ export function DataTableSkeleton({
     </div>
   )
 }
+export type { DataTableSkeletonLabels }

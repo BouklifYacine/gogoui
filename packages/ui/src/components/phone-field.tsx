@@ -3,6 +3,7 @@ import type { ClipboardEvent, KeyboardEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
@@ -24,6 +25,7 @@ import {
 } from '../internal/phone-countries.ts'
 import type { PhoneCountry, PhoneStatus } from '../internal/phone-countries.ts'
 import { PhoneCountryPicker } from '../internal/phone-country-picker.tsx'
+import type { PhoneCountryPickerLabels } from '../internal/phone-country-picker.tsx'
 import { useElementSize } from '../internal/use-element-size.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
@@ -37,6 +39,12 @@ type PhoneValueDetails = {
   /** How complete the number is, on its length only. */
   status: PhoneStatus
 }
+
+/** The words PhoneField writes, to change on one PhoneField only. */
+type PhoneFieldLabels = Partial<
+  Pick<GoGoUIMessages, 'phoneDigits' | 'phoneCountrySet' | 'phoneValid'>
+> &
+  PhoneCountryPickerLabels
 
 type PhoneFieldProps = Omit<FieldValueProps<string>, 'onValueChange'> & {
   label: string
@@ -59,6 +67,8 @@ type PhoneFieldProps = Omit<FieldValueProps<string>, 'onValueChange'> & {
   countries?: string[]
   /** At the top of the list, under « Suggestions »; France by default. */
   preferredCountries?: string[]
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PhoneFieldLabels
 }
 
 type Phone = { iso: string; digits: string }
@@ -136,7 +146,8 @@ function caretAfterDigits(text: string, count: number) {
  * `defaultValue` (uncontrolled), `error`,
  * `description`, `defaultCountry` (FR), `country` + `onCountryChange`,
  * `countries`, `preferredCountries` (FR), `size`, `required`. Exported
- * helpers: `phoneStatus()` and `toE164()` for a form's schema.
+ * helpers: `phoneStatus()` and `toE164()` for a form's schema,
+ * `labels` to change its words.
  *
  * **Accessibility**: a `tel` field (`autoComplete="tel"`) wired to its
  * label, help and error; the country list is a combobox (arrows, Enter,
@@ -163,8 +174,9 @@ function PhoneField({
   onCountryChange,
   countries,
   preferredCountries = ['FR'],
+  labels,
 }: PhoneFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   // onValueChange is called in send(), with the number's details.
   const [value, setValue] = useControllableState({
@@ -405,6 +417,7 @@ function PhoneField({
             )}
           >
             <PhoneCountryPicker
+              labels={labels}
               country={current}
               pool={pool}
               preferred={preferred}
@@ -489,4 +502,9 @@ function PhoneField({
 }
 
 export { PhoneField, phoneStatus, toE164 }
-export type { PhoneFieldProps, PhoneStatus, PhoneValueDetails }
+export type {
+  PhoneFieldProps,
+  PhoneStatus,
+  PhoneValueDetails,
+  PhoneFieldLabels,
+}

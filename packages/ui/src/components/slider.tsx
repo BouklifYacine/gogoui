@@ -13,6 +13,7 @@ import {
 import type { MotionStyle } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { fill } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -25,6 +26,9 @@ import { RollingNumber } from './rolling-number.tsx'
 type SliderValue = number | readonly number[]
 /** A tick on the track; with a label it is printed under it, and a press goes there. */
 type SliderMark = { value: number; label?: string }
+
+/** The words Slider writes, to change on one Slider only. */
+type SliderLabels = Partial<Pick<GoGoUIMessages, 'fromNumber' | 'upToNumber'>>
 
 type SliderProps = Omit<
   SliderPrimitive.Root.Props,
@@ -70,6 +74,8 @@ type SliderProps = Omit<
   /** The elastic variant taps the phone at each mark; never under reduced motion. */
   haptics?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SliderLabels
 }
 
 type Drag = {
@@ -187,7 +193,8 @@ const bubbleBody =
  * **Key props**: `value` / `defaultValue` + `onValueChange` (a number, or
  * two for a range), `onValueCommitted`, `min`, `max`, `step`, `largeStep`,
  * `minStepsBetweenValues`, `marks`, `format` (Intl options), `label`,
- * `showValue`, `start` / `end`, `color`, `size`, `variant`, `haptics`.
+ * `showValue`, `start` / `end`, `color`, `size`, `variant`, `haptics`,
+ * `labels` to change its words.
  *
  * **Accessibility**: Base UI's thumbs: arrows, Shift+arrows and Page
  * up/down by a large step, Home/End; the value is read formatted. Name it
@@ -218,9 +225,11 @@ function Slider({
   end,
   haptics = true,
   disabled,
+  'aria-labelledby': ariaLabelledBy,
+  labels,
   ...props
 }: SliderProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const step = stepProp > 0 ? stepProp : 1
   const span = max - min || 1
@@ -1033,4 +1042,4 @@ function Slider({
 }
 
 export { Slider }
-export type { SliderMark, SliderProps, SliderValue }
+export type { SliderMark, SliderProps, SliderValue, SliderLabels }

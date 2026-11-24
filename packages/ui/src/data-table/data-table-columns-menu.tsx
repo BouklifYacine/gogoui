@@ -10,8 +10,17 @@ import {
   PopoverTrigger,
 } from '../components/popover.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { columnLabel, hideableColumns } from './hideable-columns.ts'
 import type { DataTableInstance } from './table-hook.ts'
+
+/** The words DataTableColumnsMenu writes, to change on one DataTableColumnsMenu only. */
+type DataTableColumnsMenuLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'columns' | 'hiddenColumns' | 'columnsToShow' | 'showAllColumns'
+  >
+>
 
 /**
  * The « Colonnes » menu that shows or hides a list's columns.
@@ -19,16 +28,19 @@ import type { DataTableInstance } from './table-hook.ts'
  * **Use it for** wide lists; `DataTable` shows it with `columnsMenu`.
  * `useStoredColumns` remembers the choice.
  *
- * **Key props**: `table`.
+ * **Key props**: `table`, `labels` to change its words.
  *
  * @summary The menu that hides a list's columns.
  */
 export function DataTableColumnsMenu<TData extends { id: string }>({
   table,
+  labels,
 }: {
   table: DataTableInstance<TData>
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DataTableColumnsMenuLabels
 }) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const columns = hideableColumns(table)
   if (columns.length < 2) {
     return null
@@ -86,3 +98,4 @@ export function DataTableColumnsMenu<TData extends { id: string }>({
     </Popover>
   )
 }
+export type { DataTableColumnsMenuLabels }

@@ -3,6 +3,7 @@ import type { FocusEvent, KeyboardEvent, MouseEvent, PointerEvent } from 'react'
 import { animate } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { Color } from '../internal/colors.ts'
 import { stagger } from '../internal/motion.ts'
@@ -11,6 +12,14 @@ import { RatingStar } from '../internal/rating-star.tsx'
 import { RollingWords } from '../internal/rolling-words.tsx'
 import { useControllableState } from '../internal/use-controllable-state.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words Rating writes, to change on one Rating only. */
+type RatingLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'ratingLevels' | 'ratingNone' | 'ratingOf' | 'ratingCleared' | 'rating'
+  >
+>
 
 type RatingProps = {
   /** The chosen value, when the parent owns it (controlled); 0 when none. */
@@ -45,6 +54,8 @@ type RatingProps = {
   'aria-describedby'?: string
   'aria-invalid'?: boolean | 'true' | 'false'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: RatingLabels
 }
 
 // spring.snappy as physics: a time-defined spring drops the start
@@ -81,10 +92,10 @@ type Gesture = { last: number; scrub: boolean; touch: boolean }
  * **States**: empty, rated, previewed under the pointer, read-only,
  * disabled, invalid (`aria-invalid`).
  *
- * **Key props**: `value` + `onValueChange` (0 = cleared), `max` (5),
- * `size` (sm, default, lg), `color` (warning by default), `allowHalf`,
- * `allowClear`, `showValue`, `valueLabels`, `readOnly`, `disabled`,
- * `name`.
+ * **Key props**: `value` + `onValueChange` (controlled, 0 = cleared) or
+ * `defaultValue` (uncontrolled), `max` (5), `size` (sm, default, lg),
+ * `color` (warning by default), `allowHalf`, `allowClear`, `showValue`,
+ * `valueLabels`, `readOnly`, `disabled`, `name`, `labels` to change its words.
  *
  * **Motion**: the fill sweeps each star from the left, one after the
  * other; a faint mark keeps the chosen value under a preview; the chosen
@@ -120,8 +131,9 @@ function Rating({
   'aria-describedby': describedBy,
   'aria-invalid': invalid,
   className,
+  labels,
 }: RatingProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const [value, setValue] = useControllableState({
     value: valueProp,
@@ -484,4 +496,4 @@ function Rating({
 }
 
 export { Rating }
-export type { RatingProps }
+export type { RatingProps, RatingLabels }

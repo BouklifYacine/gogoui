@@ -3,6 +3,8 @@ import type { ComponentProps } from 'react'
 import { useDayPicker } from 'react-day-picker'
 import type { DayButton, Locale } from 'react-day-picker'
 
+import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import {
   CalendarLookContext,
   CalendarSelectionContext,
@@ -55,6 +57,9 @@ const KEYS = new Set([
   ' ',
 ])
 
+/** The words CalendarDayButton writes, to change on one CalendarDayButton only. */
+type CalendarDayButtonLabels = Partial<Pick<GoGoUIMessages, 'calendarDayRest'>>
+
 /**
  * One day of `Calendar`, after Arc UI (https://uiarc.dev, MIT): a round
  * day whose number changes colour as the chosen day's disc reaches it, a
@@ -69,7 +74,7 @@ const KEYS = new Set([
  * month, disabled, chosen (on the disc), in a range, an end of a range.
  *
  * **Key props**: what react-day-picker gives (`day`, `modifiers`…), plus
- * `dayColor` (the calendar's `color` by default).
+ * `dayColor` (the calendar's `color` by default), `labels` to change its words.
  *
  * **Accessibility**: a day is named by what it shows, so its name always
  * holds the number seen on screen (WCAG 2.5.3): the number, then hidden
@@ -91,15 +96,23 @@ function CalendarDayButton({
   onKeyDown,
   onPointerDown,
   onPointerEnter,
+  // react-day-picker's name (« lundi 31 mai 2027 ») does not hold what a
+  // composition adds under the number (a price): the content names the day.
+  'aria-label': _dayPickerLabel,
+  children,
+  labels,
   ...props
 }: ComponentProps<typeof DayButton> & {
   locale?: Partial<Locale>
   /** The chosen day's colour; the calendar's `color` by default. */
   dayColor?: Color
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CalendarDayButtonLabels
 }) {
   const look = useContext(CalendarLookContext)
   const selection = useContext(CalendarSelectionContext)
   const { dayPickerProps } = useDayPicker()
+  const messages = useGoGoUIMessages(labels)
   const color = dayColor ?? look.color
   const date = day.date
 
@@ -219,3 +232,4 @@ function CalendarDayButton({
 }
 
 export { CalendarDayButton }
+export type { CalendarDayButtonLabels }

@@ -2,19 +2,61 @@ import { useId } from 'react'
 import type { ReactNode } from 'react'
 
 import { BulkActionsBar } from '../components/bulk-actions-bar.tsx'
+import type { BulkActionsBarLabels } from '../components/bulk-actions-bar.tsx'
 import { Button } from '../components/button.tsx'
 import { EmptyState } from '../components/empty-state.tsx'
 import { FilterChips } from '../components/filter-chips.tsx'
-import type { FilterChip } from '../components/filter-chips.tsx'
+import type {
+  FilterChip,
+  FilterChipsLabels,
+} from '../components/filter-chips.tsx'
+import type { ExpandingSearchLabels } from '../components/expanding-search.tsx'
+import type { PageSizeSelectLabels } from '../components/page-size-select.tsx'
+import type { TablePaginationLabels } from '../components/table-pagination.tsx'
+import type { TableSelectRowLabels } from '../components/table-select-row.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
+import { LabelsScope } from '../internal/labels-scope.tsx'
 import { useIsMobile } from '../internal/use-is-mobile.ts'
 import { DataTableCards } from './data-table-cards.tsx'
 import { DataTableColumnsMenu } from './data-table-columns-menu.tsx'
+import type { DataTableColumnsMenuLabels } from './data-table-columns-menu.tsx'
 import { DataTableGrid } from './data-table-grid.tsx'
 import { DataTablePagination } from './data-table-pagination.tsx'
 import { DataTableToolbar } from './data-table-toolbar.tsx'
 import { hideableColumns } from './hideable-columns.ts'
 import type { DataTableInstance } from './table-hook.ts'
+
+/**
+ * The words DataTable writes, and those of every part it draws (search,
+ * chips, columns menu, sort, ticks, pagination), to change on one table.
+ */
+type DataTableLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'searchQuery'
+    | 'selectAllCount'
+    | 'noResultsFor'
+    | 'noResultsHint'
+    | 'clearFilter'
+    | 'resultCount'
+    | 'showMore'
+    | 'narrowToFindMore'
+    | 'ascending'
+    | 'descending'
+    | 'sortedBy'
+    | 'sort'
+    | 'sortBy'
+    | 'selectPage'
+  >
+> &
+  BulkActionsBarLabels &
+  DataTableColumnsMenuLabels &
+  ExpandingSearchLabels &
+  FilterChipsLabels &
+  PageSizeSelectLabels &
+  TablePaginationLabels &
+  TableSelectRowLabels
 
 type DataTableProps<TData extends { id: string }> = {
   table: DataTableInstance<TData>
@@ -74,7 +116,8 @@ type DataTableProps<TData extends { id: string }> = {
  * from `createDataColumns<Row>()`), `caption`, `emptyState`, `filterLabel`
  * (the search), `filters` (a `FilterMenu`), `activeFilters` (`chips`,
  * `onReset`), `pagination` (`rowsLabel`, `pageSizes`), `selection`
- * (`label`, `actions`, `selectAll`), `onRowClick`, `columnsMenu`.
+ * (`label`, `actions`, `selectAll`), `onRowClick`, `columnsMenu`,
+ * `labels` to change its words.
  *
  * **Accessibility**: the caption names the table; sorting, ticking and the
  * count are read aloud.
@@ -93,8 +136,12 @@ export function DataTable<TData extends { id: string }>({
   columnsMenu = true,
   onRowClick,
   selectedRowId,
-}: DataTableProps<TData>) {
-  const messages = useGoGoUIMessages()
+  labels,
+}: DataTableProps<TData> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DataTableLabels
+}) {
+  const messages = useGoGoUIMessages(labels)
   const mobile = useIsMobile()
   // Every row the filter keeps, on every page.
   const matching = table.getPrePaginatedRowModel().rows.length
@@ -134,93 +181,96 @@ export function DataTable<TData extends { id: string }>({
   }
 
   return (
-    <table.AppTable>
-      <div data-slot="data-table" className="flex flex-col gap-4">
-        {(filterLabel || filters || mobile || showColumns) && (
-          <DataTableToolbar
-            table={table}
-            filterId={filterId}
-            filterLabel={filterLabel}
-            filters={
-              (filters || showColumns) && (
-                <>
-                  {filters}
-                  {showColumns && <DataTableColumnsMenu table={table} />}
-                </>
-              )
-            }
-            sortSelect={mobile}
-          />
-        )}
-        <FilterChips
-          chips={chips}
-          onReset={() => {
-            activeFilters?.onReset()
-            table.setGlobalFilter('')
-          }}
-          fallbackFocusId={
-            activeFilters?.fallbackFocusId ??
-            (filterLabel ? `${filterId}-glass` : undefined)
-          }
-        />
-        {/* The ticked rows' bar lies over the head row: ticking a box
-            never moves the list. */}
-        <div className="@container relative flex flex-col gap-4">
-          {selection && !mobile && selected > 0 && (
-            <BulkActionsBar
-              label={selection.label(selected)}
-              actions={selection.actions}
-              selectAll={selectAll}
+    <LabelsScope labels={labels}>
+      <table.AppTable>
+        <div data-slot="data-table" className="flex flex-col gap-4">
+          {(filterLabel || filters || mobile || showColumns) && (
+            <DataTableToolbar
+              table={table}
+              filterId={filterId}
+              filterLabel={filterLabel}
+              filters={
+                (filters || showColumns) && (
+                  <>
+                    {filters}
+                    {showColumns && <DataTableColumnsMenu table={table} />}
+                  </>
+                )
+              }
+              sortSelect={mobile}
             />
           )}
-          {nothingLoaded ? (
-            emptyState
-          ) : matching === 0 ? (
-            <EmptyState
-              title={messages.noResultsFor(filter)}
-              description={messages.noResultsHint}
-              action={
-                <Button variant="outline" onClick={clearFilter}>
-                  {messages.clearFilter}
-                </Button>
-              }
-            />
-          ) : mobile ? (
-            <DataTableCards
+          <FilterChips
+            chips={chips}
+            onReset={() => {
+              activeFilters?.onReset()
+              table.setGlobalFilter('')
+            }}
+            fallbackFocusId={
+              activeFilters?.fallbackFocusId ??
+              (filterLabel ? `${filterId}-glass` : undefined)
+            }
+          />
+          {/* The ticked rows' bar lies over the head row: ticking a box
+            never moves the list. */}
+          <div className="@container relative flex flex-col gap-4">
+            {selection && !mobile && selected > 0 && (
+              <BulkActionsBar
+                label={selection.label(selected)}
+                actions={selection.actions}
+                selectAll={selectAll}
+              />
+            )}
+            {nothingLoaded ? (
+              emptyState
+            ) : matching === 0 ? (
+              <EmptyState
+                title={messages.noResultsFor(filter)}
+                description={messages.noResultsHint}
+                action={
+                  <Button variant="outline" onClick={clearFilter}>
+                    {messages.clearFilter}
+                  </Button>
+                }
+              />
+            ) : mobile ? (
+              <DataTableCards
+                table={table}
+                caption={caption}
+                selectedRowId={selectedRowId}
+              />
+            ) : (
+              <DataTableGrid
+                table={table}
+                caption={caption}
+                selectable={selection !== undefined}
+                onRowClick={onRowClick}
+                selectedRowId={selectedRowId}
+              />
+            )}
+          </div>
+          {pagination && !nothingLoaded && (
+            <DataTablePagination
               table={table}
-              caption={caption}
-              selectedRowId={selectedRowId}
+              rowsLabel={pagination.rowsLabel}
+              pageSizes={pagination.pageSizes}
+              maxRows={pagination.maxRows}
+              compact={mobile}
             />
-          ) : (
-            <DataTableGrid
-              table={table}
-              caption={caption}
-              selectable={selection !== undefined}
-              onRowClick={onRowClick}
-              selectedRowId={selectedRowId}
-            />
+          )}
+          {/* The count, read aloud as a filter is typed. */}
+          <p role="status" className="sr-only">
+            {filter === '' ? '' : messages.resultCount(matching)}
+          </p>
+          {/* How many rows are ticked, read aloud as it changes. */}
+          {selection && (
+            <p role="status" className="sr-only">
+              {selected > 0 ? selection.label(selected) : ''}
+            </p>
           )}
         </div>
-        {pagination && !nothingLoaded && (
-          <DataTablePagination
-            table={table}
-            rowsLabel={pagination.rowsLabel}
-            pageSizes={pagination.pageSizes}
-            maxRows={pagination.maxRows}
-            compact={mobile}
-          />
-        )}
-        {/* The count, read aloud as a filter is typed. */}
-        <p role="status" className="sr-only">
-          {filter === '' ? '' : messages.resultCount(matching)}
-        </p>
-        {/* How many rows are ticked, read aloud as it changes. */}
-        {selection && (
-          <p role="status" className="sr-only">
-            {selected > 0 ? selection.label(selected) : ''}
-          </p>
-        )}
-      </div>
-    </table.AppTable>
+      </table.AppTable>
+    </LabelsScope>
   )
 }
+export type { DataTableLabels }

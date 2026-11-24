@@ -7,6 +7,7 @@ import type {
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { blur, duration, ease } from '../internal/motion.ts'
 import {
@@ -25,26 +26,40 @@ import { cn } from '../lib/cn.ts'
 /** The ink on screen follows the sheet's (always light) tokens. */
 const inkFill = { black: 'fill-fg', blue: 'fill-info-fg' } as const
 
+/** The words SignaturePadSurface writes, to change on one SignaturePadSurface only. */
+type SignaturePadSurfaceLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'signaturePad' | 'signatureSummary' | 'signatureDrawHint' | 'signatureKeys'
+  >
+>
+
 type SignaturePadSurfaceProps = Omit<
   ComponentProps<'div'>,
   'children' | 'role' | 'tabIndex'
->
+> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SignaturePadSurfaceLabels
+}
 
 /**
  * The white sheet of a `SignaturePad`: a baseline, a × where to start, the
  * signer's name under it, « Signez ici » until the first stroke. It keeps
  * the pad's 600 × 260 proportions at every width.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary The sheet a SignaturePad is signed on.
  */
 function SignaturePadSurface({
   className,
   'aria-describedby': describedBy,
+  labels,
   ...props
 }: SignaturePadSurfaceProps) {
   const pad = useSignaturePad()
   const { registerInk } = pad
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const keysId = useId()
   const [drawing, setDrawing] = useState(false)
   const sheet = useRef<HTMLDivElement>(null)
@@ -309,4 +324,4 @@ function SignaturePadSurface({
 }
 
 export { SignaturePadSurface }
-export type { SignaturePadSurfaceProps }
+export type { SignaturePadSurfaceProps, SignaturePadSurfaceLabels }

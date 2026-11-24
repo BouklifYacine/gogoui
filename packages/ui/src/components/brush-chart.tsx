@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { animate, motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -28,6 +29,26 @@ export type BrushChartAnnotation = {
   /** A longer note for the tooltip and screen readers. */
   description?: string
 }
+
+/** The words BrushChart writes, to change on one BrushChart only. */
+type BrushChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartRange'
+    | 'chartSpan'
+    | 'brushShowing'
+    | 'brushRole'
+    | 'brushKeys'
+    | 'brushAverage'
+    | 'brushVsWeek'
+    | 'brushWindow'
+    | 'brushWindowRole'
+    | 'brushWindowStart'
+    | 'brushWindowEnd'
+    | 'brushDate'
+    | 'brushEvent'
+  >
+>
 
 export type BrushChartProps = {
   data: BrushChartDatum[]
@@ -59,6 +80,8 @@ export type BrushChartProps = {
   /** Shown when there is no series; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BrushChartLabels
 }
 
 type Point = { t: number; value: number }
@@ -259,7 +282,8 @@ const handleClass =
  *
  * **Key props**: `data` (date, value), `label`, `unit`, `formatValue`,
  * `formatTick`, `formatDate`, `annotations`, `range` + `onRangeChange`,
- * `defaultRange`, `minSpan`, `color`, `height`, `overviewHeight`.
+ * `defaultRange`, `minSpan`, `color`, `height`, `overviewHeight`,
+ * `labels` to change its words.
  *
  * **Motion**: the line draws in from the left the first time it is seen;
  * the value axis springs to the tallest point in view; a window set from
@@ -292,8 +316,9 @@ export function BrushChart({
   color = 'chart-1',
   emptyLabel,
   className,
+  labels,
 }: BrushChartProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = `brush${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
   const figure = useRef<HTMLElement>(null)
@@ -1179,3 +1204,4 @@ export function BrushChart({
     </MotionScope>
   )
 }
+export type { BrushChartLabels }

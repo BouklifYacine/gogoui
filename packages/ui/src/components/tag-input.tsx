@@ -3,6 +3,7 @@ import type { ClipboardEvent, KeyboardEvent, MouseEvent } from 'react'
 import { AnimatePresence, animate, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { subtle } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -10,6 +11,19 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { blur, duration, ease, spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { cn } from '../lib/cn.ts'
+
+/** The words TagInput writes, to change on one TagInput only. */
+type TagInputLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'tagSelected'
+    | 'tagDuplicate'
+    | 'tagLimit'
+    | 'tagAdded'
+    | 'tagRemoved'
+    | 'removeTag'
+  >
+>
 
 type TagInputProps = {
   /** The tags, when the page keeps them. */
@@ -38,6 +52,8 @@ type TagInputProps = {
   'aria-describedby'?: string
   'aria-label'?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: TagInputLabels
 }
 
 const sizes = {
@@ -68,7 +84,7 @@ const sizes = {
  *
  * **Key props**: `value` + `onValueChange` (or `defaultValue`), `max`,
  * `validate` (a reason in words refuses the tag), `size`, `color` (the
- * ring), `name` (one form value per tag).
+ * ring), `name` (one form value per tag), `labels` to change its words.
  *
  * **Accessibility**: Enter or a comma adds, leaving the field adds too;
  * Backspace at the start picks the last tag, ← → move between tags, a
@@ -95,8 +111,9 @@ function TagInput({
   'aria-describedby': ariaDescribedBy,
   'aria-label': ariaLabel,
   className,
+  labels,
 }: TagInputProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const [internal, setInternal] = useState(defaultValue)
   const [draft, setDraft] = useState('')
@@ -536,4 +553,4 @@ function TagInput({
 }
 
 export { TagInput }
-export type { TagInputProps }
+export type { TagInputProps, TagInputLabels }

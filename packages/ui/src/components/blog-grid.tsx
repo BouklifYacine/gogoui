@@ -4,6 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import type { Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { AutoHeight } from '../internal/auto-height.tsx'
 import { duration, ease, spring } from '../internal/motion.ts'
@@ -38,6 +39,11 @@ type BlogPost = {
   featured?: boolean
 }
 
+/** The words BlogGrid writes, to change on one BlogGrid only. */
+type BlogGridLabels = Partial<
+  Pick<GoGoUIMessages, 'blogCategories' | 'blogAll' | 'blogEmpty' | 'blogPage'>
+>
+
 type BlogGridProps = {
   posts: BlogPost[]
   /** The index's title, an `h2`. */
@@ -63,6 +69,8 @@ type BlogGridProps = {
    */
   renderLink?: (post: BlogPost) => ReactElement
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BlogGridLabels
 }
 
 // The tab every post is under.
@@ -105,7 +113,8 @@ const pageVariants: Variants = {
  *
  * **Key props**: `posts`, `title`, `description`, `categories`, `category`
  * / `defaultCategory` + `onCategoryChange`, `page` / `defaultPage` +
- * `onPageChange`, `pageSize`, `showFeatured`, `renderLink`.
+ * `onPageChange`, `pageSize`, `showFeatured`, `renderLink`,
+ * `labels` to change its words.
  *
  * **Accessibility**: categories are tabs; pages are buttons named « Page
  * 2 », the current one `aria-current="page"`; each card's link is its
@@ -128,8 +137,9 @@ function BlogGrid({
   showFeatured = true,
   renderLink,
   className,
+  labels,
 }: BlogGridProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const rootRef = useRef<HTMLElement>(null)
@@ -356,4 +366,4 @@ function BlogGrid({
 }
 
 export { BlogGrid }
-export type { BlogGridProps, BlogPost }
+export type { BlogGridProps, BlogPost, BlogGridLabels }

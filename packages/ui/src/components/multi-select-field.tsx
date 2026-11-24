@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
@@ -16,6 +17,9 @@ import {
   SelectItem,
   SelectTrigger,
 } from './select.tsx'
+
+/** The words MultiSelectField writes, to change on one MultiSelectField only. */
+type MultiSelectFieldLabels = Partial<Pick<GoGoUIMessages, 'clearAll'>>
 
 type MultiSelectFieldProps<TValue extends string> = FieldValueProps<
   TValue[]
@@ -51,8 +55,9 @@ type MultiSelectFieldProps<TValue extends string> = FieldValueProps<
  * directly for a list of your own.
  *
  * **Key props**: `label`, `options` (`{ value, label }[]`), `value` +
- * `onValueChange` (an array), `maxVisible`, `placeholder`, `error`,
- * `description`, `size`.
+ * `onValueChange` (an array, controlled) or `defaultValue` (uncontrolled),
+ * `maxVisible`, `placeholder`, `error`, `description`, `size`,
+ * `labels` to change its words.
  *
  * **Motion**: chips open their place on a spring, « +N » rolls, a tick
  * draws itself and retracts, the × pops in. Still with reduced motion.
@@ -79,8 +84,12 @@ function MultiSelectField<TValue extends string>({
   required,
   disabled,
   size,
-}: MultiSelectFieldProps<TValue>) {
-  const { choose, clearAll } = useGoGoUIMessages()
+  labels,
+}: MultiSelectFieldProps<TValue> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: MultiSelectFieldLabels
+}) {
+  const { choose, clearAll } = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const [value, setValue] = useControllableState({
     value: valueProp,
@@ -192,4 +201,4 @@ function MultiSelectField<TValue extends string>({
 }
 
 export { MultiSelectField }
-export type { MultiSelectFieldProps }
+export type { MultiSelectFieldProps, MultiSelectFieldLabels }

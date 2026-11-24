@@ -1,7 +1,11 @@
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { Checkbox } from './checkbox.tsx'
 import { TableCell } from './table.tsx'
+
+/** The words TableSelectRow writes, to change on one TableSelectRow only. */
+type TableSelectRowLabels = Partial<Pick<GoGoUIMessages, 'selectRow'>>
 
 type TableSelectRowProps = {
   checked: boolean
@@ -11,13 +15,15 @@ type TableSelectRowProps = {
   /** A row no bulk action applies to. */
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: TableSelectRowLabels
 }
 
 /**
  * A row's box to tick.
  *
  * **Key props**: `checked`, `onCheckedChange`, `name` (the row's name, read
- * as « Sélectionner Grange »), `disabled`.
+ * as « Sélectionner Grange »), `disabled`, `labels` to change its words.
  *
  * **Accessibility**: each box is named by its row, never « Sélectionner »
  * alone.
@@ -30,8 +36,9 @@ function TableSelectRow({
   name,
   disabled,
   className,
+  labels,
 }: TableSelectRowProps) {
-  const { selectRow } = useGoGoUIMessages()
+  const { selectRow } = useGoGoUIMessages(labels)
   return (
     <TableCell
       data-slot="table-select-row"
@@ -48,4 +55,4 @@ function TableSelectRow({
 }
 
 export { TableSelectRow }
-export type { TableSelectRowProps }
+export type { TableSelectRowProps, TableSelectRowLabels }

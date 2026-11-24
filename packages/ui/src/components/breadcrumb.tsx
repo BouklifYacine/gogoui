@@ -3,8 +3,12 @@ import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
+
+/** The words Breadcrumb writes, to change on one Breadcrumb only. */
+type BreadcrumbLabels = Partial<Pick<GoGoUIMessages, 'breadcrumb'>>
 
 /**
  * The path to the current page, each step a link back.
@@ -18,13 +22,22 @@ import { cn } from '../lib/cn.ts'
  * `BreadcrumbLink` (or `BreadcrumbPage` for the current one) and
  * `BreadcrumbSeparator`; `BreadcrumbEllipsis` hides middle steps.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * **Accessibility**: a `nav` named « Fil d'Ariane »; the current page has
  * `aria-current="page"`.
  *
  * @summary The path to the current page, each step a link back.
  */
-function Breadcrumb({ className, ...props }: React.ComponentProps<'nav'>) {
-  const { breadcrumb } = useGoGoUIMessages()
+function Breadcrumb({
+  className,
+  labels,
+  ...props
+}: React.ComponentProps<'nav'> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BreadcrumbLabels
+}) {
+  const { breadcrumb } = useGoGoUIMessages(labels)
   return (
     <nav
       aria-label={breadcrumb}
@@ -109,11 +122,19 @@ function BreadcrumbSeparator({
   )
 }
 
+/** The words BreadcrumbEllipsis writes, to change on one BreadcrumbEllipsis only. */
+type BreadcrumbEllipsisLabels = Partial<Pick<GoGoUIMessages, 'more'>>
+
+/** **Key props**: `labels` to change its words. */
 function BreadcrumbEllipsis({
   className,
+  labels,
   ...props
-}: React.ComponentProps<'span'>) {
-  const { more } = useGoGoUIMessages()
+}: React.ComponentProps<'span'> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BreadcrumbEllipsisLabels
+}) {
+  const { more } = useGoGoUIMessages(labels)
   return (
     <span
       data-slot="breadcrumb-ellipsis"
@@ -140,3 +161,4 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 }
+export type { BreadcrumbLabels, BreadcrumbEllipsisLabels }

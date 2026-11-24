@@ -10,6 +10,7 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { BarChartAxisLabel } from '../internal/bar-chart-axis-label.tsx'
 import { BarChartBar } from '../internal/bar-chart-bar.tsx'
@@ -46,6 +47,19 @@ type BarChartDatum = {
   value: number
 }
 
+/** The words BarChart writes, to change on one BarChart only. */
+type BarChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartAverageShort'
+    | 'chartReading'
+    | 'chartHighest'
+    | 'chartLowest'
+    | 'chartExplore'
+    | 'chartNoData'
+  >
+>
+
 type BarChartProps = {
   data: readonly BarChartDatum[]
   /** What is measured: « Chiffre d'affaires ». Names the chart. */
@@ -68,6 +82,8 @@ type BarChartProps = {
   format?: Intl.NumberFormatOptions
   color?: ChartColor
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BarChartLabels
 }
 
 /** Room above the top gridline. */
@@ -145,7 +161,8 @@ function fittingLabels(
  * the range.
  *
  * **Key props**: `data` (`key`, `label`, `axisLabel`, `value`), `label`,
- * `period`, `unit`, `format`, `showAverage`, `height`, `color`.
+ * `period`, `unit`, `format`, `showAverage`, `height`, `color`,
+ * `labels` to change its words.
  *
  * **Motion**: the bars grow one after another once seen; a new range
  * zooms the axis around the latest bar, rescales the gridlines and moves
@@ -172,8 +189,9 @@ function BarChart({
   format,
   color = 'chart-1',
   className,
+  labels,
 }: BarChartProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const titleId = useId()
   const restWord = averageLabel ?? messages.chartAverage
@@ -654,4 +672,4 @@ function BarChart({
 }
 
 export { BarChart }
-export type { BarChartDatum, BarChartProps }
+export type { BarChartDatum, BarChartProps, BarChartLabels }

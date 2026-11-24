@@ -3,6 +3,7 @@ import type { ReactElement, ReactNode } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { duration, ease, spring, stagger } from '../internal/motion.ts'
@@ -56,6 +57,9 @@ type SiteHeaderItem = {
   feature?: SiteHeaderFeature
 }
 
+/** The words SiteHeader writes, to change on one SiteHeader only. */
+type SiteHeaderLabels = Partial<Pick<GoGoUIMessages, 'openMenu' | 'closeMenu'>>
+
 type SiteHeaderProps = {
   /**
    * `simple`: the links beside the brand. `centered`: the links centred
@@ -85,6 +89,8 @@ type SiteHeaderProps = {
   /** The navigation's name, « Navigation principale » by default. */
   label?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SiteHeaderLabels
 }
 
 // Under this width of the header, the links fold into the phone menu.
@@ -113,7 +119,8 @@ const COLLAPSE_AT = 760
  *
  * **Key props**: `variant` (simple, centered, mega), `brand`, `items`,
  * `current` / `defaultCurrent` + `onCurrentChange`, `actions`,
- * `mobileAction`, `sticky`, `scrollThreshold`, `renderLink`, `label`.
+ * `mobileAction`, `sticky`, `scrollThreshold`, `renderLink`, `label`,
+ * `labels` to change its words.
  *
  * **Accessibility**: a named `nav`; the current page has
  * `aria-current="page"`; panels open with Enter and arrows; the phone menu
@@ -137,8 +144,9 @@ function SiteHeader({
   renderLink,
   label,
   className,
+  labels,
 }: SiteHeaderProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const [innerCurrent, setInnerCurrent] = useState(defaultCurrent)
@@ -613,4 +621,5 @@ export type {
   SiteHeaderItem,
   SiteHeaderLink,
   SiteHeaderProps,
+  SiteHeaderLabels,
 }

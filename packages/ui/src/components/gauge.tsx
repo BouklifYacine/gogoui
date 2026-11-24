@@ -10,6 +10,7 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor, chartTextColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -31,6 +32,9 @@ import { cn } from '../lib/cn.ts'
  */
 type GaugeThreshold = { from: number; color: ChartColor; label: string }
 
+/** The words Gauge writes, to change on one Gauge only. */
+type GaugeLabels = Partial<Pick<GoGoUIMessages, 'chartReading' | 'chartOutOf'>>
+
 type GaugeProps = {
   value: number
   min?: number
@@ -45,6 +49,8 @@ type GaugeProps = {
   thresholds?: readonly GaugeThreshold[]
   size?: 'sm' | 'default' | 'lg'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: GaugeLabels
 }
 
 /** A 270° ring open at the bottom, drawn clockwise from its lower left end. */
@@ -84,7 +90,8 @@ const sizes = {
  * **Compose**: inside a `Card`, beside a `StatCard`.
  *
  * **Key props**: `value`, `min` / `max` (0 to 100), `label`, `detail`,
- * `color`, `thresholds` (`{ from, color, label }`), `size`.
+ * `color`, `thresholds` (`{ from, color, label }`), `size`,
+ * `labels` to change its words.
  *
  * **Motion**: the ring fills once it is seen and the percentage counts
  * up with it; a new value springs the ring and the count without
@@ -107,8 +114,9 @@ function Gauge({
   thresholds,
   size = 'default',
   className,
+  labels,
 }: GaugeProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const safeMax = max > min ? max : min + 1
   const share = clamp((value - min) / (safeMax - min), 0, 1)
@@ -275,4 +283,4 @@ function Gauge({
 }
 
 export { Gauge }
-export type { GaugeProps, GaugeThreshold }
+export type { GaugeProps, GaugeThreshold, GaugeLabels }

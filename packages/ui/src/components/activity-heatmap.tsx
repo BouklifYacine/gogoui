@@ -9,6 +9,7 @@ import type {
 import { useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -28,6 +29,22 @@ type ActivityDay = {
   date: string
   count: number
 }
+
+/** The words ActivityHeatmap writes, to change on one ActivityHeatmap only. */
+type ActivityHeatmapLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartRange'
+    | 'chartOrMore'
+    | 'heatmapDays'
+    | 'heatmapDaysWith'
+    | 'heatmapLegend'
+    | 'heatmapLess'
+    | 'heatmapLevels'
+    | 'heatmapHighlight'
+    | 'heatmapMore'
+  >
+>
 
 type ActivityHeatmapProps = {
   /** One entry per day, oldest first; a day missing inside the range counts as zero. */
@@ -51,6 +68,8 @@ type ActivityHeatmapProps = {
   /** The busiest days' colour; the levels are tints of it. */
   color?: ChartColor
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ActivityHeatmapLabels
 }
 
 type Model = {
@@ -200,7 +219,7 @@ const still =
  *
  * **Key props**: `days` (`date`, `count`), `label`, `period`, `unit`,
  * `thresholds`, `weekStartsOn` (1, Monday), `selectedDate` /
- * `onSelectDate`, `actions`, `color`.
+ * `onSelectDate`, `actions`, `color`, `labels` to change its words.
  *
  * **Motion**: the squares wave in once seen; one tooltip glides from day
  * to day; a new range recolours the grid in a sweep forward or back; the
@@ -226,8 +245,9 @@ function ActivityHeatmap({
   actions,
   color = 'chart-1',
   className,
+  labels,
 }: ActivityHeatmapProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const id = useId()
   const locale = messages.intlLocale
@@ -793,4 +813,4 @@ function ActivityHeatmap({
 }
 
 export { ActivityHeatmap }
-export type { ActivityDay, ActivityHeatmapProps }
+export type { ActivityDay, ActivityHeatmapProps, ActivityHeatmapLabels }

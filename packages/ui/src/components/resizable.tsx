@@ -11,6 +11,7 @@ import { Group, Panel, Separator, useParentGroup } from 'react-resizable-panels'
 import type { PanelImperativeHandle } from 'react-resizable-panels'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { ResizableContext } from '../internal/resizable-context.ts'
 import type { ResizablePanelEntry } from '../internal/resizable-context.ts'
@@ -144,9 +145,16 @@ function ResizablePanel({
   )
 }
 
+/** The words ResizableHandle writes, to change on one ResizableHandle only. */
+type ResizableHandleLabels = Partial<
+  Pick<GoGoUIMessages, 'showPanel' | 'panelHidden'>
+>
+
 type ResizableHandleProps = ComponentProps<typeof Separator> & {
   /** A grip that forms in the line's middle when it is pointed at or held. */
   withHandle?: boolean
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ResizableHandleLabels
 }
 
 /**
@@ -154,6 +162,8 @@ type ResizableHandleProps = ComponentProps<typeof Separator> & {
  * focused or held, its grip forms on a spring (`withHandle`). Once a
  * neighbour is folded, a small tab with a chevron shows on it: a click or
  * Enter brings the panel back.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary The line between two panels, and the way back to a folded one.
  */
@@ -163,11 +173,12 @@ function ResizableHandle({
   elementRef,
   onClick,
   onKeyDownCapture,
+  labels,
   ...props
 }: ResizableHandleProps) {
   const context = useContext(ResizableContext)
   const vertical = useParentGroup()?.orientation === 'vertical'
-  const { showPanel, panelHidden } = useGoGoUIMessages()
+  const { showPanel, panelHidden } = useGoGoUIMessages(labels)
   const [sides, setSides] = useState<{ before?: string; after?: string }>({})
 
   // The panels on either side are its DOM neighbours (the library keeps
@@ -269,4 +280,4 @@ function ResizableHandle({
 }
 
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
-export type { ResizableHandleProps, ResizablePanelProps }
+export type { ResizableHandleProps, ResizablePanelProps, ResizableHandleLabels }

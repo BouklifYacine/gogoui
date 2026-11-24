@@ -5,9 +5,13 @@ import { ToggleGroup as ToggleGroupPrimitive } from '@base-ui/react/toggle-group
 import { ChipBody } from '../internal/chip-body.tsx'
 import { ChipContext } from '../internal/chip-context.ts'
 import { ChipGroup } from '../internal/chip-group.tsx'
+import type { ChipGroupLabels } from '../internal/chip-group.tsx'
 import { pressed } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words ToggleGroup writes (variant="chips"), to change on one group only. */
+type ToggleGroupLabels = ChipGroupLabels
 
 type ToggleGroupProps = ToggleGroupPrimitive.Props & {
   /**
@@ -19,6 +23,8 @@ type ToggleGroupProps = ToggleGroupPrimitive.Props & {
   maxVisible?: number
   /** `chips` only: 28px (`sm`) or 32px high; taller on a phone. */
   size?: 'sm' | 'default'
+  /** `chips` only: its words on this one, over GoGoUIProvider's `messages`. */
+  labels?: ToggleGroupLabels
 }
 
 /**
@@ -40,7 +46,7 @@ type ToggleGroupProps = ToggleGroupPrimitive.Props & {
  *
  * **Key props**: `value` + `onValueChange` (an array), `multiple`,
  * `variant` (default, chips), `maxVisible` and `size` with chips; on items
- * `color`.
+ * `color`, `labels` to change its words.
  *
  * **Motion** (chips), after Arc UI (https://uiarc.dev, MIT): the tick
  * pushes the words aside as it draws itself, the fill's edge follows on a
@@ -60,6 +66,7 @@ function ToggleGroup({
   variant = 'default',
   maxVisible = Number.POSITIVE_INFINITY,
   size = 'default',
+  labels,
   ...props
 }: ToggleGroupProps) {
   if (variant === 'chips') {
@@ -68,6 +75,7 @@ function ToggleGroup({
         maxVisible={maxVisible}
         size={size}
         className={className}
+        labels={labels}
         {...props}
       />
     )
@@ -141,4 +149,4 @@ function ToggleGroupItem({
 }
 
 export { ToggleGroup, ToggleGroupItem }
-export type { ToggleGroupItemProps, ToggleGroupProps }
+export type { ToggleGroupItemProps, ToggleGroupLabels, ToggleGroupProps }

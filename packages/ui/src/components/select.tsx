@@ -9,6 +9,7 @@ import { SelectChipList } from '../internal/select-chip-list.tsx'
 import { SelectSharedContext } from '../internal/select-context.ts'
 import type { SelectPick, SelectShared } from '../internal/select-context.ts'
 import { SelectMorphLid } from '../internal/select-morph-lid.tsx'
+import type { SelectMorphLidLabels } from '../internal/select-morph-lid.tsx'
 import { SelectRollingValue } from '../internal/select-rolling-value.tsx'
 import { cn } from '../lib/cn.ts'
 
@@ -224,12 +225,19 @@ type SelectContentProps = SelectPrimitive.Popup.Props &
      * `alignItemWithTrigger` are then set for you).
      */
     variant?: 'default' | 'morph'
+    /** Its words on this one only, over GoGoUIProvider's `messages`. */
+    labels?: SelectContentLabels
   }
+
+/** The words SelectContent writes, to change on one list only. */
+type SelectContentLabels = SelectMorphLidLabels
 
 /**
  * The list. It opens like the menus, its rows following one after another,
  * a highlight gliding from row to row. `variant="morph"` grows the trigger
  * itself into the list (Arc UI's morph select), and folds it back.
+ *
+ * **Key props**: `variant`, `side`, `align`, `labels` to change its words.
  *
  * @summary The open list of items, positioned on its trigger.
  */
@@ -242,6 +250,7 @@ function SelectContent({
   alignOffset = 0,
   alignItemWithTrigger = false,
   variant = 'default',
+  labels,
   ...props
 }: SelectContentProps) {
   if (variant === 'morph') {
@@ -269,7 +278,7 @@ function SelectContent({
             {...props}
           >
             <div ref={followHeight} className="flex w-(--morph-width) flex-col">
-              <SelectMorphLid />
+              <SelectMorphLid labels={labels} />
               <div className="mx-3 h-px shrink-0 bg-line-subtle" />
               <SelectPrimitive.List className="relative max-h-[min(18.5rem,calc(var(--available-height)-var(--anchor-height)))] overflow-y-auto overscroll-contain p-1.5">
                 <MenuHighlight />
@@ -523,4 +532,9 @@ export {
   SelectTrigger,
   SelectValue,
 }
-export type { SelectChipsProps, SelectContentProps, SelectTriggerProps }
+export type {
+  SelectChipsProps,
+  SelectContentLabels,
+  SelectContentProps,
+  SelectTriggerProps,
+}

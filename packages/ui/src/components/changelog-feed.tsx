@@ -4,6 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import type { Transition, Variants } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { ChangelogChip } from '../internal/changelog-chip.tsx'
 import { ChangelogMediaView } from '../internal/changelog-media.tsx'
@@ -42,6 +43,25 @@ type ChangelogItem = {
   media?: ChangelogMedia
 }
 
+/** The words ChangelogFeed writes, to change on one ChangelogFeed only. */
+type ChangelogFeedLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'changelogNew'
+    | 'changelogImproved'
+    | 'changelogFixed'
+    | 'changelogFilter'
+    | 'changelogShowAll'
+    | 'changelogUpdates'
+    | 'changelogOfTotal'
+    | 'changelogShowing'
+    | 'changelogNoUpdates'
+    | 'changelogMonths'
+    | 'changelogJumpTo'
+    | 'changelogList'
+  >
+>
+
 type ChangelogFeedProps = {
   /** The notes, newest first. Their months are read from `date`. */
   entries: ChangelogItem[]
@@ -60,6 +80,8 @@ type ChangelogFeedProps = {
   /** The list's height (560 px, 520 px under 640 px of width by default). */
   height?: number | string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ChangelogFeedLabels
 }
 
 const KINDS: ChangelogKind[] = ['new', 'improved', 'fixed']
@@ -121,7 +143,7 @@ function monthWords(key: string, locale: string) {
  *
  * **Key props**: `entries` (newest first, months read from `date`),
  * `title`, `subtitle`, `endNote`, `action`, `defaultOpen`, `kindColors`,
- * `height`.
+ * `height`, `labels` to change its words.
  *
  * **Accessibility**: chips are toggle buttons (`aria-pressed`) and the
  * shown count is read when the filter changes; the month bar is a `nav`
@@ -140,8 +162,9 @@ function ChangelogFeed({
   kindColors,
   height,
   className,
+  labels,
 }: ChangelogFeedProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const [filters, setFilters] = useState<ChangelogKind[]>([])
@@ -563,4 +586,9 @@ function ChangelogFeed({
 }
 
 export { ChangelogFeed }
-export type { ChangelogFeedProps, ChangelogItem, ChangelogMedia }
+export type {
+  ChangelogFeedProps,
+  ChangelogItem,
+  ChangelogMedia,
+  ChangelogFeedLabels,
+}

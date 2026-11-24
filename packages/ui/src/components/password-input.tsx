@@ -4,15 +4,21 @@ import { animate } from 'motion/react'
 import { LockSimpleIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { duration, ease } from '../internal/motion.ts'
 import { PasswordEye } from '../internal/password-eye.tsx'
 import { cn } from '../lib/cn.ts'
 import { Input } from './input.tsx'
 
+/** The words PasswordInput writes, to change on one PasswordInput only. */
+type PasswordInputLabels = Partial<Pick<GoGoUIMessages, 'showPassword'>>
+
 type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type'> & {
   /** Required: the eye button points at the field it reveals. */
   id: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PasswordInputLabels
 }
 
 /**
@@ -24,7 +30,8 @@ type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type'> & {
  * slash draws itself across the eye and cuts its outline, and the text
  * resolves from a light blur as dots and letters swap.
  *
- * **Key props**: `id` (required), `size`, `autoComplete`, plus Input's.
+ * **Key props**: `id` (required), `size`, `autoComplete`, plus Input's,
+ * `labels` to change its words.
  *
  * **Accessibility**: the button is named « Afficher le mot de passe » and
  * pressed while shown (its name stays the same). With reduced motion the
@@ -32,9 +39,14 @@ type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type'> & {
  *
  * @summary A password field with a button to show what was typed.
  */
-function PasswordInput({ className, id, ...props }: PasswordInputProps) {
+function PasswordInput({
+  className,
+  id,
+  labels,
+  ...props
+}: PasswordInputProps) {
   const [visible, setVisible] = useState(false)
-  const { showPassword } = useGoGoUIMessages()
+  const { showPassword } = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
 
   function toggle(event: MouseEvent<HTMLButtonElement>) {
@@ -78,4 +90,4 @@ function PasswordInput({ className, id, ...props }: PasswordInputProps) {
 }
 
 export { PasswordInput }
-export type { PasswordInputProps }
+export type { PasswordInputProps, PasswordInputLabels }

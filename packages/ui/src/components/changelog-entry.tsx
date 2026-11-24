@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { Color } from '../internal/colors.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
@@ -23,6 +24,11 @@ const changelogKindColors: Record<ChangelogKind, Color> = {
 }
 
 const still: Transition = { duration: 0 }
+
+/** The words ChangelogEntry writes, to change on one ChangelogEntry only. */
+type ChangelogEntryLabels = Partial<
+  Pick<GoGoUIMessages, 'changelogNew' | 'changelogImproved' | 'changelogFixed'>
+>
 
 type ChangelogEntryProps = {
   /** The release day, ISO (`2026-11-18`): written in the provider's language. */
@@ -45,6 +51,8 @@ type ChangelogEntryProps = {
   className?: string
   /** The row's `<li>` (AnimatePresence's popLayout measures it). */
   ref?: Ref<HTMLLIElement>
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ChangelogEntryLabels
 }
 
 /**
@@ -63,7 +71,7 @@ type ChangelogEntryProps = {
  *
  * **Key props**: `date` (ISO), `version`, `kind` (new, improved, fixed) +
  * `color`, `title`, `summary`, `open` / `defaultOpen` + `onOpenChange`,
- * `children` (what it opens on).
+ * `children` (what it opens on), `labels` to change its words.
  *
  * **Accessibility**: the row is a button with `aria-expanded`; the day is a
  * `<time>`; the kind is written in words. Still with reduced motion.
@@ -83,8 +91,9 @@ function ChangelogEntry({
   children,
   className,
   ref,
+  labels,
 }: ChangelogEntryProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const panelId = useId()
   const [innerOpen, setInnerOpen] = useState(defaultOpen)
@@ -246,4 +255,4 @@ function ChangelogEntry({
 }
 
 export { ChangelogEntry, changelogKindColors }
-export type { ChangelogEntryProps, ChangelogKind }
+export type { ChangelogEntryProps, ChangelogKind, ChangelogEntryLabels }

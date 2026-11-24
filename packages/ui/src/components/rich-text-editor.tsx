@@ -14,10 +14,28 @@ import {
 } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 import { Separator } from './separator.tsx'
 import { Toggle } from './toggle.tsx'
+
+/** The words RichTextEditor writes, to change on one RichTextEditor only. */
+type RichTextEditorLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'bold'
+    | 'italic'
+    | 'strike'
+    | 'heading'
+    | 'bulletList'
+    | 'orderedList'
+    | 'quote'
+    | 'formatting'
+    | 'undo2'
+    | 'redo'
+  >
+>
 
 type RichTextEditorProps = {
   /** The text as HTML, read when the editor opens. */
@@ -34,6 +52,8 @@ type RichTextEditorProps = {
   'aria-invalid'?: boolean
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: RichTextEditorLabels
 }
 
 /**
@@ -47,7 +67,8 @@ type RichTextEditorProps = {
  * **States**: empty (placeholder), editing, disabled.
  *
  * **Key props**: `defaultValue` (HTML), `onValueChange` (HTML),
- * `placeholder`, `disabled`, `extensions` (add your Tiptap ones).
+ * `placeholder`, `disabled`, `extensions` (add your Tiptap ones),
+ * `labels` to change its words.
  *
  * **Accessibility**: the toolbar buttons are named and pressed; the usual
  * shortcuts work (Ctrl B, Ctrl I).
@@ -65,8 +86,9 @@ function RichTextEditor({
   'aria-invalid': ariaInvalid,
   disabled = false,
   className,
+  labels,
 }: RichTextEditorProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
@@ -209,4 +231,4 @@ function RichTextEditor({
 }
 
 export { RichTextEditor }
-export type { RichTextEditorProps }
+export type { RichTextEditorProps, RichTextEditorLabels }

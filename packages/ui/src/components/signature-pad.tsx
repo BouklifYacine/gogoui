@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import { animate } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { ease } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
@@ -47,6 +48,19 @@ type History = {
   fresh: string | null
 }
 
+/** The words SignaturePad writes, to change on one SignaturePad only. */
+type SignaturePadLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'signatureStrokeAdded'
+    | 'signatureUndone'
+    | 'signatureRedone'
+    | 'signatureCleared'
+    | 'signatureReplayDone'
+    | 'signatureReplaying'
+  >
+>
+
 type SignaturePadProps = {
   /** The strokes it opens with (a signature drawn earlier). */
   defaultValue?: SignatureStroke[]
@@ -66,6 +80,8 @@ type SignaturePadProps = {
   className?: string
   /** `SignaturePadSurface`, then the `SignaturePadAction` buttons. */
   children: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SignaturePadLabels
 }
 
 /**
@@ -86,7 +102,8 @@ type SignaturePadProps = {
  *
  * **Key props**: `onValueChange` (the strokes), `defaultValue`, `ink`,
  * `width`, `signer`, `hint`, `label`. Export the strokes with
- * `signatureToPng` (a data URL) or `signatureToSvg`, cropped to the ink.
+ * `signatureToPng` (a data URL) or `signatureToSvg`, cropped to the ink,
+ * `labels` to change its words.
  *
  * **Accessibility**: the sheet is a focusable image that says how many
  * strokes it holds; Ctrl/Cmd+Z undoes, with Shift redoes, Delete clears;
@@ -107,8 +124,9 @@ function SignaturePad({
   hint,
   className,
   children,
+  labels,
 }: SignaturePadProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const [history, setHistory] = useState<History>(() => ({
@@ -311,4 +329,4 @@ function SignaturePad({
 }
 
 export { SignaturePad }
-export type { SignaturePadProps }
+export type { SignaturePadProps, SignaturePadLabels }

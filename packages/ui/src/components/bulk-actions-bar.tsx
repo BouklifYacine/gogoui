@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { Button } from './button.tsx'
 
 // « Tout sélectionner (N) » leaves once every row is ticked, while it
@@ -17,6 +18,11 @@ function keepFocusInBar(button: HTMLButtonElement | null) {
   }
 }
 
+/** The words BulkActionsBar writes, to change on one BulkActionsBar only. */
+type BulkActionsBarLabels = Partial<
+  Pick<GoGoUIMessages, 'selectedRows' | 'selecting'>
+>
+
 type BulkActionsBarProps = {
   /** « 3 clients sélectionnés ». */
   label: string
@@ -24,6 +30,8 @@ type BulkActionsBarProps = {
   actions?: ReactNode
   /** Every row the filters keep, beyond this page; absent: none to add. */
   selectAll?: { label: string; onSelect: () => void; loading?: boolean }
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BulkActionsBarLabels
 }
 
 /**
@@ -35,14 +43,19 @@ type BulkActionsBarProps = {
  * ticked.
  *
  * **Key props**: `label` (« 3 demandes sélectionnées »), `actions`,
- * `selectAll` (offer every row of every page).
+ * `selectAll` (offer every row of every page), `labels` to change its words.
  *
  * **Accessibility**: the count is read as it changes.
  *
  * @summary The ticked rows' count and actions.
  */
-function BulkActionsBar({ label, actions, selectAll }: BulkActionsBarProps) {
-  const messages = useGoGoUIMessages()
+function BulkActionsBar({
+  label,
+  actions,
+  selectAll,
+  labels,
+}: BulkActionsBarProps) {
+  const messages = useGoGoUIMessages(labels)
   return (
     <section
       aria-label={messages.selectedRows}
@@ -78,4 +91,4 @@ function BulkActionsBar({ label, actions, selectAll }: BulkActionsBarProps) {
 }
 
 export { BulkActionsBar }
-export type { BulkActionsBarProps }
+export type { BulkActionsBarProps, BulkActionsBarLabels }

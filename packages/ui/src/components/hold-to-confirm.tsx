@@ -12,6 +12,7 @@ import { animate, motion, useMotionValue, useTransform } from 'motion/react'
 import type { AnimationPlaybackControls } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { text as inkOf } from '../internal/colors.ts'
 import { describedBy } from '../internal/field-props.ts'
@@ -43,6 +44,9 @@ const SLACK = 24
 
 type Phase = 'idle' | 'holding' | 'confirming' | 'done'
 
+/** The words HoldToConfirm writes, to change on one HoldToConfirm only. */
+type HoldToConfirmLabels = Partial<Pick<GoGoUIMessages, 'holdHint'>>
+
 type HoldToConfirmProps = Omit<
   ComponentProps<'button'>,
   | 'children'
@@ -73,6 +77,8 @@ type HoldToConfirmProps = Omit<
   confirmed?: boolean
   /** A hold starts or ends, for a hint such as « Continuez d'appuyer ». */
   onHoldChange?: (holding: boolean) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: HoldToConfirmLabels
 }
 
 /**
@@ -94,7 +100,8 @@ type HoldToConfirmProps = Omit<
  *
  * **Key props**: `label`, `doneLabel`, `onConfirm` (may return a promise),
  * `confirmingLabel`, `duration` (1200 ms), `iconStart`, `color`
- * (`primary`), `size`, `confirmed` (controlled), `onHoldChange`.
+ * (`primary`), `size`, `confirmed` (controlled), `onHoldChange`,
+ * `labels` to change its words.
  *
  * **Accessibility**: Space or Enter held fills it too (a held key does not
  * repeat); a screen reader's double tap confirms at once. The way to hold
@@ -117,9 +124,10 @@ function HoldToConfirm({
   disabled,
   className,
   'aria-describedby': ariaDescribedBy,
+  labels,
   ...props
 }: HoldToConfirmProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const hintId = useId()
   const [phase, setPhase] = useState<Phase>('idle')
@@ -407,4 +415,4 @@ function HoldToConfirm({
 }
 
 export { HoldToConfirm }
-export type { HoldToConfirmProps }
+export type { HoldToConfirmProps, HoldToConfirmLabels }

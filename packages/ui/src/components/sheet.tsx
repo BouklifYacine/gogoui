@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Dialog as SheetPrimitive } from '@base-ui/react/dialog'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
@@ -55,20 +56,27 @@ function SheetOverlay({ className, ...props }: SheetPrimitive.Backdrop.Props) {
   )
 }
 
+/** The words SheetContent writes, to change on one SheetContent only. */
+type SheetContentLabels = Partial<Pick<GoGoUIMessages, 'close'>>
+
+/** **Key props**: `labels` to change its words. */
 function SheetContent({
   className,
   children,
   side = 'right',
   showCloseButton = true,
   size = 'default',
+  labels,
   ...props
 }: SheetPrimitive.Popup.Props & {
   side?: 'top' | 'right' | 'bottom' | 'left'
   showCloseButton?: boolean
   /** A side panel's width: sm 384 px, default 448 px, lg 672 px, xl 896 px, full the screen. */
   size?: 'sm' | 'default' | 'lg' | 'xl' | 'full'
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SheetContentLabels
 }) {
-  const { close } = useGoGoUIMessages()
+  const { close } = useGoGoUIMessages(labels)
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -165,3 +173,4 @@ export {
   SheetTitle,
   SheetDescription,
 }
+export type { SheetContentLabels }

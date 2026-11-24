@@ -5,8 +5,15 @@ import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { FieldShell } from './field-shell.tsx'
 import { PasswordInput } from './password-input.tsx'
+import type { PasswordInputLabels } from './password-input.tsx'
 import { PasswordStrength } from './password-strength.tsx'
-import type { PasswordRule } from './password-strength.tsx'
+import type {
+  PasswordRule,
+  PasswordStrengthLabels,
+} from './password-strength.tsx'
+
+/** The words PasswordField writes, and its strength meter's, to change on one field only. */
+type PasswordFieldLabels = PasswordInputLabels & PasswordStrengthLabels
 
 type PasswordFieldProps = FieldValueProps<string> & {
   label: string
@@ -19,6 +26,8 @@ type PasswordFieldProps = FieldValueProps<string> & {
   /** The field's height: sm, default or lg. */
   size?: 'sm' | 'default' | 'lg'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PasswordFieldLabels
 }
 
 // Released sideways, the spring rings out on its own: the refused field
@@ -42,7 +51,9 @@ const nudge = {
  * new error appears (after Arc UI), and the error slides in.
  *
  * **Key props**: `label`, `autoComplete` (required: it picks the mode),
- * `minLength`, `rules`, `value` + `onValueChange`, `error`, `size`.
+ * `minLength`, `rules`, `value` + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled), `error`, `size`, `labels` to change its
+ * words.
  *
  * **Accessibility**: the show button says what it will do; password
  * managers fill it thanks to `autoComplete`. No nudge with reduced motion.
@@ -64,6 +75,7 @@ function PasswordField({
   rules,
   size,
   className,
+  labels,
 }: PasswordFieldProps) {
   const reduce = useReduceMotion()
   const [value, setValue] = useControllableState({
@@ -123,6 +135,7 @@ function PasswordField({
               password={value}
               minLength={minLength}
               rules={rules}
+              labels={labels}
             />
           )}
         </>
@@ -132,4 +145,4 @@ function PasswordField({
 }
 
 export { PasswordField }
-export type { PasswordFieldProps }
+export type { PasswordFieldLabels, PasswordFieldProps }

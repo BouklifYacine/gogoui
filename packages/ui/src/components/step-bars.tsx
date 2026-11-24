@@ -1,7 +1,11 @@
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { fill } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words StepBars writes, to change on one StepBars only. */
+type StepBarsLabels = Partial<Pick<GoGoUIMessages, 'stepOf'>>
 
 type StepBarsProps = {
   steps: readonly string[]
@@ -10,6 +14,8 @@ type StepBarsProps = {
   /** The bars' colour, the primary by default. */
   color?: Color
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: StepBarsLabels
 }
 
 /**
@@ -17,7 +23,8 @@ type StepBarsProps = {
  *
  * **Use it for** 2 to 5 steps in a dialog or an onboarding card.
  *
- * **Key props**: `steps` (their names), `current` (from 0), `color`.
+ * **Key props**: `steps` (their names), `current` (from 0), `color`,
+ * `labels` to change its words.
  *
  * @summary Bars for the steps of a short flow.
  */
@@ -26,8 +33,9 @@ function StepBars({
   current,
   color = 'primary',
   className,
+  labels,
 }: StepBarsProps) {
-  const { stepOf } = useGoGoUIMessages()
+  const { stepOf } = useGoGoUIMessages(labels)
   const where = stepOf(current + 1, steps.length)
   return (
     <div data-slot="step-bars" className={cn('flex flex-col gap-2', className)}>
@@ -57,4 +65,4 @@ function StepBars({
 }
 
 export { StepBars }
-export type { StepBarsProps }
+export type { StepBarsProps, StepBarsLabels }

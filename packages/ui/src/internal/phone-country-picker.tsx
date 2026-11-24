@@ -3,6 +3,7 @@ import type { KeyboardEvent } from 'react'
 import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
 import { GoGoIcon } from './gogo-icon.tsx'
@@ -27,6 +28,23 @@ const PAGE = 8
 type Row = { key: string; entry: PhoneCountry }
 type Section = { key: string; label?: string; rows: Row[] }
 
+/** The words PhoneCountryPicker writes, to change on one PhoneCountryPicker only. */
+type PhoneCountryPickerLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'phoneAllCountries'
+    | 'phoneSuggested'
+    | 'phoneCountry'
+    | 'phoneSearch'
+    | 'phoneSearchPlaceholder'
+    | 'clearSearch'
+    | 'phoneCloseList'
+    | 'phoneCountries'
+    | 'phoneNoCountry'
+    | 'phoneCountryCount'
+  >
+>
+
 type PhoneCountryPickerProps = {
   country: PhoneCountry
   pool: PhoneCountry[]
@@ -44,12 +62,16 @@ type PhoneCountryPickerProps = {
   /** The field's width: the open list takes it, 340 px at most. */
   fieldWidth: number
   disabled?: boolean
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PhoneCountryPickerLabels
 }
 
 /**
  * The country button of PhoneField, after Arc UI (https://uiarc.dev, MIT):
  * one surface whose width, height and corners spring from the button to
  * a searchable list, the highlight gliding from row to row.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary Internal: PhoneField's country button and list.
  */
@@ -66,8 +88,9 @@ export function PhoneCountryPicker({
   onFocusNumber,
   fieldWidth,
   disabled,
+  labels,
 }: PhoneCountryPickerProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = useId()
   const listId = `${uid}-list`
@@ -722,3 +745,4 @@ export function PhoneCountryPicker({
     </div>
   )
 }
+export type { PhoneCountryPickerLabels }

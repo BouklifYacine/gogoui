@@ -2,9 +2,15 @@ import type { ReactNode } from 'react'
 import { ArrowDownRightIcon, ArrowUpRightIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { subtle } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words StatCard writes, to change on one StatCard only. */
+type StatCardLabels = Partial<
+  Pick<GoGoUIMessages, 'trendFlat' | 'trendUp' | 'trendDown'>
+>
 
 type StatCardProps = {
   /** What is counted: « Demandes ce mois-ci ». */
@@ -24,6 +30,8 @@ type StatCardProps = {
   /** The icon's tile tint; a plain grey icon without it. */
   color?: Color
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: StatCardLabels
 }
 
 /**
@@ -35,7 +43,7 @@ type StatCardProps = {
  *
  * **Key props**: `label`, `value` (already formatted), `change` (a
  * number, in %), `changeLabel` (« vs mois dernier »), `lowerIsBetter`
- * (green when it drops), `icon`, `color`.
+ * (green when it drops), `icon`, `color`, `labels` to change its words.
  *
  * **Accessibility**: the change is told in words and sign, not colour.
  *
@@ -50,8 +58,9 @@ function StatCard({
   icon,
   color,
   className,
+  labels,
 }: StatCardProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const percent =
     change === undefined
       ? null
@@ -126,4 +135,4 @@ function StatCard({
 }
 
 export { StatCard }
-export type { StatCardProps }
+export type { StatCardProps, StatCardLabels }

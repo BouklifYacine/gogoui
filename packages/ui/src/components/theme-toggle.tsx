@@ -2,6 +2,7 @@ import { useSyncExternalStore } from 'react'
 import { DesktopIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import {
   readTheme,
   subscribeTheme,
@@ -10,6 +11,7 @@ import {
 } from '../internal/theme-store.ts'
 import type { Theme } from '../internal/theme-store.ts'
 import { ThemeButton } from '../internal/theme-button.tsx'
+import type { ThemeButtonLabels } from '../internal/theme-button.tsx'
 import { ToggleGroup, ToggleGroupItem } from './toggle-group.tsx'
 
 /**
@@ -25,6 +27,12 @@ function useTheme(): [Theme, (theme: Theme) => void] {
   return [theme, writeTheme]
 }
 
+/** The words ThemeToggle writes, to change on one ThemeToggle only. */
+type ThemeToggleLabels = Partial<
+  Pick<GoGoUIMessages, 'themeLight' | 'themeDark' | 'themeSystem' | 'theme'>
+> &
+  ThemeButtonLabels
+
 type ThemeToggleProps = {
   /**
    * `group`: light, dark and the device's, side by side. `button`: one
@@ -37,6 +45,8 @@ type ThemeToggleProps = {
   /** `button` only: Button's sizes. */
   size?: 'sm' | 'default' | 'lg'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ThemeToggleLabels
 }
 
 /**
@@ -54,7 +64,7 @@ type ThemeToggleProps = {
  * **Key props**: `variant` (group, button), `compact` (icons only, their
  * names on hover and for screen readers, for a header), `size` (button).
  * Put `themeScript` in the page's head so the right theme shows before
- * React starts.
+ * React starts, `labels` to change its words.
  *
  * **Accessibility**: `group`: each choice is named, the chosen one is
  * pressed. `button`: named « Mode sombre » and pressed in dark mode
@@ -67,11 +77,19 @@ function ThemeToggle({
   compact = false,
   size = 'default',
   className,
+  labels,
 }: ThemeToggleProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const [theme, setTheme] = useTheme()
   if (variant === 'button') {
-    return <ThemeButton compact={compact} size={size} className={className} />
+    return (
+      <ThemeButton
+        compact={compact}
+        size={size}
+        className={className}
+        labels={labels}
+      />
+    )
   }
   const options = [
     { value: 'light', label: messages.themeLight, icon: SunIcon },
@@ -106,4 +124,4 @@ function ThemeToggle({
 }
 
 export { ThemeToggle, themeScript, useTheme }
-export type { Theme, ThemeToggleProps }
+export type { Theme, ThemeToggleProps, ThemeToggleLabels }

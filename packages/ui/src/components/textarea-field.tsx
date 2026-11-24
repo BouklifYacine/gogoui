@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
@@ -8,6 +9,9 @@ import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
 import { RollingNumber } from './rolling-number.tsx'
 import { Textarea } from './textarea.tsx'
+
+/** The words TextareaField writes, to change on one TextareaField only. */
+type TextareaFieldLabels = Partial<Pick<GoGoUIMessages, 'charactersLeft'>>
 
 type TextareaFieldProps = FieldValueProps<string> &
   Omit<
@@ -20,6 +24,8 @@ type TextareaFieldProps = FieldValueProps<string> &
      * under the field and says what is left near the end.
      */
     maxLength?: number
+    /** Its words on this one only, over GoGoUIProvider's `messages`. */
+    labels?: TextareaFieldLabels
   }
 
 // Under this many characters left, the count is read aloud.
@@ -34,9 +40,10 @@ const NEAR_END = 20
  * turns), over it. The count's digits roll as you type; help and error
  * slide in (FieldShell).
  *
- * **Key props**: `label`, `value` + `onValueChange`, `error`,
- * `description`, `maxLength` (shows « 120 caractères restants »). Four
- * lines high.
+ * **Key props**: `label`, `value` + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled), `error`, `description`, `maxLength`
+ * (shows « 120 caractères restants »). Four lines high,
+ * `labels` to change its words.
  *
  * **Accessibility**: the counter is read politely, not at every key.
  *
@@ -53,9 +60,15 @@ function TextareaField({
   onValueChange,
   onBlur,
   maxLength,
+  labels,
   ...textareaProps
 }: TextareaFieldProps) {
-  const { charactersLeft } = useGoGoUIMessages()
+  const { charactersLeft } = useGoGoUIMessages(labels)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   const left = maxLength === undefined ? null : maxLength - value.length
 
   return (
@@ -107,4 +120,4 @@ function TextareaField({
 }
 
 export { TextareaField }
-export type { TextareaFieldProps }
+export type { TextareaFieldProps, TextareaFieldLabels }

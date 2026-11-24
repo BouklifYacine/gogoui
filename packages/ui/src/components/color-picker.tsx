@@ -5,6 +5,7 @@ import { cva } from 'class-variance-authority'
 import { AnimatePresence, Reorder, animate, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { ColorChip } from '../internal/color-chip.tsx'
 import {
@@ -251,22 +252,32 @@ function ColorPickerTrigger({
   )
 }
 
+/** The words ColorPickerContent writes, to change on one ColorPickerContent only. */
+type ColorPickerContentLabels = Partial<
+  Pick<GoGoUIMessages, 'colorPanel' | 'colorEyedropper' | 'confirm'>
+>
+
 /**
  * The panel of a ColorPicker. It opens over the button and grows out of
  * its box (a clip that springs from the pill to the panel), its content
  * arriving just behind the growing edge; it shrinks back on closing.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary ColorPicker's panel, grown out of its button.
  */
 function ColorPickerContent({
   className,
   children,
+  labels,
 }: {
   className?: string
   children?: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerContentLabels
 }) {
   const state = useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const popup = useRef<HTMLDivElement>(null)
   const canPick = useSyncExternalStore(
     subscribeNothing,
@@ -382,16 +393,30 @@ function ColorPickerContent({
 const iconButton =
   'grid size-8 place-items-center rounded-xl text-fg-muted transition-[background-color,color,scale] duration-(--motion-fast) ease-standard hover:bg-hover hover:text-fg focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-focus active:scale-96 motion-reduce:transition-none'
 
+/** The words ColorPickerArea writes, to change on one ColorPickerArea only. */
+type ColorPickerAreaLabels = Partial<
+  Pick<GoGoUIMessages, 'colorArea' | 'colorAreaRole' | 'colorAreaValue'>
+>
+
 /**
  * Saturation (across) and brightness (up) over the pure hue. A click sends
  * the thumb on a quick spring, a drag keeps it under the finger.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's saturation and brightness area.
  */
-function ColorPickerArea({ className }: { className?: string }) {
+function ColorPickerArea({
+  className,
+  labels,
+}: {
+  className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerAreaLabels
+}) {
   const { hsva, commit, pure, opaque, drag, setDrag, disabled } =
     useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const pad = useColorPad(
     (x, y) => commit({ ...hsva, s: x, v: 1 - y }),
@@ -461,14 +486,26 @@ function ColorPickerArea({ className }: { className?: string }) {
 const HUE_TRACK =
   'linear-gradient(to right, #f00 11px, #ff0 calc(11px + (100% - 22px) * .1666), #0f0 calc(11px + (100% - 22px) * .3333), #0ff 50%, #00f calc(11px + (100% - 22px) * .6666), #f0f calc(11px + (100% - 22px) * .8333), #f00 calc(100% - 11px))'
 
+/** The words ColorPickerHue writes, to change on one ColorPickerHue only. */
+type ColorPickerHueLabels = Partial<
+  Pick<GoGoUIMessages, 'colorHue' | 'colorHueValue'>
+>
+
 /**
  * The hue bar, red to red.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's hue bar.
  */
-function ColorPickerHue() {
+function ColorPickerHue({
+  labels,
+}: {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerHueLabels
+}) {
   const { hsva, commit, pure, drag, setDrag, disabled } = useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   return (
     <MotionScope>
       <ColorSlider
@@ -488,15 +525,25 @@ function ColorPickerHue() {
   )
 }
 
+/** The words ColorPickerAlpha writes, to change on one ColorPickerAlpha only. */
+type ColorPickerAlphaLabels = Partial<Pick<GoGoUIMessages, 'colorOpacity'>>
+
 /**
  * The opacity bar, see-through to solid over a checkerboard.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's opacity bar.
  */
-function ColorPickerAlpha() {
+function ColorPickerAlpha({
+  labels,
+}: {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerAlphaLabels
+}) {
   const { hsva, commit, css, opaque, drag, setDrag, disabled } =
     useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   return (
     <MotionScope>
       <ColorSlider
@@ -516,17 +563,31 @@ function ColorPickerAlpha() {
   )
 }
 
+/** The words ColorPickerInput writes, to change on one ColorPickerInput only. */
+type ColorPickerInputLabels = Partial<
+  Pick<GoGoUIMessages, 'colorFormat' | 'colorIn' | 'colorInvalid'>
+>
+
 /**
  * The colour typed by hand. With several `formats`, a button before it
  * cycles HEX, RGB, HSL, OKLCH, its name and the value morphing letter by
  * letter. Enter or leaving the field reads it; a colour it cannot read
  * shakes the field and says why.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's typed value, with its format.
  */
-function ColorPickerInput({ className }: { className?: string }) {
+function ColorPickerInput({
+  className,
+  labels,
+}: {
+  className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerInputLabels
+}) {
   const { hsva, commit, label, formats, disabled } = useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const errorId = useId()
   const [format, setFormat] = useState<ColorFormat>(formats[0] ?? 'hex')
@@ -670,15 +731,29 @@ const gradeLook = {
   fail: 'bg-danger-subtle text-danger-fg',
 } as const
 
+/** The words ColorPickerContrast writes, to change on one ColorPickerContrast only. */
+type ColorPickerContrastLabels = Partial<
+  Pick<GoGoUIMessages, 'colorContrastWith' | 'contrastGrade' | 'contrastRead'>
+>
+
 /**
  * The contrast of the colour against `contrastWith`: a sample, the ratio
  * counted up on a spring, and the WCAG level that rolls when it changes.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's contrast readout.
  */
-function ColorPickerContrast({ className }: { className?: string }) {
+function ColorPickerContrast({
+  className,
+  labels,
+}: {
+  className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerContrastLabels
+}) {
   const { hsva, css, contrastWith } = useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const background = contrastWith ?? '#ffffff'
   const ratio = contrastRatio(hsva, parseColor(background))
@@ -744,17 +819,31 @@ function ColorPickerContrast({ className }: { className?: string }) {
   )
 }
 
+/** The words ColorPickerSwatches writes, to change on one ColorPickerSwatches only. */
+type ColorPickerSwatchesLabels = Partial<
+  Pick<GoGoUIMessages, 'colorSave' | 'colorSaved' | 'colorSwatch'>
+>
+
 /**
  * Saved colours: « + » saves the current one first in line; a click
  * applies one; they can be dragged, moved with Alt + arrows, removed with
  * Delete.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary ColorPicker's saved colours.
  */
-function ColorPickerSwatches({ className }: { className?: string }) {
+function ColorPickerSwatches({
+  className,
+  labels,
+}: {
+  className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorPickerSwatchesLabels
+}) {
   const { hex, hsva, commit, swatches, setSwatches, maxSwatches, disabled } =
     useColorPicker()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const [focusId, setFocusId] = useState<string | null>(null)
   const buttons = useRef(new Map<string, HTMLButtonElement>())
@@ -933,5 +1022,16 @@ export {
   ColorPickerSwatches,
   ColorPickerTrigger,
 }
-export type { ColorFormat, ColorPickerProps, ColorSwatch }
+export type {
+  ColorFormat,
+  ColorPickerProps,
+  ColorSwatch,
+  ColorPickerContentLabels,
+  ColorPickerAreaLabels,
+  ColorPickerHueLabels,
+  ColorPickerAlphaLabels,
+  ColorPickerInputLabels,
+  ColorPickerContrastLabels,
+  ColorPickerSwatchesLabels,
+}
 export type ColorPickerTriggerProps = ComponentProps<typeof ColorPickerTrigger>

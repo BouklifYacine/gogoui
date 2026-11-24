@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
+import { LabelsScope } from '../internal/labels-scope.tsx'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
@@ -21,9 +23,32 @@ import { Button } from './button.tsx'
 import { Field, FieldDescription, FieldError, FieldLabel } from './field.tsx'
 import { Input } from './input.tsx'
 import { SignaturePad } from './signature-pad.tsx'
+import type { SignaturePadLabels } from './signature-pad.tsx'
 import { SignaturePadAction } from './signature-pad-action.tsx'
+import type { SignaturePadActionLabels } from './signature-pad-action.tsx'
 import { SignaturePadSurface } from './signature-pad-surface.tsx'
+import type { SignaturePadSurfaceLabels } from './signature-pad-surface.tsx'
 import { ToggleGroup, ToggleGroupItem } from './toggle-group.tsx'
+
+/**
+ * The words SignatureField writes, and those of the pad it draws, to change
+ * on one SignatureField only.
+ */
+type SignatureFieldLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'signatureMode'
+    | 'signatureDraw'
+    | 'signatureType'
+    | 'savedSignature'
+    | 'signAgain'
+    | 'signatureTypedPlaceholder'
+    | 'signHere'
+  >
+> &
+  SignaturePadLabels &
+  SignaturePadSurfaceLabels &
+  SignaturePadActionLabels
 
 type SignatureFieldProps = FieldValueProps<string> & {
   label: string
@@ -40,6 +65,8 @@ type SignatureFieldProps = FieldValueProps<string> & {
   required?: boolean
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SignatureFieldLabels
 }
 
 /**
@@ -53,9 +80,10 @@ type SignatureFieldProps = FieldValueProps<string> & {
  * **States**: empty, drawn, typed, a signature saved earlier (shown, with
  * « Signer à nouveau »), invalid (`error`), disabled.
  *
- * **Key props**: `label`, `value` + `onValueChange` (controlled: '' or a
- * data URL, PNG by default, SVG with `format="svg"`), `signer`, `error`,
- * `description`, `allowTyped` (true), `ink`, `width`.
+ * **Key props**: `label`, `value` + `onValueChange` ('' or a data URL, PNG
+ * by default, SVG with `format="svg"`; controlled) or `defaultValue`
+ * (uncontrolled), `signer`, `error`, `description`, `allowTyped` (true),
+ * `ink`, `width`, `labels` to change its words.
  *
  * **Accessibility**: drawing has no keyboard path, so « Écrire mon nom »
  * is always offered (Arc UI's pad has none: GoGoUI adds it); the typed name
@@ -83,8 +111,9 @@ function SignatureField({
   required,
   disabled = false,
   className,
+  labels,
 }: SignatureFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const ids = useFieldIds(id, name)
   const labelId = `${ids.id}-label`
   const [value, setValue] = useControllableState({
@@ -189,29 +218,31 @@ function SignatureField({
           </div>
         </div>
       ) : mode === 'draw' ? (
-        <SignaturePad
-          key={padKey}
-          label={label}
-          signer={signer}
-          hint={hint}
-          ink={ink}
-          width={width}
-          disabled={disabled}
-          onValueChange={(strokes) => send(fromStrokes(strokes))}
-        >
-          <SignaturePadSurface
-            id={ids.id}
-            aria-describedby={describe}
-            aria-invalid={invalid}
-            onBlur={onBlur}
-          />
-          <div className="flex justify-end gap-1">
-            <SignaturePadAction action="undo" />
-            <SignaturePadAction action="redo" />
-            <SignaturePadAction action="replay" />
-            <SignaturePadAction action="clear" />
-          </div>
-        </SignaturePad>
+        <LabelsScope labels={labels}>
+          <SignaturePad
+            key={padKey}
+            label={label}
+            signer={signer}
+            hint={hint}
+            ink={ink}
+            width={width}
+            disabled={disabled}
+            onValueChange={(strokes) => send(fromStrokes(strokes))}
+          >
+            <SignaturePadSurface
+              id={ids.id}
+              aria-describedby={describe}
+              aria-invalid={invalid}
+              onBlur={onBlur}
+            />
+            <div className="flex justify-end gap-1">
+              <SignaturePadAction action="undo" />
+              <SignaturePadAction action="redo" />
+              <SignaturePadAction action="replay" />
+              <SignaturePadAction action="clear" />
+            </div>
+          </SignaturePad>
+        </LabelsScope>
       ) : (
         <div className="grid gap-2.5">
           <Input
@@ -265,4 +296,4 @@ function SignatureField({
 }
 
 export { SignatureField }
-export type { SignatureFieldProps }
+export type { SignatureFieldProps, SignatureFieldLabels }

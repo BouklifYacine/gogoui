@@ -5,6 +5,7 @@ import type { Icon } from '@phosphor-icons/react'
 import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { describedBy } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
@@ -25,6 +26,14 @@ import { useElementSize } from '../internal/use-element-size.ts'
 import { cn } from '../lib/cn.ts'
 import { FieldShell } from './field-shell.tsx'
 
+/** The words MoneyField writes, to change on one MoneyField only. */
+type MoneyFieldLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'moneyUpTo' | 'moneyAtLeast' | 'moneyBetween' | 'moneyQuickAdd' | 'moneyAdd'
+  >
+>
+
 type MoneyFieldProps = FieldValueProps<string> & {
   label: string
   placeholder?: string
@@ -41,6 +50,8 @@ type MoneyFieldProps = FieldValueProps<string> & {
   min?: number
   /** The highest amount, said under the field; typing past it is refused. */
   max?: number
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: MoneyFieldLabels
 }
 
 // A refused change kicks the amount sideways and springs it home: a
@@ -68,9 +79,10 @@ const KICK = physical(0.42)
  * (a sideways kick, the range flashes), disabled, invalid.
  *
  * **Key props**: `label`, `value` (the shown text, « 1 200,5 »: your
- * form's schema turns it into a number) + `onValueChange`, `error`,
- * `description`, `placeholder`, `required`, `size`, `icon`, `currency`,
- * `quickAdd`, `min`, `max`.
+ * form's schema turns it into a number) + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled), `error`, `description`, `placeholder`,
+ * `required`, `size`, `icon`, `currency`, `quickAdd`, `min`, `max`,
+ * `labels` to change its words.
  *
  * **Accessibility**: a decimal keyboard on a phone; a plain text box whose
  * range is read with it (`aria-describedby`); a chip says the new amount
@@ -98,8 +110,9 @@ function MoneyField({
   quickAdd = [],
   min,
   max,
+  labels,
 }: MoneyFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const symbols = moneySymbols(messages.intlLocale)
   const rangeId = `${useId()}-range`
@@ -487,4 +500,4 @@ function MoneyField({
 }
 
 export { MoneyField }
-export type { MoneyFieldProps }
+export type { MoneyFieldProps, MoneyFieldLabels }

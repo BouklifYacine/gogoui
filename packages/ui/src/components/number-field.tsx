@@ -5,6 +5,7 @@ import { AnimatePresence, animate, motion, useMotionValue } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { blur, duration, ease, spring } from '../internal/motion.ts'
@@ -14,6 +15,19 @@ import { RollingNumber } from './rolling-number.tsx'
 
 /** Words beside the number; a function gets the value (« 1 invité », « 2 invités »). */
 type NumberFieldAffix = string | ((value: number) => string)
+
+/** The words NumberField writes, to change on one NumberField only. */
+type NumberFieldLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'numberAtMax'
+    | 'numberAtMin'
+    | 'numberMax'
+    | 'numberMin'
+    | 'decrease'
+    | 'increase'
+  >
+>
 
 type NumberFieldProps = Omit<
   NumberFieldPrimitive.Root.Props,
@@ -32,6 +46,8 @@ type NumberFieldProps = Omit<
   /** Shown above the field, inside it: a `NumberFieldScrubArea` around its label. */
   children?: ReactNode
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: NumberFieldLabels
 }
 
 // Arc UI's number field (https://uiarc.dev, MIT): a press past a limit
@@ -85,7 +101,7 @@ const ScrubContext = createContext<{
  *
  * **Key props**: `value` / `defaultValue` + `onValueChange`, `min`, `max`,
  * `step`, `largeStep`, `format` (Intl options), `prefix`, `suffix`,
- * `limitHint`, `size` (sm, default, lg).
+ * `limitHint`, `size` (sm, default, lg), `labels` to change its words.
  *
  * **Accessibility**: a spinbutton (Base UI): arrows, Page up/down,
  * Home/End. A press at a limit is said aloud (« 300, maximum »). Give it a
@@ -110,9 +126,10 @@ function NumberField({
   max,
   format,
   disabled,
+  labels,
   ...props
 }: NumberFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const generatedId = useId()
   const inputId = id ?? generatedId
@@ -549,4 +566,4 @@ function NumberFieldScrubArea({
 }
 
 export { NumberField, NumberFieldScrubArea }
-export type { NumberFieldAffix, NumberFieldProps }
+export type { NumberFieldAffix, NumberFieldProps, NumberFieldLabels }

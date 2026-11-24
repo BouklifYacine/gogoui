@@ -3,7 +3,16 @@ import { Toaster as Sonner, toast } from 'sonner'
 import type { ToasterProps } from 'sonner'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
+
+/** The words Toaster writes, to change on one Toaster only. */
+type ToasterLabels = Partial<
+  Pick<GoGoUIMessages, 'notifications' | 'closeNotification'>
+>
+
+/** The words useToastWithUndo writes, to change for one call only. */
+type ToastWithUndoLabels = Partial<Pick<GoGoUIMessages, 'undo'>>
 
 /**
  * Short confirmations at the top of the screen.
@@ -19,13 +28,21 @@ import { GoGoIcon } from '../internal/gogo-icon.tsx'
  *
  * **States**: success, error, warning, info, loading, with an action.
  *
+ * **Key props**: Sonner's, `labels` to change its words.
+ *
  * **Accessibility**: read aloud politely; it stays 10 s when it carries
  * « Annuler ».
  *
  * @summary Short confirmations at the top of the screen.
  */
-function Toaster(props: ToasterProps) {
-  const { notifications, closeNotification } = useGoGoUIMessages()
+function Toaster({
+  labels,
+  ...props
+}: ToasterProps & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ToasterLabels
+}) {
+  const { notifications, closeNotification } = useGoGoUIMessages(labels)
 
   return (
     <Sonner
@@ -98,8 +115,11 @@ function Toaster(props: ToasterProps) {
  *
  * @summary Show a toast with an « Annuler » button.
  */
-function useToastWithUndo() {
-  const { undo: undoWord } = useGoGoUIMessages()
+function useToastWithUndo(
+  /** Its words for these toasts only: `{ undo: 'Rétablir' }`. */
+  labels?: ToastWithUndoLabels,
+) {
+  const { undo: undoWord } = useGoGoUIMessages(labels)
   return useCallback(
     (message: string, undo: () => void) => {
       toast.success(message, {
@@ -112,3 +132,4 @@ function useToastWithUndo() {
 }
 
 export { Toaster, toast, useToastWithUndo }
+export type { ToasterLabels, ToastWithUndoLabels }

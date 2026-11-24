@@ -10,6 +10,7 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor, seriesColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -60,6 +61,21 @@ type LineChartDatum = {
   values: Record<string, number | undefined>
 }
 
+/** The words LineChart writes, to change on one LineChart only. */
+type LineChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartReading'
+    | 'chartSeriesShown'
+    | 'chartSpan'
+    | 'chartLatestOf'
+    | 'chartSeriesGroup'
+    | 'chartExplore'
+    | 'chartChooseSeries'
+    | 'loading'
+  >
+>
+
 type LineChartProps = {
   data: readonly LineChartDatum[]
   series: readonly LineChartSeries[]
@@ -88,6 +104,8 @@ type LineChartProps = {
   /** Smooth curves that never swing past the data, or straight segments. */
   curve?: 'smooth' | 'linear'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: LineChartLabels
 }
 
 /** A series' line as it moves, read by `paint`, never by React. */
@@ -178,7 +196,7 @@ function curvesOf(
  * **Key props**: `data` (`key`, `label`, `axisLabel`, `values`), `series`
  * (`key`, `label`, `color`, `dashed`, `area`), `label`, `unit`, `format`,
  * `hiddenSeries` / `onHiddenSeriesChange`, `onActiveChange`, `loading`,
- * `curve`, `height`.
+ * `curve`, `height`, `labels` to change its words.
  *
  * **Motion**: the lines draw left to right once seen; new data morphs
  * every line from the one on screen; a hidden series flattens and fades
@@ -209,8 +227,9 @@ function LineChart({
   categoryLabel,
   curve = 'smooth',
   className,
+  labels,
 }: LineChartProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const uid = `line${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
   const emptyText = emptyLabel ?? messages.chartNoData
@@ -845,4 +864,4 @@ function LineChart({
 }
 
 export { LineChart }
-export type { LineChartDatum, LineChartProps, LineChartSeries }
+export type { LineChartDatum, LineChartProps, LineChartSeries, LineChartLabels }

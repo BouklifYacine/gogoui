@@ -4,6 +4,7 @@ import type { Transition } from 'motion/react'
 
 import { Button } from '../components/button.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { GoGoIcon } from './gogo-icon.tsx'
 import { MotionScope } from './motion-scope.tsx'
@@ -29,10 +30,15 @@ const iconSizes = {
   lg: 'icon-lg',
 } as const
 
+/** The words ThemeButton writes, to change on one ThemeButton only. */
+type ThemeButtonLabels = Partial<Pick<GoGoUIMessages, 'darkMode'>>
+
 /**
  * ThemeToggle variant="button", after Arc UI (https://uiarc.dev, MIT): one
  * button between light and dark whose sun and moon trade places with a
  * turn, both the same way (clockwise into dark, back out of it).
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary Internal: ThemeToggle's one-button variant.
  */
@@ -40,12 +46,15 @@ export function ThemeButton({
   compact,
   size,
   className,
+  labels,
 }: {
   compact: boolean
   size: 'sm' | 'default' | 'lg'
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ThemeButtonLabels
 }) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const dark = useSyncExternalStore(subscribeTheme, isDark, () => false)
 
@@ -130,3 +139,4 @@ export function ThemeButton({
     </MotionScope>
   )
 }
+export type { ThemeButtonLabels }

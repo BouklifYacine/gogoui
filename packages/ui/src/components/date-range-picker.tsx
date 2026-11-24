@@ -5,6 +5,7 @@ import type { DateRange, Matcher } from 'react-day-picker'
 import { fr } from 'react-day-picker/locale'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import type { Color } from '../internal/colors.ts'
 import { DatePopup } from '../internal/date-popup.tsx'
 import { formatTypedDay, parseDay, toDay } from '../internal/days.ts'
@@ -19,6 +20,22 @@ import { Popover, PopoverTrigger } from './popover.tsx'
 
 /** A ready-made period: « 7 derniers jours ». */
 type DateRangePreset = { label: string; from: string; to: string }
+
+/** The words DateRangePicker writes, to change on one DateRangePicker only. */
+type DateRangePickerLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'dateRange'
+    | 'dayCount'
+    | 'pickEndDate'
+    | 'presets'
+    | 'clearDates'
+    | 'confirm'
+    | 'todayLabel'
+    | 'today'
+    | 'calendarDayRest'
+  >
+>
 
 type DateRangePickerProps = {
   id?: string
@@ -37,6 +54,8 @@ type DateRangePickerProps = {
   /** The chosen days' colour; the primary by default. */
   color?: Color
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DateRangePickerLabels
 }
 
 const monthsApart = (a: Date, b: Date) =>
@@ -115,7 +134,7 @@ function useTimeDirection(time: number | null) {
  *
  * **Key props**: `from`, `to`, `onChange`, `placeholder`, `presets`
  * (`useDateRangePresets()` gives the usual ones: 7 days, this month…),
- * `minDays`, `maxDays`, `disabledDates`, `color`.
+ * `minDays`, `maxDays`, `disabledDates`, `color`, `labels` to change its words.
  *
  * **Accessibility**: the button says the chosen period in words; the
  * calendar opens on the period (arrows work at once); the length, or the
@@ -136,8 +155,9 @@ function DateRangePicker({
   maxDays,
   color,
   className,
+  labels,
 }: DateRangePickerProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const isMobile = useIsMobile()
   const highlightId = useId()
   const [open, setOpen] = useState(false)
@@ -267,6 +287,7 @@ function DateRangePicker({
           )}
           <Calendar
             mode="range"
+            labels={labels}
             numberOfMonths={count}
             selected={selected}
             month={month}
@@ -315,4 +336,4 @@ function DateRangePicker({
 }
 
 export { DateRangePicker, useDateRangePresets }
-export type { DateRangePickerProps, DateRangePreset }
+export type { DateRangePickerProps, DateRangePreset, DateRangePickerLabels }

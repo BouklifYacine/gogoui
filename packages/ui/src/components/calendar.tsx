@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react'
 import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { CalendarChevron } from '../internal/calendar-chevron.tsx'
 import { CalendarMonth } from '../internal/calendar-month.tsx'
@@ -9,6 +10,7 @@ import { CalendarNav } from '../internal/calendar-nav.tsx'
 import { CalendarLookContext } from '../internal/calendar-state.ts'
 import { CalendarWeeks } from '../internal/calendar-weeks.tsx'
 import type { Color } from '../internal/colors.ts'
+import { LabelsScope } from '../internal/labels-scope.tsx'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { cn } from '../lib/cn.ts'
 import { buttonVariants } from './button.tsx'
@@ -21,6 +23,14 @@ import { CalendarDayButton } from './calendar-day-button.tsx'
 // when its title is done, so the title's exit lasts as long as the slide.
 // react-day-picker adds and removes each of these with classList, so each
 // is ONE class; the keyframes live in styles.css (`calendar-…`).
+/**
+ * The words Calendar writes, to change on one Calendar only. They go in
+ * the same `labels` as react-day-picker's own (`labelNext`…).
+ */
+type CalendarLabels = Partial<
+  Pick<GoGoUIMessages, 'todayLabel' | 'today' | 'calendarDayRest'>
+>
+
 const animations = {
   weeks_after_enter: 'calendar-weeks-after-enter',
   weeks_before_enter: 'calendar-weeks-before-enter',
@@ -56,7 +66,8 @@ const animations = {
  * `min` / `max` (range length), `modifiers` + `modifiersClassNames`,
  * `locale` (from react-day-picker/locale), `showToday` (a « Today »
  * button), `fixedWeeks` (six weeks, on by default: the height never
- * jumps). The days' size is `--cell-size` (44px by default).
+ * jumps), `labels` to change its words (react-day-picker's and
+ * GoGoUI's). The days' size is `--cell-size` (44px by default).
  *
  * **Accessibility**: arrows move between days, Page up / down between
  * months; the new month is read aloud; the disc, bars and dot are drawn,
@@ -77,6 +88,7 @@ function Calendar({
   color = 'primary',
   showToday = false,
   animate,
+  labels,
   ...props
 }: ComponentProps<typeof DayPicker> & {
   /** The arrows' look, a Button variant; quiet (ghost) by default. */
@@ -85,6 +97,11 @@ function Calendar({
   color?: Color
   /** A « Today » button beside the arrows: back to today's month, and today chosen in single mode. */
   showToday?: boolean
+  /**
+   * Its words on this one only, over GoGoUIProvider's `messages`, beside
+   * react-day-picker's own labels.
+   */
+  labels?: ComponentProps<typeof DayPicker>['labels'] & CalendarLabels
 }) {
   const reduce = useReduceMotion()
   const d = getDefaultClassNames()
@@ -95,97 +112,104 @@ function Calendar({
 
   return (
     <MotionScope>
-      <CalendarLookContext value={{ color, showToday }}>
-        <DayPicker
-          data-slot="calendar"
-          data-show-today={showToday || undefined}
-          showOutsideDays={showOutsideDays}
-          fixedWeeks={fixedWeeks}
-          // Months slide; with reduced motion they swap in place.
-          animate={animate ?? !reduce}
-          className={cn(
-            'group/calendar p-3 text-fg [--cell-size:--spacing(11)]',
-            String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
-            String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
-            className,
-          )}
-          captionLayout={captionLayout}
-          formatters={{
-            formatMonthDropdown: (date) =>
-              date.toLocaleString(props.locale?.code, { month: 'short' }),
-            ...formatters,
-          }}
-          classNames={{
-            root: cn('w-fit', d.root),
-            months: cn('relative flex flex-col gap-6 md:flex-row', d.months),
-            month: cn('flex w-full flex-col gap-3', d.month),
-            nav: cn(
-              'absolute end-0 top-0 z-10 -me-1.5 flex items-center gap-0.5',
-              d.nav,
-            ),
-            button_previous: cn(navButton, d.button_previous),
-            button_next: cn(navButton, d.button_next),
-            month_caption: cn(
-              'flex h-8 w-full items-center ps-1 pe-20 group-data-show-today/calendar:pe-40',
-              d.month_caption,
-            ),
-            dropdowns: cn(
-              'flex h-8 items-center gap-1.5 text-sm font-medium',
-              d.dropdowns,
-            ),
-            dropdown_root: cn(
-              'relative rounded-lg has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-focus',
-              d.dropdown_root,
-            ),
-            dropdown: cn('absolute inset-0 bg-floating opacity-0', d.dropdown),
-            caption_label: cn(
-              'font-medium whitespace-nowrap tabular-nums select-none',
-              captionLayout === 'label'
-                ? 'text-base'
-                : 'flex items-center gap-1 rounded-lg text-sm [&>svg]:size-3.5 [&>svg]:text-fg-muted',
-              d.caption_label,
-            ),
-            month_grid: cn('flex w-full flex-col', d.month_grid),
-            weekdays: cn('mb-1.5 flex', d.weekdays),
-            weekday: cn(
-              'h-6 flex-1 text-xs leading-6 font-medium text-fg-subtle select-none',
-              d.weekday,
-            ),
-            weeks: cn('group/weeks relative flex flex-col', d.weeks),
-            week: cn('flex w-full', d.week),
-            week_number_header: cn(
-              'w-(--cell-size) select-none',
-              d.week_number_header,
-            ),
-            week_number: cn(
-              'flex size-(--cell-size) items-center justify-center text-xs text-fg-subtle select-none',
-              d.week_number,
-            ),
-            day: cn('flex-1 p-0 text-center select-none', d.day),
-            range_start: d.range_start,
-            range_middle: d.range_middle,
-            range_end: d.range_end,
-            today: d.today,
-            outside: d.outside,
-            disabled: d.disabled,
-            hidden: cn('invisible', d.hidden),
-            ...animations,
-            ...classNames,
-          }}
-          components={{
-            Chevron: CalendarChevron,
-            DayButton: CalendarDayButton,
-            Month: CalendarMonth,
-            Months: CalendarMonths,
-            Nav: CalendarNav,
-            Weeks: CalendarWeeks,
-            ...components,
-          }}
-          {...props}
-        />
-      </CalendarLookContext>
+      <LabelsScope labels={labels}>
+        <CalendarLookContext value={{ color, showToday }}>
+          <DayPicker
+            labels={labels}
+            data-slot="calendar"
+            data-show-today={showToday || undefined}
+            showOutsideDays={showOutsideDays}
+            fixedWeeks={fixedWeeks}
+            // Months slide; with reduced motion they swap in place.
+            animate={animate ?? !reduce}
+            className={cn(
+              'group/calendar p-3 text-fg [--cell-size:--spacing(11)]',
+              String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
+              String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+              className,
+            )}
+            captionLayout={captionLayout}
+            formatters={{
+              formatMonthDropdown: (date) =>
+                date.toLocaleString(props.locale?.code, { month: 'short' }),
+              ...formatters,
+            }}
+            classNames={{
+              root: cn('w-fit', d.root),
+              months: cn('relative flex flex-col gap-6 md:flex-row', d.months),
+              month: cn('flex w-full flex-col gap-3', d.month),
+              nav: cn(
+                'absolute end-0 top-0 z-10 -me-1.5 flex items-center gap-0.5',
+                d.nav,
+              ),
+              button_previous: cn(navButton, d.button_previous),
+              button_next: cn(navButton, d.button_next),
+              month_caption: cn(
+                'flex h-8 w-full items-center ps-1 pe-20 group-data-show-today/calendar:pe-40',
+                d.month_caption,
+              ),
+              dropdowns: cn(
+                'flex h-8 items-center gap-1.5 text-sm font-medium',
+                d.dropdowns,
+              ),
+              dropdown_root: cn(
+                'relative rounded-lg has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-focus',
+                d.dropdown_root,
+              ),
+              dropdown: cn(
+                'absolute inset-0 bg-floating opacity-0',
+                d.dropdown,
+              ),
+              caption_label: cn(
+                'font-medium whitespace-nowrap tabular-nums select-none',
+                captionLayout === 'label'
+                  ? 'text-base'
+                  : 'flex items-center gap-1 rounded-lg text-sm [&>svg]:size-3.5 [&>svg]:text-fg-muted',
+                d.caption_label,
+              ),
+              month_grid: cn('flex w-full flex-col', d.month_grid),
+              weekdays: cn('mb-1.5 flex', d.weekdays),
+              weekday: cn(
+                'h-6 flex-1 text-xs leading-6 font-medium text-fg-subtle select-none',
+                d.weekday,
+              ),
+              weeks: cn('group/weeks relative flex flex-col', d.weeks),
+              week: cn('flex w-full', d.week),
+              week_number_header: cn(
+                'w-(--cell-size) select-none',
+                d.week_number_header,
+              ),
+              week_number: cn(
+                'flex size-(--cell-size) items-center justify-center text-xs text-fg-subtle select-none',
+                d.week_number,
+              ),
+              day: cn('flex-1 p-0 text-center select-none', d.day),
+              range_start: d.range_start,
+              range_middle: d.range_middle,
+              range_end: d.range_end,
+              today: d.today,
+              outside: d.outside,
+              disabled: d.disabled,
+              hidden: cn('invisible', d.hidden),
+              ...animations,
+              ...classNames,
+            }}
+            components={{
+              Chevron: CalendarChevron,
+              DayButton: CalendarDayButton,
+              Month: CalendarMonth,
+              Months: CalendarMonths,
+              Nav: CalendarNav,
+              Weeks: CalendarWeeks,
+              ...components,
+            }}
+            {...props}
+          />
+        </CalendarLookContext>
+      </LabelsScope>
     </MotionScope>
   )
 }
 
 export { Calendar, CalendarDayButton }
+export type { CalendarLabels }

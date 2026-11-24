@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor, seriesColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -35,6 +36,21 @@ export type StreamgraphDatum = {
   values: Record<string, number | undefined>
 }
 
+/** The words Streamgraph writes, to change on one Streamgraph only. */
+type StreamgraphLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartReading'
+    | 'chartTotal'
+    | 'chartSpan'
+    | 'chartLatestOf'
+    | 'chartSeriesGroup'
+    | 'streamgraphRole'
+    | 'streamgraphKeys'
+    | 'chartChooseSeries'
+  >
+>
+
 export type StreamgraphProps = {
   data: StreamgraphDatum[]
   /** The layers from the centre out: the first runs through the middle, the others alternate above and below. */
@@ -63,6 +79,8 @@ export type StreamgraphProps = {
   /** Shown when there is no data; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: StreamgraphLabels
 }
 
 type Reading = { index: number; key: string | null; y: number | null }
@@ -205,7 +223,7 @@ function axisPicks(data: StreamgraphDatum[], width: number) {
  * **Key props**: `data` (key, label, axisLabel, values), `series` (key,
  * label, color), `label`, `unit`, `offset` (wiggle, silhouette, zero),
  * `formatValue`, `hiddenSeries`, `onActiveChange`, `legend`,
- * `directLabels`, `height`.
+ * `directLabels`, `height`, `labels` to change its words.
  *
  * **Motion**: the stream swells out of a hairline the first time it is
  * seen; new data and hidden layers morph the shapes on a spring; the
@@ -237,8 +255,9 @@ export function Streamgraph({
   categoryLabel,
   emptyLabel,
   className,
+  labels,
 }: StreamgraphProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const figure = useRef<HTMLElement>(null)
   const inView = useInView(figure, { once: true, amount: 0.3 })
@@ -720,3 +739,4 @@ export function Streamgraph({
     </MotionScope>
   )
 }
+export type { StreamgraphLabels }

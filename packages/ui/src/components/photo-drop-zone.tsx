@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone'
 import { ImageIcon, UploadSimpleIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
 import { Spinner } from './spinner.tsx'
@@ -15,6 +16,19 @@ const ACCEPTED = {
   'image/png': ['.png'],
   'image/webp': ['.webp'],
 }
+
+/** The words PhotoDropZone writes, to change on one PhotoDropZone only. */
+type PhotoDropZoneLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'onlyOneImage'
+    | 'notAnImage'
+    | 'dropImage'
+    | 'change'
+    | 'sendingImage'
+    | 'imageSaved'
+  >
+>
 
 type PhotoDropZoneProps = {
   /** A logo is shown whole on a square; a portrait fills a circle. */
@@ -31,6 +45,8 @@ type PhotoDropZoneProps = {
   onPick: (file: File) => Promise<boolean>
   /** A file refused before sending, said in the page's alert. */
   onRefuse: (message: string) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PhotoDropZoneLabels
 }
 
 /**
@@ -38,7 +54,7 @@ type PhotoDropZoneProps = {
  *
  * **Key props**: `shape` (logo, portrait), `current` (`{ src, alt }` or
  * null), `onPick`, `onRefuse`, `pickLabel`, `description`,
- * `extraActions` (« Retirer »).
+ * `extraActions` (« Retirer »), `labels` to change its words.
  *
  * @summary A logo or a portrait to drop or pick.
  */
@@ -50,8 +66,9 @@ function PhotoDropZone({
   extraActions,
   onPick,
   onRefuse,
+  labels,
 }: PhotoDropZoneProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   // The file on its way, shown from the computer before it is saved.
   const [preview, setPreview] = useState<string | null>(null)
   const [saved, setSaved] = useState(false)
@@ -171,4 +188,4 @@ function PhotoDropZone({
 }
 
 export { PhotoDropZone }
-export type { PhotoDropZoneProps }
+export type { PhotoDropZoneProps, PhotoDropZoneLabels }

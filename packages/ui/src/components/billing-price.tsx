@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { duration, ease, spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
@@ -8,6 +9,9 @@ import { swapFade, swapRise } from '../internal/swap-variants.ts'
 import { useElementSize } from '../internal/use-element-size.ts'
 import { cn } from '../lib/cn.ts'
 import { RollingNumber } from './rolling-number.tsx'
+
+/** The words BillingPrice writes, to change on one BillingPrice only. */
+type BillingPriceLabels = Partial<Pick<GoGoUIMessages, 'billingWasPrice'>>
 
 type BillingPriceProps = {
   amount: number
@@ -20,6 +24,8 @@ type BillingPriceProps = {
   /** An ISO 4217 code, the euro by default. */
   currency?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BillingPriceLabels
 }
 
 /**
@@ -38,7 +44,8 @@ type BillingPriceProps = {
  * **Compose**: below a `BillingToggle`; inside a `Card`.
  *
  * **Key props**: `amount`, `was`, `period`, `decimals`, `currency`. The
- * amount is written by Intl in the provider's language (« 29 € »).
+ * amount is written by Intl in the provider's language (« 29 € »),
+ * `labels` to change its words.
  *
  * **Motion**: the digits roll (`RollingNumber`); the former price opens in
  * width and the period changes width without a jump. With reduced motion
@@ -56,8 +63,9 @@ function BillingPrice({
   decimals = 0,
   currency = 'EUR',
   className,
+  labels,
 }: BillingPriceProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const [periodSize, measurePeriod] = useElementSize<HTMLSpanElement>()
   const format: Intl.NumberFormatOptions = {
@@ -154,4 +162,4 @@ function BillingPrice({
 }
 
 export { BillingPrice }
-export type { BillingPriceProps }
+export type { BillingPriceProps, BillingPriceLabels }

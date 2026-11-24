@@ -2,10 +2,23 @@ import type { ComponentProps } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { duration, spring } from '../internal/motion.ts'
 import { useSignaturePad } from '../internal/signature-pad-context.ts'
 import { Button } from './button.tsx'
+
+/** The words SignaturePadAction writes, to change on one SignaturePadAction only. */
+type SignaturePadActionLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'signatureUndo'
+    | 'signatureRedo'
+    | 'signatureStopReplay'
+    | 'signatureReplay'
+    | 'signatureClear'
+  >
+>
 
 type SignaturePadActionProps = Omit<
   ComponentProps<typeof Button>,
@@ -13,12 +26,16 @@ type SignaturePadActionProps = Omit<
 > & {
   /** Undo the last stroke, redo it, replay the signature, or clear it. */
   action: 'undo' | 'redo' | 'replay' | 'clear'
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SignaturePadActionLabels
 }
 
 /**
  * One of a `SignaturePad`'s tools: a round ghost button with its icon and
  * its name (a tooltip and a screen reader's word). Disabled when it has
  * nothing to do. `replay` turns into « Arrêter » while it plays.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary A signature pad's undo, redo, replay or clear button.
  */
@@ -27,10 +44,11 @@ function SignaturePadAction({
   variant = 'ghost',
   size = 'icon-sm',
   disabled,
+  labels,
   ...props
 }: SignaturePadActionProps) {
   const pad = useSignaturePad()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const empty = pad.strokes.length === 0
   const playing = pad.replay !== null
 
@@ -93,4 +111,4 @@ function SignaturePadAction({
 }
 
 export { SignaturePadAction }
-export type { SignaturePadActionProps }
+export type { SignaturePadActionProps, SignaturePadActionLabels }

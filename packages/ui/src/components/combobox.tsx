@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Combobox as ComboboxPrimitive } from '@base-ui/react/combobox'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { FollowHeight } from '../internal/follow-height.tsx'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
@@ -138,18 +139,27 @@ function ComboboxClear({
   )
 }
 
+/** The words ComboboxInput writes, to change on one ComboboxInput only. */
+type ComboboxInputLabels = Partial<
+  Pick<GoGoUIMessages, 'showOptions' | 'clear'>
+>
+
+/** **Key props**: `labels` to change its words. */
 function ComboboxInput({
   className,
   children,
   disabled = false,
   showTrigger = true,
   showClear = false,
+  labels,
   ...props
 }: ComboboxPrimitive.Input.Props & {
   showTrigger?: boolean
   showClear?: boolean
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ComboboxInputLabels
 }) {
-  const { showOptions, clear } = useGoGoUIMessages()
+  const { showOptions, clear } = useGoGoUIMessages(labels)
   return (
     <InputGroup className={cn('w-auto', className)}>
       <ComboboxPrimitive.Input
@@ -435,3 +445,4 @@ export {
   ComboboxValue,
   useComboboxAnchor,
 }
+export type { ComboboxInputLabels }

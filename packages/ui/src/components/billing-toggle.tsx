@@ -5,6 +5,7 @@ import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
 import { animate, motion, useMotionValue } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { BillingToggleContext } from '../internal/billing-toggle-context.ts'
 import type { Color } from '../internal/colors.ts'
@@ -12,6 +13,11 @@ import { spring } from '../internal/motion.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 import { StableSwap } from '../internal/stable-swap.tsx'
 import { cn } from '../lib/cn.ts'
+
+/** The words BillingToggle writes, to change on one BillingToggle only. */
+type BillingToggleLabels = Partial<
+  Pick<GoGoUIMessages, 'billingMonthly' | 'billingYearly'>
+>
 
 type BillingToggleProps = {
   value: string
@@ -26,6 +32,8 @@ type BillingToggleProps = {
   /** `BillingToggleItem`s; Mensuel (`monthly`) and Annuel (`yearly`) by default. */
   children?: ReactNode
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BillingToggleLabels
 }
 
 const tray = {
@@ -59,7 +67,7 @@ const thumbInset = {
  *
  * **Key props**: `value` + `onValueChange`, `label`, `size` (sm, default,
  * lg), `color` (the badge's tint); on an item `value`, `badge`,
- * `activeBadge`.
+ * `activeBadge`, `labels` to change its words.
  *
  * **Motion**: one thumb glides to the chosen period (smooth spring, no
  * bounce); a pressed period sinks to .97; the badge's words swap in
@@ -79,8 +87,9 @@ function BillingToggle({
   name,
   children,
   className,
+  labels,
 }: BillingToggleProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const x = useMotionValue(0)
   const width = useMotionValue(0)
@@ -249,4 +258,4 @@ function BillingToggleItem({
 }
 
 export { BillingToggle, BillingToggleItem }
-export type { BillingToggleItemProps, BillingToggleProps }
+export type { BillingToggleItemProps, BillingToggleProps, BillingToggleLabels }

@@ -2,7 +2,11 @@ import type { ReactElement } from 'react'
 import { useRender } from '@base-ui/react/use-render'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words BlogCard writes, to change on one BlogCard only. */
+type BlogCardLabels = Partial<Pick<GoGoUIMessages, 'blogReadingTime'>>
 
 type BlogCardProps = {
   title: string
@@ -25,6 +29,8 @@ type BlogCardProps = {
    */
   linkRender?: ReactElement
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: BlogCardLabels
 }
 
 /**
@@ -44,7 +50,7 @@ type BlogCardProps = {
  *
  * **Key props**: `title`, `href` (or `linkRender` for a router link),
  * `date`, `category`, `excerpt`, `readingTime`, `author`, `image`,
- * `variant` (default, featured).
+ * `variant` (default, featured), `labels` to change its words.
  *
  * **Accessibility**: the link is the title alone, stretched over the card,
  * so its name stays short; an `h3`; the day is a `<time>`. Still with
@@ -64,8 +70,9 @@ function BlogCard({
   variant = 'default',
   linkRender,
   className,
+  labels,
 }: BlogCardProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const featured = variant === 'featured'
   const day = new Intl.DateTimeFormat(messages.intlLocale, {
     dateStyle: 'medium',
@@ -168,4 +175,4 @@ function BlogCard({
 }
 
 export { BlogCard }
-export type { BlogCardProps }
+export type { BlogCardProps, BlogCardLabels }

@@ -1,10 +1,14 @@
 import { ListBulletsIcon } from '@phosphor-icons/react'
 import type { Icon } from '@phosphor-icons/react'
 
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useFilterLayout } from '../internal/filter-layout.ts'
 import { FilterRow } from '../internal/filter-row.tsx'
 import { cn } from '../lib/cn.ts'
 import { Checkbox } from './checkbox.tsx'
+
+/** The words FilterCheckboxGroup writes, to change on one group only. */
+type FilterCheckboxGroupLabels = Partial<Pick<GoGoUIMessages, 'activeSummary'>>
 
 type FilterCheckboxGroupProps<TValue extends string> = {
   legend: string
@@ -13,6 +17,8 @@ type FilterCheckboxGroupProps<TValue extends string> = {
   onCheckedChange: (value: TValue | undefined) => void
   /** Its icon in the menu's sidebar. */
   icon?: Icon
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterCheckboxGroupLabels
 }
 
 /**
@@ -21,7 +27,7 @@ type FilterCheckboxGroupProps<TValue extends string> = {
  * **Use it for** a status or a type where one value at a time is enough.
  *
  * **Key props**: `legend`, `icon`, `options`, `checked` +
- * `onCheckedChange`.
+ * `onCheckedChange`, `labels` to change its words.
  *
  * @summary A filter group of boxes, one ticked at most.
  */
@@ -31,11 +37,13 @@ function FilterCheckboxGroup<TValue extends string>({
   checked,
   onCheckedChange,
   icon = ListBulletsIcon,
+  labels,
 }: FilterCheckboxGroupProps<TValue>) {
   const layout = useFilterLayout()
   if (layout.mode === 'row') {
     return (
       <FilterRow
+        labels={labels}
         label={legend}
         summary={
           options.find((option) => option.value === checked)?.label ?? null
@@ -71,4 +79,4 @@ function FilterCheckboxGroup<TValue extends string>({
 }
 
 export { FilterCheckboxGroup }
-export type { FilterCheckboxGroupProps }
+export type { FilterCheckboxGroupProps, FilterCheckboxGroupLabels }

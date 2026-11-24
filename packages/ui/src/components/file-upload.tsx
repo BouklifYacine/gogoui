@@ -6,6 +6,7 @@ import type { Accept, FileRejection } from 'react-dropzone'
 import { animate } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import type { Color } from '../internal/colors.ts'
 import {
@@ -38,6 +39,23 @@ export type {
 const clamp = (value: number) => Math.min(Math.max(value, 0), 100)
 const sameFile = (a: File, b: File) =>
   a.name === b.name && a.size === b.size && a.lastModified === b.lastModified
+
+/** The words FileUpload writes, to change on one FileUpload only. */
+type FileUploadLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'fileUploadedNamed'
+    | 'fileFailed'
+    | 'fileFailedNamed'
+    | 'fileTooLarge'
+    | 'fileTypeRefused'
+    | 'fileTypesRefused'
+    | 'fileTooMany'
+    | 'filesAdded'
+    | 'fileRemoved'
+    | 'fileRetrying'
+  >
+>
 
 type FileUploadProps = {
   /** The types taken, as react-dropzone reads them: `{ 'image/*': [] }`. */
@@ -77,6 +95,8 @@ type FileUploadProps = {
   className?: string
   /** `FileUploadDropzone` and `FileUploadList` (after it, or inside it). */
   children: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FileUploadLabels
 }
 
 /**
@@ -100,8 +120,9 @@ type FileUploadProps = {
  * (after the zone, or inside it as its child).
  *
  * **Key props**: `accept`, `multiple`, `maxFiles`, `maxSize`, `onUpload`
- * (`(item, { onProgress, signal }) => Promise`), `defaultItems` +
- * `onItemsChange`, `compactAt`, `color`, `size`.
+ * (`(item, { onProgress, signal }) => Promise`), `items` + `onItemsChange`
+ * (controlled) or `defaultItems` (uncontrolled), `compactAt`, `color`,
+ * `size`, `labels` to change its words.
  *
  * **Accessibility**: the zone is a real button (Enter opens the picker);
  * each change is announced once; every bar is a `progressbar`; the arrows
@@ -125,8 +146,9 @@ function FileUpload({
   disabled = false,
   className,
   children,
+  labels,
 }: FileUploadProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const errorId = useId()
   const [items, setItems] = useControllableState({
@@ -404,4 +426,4 @@ function FileUpload({
 }
 
 export { FileUpload }
-export type { FileUploadProps }
+export type { FileUploadProps, FileUploadLabels }

@@ -2,10 +2,27 @@ import { FunnelSimpleIcon } from '@phosphor-icons/react'
 
 import { Badge } from '../components/badge.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 
-/** The « Filtrer » button's words: how many filters are on beside it. */
-export function FilterTriggerLabel({ activeCount }: { activeCount: number }) {
-  const messages = useGoGoUIMessages()
+/** The words FilterTriggerLabel writes, to change on one FilterTriggerLabel only. */
+type FilterTriggerLabelLabels = Partial<
+  Pick<GoGoUIMessages, 'filter' | 'activeFilterCount'>
+>
+
+/**
+ * The « Filtrer » button's words: how many filters are on beside it.
+ *
+ * **Key props**: `labels` to change its words.
+ */
+export function FilterTriggerLabel({
+  activeCount,
+  labels,
+}: {
+  activeCount: number
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterTriggerLabelLabels
+}) {
+  const messages = useGoGoUIMessages(labels)
   return (
     <>
       <FunnelSimpleIcon aria-hidden="true" />
@@ -23,3 +40,4 @@ export function FilterTriggerLabel({ activeCount }: { activeCount: number }) {
     </>
   )
 }
+export type { FilterTriggerLabelLabels }

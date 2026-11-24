@@ -2,7 +2,11 @@ import { WarningCircleIcon } from '@phosphor-icons/react'
 import type { Ref } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
+
+/** The words ErrorSummary writes, to change on one ErrorSummary only. */
+type ErrorSummaryLabels = Partial<Pick<GoGoUIMessages, 'errorCount'>>
 
 type ErrorSummaryProps = {
   /** Each error, with the id of the field it is about. */
@@ -11,6 +15,8 @@ type ErrorSummaryProps = {
   className?: string
   /** Focus it after a refused submit, so a screen reader reads the list. */
   ref?: Ref<HTMLDivElement>
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ErrorSummaryLabels
 }
 
 /** Puts the focus on a field by its id, as Tab would on a radio group. */
@@ -34,7 +40,7 @@ function focusField(fieldId: string) {
  * **Where**: at the top of the form; it takes the focus when it shows.
  *
  * **Key props**: `errors` (`{ fieldId, message }[]`, the `id` of each
- * field).
+ * field), `labels` to change its words.
  *
  * **Accessibility**: `role="alert"`, focused, each link moves to its field.
  *
@@ -45,8 +51,9 @@ function ErrorSummary({
   id = 'error-summary',
   className,
   ref,
+  labels,
 }: ErrorSummaryProps) {
-  const { errorCount } = useGoGoUIMessages()
+  const { errorCount } = useGoGoUIMessages(labels)
   if (errors.length === 0) {
     return null
   }
@@ -88,4 +95,4 @@ function ErrorSummary({
 }
 
 export { ErrorSummary, focusField }
-export type { ErrorSummaryProps }
+export type { ErrorSummaryProps, ErrorSummaryLabels }

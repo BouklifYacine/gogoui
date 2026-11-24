@@ -1,6 +1,7 @@
 import { CheckIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { describedBy, useFieldIds } from '../internal/field-props.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
@@ -13,11 +14,16 @@ import {
 } from './field.tsx'
 import { RadioGroup, RadioGroupItem } from './radio-group.tsx'
 
+/** The words ColorField writes, to change on one ColorField only. */
+type ColorFieldLabels = Partial<Pick<GoGoUIMessages, 'chosenColor'>>
+
 type ColorFieldProps = Omit<FieldValueProps<string>, 'description'> & {
   legend: string
   description?: string
   /** The colours offered: a CSS colour and its name. */
   options: readonly { value: string; label: string }[]
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ColorFieldLabels
 }
 
 /**
@@ -26,7 +32,9 @@ type ColorFieldProps = Omit<FieldValueProps<string>, 'description'> & {
  * **Use it for** a calendar's colour, a tag's colour.
  *
  * **Key props**: `legend`, `options` (`{ value, label }[]`, value a CSS
- * colour or a token), `value` + `onValueChange`, `description`, `error`.
+ * colour or a token), `value` + `onValueChange` (controlled) or
+ * `defaultValue` (uncontrolled), `description`, `error`,
+ * `labels` to change its words.
  *
  * **Accessibility**: each colour has a name in words.
  *
@@ -43,9 +51,15 @@ function ColorField({
   onValueChange,
   onBlur,
   options,
+  labels,
 }: ColorFieldProps) {
   const ids = useFieldIds(id, name)
-  const { chosenColor } = useGoGoUIMessages()
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
+  const { chosenColor } = useGoGoUIMessages(labels)
   const legendId = `${ids.id}-legend`
   const chosen = options.find((color) => color.value === value)
 
@@ -112,4 +126,4 @@ function ColorField({
 }
 
 export { ColorField }
-export type { ColorFieldProps }
+export type { ColorFieldProps, ColorFieldLabels }

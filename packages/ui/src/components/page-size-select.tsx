@@ -1,6 +1,7 @@
 import { useId } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import {
   Select,
   SelectContent,
@@ -9,18 +10,23 @@ import {
   SelectValue,
 } from './select.tsx'
 
+/** The words PageSizeSelect writes, to change on one PageSizeSelect only. */
+type PageSizeSelectLabels = Partial<Pick<GoGoUIMessages, 'rowsPerPage'>>
+
 type PageSizeSelectProps = {
   value: number
   onValueChange: (size: number) => void
   /** The sizes offered, 10, 20 and 25 by default. */
   sizes?: readonly number[]
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: PageSizeSelectLabels
 }
 
 /**
  * How many rows a page of a list shows.
  *
  * **Key props**: `value` + `onValueChange`, `sizes` (25, 50, 100),
- * `label`.
+ * `label`, `labels` to change its words.
  *
  * @summary How many rows a page of a list shows.
  */
@@ -28,9 +34,10 @@ function PageSizeSelect({
   value,
   onValueChange,
   sizes = [10, 20, 25],
+  labels,
 }: PageSizeSelectProps) {
   const labelId = useId()
-  const { rowsPerPage } = useGoGoUIMessages()
+  const { rowsPerPage } = useGoGoUIMessages(labels)
   const options = sizes.map((size) => ({
     value: String(size),
     label: String(size),
@@ -67,4 +74,4 @@ function PageSizeSelect({
 }
 
 export { PageSizeSelect }
-export type { PageSizeSelectProps }
+export type { PageSizeSelectProps, PageSizeSelectLabels }

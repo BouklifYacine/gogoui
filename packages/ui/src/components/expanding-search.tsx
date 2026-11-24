@@ -6,6 +6,7 @@ import { useReduceMotion } from '../i18n/motion-context.ts'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 import { cn } from '../lib/cn.ts'
 import { Kbd } from './kbd.tsx'
@@ -44,6 +45,14 @@ function windowOver(search: HTMLElement) {
   return [...dialogs].some((dialog) => !dialog.contains(search))
 }
 
+/** The words ExpandingSearch writes, to change on one ExpandingSearch only. */
+type ExpandingSearchLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'searchPlaceholder' | 'clearSearch' | 'escapeKey' | 'search' | 'searchQuery'
+  >
+>
+
 type ExpandingSearchProps = {
   /** The field's id; the closed pill is `${id}-glass`. */
   id: string
@@ -53,6 +62,8 @@ type ExpandingSearchProps = {
   glassLabel?: string
   value: string
   onValueChange: (text: string) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ExpandingSearchLabels
 }
 
 /**
@@ -66,7 +77,7 @@ type ExpandingSearchProps = {
  * **States**: closed (pill), open, filled (stays open), cleared.
  *
  * **Key props**: `value` + `onValueChange`, `label` (« Rechercher un
- * client »).
+ * client »), `labels` to change its words.
  *
  * **Accessibility**: « / » opens it; Escape clears then closes it.
  *
@@ -78,8 +89,9 @@ function ExpandingSearch({
   glassLabel,
   value,
   onValueChange,
+  labels,
 }: ExpandingSearchProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const [open, setOpen] = useState(false)
   const reduce = useReduceMotion()
   const container = useRef<HTMLElement>(null)
@@ -262,4 +274,4 @@ function ExpandingSearch({
 }
 
 export { ExpandingSearch }
-export type { ExpandingSearchProps }
+export type { ExpandingSearchProps, ExpandingSearchLabels }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import type { FieldValueProps } from '../internal/field-props.ts'
 import { useControllableState } from '../internal/use-controllable-state.ts'
 import {
@@ -26,8 +27,15 @@ function erases(event: Event | undefined): boolean {
   return native instanceof InputEvent && native.inputType.startsWith('delete')
 }
 
+/** The words TimeField writes, to change on one TimeField only. */
+type TimeFieldLabels = Partial<
+  Pick<GoGoUIMessages, 'timePlaceholder' | 'timeKeepTyped'>
+>
+
 type TimeFieldProps = FieldValueProps<string> & {
   label: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: TimeFieldLabels
 }
 
 /**
@@ -35,8 +43,9 @@ type TimeFieldProps = FieldValueProps<string> & {
  *
  * **Use it for** an arrival, a start, an appointment.
  *
- * **Key props**: `label`, `value` (« 14:30 ») + `onValueChange`, `error`,
- * `description`.
+ * **Key props**: `label`, `value` (« 14:30 ») + `onValueChange` (controlled)
+ * or `defaultValue` (uncontrolled), `error`, `description`,
+ * `labels` to change its words.
  *
  * **Accessibility**: typing « 1430 » or « 14h30 » works.
  *
@@ -52,8 +61,14 @@ function TimeField({
   defaultValue = '',
   onValueChange,
   onBlur,
+  labels,
 }: TimeFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
+  const [value, setValue] = useControllableState({
+    value: valueProp,
+    defaultValue,
+    onChange: onValueChange,
+  })
   // The field's text apart from its time while one types.
   const [text, setText] = useState(value)
   const [typing, setTyping] = useState(false)
@@ -137,4 +152,4 @@ function TimeField({
 }
 
 export { TimeField }
-export type { TimeFieldProps }
+export type { TimeFieldProps, TimeFieldLabels }

@@ -1,8 +1,12 @@
 import type { ReactNode } from 'react'
 import type { Icon } from '@phosphor-icons/react'
 
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useFilterLayout } from '../internal/filter-layout.ts'
 import { FilterRow } from '../internal/filter-row.tsx'
+
+/** The words FilterSection writes, to change on one section only. */
+type FilterSectionLabels = Partial<Pick<GoGoUIMessages, 'activeSummary'>>
 
 type FilterSectionProps = {
   legend: string
@@ -10,13 +14,15 @@ type FilterSectionProps = {
   summary: string | null
   icon: Icon
   children: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterSectionLabels
 }
 
 /**
  * Several filters in one group of the menu.
  *
  * **Key props**: `legend`, `icon`, `summary` (what is chosen, shown while
- * folded), children.
+ * folded), children, `labels` to change its words.
  *
  * @summary Several filters in one group of the menu.
  */
@@ -25,11 +31,13 @@ function FilterSection({
   summary,
   icon,
   children,
+  labels,
 }: FilterSectionProps) {
   const layout = useFilterLayout()
   if (layout.mode === 'row') {
     return (
       <FilterRow
+        labels={labels}
         label={legend}
         summary={summary}
         icon={icon}
@@ -47,4 +55,4 @@ function FilterSection({
 }
 
 export { FilterSection }
-export type { FilterSectionProps }
+export type { FilterSectionLabels, FilterSectionProps }

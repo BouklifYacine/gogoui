@@ -3,6 +3,7 @@ import { Menu as MenuPrimitive } from '@base-ui/react/menu'
 
 import { DropdownMenuRadioGroup } from '../components/dropdown-menu.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from './gogo-icon.tsx'
 import type { Theme } from './theme-store.ts'
 
@@ -12,22 +13,32 @@ const ICONS = {
   system: 'themeSystem',
 } as const
 
+/** The words UserMenuTheme writes, to change on one UserMenuTheme only. */
+type UserMenuThemeLabels = Partial<
+  Pick<GoGoUIMessages, 'themeLight' | 'themeDark' | 'themeSystem' | 'theme'>
+>
+
 /**
  * UserMenu's theme row, after Arc UI (https://uiarc.dev, MIT): « Thème »
  * and a small segmented switch whose thumb slides under the chosen icon.
  * Radio items of the menu, so choosing keeps it open; up and down reach
  * them like rows, left and right choose within the switch.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary Internal: the light, dark and system switch of UserMenu.
  */
 export function UserMenuTheme({
   theme,
   onThemeChange,
+  labels,
 }: {
   theme: Theme
   onThemeChange: (theme: Theme) => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: UserMenuThemeLabels
 }) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const options = [
     { value: 'light', label: messages.themeLight },
     { value: 'dark', label: messages.themeDark },
@@ -108,3 +119,4 @@ export function UserMenuTheme({
     </div>
   )
 }
+export type { UserMenuThemeLabels }

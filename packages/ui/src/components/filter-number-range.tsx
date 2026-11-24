@@ -2,12 +2,26 @@ import { CurrencyEurIcon, UsersThreeIcon } from '@phosphor-icons/react'
 import type { Icon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useFilterLayout } from '../internal/filter-layout.ts'
 import { FilterNumberInput } from '../internal/filter-number-input.tsx'
 import { FilterRow } from '../internal/filter-row.tsx'
 import { formatNumber, typedNumber } from '../internal/numbers.ts'
 import type { NumberUnit } from '../internal/numbers.ts'
 import { RangeSlider } from './range-slider.tsx'
+
+/** The words FilterNumberRange writes, to change on one FilterNumberRange only. */
+type FilterNumberRangeLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'numberRange'
+    | 'amountExample'
+    | 'countExample'
+    | 'fromNumber'
+    | 'upToNumber'
+    | 'activeSummary'
+  >
+>
 
 type FilterNumberRangeProps = {
   /** Prefix of the two fields' ids. */
@@ -22,13 +36,16 @@ type FilterNumberRangeProps = {
   onChange: (range: { min?: number; max?: number }) => void
   /** Its icon, the euro or people by default. */
   icon?: Icon
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterNumberRangeLabels
 }
 
 /**
  * A filter on an amount or a count, from and to.
  *
  * **Key props**: `legend`, `icon`, `min`, `max`, `onChange`, `unit`,
- * `scale` (`{ max, step }` for its slider), `decimals`, `example`.
+ * `scale` (`{ max, step }` for its slider), `labels` to change its words.
+ * Decimals and the example in the field follow `unit` (money has cents).
  *
  * @summary A filter on an amount or a count, from and to.
  */
@@ -41,8 +58,9 @@ function FilterNumberRange({
   max,
   onChange,
   icon,
+  labels,
 }: FilterNumberRangeProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const layout = useFilterLayout()
   const groupIcon =
     icon ?? (unit.kind === 'money' ? CurrencyEurIcon : UsersThreeIcon)
@@ -52,6 +70,7 @@ function FilterNumberRange({
   if (layout.mode === 'row') {
     return (
       <FilterRow
+        labels={labels}
         label={legend}
         summary={messages.numberRange(
           min === undefined ? undefined : format(min),
@@ -104,4 +123,4 @@ function FilterNumberRange({
 }
 
 export { FilterNumberRange }
-export type { FilterNumberRangeProps, NumberUnit }
+export type { FilterNumberRangeProps, NumberUnit, FilterNumberRangeLabels }

@@ -2,13 +2,21 @@ import type { KeyboardEvent } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useFileUpload } from '../internal/file-upload-context.ts'
 import { spring, stagger } from '../internal/motion.ts'
 import { cn } from '../lib/cn.ts'
 import { FileUploadItem } from './file-upload-item.tsx'
+import type { FileUploadItemLabels } from './file-upload-item.tsx'
+
+/** The words FileUploadList writes, and its files', to change on one list only. */
+type FileUploadListLabels = Partial<Pick<GoGoUIMessages, 'fileUploadList'>> &
+  FileUploadItemLabels
 
 type FileUploadListProps = {
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FileUploadListLabels
 }
 
 /**
@@ -16,11 +24,13 @@ type FileUploadListProps = {
  * after another (56ms apart, seven at most). The arrows move between rows
  * on the same button, Delete or Backspace removes the row in focus.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary The list of a FileUpload's files.
  */
-function FileUploadList({ className }: FileUploadListProps) {
+function FileUploadList({ className, labels }: FileUploadListProps) {
   const upload = useFileUpload()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const count = upload.items.length
 
   function onKeyDown(event: KeyboardEvent<HTMLUListElement>) {
@@ -79,6 +89,7 @@ function FileUploadList({ className }: FileUploadListProps) {
           <FileUploadItem
             key={item.id}
             item={item}
+            labels={labels}
             delay={
               upload.reduce
                 ? 0
@@ -94,4 +105,4 @@ function FileUploadList({ className }: FileUploadListProps) {
 }
 
 export { FileUploadList }
-export type { FileUploadListProps }
+export type { FileUploadListProps, FileUploadListLabels }

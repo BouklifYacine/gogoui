@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { AnimatePresence, motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { seriesColor } from '../internal/chart-color.ts'
 import { ChartDataTable } from '../internal/chart-data-table.tsx'
@@ -26,6 +27,20 @@ export type TreemapNode = {
   children?: TreemapNode[]
 }
 
+/** The words Treemap writes, to change on one Treemap only. */
+type TreemapLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'treemapShareOf'
+    | 'treemapPath'
+    | 'treemapRole'
+    | 'treemapKeys'
+    | 'treemapPathColumn'
+    | 'chartValue'
+    | 'treemapShareColumn'
+  >
+>
+
 export type TreemapProps = {
   /** The root; its label names the whole in the first crumb. */
   data: TreemapNode
@@ -46,6 +61,8 @@ export type TreemapProps = {
   /** Shown when the whole is zero; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: TreemapLabels
 }
 
 type Rect = { x: number; y: number; w: number; h: number }
@@ -270,7 +287,7 @@ function layoutFrom(flat: Map<string, Flat>, focus: string, view: Rect) {
  *
  * **Key props**: `data` (id, label, value, measure, children), `label`,
  * `formatValue`, `measureLabel` + `formatMeasure` + `measureDomain`,
- * `focus` + `onFocusChange`, `height`.
+ * `focus` + `onFocusChange`, `height`, `labels` to change its words.
  *
  * **Motion**: the tiles grow in a wave from the largest the first time
  * they are seen; a zoom carries the chosen tile out to fill the view (or
@@ -299,8 +316,9 @@ export function Treemap({
   height = 420,
   emptyLabel,
   className,
+  labels,
 }: TreemapProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const figure = useRef<HTMLElement>(null)
   const inView = useInView(figure, { once: true, amount: 0.25 })
@@ -861,3 +879,4 @@ export function Treemap({
     </MotionScope>
   )
 }
+export type { TreemapLabels }

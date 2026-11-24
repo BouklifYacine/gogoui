@@ -4,6 +4,7 @@ import type { TargetAndTransition, Transition } from 'motion/react'
 
 import type { GoGoUIIcons } from '../i18n/icons.ts'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useFileUpload } from '../internal/file-upload-context.ts'
 import type { FileUploadEntry } from '../internal/file-upload-context.ts'
 import { fileSize } from '../internal/file-size.ts'
@@ -36,10 +37,26 @@ function typeIcon(name: string): keyof GoGoUIIcons {
   return 'file'
 }
 
+/** The words FileUploadItem writes, to change on one FileUploadItem only. */
+type FileUploadItemLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'fileUploading'
+    | 'fileUploaded'
+    | 'fileFailed'
+    | 'uploadingFile'
+    | 'retryFile'
+    | 'fileRetry'
+    | 'removeFile'
+  >
+>
+
 type FileUploadItemProps = {
   item: FileUploadEntry
   /** When it starts to drop in, in seconds: its place in the batch. */
   delay?: number
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FileUploadItemLabels
 }
 
 /**
@@ -49,11 +66,13 @@ type FileUploadItemProps = {
  * on one spring; at 100 % a circle then a tick draw themselves and the bar
  * folds away; failed, it shakes and « Réessayer » opens its own width.
  *
+ * **Key props**: `labels` to change its words.
+ *
  * @summary One file of a FileUpload, with its upload's progress.
  */
-function FileUploadItem({ item, delay = 0 }: FileUploadItemProps) {
+function FileUploadItem({ item, delay = 0, labels }: FileUploadItemProps) {
   const upload = useFileUpload()
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const { reduce } = upload
   const { status } = item
   const [broken, setBroken] = useState(false)
@@ -434,4 +453,4 @@ function FileUploadItem({ item, delay = 0 }: FileUploadItemProps) {
 }
 
 export { FileUploadItem }
-export type { FileUploadItemProps }
+export type { FileUploadItemProps, FileUploadItemLabels }

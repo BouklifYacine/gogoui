@@ -1,12 +1,18 @@
 // Shortcut keys, after Arc UI (https://uiarc.dev, MIT licence, Elia
 // Kuratli), drawn with GoGoUI's Kbd.
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import type { Color } from '../internal/colors.ts'
 import { capPressed, capSize } from '../internal/shortcut-caps.ts'
 import { shortcutTokens, usePlatform } from '../internal/shortcut-model.ts'
 import type { Platform } from '../internal/shortcut-model.ts'
 import { cn } from '../lib/cn.ts'
 import { Kbd } from './kbd.tsx'
+
+/** The words ShortcutKeys writes, to change on one ShortcutKeys only. */
+type ShortcutKeysLabels = Partial<
+  Pick<GoGoUIMessages, 'shortcutCaps' | 'shortcutSpoken'>
+>
 
 type ShortcutKeysProps = {
   /** « mod+shift+k »: `mod` is ⌘ on a Mac, Ctrl elsewhere. */
@@ -19,6 +25,8 @@ type ShortcutKeysProps = {
   /** The colour of a held cap. */
   color?: Color
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ShortcutKeysLabels
 }
 
 /**
@@ -32,7 +40,7 @@ type ShortcutKeysProps = {
  * **States**: at rest; caps held (`pressed`) sink and light up.
  *
  * **Key props**: `shortcut`, `platform`, `pressed`, `size` (sm, default),
- * `color`.
+ * `color`, `labels` to change its words.
  *
  * **Accessibility**: read once, in full (« Commande Majuscule K »), not
  * cap by cap.
@@ -46,8 +54,9 @@ function ShortcutKeys({
   size = 'default',
   color = 'primary',
   className,
+  labels,
 }: ShortcutKeysProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const platform = usePlatform(platformProp)
   const tokens = shortcutTokens(shortcut, platform, {
     caps: messages.shortcutCaps,
@@ -76,4 +85,4 @@ function ShortcutKeys({
 }
 
 export { ShortcutKeys }
-export type { ShortcutKeysProps }
+export type { ShortcutKeysProps, ShortcutKeysLabels }

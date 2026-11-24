@@ -1,6 +1,7 @@
 import { GoGoIcon } from '../internal/gogo-icon.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { Button } from './button.tsx'
 
 /** One filter that is on (« Étape : Nouvelle ») and how to take it off. */
@@ -11,11 +12,18 @@ type FilterChip = {
   onRemove: () => void
 }
 
+/** The words FilterChips writes, to change on one FilterChips only. */
+type FilterChipsLabels = Partial<
+  Pick<GoGoUIMessages, 'activeFilters' | 'removeFilter' | 'resetFilters'>
+>
+
 type FilterChipsProps = {
   chips: FilterChip[]
   onReset: () => void
   /** Where the focus goes once the last chip is gone (the search's glass). */
   fallbackFocusId?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterChipsLabels
 }
 
 // Once the screen has been redrawn without the chip.
@@ -30,14 +38,19 @@ function focusSoon(id: string) {
  *
  * **Key props**: `chips` (`{ id, label, onRemove }[]`), `onReset`
  * (« Tout effacer »), `fallbackFocusId` (where the focus goes when the last
- * chip is gone).
+ * chip is gone), `labels` to change its words.
  *
  * **Accessibility**: each chip says « Retirer le filtre … ».
  *
  * @summary The filters that are on, each a chip that removes it.
  */
-function FilterChips({ chips, onReset, fallbackFocusId }: FilterChipsProps) {
-  const messages = useGoGoUIMessages()
+function FilterChips({
+  chips,
+  onReset,
+  fallbackFocusId,
+  labels,
+}: FilterChipsProps) {
+  const messages = useGoGoUIMessages(labels)
   if (chips.length === 0) {
     return null
   }
@@ -95,4 +108,4 @@ function FilterChips({ chips, onReset, fallbackFocusId }: FilterChipsProps) {
 }
 
 export { FilterChips }
-export type { FilterChip, FilterChipsProps }
+export type { FilterChip, FilterChipsProps, FilterChipsLabels }

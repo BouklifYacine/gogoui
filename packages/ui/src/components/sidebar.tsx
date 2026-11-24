@@ -4,6 +4,7 @@ import { useRender } from '@base-ui/react/use-render'
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useIsMobile } from '../internal/use-is-mobile.ts'
 import { cn } from '../lib/cn.ts'
 import { Button } from './button.tsx'
@@ -170,6 +171,10 @@ function SidebarProvider({
   )
 }
 
+/** The words Sidebar writes, to change on one Sidebar only. */
+type SidebarLabels = Partial<Pick<GoGoUIMessages, 'menu' | 'navigation'>>
+
+/** **Key props**: `labels` to change its words. */
 function Sidebar({
   side = 'left',
   variant = 'sidebar',
@@ -177,14 +182,17 @@ function Sidebar({
   className,
   children,
   dir,
+  labels,
   ...props
 }: React.ComponentProps<'div'> & {
   side?: 'left' | 'right'
   variant?: 'sidebar' | 'floating' | 'inset'
   collapsible?: 'offcanvas' | 'icon' | 'none'
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SidebarLabels
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
-  const { menu, navigation } = useGoGoUIMessages()
+  const { menu, navigation } = useGoGoUIMessages(labels)
 
   if (collapsible === 'none') {
     return (
@@ -273,13 +281,21 @@ function Sidebar({
   )
 }
 
+/** The words SidebarTrigger writes, to change on one SidebarTrigger only. */
+type SidebarTriggerLabels = Partial<Pick<GoGoUIMessages, 'menu' | 'toggleMenu'>>
+
+/** **Key props**: `labels` to change its words. */
 function SidebarTrigger({
   className,
   onClick,
+  labels,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SidebarTriggerLabels
+}) {
   const { toggleSidebar } = useSidebar()
-  const { menu, toggleMenu } = useGoGoUIMessages()
+  const { menu, toggleMenu } = useGoGoUIMessages(labels)
 
   return (
     <Button
@@ -304,9 +320,20 @@ function SidebarTrigger({
   )
 }
 
-function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
+/** The words SidebarRail writes, to change on one SidebarRail only. */
+type SidebarRailLabels = Partial<Pick<GoGoUIMessages, 'toggleMenu'>>
+
+/** **Key props**: `labels` to change its words. */
+function SidebarRail({
+  className,
+  labels,
+  ...props
+}: React.ComponentProps<'button'> & {
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: SidebarRailLabels
+}) {
   const { toggleSidebar } = useSidebar()
-  const { toggleMenu } = useGoGoUIMessages()
+  const { toggleMenu } = useGoGoUIMessages(labels)
 
   return (
     <button
@@ -760,3 +787,4 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+export type { SidebarLabels, SidebarTriggerLabels, SidebarRailLabels }

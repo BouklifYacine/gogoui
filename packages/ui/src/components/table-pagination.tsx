@@ -1,7 +1,9 @@
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { pageWindow } from '../internal/page-window.ts'
 import { cn } from '../lib/cn.ts'
 import { PageSizeSelect } from './page-size-select.tsx'
+import type { PageSizeSelectLabels } from './page-size-select.tsx'
 import {
   Pagination,
   PaginationButton,
@@ -11,6 +13,23 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from './pagination.tsx'
+import type {
+  PaginationLabels,
+  PaginationNextLabels,
+  PaginationPreviousLabels,
+} from './pagination.tsx'
+
+/**
+ * The words TablePagination writes, and those of the page size select and
+ * the pagination it draws, to change on one TablePagination only.
+ */
+type TablePaginationLabels = Partial<
+  Pick<GoGoUIMessages, 'rowsRange' | 'page'>
+> &
+  PageSizeSelectLabels &
+  PaginationLabels &
+  PaginationPreviousLabels &
+  PaginationNextLabels
 
 type TablePaginationProps = {
   /** The page shown, counted from 1. */
@@ -26,13 +45,16 @@ type TablePaginationProps = {
   /** The rows in all, in words: « 257 clients ». The figure by default. */
   rowsLabel?: (count: number) => string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: TablePaginationLabels
 }
 
 /**
  * A table's pages and page size, without the paging logic.
  *
  * **Key props**: `page` + `onPageChange`, `pageSize` + `onPageSizeChange`,
- * `pageSizes`, `total`, `rowsLabel` (« 257 demandes »).
+ * `pageSizes`, `total`, `rowsLabel` (« 257 demandes »),
+ * `labels` to change its words.
  *
  * **Where**: under the table, inside its card.
  *
@@ -49,8 +71,9 @@ function TablePagination({
   pageSizes,
   rowsLabel = (count) => String(count),
   className,
+  labels,
 }: TablePaginationProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const pageCount = Math.max(1, Math.ceil(total / pageSize))
   const first = total === 0 ? 0 : (page - 1) * pageSize + 1
   const last = Math.min(total, page * pageSize)
@@ -73,12 +96,14 @@ function TablePagination({
             value={pageSize}
             sizes={pageSizes}
             onValueChange={onPageSizeChange}
+            labels={labels}
           />
         )}
-        <Pagination className="mx-0 w-auto">
+        <Pagination className="mx-0 w-auto" labels={labels}>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
+                labels={labels}
                 disabled={page <= 1}
                 onClick={() => onPageChange(page - 1)}
               />
@@ -102,6 +127,7 @@ function TablePagination({
             )}
             <PaginationItem>
               <PaginationNext
+                labels={labels}
                 disabled={page >= pageCount}
                 onClick={() => onPageChange(page + 1)}
               />
@@ -114,4 +140,4 @@ function TablePagination({
 }
 
 export { TablePagination }
-export type { TablePaginationProps }
+export type { TablePaginationProps, TablePaginationLabels }

@@ -2,16 +2,22 @@ import { motion } from 'motion/react'
 import { MotionScope } from '../internal/motion-scope.tsx'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 
 const fill = { type: 'spring', stiffness: 160, damping: 22 } as const
 const pop = { type: 'spring', stiffness: 500, damping: 14 } as const
+
+/** The words StepProgress writes, to change on one StepProgress only. */
+type StepProgressLabels = Partial<Pick<GoGoUIMessages, 'stepOf'>>
 
 type StepProgressProps = {
   steps: readonly string[]
   /** The current step, counted from 1. */
   current: number
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: StepProgressLabels
 }
 
 /**
@@ -22,14 +28,20 @@ type StepProgressProps = {
  *
  * **Where**: at the top of the flow, under its title.
  *
- * **Key props**: `steps` (their names), `current` (from 1).
+ * **Key props**: `steps` (their names), `current` (from 1),
+ * `labels` to change its words.
  *
  * **Accessibility**: read as « Étape 2 sur 4 : Colonnes ».
  *
  * @summary Numbered steps on a line that fills.
  */
-function StepProgress({ steps, current, className }: StepProgressProps) {
-  const { stepOf } = useGoGoUIMessages()
+function StepProgress({
+  steps,
+  current,
+  className,
+  labels,
+}: StepProgressProps) {
+  const { stepOf } = useGoGoUIMessages(labels)
   const last = Math.max(1, steps.length - 1)
   const index = current - 1
   return (
@@ -110,4 +122,4 @@ function StepProgress({ steps, current, className }: StepProgressProps) {
 }
 
 export { StepProgress }
-export type { StepProgressProps }
+export type { StepProgressProps, StepProgressLabels }

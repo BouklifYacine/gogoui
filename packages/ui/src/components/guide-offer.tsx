@@ -2,7 +2,16 @@ import { useId } from 'react'
 import { CompassIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { Button } from './button.tsx'
+
+/** The words GuideOffer writes, to change on one GuideOffer only. */
+type GuideOfferLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    'guideOffer' | 'guideLength' | 'guideStart' | 'guideDecline'
+  >
+>
 
 type GuideOfferProps = {
   /** What the guide teaches (« créer un devis »). */
@@ -11,6 +20,8 @@ type GuideOfferProps = {
   steps: number
   onStart: () => void
   onDecline: () => void
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: GuideOfferLabels
 }
 
 /**
@@ -21,8 +32,14 @@ type GuideOfferProps = {
  *
  * @summary The card offering a page's guide.
  */
-function GuideOffer({ title, steps, onStart, onDecline }: GuideOfferProps) {
-  const messages = useGoGoUIMessages()
+function GuideOffer({
+  title,
+  steps,
+  onStart,
+  onDecline,
+  labels,
+}: GuideOfferProps) {
+  const messages = useGoGoUIMessages(labels)
   const titleId = useId()
   return (
     <section
@@ -56,4 +73,4 @@ function GuideOffer({ title, steps, onStart, onDecline }: GuideOfferProps) {
 }
 
 export { GuideOffer }
-export type { GuideOfferProps }
+export type { GuideOfferProps, GuideOfferLabels }

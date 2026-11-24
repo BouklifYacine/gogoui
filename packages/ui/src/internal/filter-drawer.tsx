@@ -13,6 +13,7 @@ import {
   DrawerTrigger,
 } from '../components/drawer.tsx'
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import {
   FilterLayoutContext,
@@ -27,23 +28,40 @@ function focusSoon(id: string) {
   requestAnimationFrame(() => document.getElementById(id)?.focus())
 }
 
+/** The words FilterDrawer writes, to change on one FilterDrawer only. */
+type FilterDrawerLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'allFilters'
+    | 'resetFilters'
+    | 'seeResults'
+    | 'filter'
+    | 'activeFilterCount'
+  >
+>
+
 /**
  * A list's filters on a phone, in a drawer from the bottom: one line per
  * group with what is chosen, then one group at a time. « Voir les
  * résultats » closes it on the filtered list.
+ *
+ * **Key props**: `labels` to change its words.
  */
 export function FilterDrawer({
   title,
   activeCount,
   onReset,
   children,
+  labels,
 }: {
   title: string
   activeCount: number
   onReset: () => void
   children: ReactNode
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterDrawerLabels
 }) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   // The group open alone, by its place; null: the list.
   const [active, setActive] = useState<number | null>(null)
   const rowId = useId()
@@ -69,7 +87,7 @@ export function FilterDrawer({
       <DrawerTrigger
         render={<Button variant="outline" size="sm" className="shrink-0" />}
       >
-        <FilterTriggerLabel activeCount={activeCount} />
+        <FilterTriggerLabel activeCount={activeCount} labels={labels} />
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="flex-row items-center gap-1 pb-2 text-left">
@@ -140,3 +158,4 @@ export function FilterDrawer({
     </Drawer>
   )
 }
+export type { FilterDrawerLabels }

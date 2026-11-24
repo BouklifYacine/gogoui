@@ -2,26 +2,35 @@ import { CaretRightIcon } from '@phosphor-icons/react'
 import type { Icon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { cn } from '../lib/cn.ts'
 import { useFilterLayout } from './filter-layout.ts'
+
+/** The words FilterRow writes, to change on one FilterRow only. */
+type FilterRowLabels = Partial<Pick<GoGoUIMessages, 'activeSummary'>>
 
 /**
  * A group in the list of filters. On a computer it selects the controls
  * beside the list; on a phone it opens them in the drawer.
+ *
+ * **Key props**: `labels` to change its words.
  */
 export function FilterRow({
   label,
   summary,
   onOpen,
   icon: GroupIcon,
+  labels,
 }: {
   label: string
   /** What is chosen in words; null when nothing is. */
   summary: string | null
   onOpen: () => void
   icon?: Icon
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FilterRowLabels
 }) {
-  const { activeSummary } = useGoGoUIMessages()
+  const { activeSummary } = useGoGoUIMessages(labels)
   const layout = useFilterLayout()
   const sidebar = layout.mode === 'row' && layout.sidebar === true
   const selected = layout.mode === 'row' && layout.selected === true
@@ -66,3 +75,4 @@ export function FilterRow({
     </button>
   )
 }
+export type { FilterRowLabels }

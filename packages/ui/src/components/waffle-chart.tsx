@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor, seriesColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -26,6 +27,20 @@ export type WaffleCategory = {
   color?: ChartColor
 }
 
+/** The words WaffleChart writes, to change on one WaffleChart only. */
+type WaffleChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'waffleRole'
+    | 'waffleKeys'
+    | 'chartCategories'
+    | 'chartCategory'
+    | 'chartValue'
+    | 'chartShare'
+    | 'waffleCells'
+  >
+>
+
 export type WaffleChartProps = {
   /** The categories in fill order: the first fills from the bottom-left corner, column by column. */
   data: WaffleCategory[]
@@ -48,6 +63,8 @@ export type WaffleChartProps = {
   /** Shown when there is nothing to count; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: WaffleChartLabels
 }
 
 type Cell = { id: number; key: string | null; slot: number }
@@ -130,7 +147,7 @@ function reassign(previous: Cell[], data: WaffleCategory[], counts: number[]) {
  *
  * **Key props**: `data` (key, label, value, color), `label`, `unit`,
  * `formatValue`, `rows` × `columns` (10 × 10), `activeKey` +
- * `onActiveChange`, `legend`, `decimals`.
+ * `onActiveChange`, `legend`, `decimals`, `labels` to change its words.
  *
  * **Motion**: the cells fill in a wave from the bottom-left corner the
  * first time the chart is seen; new data moves cells from one category to
@@ -158,8 +175,9 @@ export function WaffleChart({
   decimals = 0,
   emptyLabel,
   className,
+  labels,
 }: WaffleChartProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const figure = useRef<HTMLElement>(null)
   const inView = useInView(figure, { once: true, amount: 0.35 })
@@ -601,3 +619,4 @@ export function WaffleChart({
     </MotionScope>
   )
 }
+export type { WaffleChartLabels }

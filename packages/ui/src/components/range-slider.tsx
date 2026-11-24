@@ -11,6 +11,7 @@ import {
 } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { fill } from '../internal/colors.ts'
 import type { Color } from '../internal/colors.ts'
@@ -48,6 +49,11 @@ const litBars: Record<Color, string> = {
   danger: '*:bg-danger',
 }
 
+/** The words RangeSlider writes, to change on one RangeSlider only. */
+type RangeSliderLabels = Partial<
+  Pick<GoGoUIMessages, 'andMore' | 'fromNumber' | 'upToNumber' | 'noLimit'>
+>
+
 type RangeSliderProps = {
   /** What is ranged, for a screen reader (« Budget »). */
   label: string
@@ -73,6 +79,8 @@ type RangeSliderProps = {
   /** A thumb let go near a bar's edge settles on it. On with a histogram. */
   snapToBins?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: RangeSliderLabels
 }
 
 /**
@@ -88,7 +96,7 @@ type RangeSliderProps = {
  * **Key props**: `label`, `low`, `high` (absent: no bound), `min` (0),
  * `max` (at it, « no limit »), `step`, `format` (how a value is written:
  * « 3 000 € »), `onCommit` (when a thumb is let go), `color`, `histogram`
- * (`{ data, bins }`), `snapToBins`.
+ * (`{ data, bins }`), `snapToBins`, `labels` to change its words.
  *
  * **Accessibility**: each thumb is a slider with its value in words;
  * arrows move a step, Page up/down (and Shift+arrows over a histogram) a
@@ -110,8 +118,9 @@ function RangeSlider({
   histogram,
   snapToBins = histogram !== undefined,
   className,
+  labels,
 }: RangeSliderProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const track = useRef<HTMLDivElement>(null)
   const span = max - min || 1
@@ -497,4 +506,4 @@ function RangeSlider({
 }
 
 export { RangeSlider }
-export type { RangeSliderProps }
+export type { RangeSliderProps, RangeSliderLabels }

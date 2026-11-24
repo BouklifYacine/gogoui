@@ -5,6 +5,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import type { Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { cn } from '../lib/cn.ts'
 import { ChipContext } from './chip-context.ts'
@@ -13,9 +14,14 @@ import { FollowHeight } from './follow-height.tsx'
 import { MotionScope } from './motion-scope.tsx'
 import { duration, ease, spring, stagger } from './motion.ts'
 
+/** The words ChipGroup writes, to change on one ChipGroup only. */
+type ChipGroupLabels = Partial<Pick<GoGoUIMessages, 'chipsMore' | 'chipsLess'>>
+
 type ChipGroupProps = ToggleGroupPrimitive.Props & {
   maxVisible: number
   size: 'sm' | 'default'
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: ChipGroupLabels
 }
 
 /**
@@ -25,6 +31,8 @@ type ChipGroupProps = ToggleGroupPrimitive.Props & {
  * behind a « +N de plus » chip. Unfolding opens the height on a spring and
  * the revealed chips arrive one after another; chips pressed when it folds
  * stay in view.
+ *
+ * **Key props**: `labels` to change its words.
  *
  * @summary Internal: the chips variant of ToggleGroup.
  */
@@ -36,9 +44,10 @@ export function ChipGroup({
   size,
   className,
   children,
+  labels,
   ...props
 }: ChipGroupProps) {
-  const { chipsMore, chipsLess } = useGoGoUIMessages()
+  const { chipsMore, chipsLess } = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const groupId = useId()
   const [own, setOwn] = useState<readonly string[]>(defaultValue ?? [])
@@ -163,3 +172,4 @@ export function ChipGroup({
     </ChipContext>
   )
 }
+export type { ChipGroupLabels }

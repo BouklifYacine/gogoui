@@ -6,6 +6,7 @@ import { MotionScope } from '../internal/motion-scope.tsx'
 import { ArrowUpIcon } from '@phosphor-icons/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { fileSize, shortName } from '../internal/file-size.ts'
 import { cn } from '../lib/cn.ts'
 import { RollingLine } from './rolling-line.tsx'
@@ -16,6 +17,9 @@ const DONE_MS = 2600
 const settle = { type: 'spring', stiffness: 380, damping: 16 } as const
 const gulp = { type: 'spring', stiffness: 420, damping: 14 } as const
 const flood = { type: 'spring', stiffness: 260, damping: 21 } as const
+
+/** The words FileDrop writes, to change on one FileDrop only. */
+type FileDropLabels = Partial<Pick<GoGoUIMessages, 'fileRefused' | 'dropHere'>>
 
 type FileDropProps = {
   /** The types taken, as react-dropzone reads them. */
@@ -37,6 +41,8 @@ type FileDropProps = {
   onRefuse: (message: string) => void
   disabled?: boolean
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: FileDropLabels
 }
 
 /**
@@ -48,7 +54,7 @@ type FileDropProps = {
  * refused (`refusal`), disabled.
  *
  * **Key props**: `label`, `title`, `hint` (types and size), `accept`,
- * `onFile`, `onRefuse`.
+ * `onFile`, `onRefuse`, `labels` to change its words.
  *
  * **Accessibility**: a real file button inside; drop is never the only
  * way.
@@ -67,8 +73,9 @@ function FileDrop({
   onRefuse,
   disabled = false,
   className,
+  labels,
 }: FileDropProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const [busy, setBusy] = useState<File | null>(null)
   const [done, setDone] = useState<File | null>(null)
   const [zone, animateZone] = useAnimate<HTMLDivElement>()
@@ -255,4 +262,4 @@ function FileDrop({
 }
 
 export { FileDrop }
-export type { FileDropProps }
+export type { FileDropProps, FileDropLabels }

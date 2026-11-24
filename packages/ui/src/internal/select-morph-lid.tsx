@@ -2,9 +2,13 @@ import { useContext } from 'react'
 import { Select as SelectPrimitive } from '@base-ui/react/select'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { GoGoIcon } from './gogo-icon.tsx'
 import { SelectSharedContext } from './select-context.ts'
 import { SelectMorphValue } from './select-morph-value.tsx'
+
+/** The words SelectMorphLid writes, to change on one list only. */
+type SelectMorphLidLabels = Partial<Pick<GoGoUIMessages, 'close'>>
 
 /**
  * The top row of a morph Select's open list, after Arc UI
@@ -14,9 +18,14 @@ import { SelectMorphValue } from './select-morph-value.tsx'
  *
  * @summary Internal: the lid of SelectContent variant="morph".
  */
-export function SelectMorphLid() {
+export function SelectMorphLid({
+  labels,
+}: {
+  /** SelectContent's `labels`, over GoGoUIProvider's `messages`. */
+  labels?: SelectMorphLidLabels
+}) {
   const shared = useContext(SelectSharedContext)
-  const { close } = useGoGoUIMessages()
+  const { close } = useGoGoUIMessages(labels)
 
   return (
     <div
@@ -48,3 +57,4 @@ export function SelectMorphLid() {
     </div>
   )
 }
+export type { SelectMorphLidLabels }

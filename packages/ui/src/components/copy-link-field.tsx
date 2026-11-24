@@ -2,9 +2,13 @@ import { useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { CopyButton } from './copy-button.tsx'
 import { Field, FieldDescription, FieldLabel } from './field.tsx'
 import { Input } from './input.tsx'
+
+/** The words CopyLinkField writes, to change on one CopyLinkField only. */
+type CopyLinkFieldLabels = Partial<Pick<GoGoUIMessages, 'copyByHand'>>
 
 type CopyLinkFieldProps = {
   id: string
@@ -17,6 +21,8 @@ type CopyLinkFieldProps = {
   copyLabel?: string
   /** Read once copied, « Lien copié. » by default. */
   copiedMessage?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: CopyLinkFieldLabels
 }
 
 /**
@@ -26,7 +32,7 @@ type CopyLinkFieldProps = {
  * elsewhere.
  *
  * **Key props**: `label`, `value`, `description`, `copyLabel`,
- * `copiedMessage`.
+ * `copiedMessage`, `labels` to change its words.
  *
  * @summary A read-only link with its copy button.
  */
@@ -37,8 +43,9 @@ function CopyLinkField({
   description,
   copyLabel,
   copiedMessage,
+  labels,
 }: CopyLinkFieldProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle')
   const input = useRef<HTMLInputElement>(null)
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -87,4 +94,4 @@ function CopyLinkField({
 }
 
 export { CopyLinkField }
-export type { CopyLinkFieldProps }
+export type { CopyLinkFieldProps, CopyLinkFieldLabels }

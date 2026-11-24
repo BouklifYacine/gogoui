@@ -18,6 +18,7 @@ import {
 import type { MotionValue, Transition } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -40,6 +41,24 @@ type DonutChartDatum = {
   /** By default the palette in the order keys are first seen. */
   color?: ChartColor
 }
+
+/** The words DonutChart writes, to change on one DonutChart only. */
+type DonutChartLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'chartShareOfTotal'
+    | 'chartToggled'
+    | 'chartIncludes'
+    | 'chartAndMore'
+    | 'chartHiddenItem'
+    | 'chartReading'
+    | 'chartRingHint'
+    | 'chartSegments'
+    | 'chartSegment'
+    | 'chartValue'
+    | 'chartShare'
+  >
+>
 
 type DonutChartProps = {
   data: readonly DonutChartDatum[]
@@ -74,6 +93,8 @@ type DonutChartProps = {
   legend?: boolean
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: DonutChartLabels
 }
 
 type Slice = {
@@ -295,7 +316,8 @@ function drum(
  * **Key props**: `data` (`key`, `label`, `value`, `color`), `label`,
  * `unit`, `format`, `totalLabel`, `size`, `thickness`, `groupBelow`,
  * `maxSegments`, `activeKey` / `onActiveChange`, `hiddenKeys` /
- * `onHiddenKeysChange`, `legendAction` (toggle, select), `legend`.
+ * `onHiddenKeysChange`, `legendAction` (toggle, select), `legend`,
+ * `labels` to change its words.
  *
  * **Motion**: the ring sweeps in once seen, each edge a beat after the
  * one before; new data or a hidden segment moves every arc from where it
@@ -332,8 +354,9 @@ function DonutChart({
   legend = true,
   emptyLabel,
   className,
+  labels,
 }: DonutChartProps) {
-  const messages = useGoGoUIMessages()
+  const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const totalWord = totalLabel ?? messages.chartTotal
   const otherWord = otherLabel ?? messages.chartOther
@@ -1118,4 +1141,4 @@ function DonutChart({
 }
 
 export { DonutChart }
-export type { DonutChartDatum, DonutChartProps }
+export type { DonutChartDatum, DonutChartProps, DonutChartLabels }

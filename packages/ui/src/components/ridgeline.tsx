@@ -3,6 +3,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
 import { motion, useInView } from 'motion/react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
+import type { GoGoUIMessages } from '../i18n/messages.ts'
 import { useReduceMotion } from '../i18n/motion-context.ts'
 import { chartColor } from '../internal/chart-color.ts'
 import type { ChartColor } from '../internal/chart-color.ts'
@@ -21,6 +22,27 @@ export type RidgelineSeries = {
   /** The raw observations; the ridge is their smoothed density. */
   values: number[]
 }
+
+/** The words Ridgeline writes, to change on one Ridgeline only. */
+type RidgelineLabels = Partial<
+  Pick<
+    GoGoUIMessages,
+    | 'ridgelineDescribe'
+    | 'chartRange'
+    | 'ridgelineAtOrBelow'
+    | 'ridgelineRole'
+    | 'ridgelineKeys'
+    | 'ridgelineMedian'
+    | 'ridgelineMiddle'
+    | 'ridgelineSpread'
+    | 'ridgelineSeries'
+    | 'ridgelineFirstQuartile'
+    | 'ridgelineThirdQuartile'
+    | 'ridgelineLowest'
+    | 'ridgelineHighest'
+    | 'ridgelineCount'
+  >
+>
 
 export type RidgelineProps = {
   /** One ridge per series, top to bottom. */
@@ -49,6 +71,8 @@ export type RidgelineProps = {
   /** Shown when there are no values; « Aucune donnée pour cette période » by default. */
   emptyLabel?: string
   className?: string
+  /** Its words on this one only, over GoGoUIProvider's `messages`. */
+  labels?: RidgelineLabels
 }
 
 type Stats = {
@@ -170,7 +194,7 @@ function heightAt(shape: Shape, x: number) {
  *
  * **Key props**: `series` (id, label, values), `label`, `unit`,
  * `formatValue`, `domain`, `overlap`, `rowHeight`, `bandwidth`, `tint`,
- * `color`, `active` + `onActiveChange`.
+ * `color`, `active` + `onActiveChange`, `labels` to change its words.
  *
  * **Motion**: the ridges rise from their baselines in a wave from the top
  * row the first time they are seen; new data morphs them and slides the
@@ -200,8 +224,9 @@ export function Ridgeline({
   onActiveChange,
   emptyLabel,
   className,
+  labels,
 }: RidgelineProps) {
-  const t = useGoGoUIMessages()
+  const t = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const figure = useRef<HTMLElement>(null)
   const inView = useInView(figure, { once: true, amount: 0.3 })
@@ -809,3 +834,4 @@ export function Ridgeline({
     </MotionScope>
   )
 }
+export type { RidgelineLabels }
