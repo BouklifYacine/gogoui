@@ -53,6 +53,8 @@ type ShortcutFieldProps = Omit<
  * read in full; help and error are wired with `aria-describedby` and
  * `aria-invalid`.
  *
+ * @deprecated Too rare in a web app; show a shortcut with `ShortcutKeys` or `Kbd`. Removed in 0.4.0.
+ *
  * @summary A labelled shortcut recorder with its error.
  */
 function ShortcutField({

@@ -20,9 +20,15 @@ type ExpandableTextProps = Omit<ComponentProps<'div'>, 'children'> & {
   children: ReactNode
   /** How many lines show while it is closed. */
   lines?: number
-  /** Open, when the page keeps it. */
+  /** Open, when the page keeps it (like `open` on Dialog or Collapsible). */
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+  /** @deprecated Use `open`. Removed in 0.4.0. */
   expanded?: boolean
+  /** @deprecated Use `defaultOpen`. Removed in 0.4.0. */
   defaultExpanded?: boolean
+  /** @deprecated Use `onOpenChange`. Removed in 0.4.0. */
   onExpandedChange?: (expanded: boolean) => void
   /** The text's size: sm (`text-xs`), default (`text-sm`), lg (`text-base`). */
   size?: 'sm' | 'default' | 'lg'
@@ -64,8 +70,8 @@ const closingTime = (distance: number) =>
  * cross on one spot, so the button never jumps. Closing far down the page
  * brings the text's start back into view.
  *
- * **Key props**: `lines` (3), `expanded` + `onExpandedChange` (or
- * `defaultExpanded`), `size`, `about`, `moreLabel` / `lessLabel`.
+ * **Key props**: `lines` (3), `open` + `onOpenChange` (or `defaultOpen`),
+ * `size`, `about`, `moreLabel` / `lessLabel`.
  *
  * **Accessibility**: the button has `aria-expanded` and points at the
  * text; the whole text is always read by screen readers, even closed; a
@@ -77,8 +83,11 @@ const closingTime = (distance: number) =>
 function ExpandableText({
   children,
   lines = 3,
-  expanded: expandedProp,
-  defaultExpanded = false,
+  open,
+  defaultOpen,
+  onOpenChange,
+  expanded: expandedAlias,
+  defaultExpanded,
   onExpandedChange,
   size = 'default',
   moreLabel,
@@ -92,7 +101,12 @@ function ExpandableText({
   const messages = useGoGoUIMessages()
   const reduce = useReduceMotion()
   const contentId = useId()
-  const [uncontrolled, setUncontrolled] = useState(defaultExpanded)
+  // The old names still work until 0.4.0.
+  const expandedProp = open ?? expandedAlias
+  const onOpenChangeProp = onOpenChange ?? onExpandedChange
+  const [uncontrolled, setUncontrolled] = useState(
+    defaultOpen ?? defaultExpanded ?? false,
+  )
   const expanded = expandedProp ?? uncontrolled
   // Long text is the common case: the button is there until the first
   // measure finds the text fits.
@@ -201,7 +215,7 @@ function ExpandableText({
     if (expandedProp === undefined) {
       setUncontrolled(next)
     }
-    onExpandedChange?.(next)
+    onOpenChangeProp?.(next)
     move(next)
   }
 

@@ -19,6 +19,8 @@ type InputWithIconProps = ComponentProps<typeof Input> & {
  *
  * **Accessibility**: the icon is hidden; the label names the field.
  *
+ * @deprecated Use `InputGroup` with an `InputGroupAddon`: one way to put an icon in a field. Removed in 0.4.0.
+ *
  * @summary A text field with a decorative icon at its start.
  */
 function InputWithIcon({

@@ -188,6 +188,8 @@ const textButton =
  * leaves the listening, Escape cancels, Backspace clears; what happens is
  * announced. Caps follow the platform: ⌘ on a Mac, Ctrl elsewhere.
  *
+ * @deprecated Too rare in a web app; show a shortcut with `ShortcutKeys` or `Kbd`. Removed in 0.4.0.
+ *
  * @summary A field that records a keyboard shortcut.
  */
 function ShortcutRecorder({

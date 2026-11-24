@@ -49,6 +49,8 @@ function toGlyphs(text: string) {
  * letters are hidden from screen readers; with reduced motion the words
  * swap in place.
  *
+ * @deprecated Use `RollingLine`, which does the same change of words. Removed in 0.4.0.
+ *
  * @summary A label that morphs into the next one, letter by letter.
  */
 function TextMorph({ children, className, render, ...props }: TextMorphProps) {

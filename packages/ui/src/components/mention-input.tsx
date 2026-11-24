@@ -104,6 +104,8 @@ type Anchor = { x: number; y: number; above: boolean }
  * Enter or Tab chooses, Escape closes; the number of people is read
  * politely. With reduced motion nothing slides.
  *
+ * @deprecated Too rare for the apps GoGoUI serves; use `Textarea`. Removed in 0.4.0.
+ *
  * @summary A text of several lines where @ mentions a person.
  */
 function MentionInput({

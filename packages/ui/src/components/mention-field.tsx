@@ -40,6 +40,8 @@ type MentionFieldProps = FieldValueProps<MentionValue> &
  * **Accessibility**: label, help and error are wired with
  * `aria-describedby`; the list is a combobox's listbox (see MentionInput).
  *
+ * @deprecated Too rare for the apps GoGoUI serves; use `TextareaField`. Removed in 0.4.0.
+ *
  * @summary A labelled text where @ mentions a person.
  */
 function MentionField({

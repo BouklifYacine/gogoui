@@ -134,6 +134,8 @@ type EyeDropperConstructor = new () => { open: () => Promise<EyeDropperResult> }
  * saved colours move with Alt + arrows and leave with Delete; the contrast
  * is read in a sentence; the eyedropper is never the only way.
  *
+ * @deprecated Use `ColorField`: a few chosen colours keep a product consistent. Removed in 0.4.0.
+ *
  * @summary A free colour in a panel that grows out of its swatch.
  */
 function ColorPicker({

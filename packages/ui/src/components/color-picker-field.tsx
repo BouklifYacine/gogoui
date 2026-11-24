@@ -49,6 +49,8 @@ type ColorPickerFieldProps = FieldValueProps<string> & {
  * with `aria-describedby` and `aria-invalid`; the panel works from the
  * keyboard (see `ColorPicker`).
  *
+ * @deprecated Use `ColorField`: a few chosen colours keep a product consistent. Removed in 0.4.0.
+ *
  * @summary A labelled free colour, with its error.
  */
 function ColorPickerField({

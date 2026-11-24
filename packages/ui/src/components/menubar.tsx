@@ -34,6 +34,8 @@ import {
  * **Accessibility**: left and right arrows move between menus once one is
  * open.
  *
+ * @deprecated A desktop-app menu bar, rare on the web; use `DropdownMenu`. Removed in 0.4.0.
+ *
  * @summary An application's bar of menus.
  */
 function Menubar({

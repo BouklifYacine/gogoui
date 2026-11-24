@@ -21,7 +21,7 @@ export const Basic = meta.story({
   args: {
     lines: 3,
     size: 'default',
-    defaultExpanded: false,
+    defaultOpen: false,
     about: 'du message de Léa',
     children: message,
   },
@@ -56,7 +56,7 @@ export const Paragraphs = meta.story({
 })
 
 /**
- * Opened and closed by the page (`expanded` + `onExpandedChange`).
+ * Opened and closed by the page (`open` + `onOpenChange`).
  */
 export const Controlled = meta.story({
   render: function Render() {
@@ -66,7 +66,7 @@ export const Controlled = meta.story({
         <p className="text-sm text-fg-subtle">
           {expanded ? 'Ouvert' : 'Fermé'}
         </p>
-        <ExpandableText expanded={expanded} onExpandedChange={setExpanded}>
+        <ExpandableText open={expanded} onOpenChange={setExpanded}>
           {message}
         </ExpandableText>
       </div>

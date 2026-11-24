@@ -42,7 +42,7 @@ export const Basic = meta.story({
  * list comes back. The drag itself follows the pointer to the pixel.
  */
 export const Animations = meta.story({
-  tags: ['animated'],
+  tags: ['animated', 'deprecated'],
   render: () => (
     <div className="h-64 w-[40rem] overflow-hidden rounded-2xl border border-line">
       <ResizablePanelGroup orientation="horizontal">

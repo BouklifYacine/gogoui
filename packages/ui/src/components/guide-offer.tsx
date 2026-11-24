@@ -28,7 +28,10 @@ type GuideOfferProps = {
  * The card offering a page's guide, once, in the page.
  *
  * **Key props**: `title` (what it teaches), `steps` (how many), `onStart`,
- * `onDecline` (« Non merci » removes it for good).
+ * `onDecline` (« Non merci » removes it for good),
+ * `labels` to change its words.
+ *
+ * @deprecated Specific to one product; build it from `Card` and `Button`. Removed in 0.4.0.
  *
  * @summary The card offering a page's guide.
  */

@@ -48,6 +48,8 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
  * panel; a folded panel is `inert` and its line says so (« Dossiers
  * masqué, Entrée pour l'afficher »).
  *
+ * @deprecated Rare in the apps GoGoUI serves; lay panes out with CSS grid. Removed in 0.4.0.
+ *
  * @summary Panels the person resizes by dragging.
  */
 function ResizablePanelGroup({

@@ -104,6 +104,8 @@ type ExpandingButtonGroupProps = {
  * tense word is read by a live region. On touch, a first tap shows the
  * label, a second runs it. 44 px under a thumb on a phone.
  *
+ * @deprecated Use `ButtonGroup` with `SimpleTooltip` labels. Removed in 0.4.0.
+ *
  * @summary A bar of icon buttons where one shows its label.
  */
 function ExpandingButtonGroup({
