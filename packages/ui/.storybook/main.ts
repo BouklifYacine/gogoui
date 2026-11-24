@@ -9,6 +9,7 @@ export default defineMain({
     '@storybook/addon-a11y',
     '@storybook/addon-themes',
     '@storybook/addon-mcp',
+    '@storybook/addon-vitest',
   ],
   features: {
     // The JSON that tells an agent which components exist, their props and

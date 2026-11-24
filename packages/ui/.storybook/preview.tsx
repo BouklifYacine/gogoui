@@ -55,11 +55,16 @@ export default definePreview({
   decorators: [
     withThemeByClassName({
       themes: { clair: '', sombre: 'dark' },
-      defaultTheme: 'clair',
+      // The dark test run (vitest.config.ts) opens every story at night.
+      defaultTheme:
+        import.meta.env.VITE_GOGOUI_THEME === 'dark' ? 'sombre' : 'clair',
       parentSelector: 'html',
     }),
     (Story, context) => (
-      <GoGoUIProvider locale={context.globals.locale as GoGoUILocale}>
+      <GoGoUIProvider
+        locale={context.globals.locale as GoGoUILocale}
+        motion={import.meta.env.VITE_GOGOUI_THEME ? 'off' : 'auto'}
+      >
         <div className="p-6 text-fg">
           <Story />
         </div>
