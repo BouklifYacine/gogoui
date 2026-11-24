@@ -1,7 +1,7 @@
 // User menu, after Arc UI (https://uiarc.dev, MIT licence, Elia Kuratli),
 // composed on GoGoUI's DropdownMenu.
 import { useState } from 'react'
-import type { ReactNode } from 'react'
+import type { ReactElement, ReactNode } from 'react'
 
 import { useGoGoUIMessages } from '../i18n/messages-context.ts'
 import { ButtonLabel } from '../internal/button-label.tsx'
@@ -40,6 +40,8 @@ type UserMenuItem = {
   shortcut?: string
   /** A page to go to: the row is a link. */
   href?: string
+  /** Your router's link instead of `href` (`<Link to="/compte" />`): no full reload. */
+  render?: ReactElement
   onSelect?: () => void
   disabled?: boolean
 }
@@ -63,6 +65,8 @@ type UserMenuProps = {
   planColor?: Color
   /** The name and a chevron beside the photo, from 640px up. */
   showName?: boolean
+  /** Under 640px, the menu rises from the bottom edge as a sheet. On by default. */
+  phoneSheet?: boolean
   size?: 'sm' | 'default'
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'bottom' | 'left' | 'right'
@@ -91,9 +95,9 @@ type UserMenuProps = {
  * entrance, its rows. Extra rows go in `children` as `DropdownMenuItem`s.
  *
  * **Key props**: `user` (`name`, `email`, `plan`, `avatarSrc`), `items`
- * (`label`, `icon`, `shortcut`, `href` or `onSelect`), `onSignOut`,
- * `showTheme`, `theme` + `onThemeChange`, `status`, `showName`, `size`,
- * `align`, `side`.
+ * (`label`, `icon`, `shortcut`, `href`, `render` or `onSelect`),
+ * `onSignOut`, `showTheme`, `theme` + `onThemeChange`, `status`,
+ * `showName`, `phoneSheet`, `size`, `align`, `side`.
  *
  * **Accessibility**: the trigger is named « Menu du compte, {nom} »; arrows
  * move through the rows and the theme's choices, left and right choose a
@@ -113,6 +117,7 @@ function UserMenu({
   status,
   planColor,
   showName = false,
+  phoneSheet = true,
   size = 'default',
   align = 'end',
   side = 'bottom',
@@ -220,7 +225,9 @@ function UserMenu({
               <GoGoIcon
                 name="chevronDown"
                 aria-hidden="true"
-                className="-ml-0.5 size-4 text-fg-muted max-sm:hidden"
+                // At the far end when the trigger is wider than its words
+                // (a sidebar's foot), right after them otherwise.
+                className="ml-auto size-4 text-fg-muted max-sm:hidden"
               />
             </span>
           </>
@@ -230,6 +237,7 @@ function UserMenu({
         align={align}
         side={side}
         sideOffset={8}
+        phoneSheet={phoneSheet}
         className="w-62 max-w-[calc(100vw-24px)] min-w-0"
       >
         <UserMenuHeader
@@ -246,7 +254,9 @@ function UserMenu({
             key={item.label}
             disabled={item.disabled}
             onClick={item.onSelect}
-            render={item.href ? <a href={item.href} /> : undefined}
+            render={
+              item.render ?? (item.href ? <a href={item.href} /> : undefined)
+            }
           >
             {item.icon}
             <span className="min-w-0 flex-1 truncate">{item.label}</span>

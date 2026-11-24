@@ -19,6 +19,11 @@ import { Spinner } from './spinner.tsx'
 type ActionSwapState = {
   value: string
   label: string
+  /**
+   * What a screen reader hears instead of `label`, when the words alone
+   * would not say on what (« Renvoyer » → « Renvoyer l’e-mail à Marie »).
+   */
+  srLabel?: string
   icon?: ReactNode
   /**
    * `success`, `warning` (and `danger`) tint the button to confirm a
@@ -130,7 +135,7 @@ const confirming = (color?: Color) =>
  * Words morph letter by letter, the width follows on a spring, a success
  * icon is wiped in. Everything can be interrupted.
  *
- * **Key props**: `states` (`value`, `label`, `icon`, `color`,
+ * **Key props**: `states` (`value`, `label`, `srLabel`, `icon`, `color`,
  * `pendingLabel`, `holdFor`), `value` / `defaultValue` /
  * `onValueChange`, `onAction` (a promise for the working phase),
  * `failedLabel`, `variant` (default, outline), `size` (sm, default, lg).
@@ -363,7 +368,12 @@ function ActionSwap({
             </span>
           </motion.span>
         </motion.span>
-        <span className="sr-only">{view.label || active.label}</span>
+        <span className="sr-only">
+          {(view.label === active.label && active.srLabel) ||
+            view.label ||
+            active.srLabel ||
+            active.label}
+        </span>
       </Button>
       <span role="status" aria-live="polite" className="sr-only">
         {spoken}

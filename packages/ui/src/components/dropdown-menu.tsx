@@ -45,6 +45,7 @@ function DropdownMenuContent({
   alignOffset = 0,
   side = 'bottom',
   sideOffset = 4,
+  phoneSheet = false,
   className,
   children,
   ...props
@@ -52,11 +53,28 @@ function DropdownMenuContent({
   Pick<
     MenuPrimitive.Positioner.Props,
     'align' | 'alignOffset' | 'side' | 'sideOffset'
-  >) {
+  > & {
+    /**
+     * Under 640px, the menu rises from the screen's bottom edge, full
+     * width over a veil, within the thumb's reach; a menu as usual above.
+     */
+    phoneSheet?: boolean
+  }) {
   return (
     <MenuPrimitive.Portal>
+      {phoneSheet && (
+        <MenuPrimitive.Backdrop
+          data-slot="dropdown-menu-backdrop"
+          className="fixed inset-0 z-50 bg-overlay transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 sm:hidden"
+        />
+      )}
       <MenuPrimitive.Positioner
-        className="isolate z-50 outline-none"
+        className={cn(
+          'isolate z-50 outline-none',
+          // The positioner's inline place gives way to the bottom edge.
+          phoneSheet &&
+            'max-sm:fixed! max-sm:inset-x-0! max-sm:top-auto! max-sm:bottom-0! max-sm:left-0! max-sm:w-auto! max-sm:transform-none!',
+        )}
         align={align}
         alignOffset={alignOffset}
         side={side}
@@ -64,7 +82,14 @@ function DropdownMenuContent({
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
-          className={cn(menuPanel, 'w-(--anchor-width) min-w-48', className)}
+          data-phone-sheet={phoneSheet || undefined}
+          className={cn(
+            menuPanel,
+            'w-(--anchor-width) min-w-48',
+            className,
+            phoneSheet &&
+              'max-sm:max-h-[85dvh] max-sm:w-full max-sm:max-w-none max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:px-2 max-sm:pt-2 max-sm:pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
+          )}
           {...props}
         >
           <MenuHighlight />

@@ -61,6 +61,8 @@ const chevronSize = {
 } as const
 
 type SplitButtonProps = {
+  /** On the main action's button: to find it, or send the focus back to it. */
+  id?: string
   /** The main action's words (« Envoyer »); a change morphs letter by letter. */
   children: ReactNode
   /** Runs the main action. */
@@ -104,7 +106,7 @@ type SplitButtonProps = {
  * `DropdownMenu`; `menu` takes `DropdownMenuItem`s
  * (`variant="destructive"` for a red one).
  *
- * **Key props**: `children` (the words), `onClick`, `iconStart`, `menu`,
+ * **Key props**: `children` (the words), `onClick`, `id`, `iconStart`, `menu`,
  * `variant` (default, outline), `color`, `size` (sm, default, lg),
  * `loading`, `disabled`.
  *
@@ -115,6 +117,7 @@ type SplitButtonProps = {
  * @summary A main action and a menu of its variants in one pill.
  */
 function SplitButton({
+  id,
   children,
   onClick,
   iconStart,
@@ -146,6 +149,7 @@ function SplitButton({
           )}
         >
           <Button
+            id={id}
             data-split-action=""
             variant={variant}
             color={color}

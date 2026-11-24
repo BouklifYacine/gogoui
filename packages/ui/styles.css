@@ -451,6 +451,23 @@
       opacity var(--motion-standard) var(--motion-ease-enter),
       transform var(--motion-standard) var(--motion-ease-enter);
   }
+  /* On a phone, a sheet: it rises from the bottom edge and sinks back. */
+  @media (width < 40rem) {
+    &[data-phone-sheet] {
+      --menu-x: 0px;
+      --menu-y: 0px;
+      transform-origin: bottom;
+    }
+    &[data-phone-sheet][data-starting-style] {
+      opacity: 1;
+      transform: translateY(100%);
+    }
+    &[data-phone-sheet][data-ending-style] {
+      opacity: 1;
+      transform: translateY(100%);
+      transition: transform var(--motion-fast) var(--motion-ease-standard);
+    }
+  }
   &[data-starting-style] [role^='menuitem'] {
     opacity: 0;
     transform: translate(calc(var(--menu-x) * 0.4), calc(var(--menu-y) * 0.4));

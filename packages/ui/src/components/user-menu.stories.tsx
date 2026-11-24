@@ -97,6 +97,42 @@ export const CustomRows = meta.story({
 })
 
 /**
+ * On a phone, the menu rises from the bottom edge as a sheet, within the
+ * thumb's reach (`phoneSheet`, on by default).
+ */
+export const OnAPhone = meta.story({
+  globals: { viewport: { value: 'phone' } },
+  args: {
+    user: USER,
+    items: ITEMS,
+    onSignOut: () => undefined,
+  },
+})
+
+/**
+ * At a sidebar's foot: the trigger as wide as the sidebar, the chevron at
+ * its far end, the menu opening upwards.
+ */
+export const InASidebar = meta.story({
+  decorators: [
+    (Story) => (
+      <div className="flex min-h-120 w-64 flex-col justify-end border-r border-border p-2">
+        {Story()}
+      </div>
+    ),
+  ],
+  args: {
+    user: USER,
+    items: ITEMS,
+    showName: true,
+    side: 'top',
+    align: 'start',
+    className: 'w-full',
+    onSignOut: () => undefined,
+  },
+})
+
+/**
  * The menu grows from the photo, its rows following; the highlight glides
  * under the pointer; the theme's thumb slides; signing out turns and its
  * words rise.

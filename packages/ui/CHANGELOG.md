@@ -1,5 +1,11 @@
 # @gogoui/ui
 
+## 0.2.2
+
+### Patch Changes
+
+- UserMenu rises from the bottom edge as a sheet on a phone (`phoneSheet`, also on `DropdownMenuContent`), takes a router link on its rows (`render`), and its chevron sits at the far end of a wide trigger. ActionSwap states take an `srLabel` for screen readers, and SplitButton an `id` on its main action.
+
 ## 0.2.1
 
 ### Patch Changes
