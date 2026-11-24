@@ -45,6 +45,20 @@ function passwordScore(password: string, minLength = 10): number {
   )
 }
 
+/**
+ * The level word for a share of conditions met: none is « Trop court »,
+ * all is the top word, and the steps between spread over the middle ones.
+ */
+function levelOfShare(met: number, total: number): number {
+  if (met === 0 || total === 0) {
+    return 0
+  }
+  if (met >= total) {
+    return 4
+  }
+  return Math.min(3, Math.max(1, Math.round((met / total) * 4)))
+}
+
 /** One line of the list under the bars. */
 type PasswordRule = {
   id: string
@@ -154,6 +168,9 @@ type PasswordStrengthProps = {
  * mark and draws its tick, several in a row 50ms apart; the count of
  * missing characters rolls.
  *
+ * With its own `rules`, there is one bar per condition, filled as they are
+ * met: the bars and the ticks always agree.
+ *
  * **Key props**: `password`, `minLength`, `rules` (`{ id, label, test,
  * remaining? }[]`), `labels` to change its words.
  *
@@ -172,13 +189,19 @@ function PasswordStrength({
   const messages = useGoGoUIMessages(labels)
   const reduce = useReduceMotion()
   const rules = rulesProp ?? passwordRules(minLength, messages)
-  const score = passwordScore(password, minLength)
-  const word = messages.passwordLevels[score]
-  const colours = levelColours[score]
   const met = new Set(
     rules.filter((rule) => rule.test(password)).map((rule) => rule.id),
   )
   const metKey = [...met].join(' ')
+  // Its own conditions: one bar each, filled as they are met, so the bars
+  // and the ticks always say the same thing. The default list keeps the
+  // four steps of passwordScore.
+  const own = rulesProp !== undefined
+  const bars = own ? rules.length : 4
+  const score = own ? met.size : passwordScore(password, minLength)
+  const level = own ? levelOfShare(met.size, rules.length) : score
+  const word = messages.passwordLevels[level]
+  const colours = levelColours[level]
 
   // The previous score and ticks: which way the word moves, which bars
   // and ticks join the wave, decided here during the render.
@@ -218,12 +241,13 @@ function PasswordStrength({
             role="meter"
             aria-label={messages.passwordMeter}
             aria-valuemin={0}
-            aria-valuemax={4}
+            aria-valuemax={bars}
             aria-valuenow={score}
             aria-valuetext={password ? word : messages.passwordEmpty}
-            className="grid min-w-0 flex-1 grid-cols-4 gap-1.5"
+            className="grid min-w-0 flex-1 gap-1.5"
+            style={{ gridTemplateColumns: `repeat(${bars}, minmax(0, 1fr))` }}
           >
-            {[0, 1, 2, 3].map((bar) => {
+            {Array.from({ length: bars }, (_, bar) => {
               const on = bar < score
               // A pasted password fills left to right; clearing empties
               // right to left.

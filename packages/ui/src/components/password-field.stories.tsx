@@ -38,6 +38,43 @@ export const NewPassword = meta.story({
 })
 
 /**
+ * Its own conditions (`rules`): one bar per condition, filled as each is
+ * met. Type « Talyra2026! »: three ticks, three bars, the top word.
+ */
+export const OwnRules = meta.story({
+  args: {
+    name: 'password',
+    label: 'Mot de passe',
+    autoComplete: 'new-password',
+    value: '',
+    onValueChange: () => {},
+    rules: [
+      {
+        id: 'min',
+        label: 'Au moins 10 caractères',
+        test: (password: string) => password.length >= 10,
+        remaining: (password: string) => 10 - password.length,
+      },
+      {
+        id: 'cases',
+        label: 'Une majuscule et une minuscule',
+        test: (password: string) =>
+          /[a-z]/.test(password) && /[A-Z]/.test(password),
+      },
+      {
+        id: 'digit-or-symbol',
+        label: 'Un chiffre ou un symbole',
+        test: (password: string) => /[^A-Za-z]/.test(password),
+      },
+    ],
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
+    return <PasswordField {...args} value={value} onValueChange={setValue} />
+  },
+})
+
+/**
  * Signing in: no strength, the password exists already.
  */
 export const CurrentPassword = meta.story({

@@ -190,7 +190,15 @@ function RadioCardField<TValue extends string>({
                     <OptionIcon className="size-5" />
                   </span>
                 )}
-                <FieldContent className="min-w-0 self-stretch">
+                <FieldContent
+                  className={cn(
+                    'min-w-0',
+                    // Without a line under it, the label sits on the
+                    // middle line of the radio and the icon, not at the top
+                    // of the card.
+                    details ? 'self-stretch' : 'self-center',
+                  )}
+                >
                   <FieldTitle
                     className={cn(
                       'text-base font-normal',
