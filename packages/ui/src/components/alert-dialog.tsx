@@ -53,6 +53,10 @@ function AlertDialogOverlay({
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
+      // Always drawn, even over another dialog or a sheet (Base UI skips a
+      // nested dialog's backdrop): without it the panel under a confirmation
+      // stays bright and its buttons answer a tap.
+      forceRender
       className={cn(
         'fixed inset-0 isolate z-50 bg-overlay backdrop-blur-[6px]',
         dialogOverlayMotion,

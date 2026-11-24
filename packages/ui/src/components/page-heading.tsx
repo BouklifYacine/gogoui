@@ -40,7 +40,9 @@ function PageHeading({ children, className, level = 1 }: PageHeadingProps) {
       tabIndex={-1}
       data-slot="page-heading"
       className={cn(
-        'text-2xl font-medium tracking-title text-fg outline-none sm:text-3xl',
+        // No colour of its own: it reads its parent's, so a title on a dark
+        // header or a photo stays legible.
+        'text-2xl font-medium tracking-title outline-none sm:text-3xl',
         className,
       )}
     >

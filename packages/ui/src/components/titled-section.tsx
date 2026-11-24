@@ -54,7 +54,9 @@ function TitledSection({
       className={cn('flex flex-col', compact ? 'gap-3' : 'gap-4', className)}
     >
       {aside ? (
-        <div className="flex items-center gap-2">
+        // A longer aside (a few words on where the section stands) goes
+        // under the title on a phone instead of squeezing it.
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {heading}
           {aside}
         </div>

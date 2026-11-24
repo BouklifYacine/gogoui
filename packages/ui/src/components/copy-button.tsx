@@ -65,6 +65,12 @@ type CopyButtonProps = {
    * refuses the clipboard.
    */
   onResult?: (copied: boolean) => void
+  /**
+   * Reads the result aloud from its own live region (true by default). Set
+   * false where the page already says it (a toast, a field's own status),
+   * so a screen reader does not hear it twice.
+   */
+  announce?: boolean
   /** Button's shape: `outline` by default, `ghost` bare. */
   variant?: ButtonProps['variant']
   /** Button's sizes; the `icon` ones show the icon alone. */
@@ -88,8 +94,8 @@ type CopyButtonProps = {
  * changes width and nothing around it moves.
  *
  * **Key props**: `text`, `label` / `copiedLabel` / `failedLabel`,
- * `onResult`, `variant`, `size` (an `icon` size for the icon alone),
- * `color`.
+ * `onResult`, `announce`, `variant`, `size` (an `icon` size for the icon
+ * alone), `color`.
  *
  * **Accessibility**: named by `label` whatever it shows; the result is
  * read by its own live region. Where the Clipboard API is refused (an
@@ -103,6 +109,7 @@ function CopyButton({
   copiedLabel,
   failedLabel,
   onResult,
+  announce = true,
   variant = 'outline',
   size = 'default',
   color,
@@ -202,7 +209,12 @@ function CopyButton({
           </span>
         )}
       </Button>
-      <span role="status" aria-live="polite" className="sr-only">
+      <span
+        role={announce ? 'status' : undefined}
+        aria-live={announce ? 'polite' : undefined}
+        hidden={!announce}
+        className="sr-only"
+      >
         {/* A zero-width space every other copy, so « Copié » is read again. */}
         {state === 'copied'
           ? `${copiedWord}${pulse % 2 ? '' : '\u200B'}`
