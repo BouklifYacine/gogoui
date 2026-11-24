@@ -10,6 +10,14 @@ import { GoGoUIProvider } from '../src/i18n/gogoui-provider.tsx'
 import { en } from '../src/i18n/locales/en.ts'
 import { paletteCss, paletteToolbar } from './palettes.ts'
 
+// The dark test run sets `dark` on <html> before the first story renders:
+// the theme decorator adds it in an effect, and axe used to read a link
+// in its light colour over a dark background in that gap (a flaky
+// contrast failure on ErrorSummary and Tabs).
+if (import.meta.env.VITE_GOGOUI_THEME === 'dark') {
+  document.documentElement.classList.add('dark')
+}
+
 export default definePreview({
   addons: [addonDocs(), addonA11y(), addonThemes()],
   tags: ['autodocs'],
