@@ -7,6 +7,8 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react'
 
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { DropdownMenuItem, DropdownMenuSeparator } from './dropdown-menu.tsx'
@@ -42,7 +44,30 @@ const meta = preview.meta({
 /**
  * Send the quote now, or open the chevron for its variants.
  */
-export const Basic = meta.story({})
+export const Basic = meta.story({
+  args: { onClick: fn() },
+  // The main half runs the action; the chevron opens the variants.
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Envoyer le devis' }),
+    )
+    await expect(args.onClick).toHaveBeenCalledOnce()
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Plus d’actions' }),
+    )
+    const menu = await within(canvasElement.ownerDocument.body).findByRole(
+      'menu',
+    )
+    await waitFor(() =>
+      expect(
+        within(menu).getByRole('menuitem', { name: 'Programmer l’envoi' }),
+      ).toBeVisible(),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(menu).not.toBeInTheDocument())
+  },
+})
 
 /**
  * The white button, for an action beside the main one.

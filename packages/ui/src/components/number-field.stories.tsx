@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { expect, userEvent, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Label } from './label.tsx'
@@ -30,6 +32,17 @@ export const Basic = meta.story({
       <NumberField {...args} id="guests" />
     </div>
   ),
+  // The arrow keys move by the step, and the bounds hold.
+  play: async ({ canvasElement }) => {
+    const field = within(canvasElement).getByRole('textbox', {
+      name: 'Invités',
+    })
+    await userEvent.click(field)
+    await userEvent.keyboard('{ArrowUp}')
+    await expect(field).toHaveValue('130')
+    await userEvent.keyboard('{End}')
+    await expect(field).toHaveValue('300')
+  },
 })
 
 /**

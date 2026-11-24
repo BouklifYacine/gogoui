@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { expect, userEvent, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { DateField } from './date-field.tsx'
@@ -35,6 +37,16 @@ export const Basic = meta.story({
         onValueChange={setValue}
       />
     )
+  },
+  // A day typed with any separator is read when she leaves the field.
+  play: async ({ canvasElement }) => {
+    const field = within(canvasElement).getByRole('textbox', {
+      name: "Date de l'événement",
+    })
+    await userEvent.clear(field)
+    await userEvent.type(field, '14.6.2027')
+    await userEvent.tab()
+    await expect(field).toHaveValue('14/06/2027')
   },
 })
 

@@ -5,6 +5,8 @@ import {
   UserIcon,
 } from '@phosphor-icons/react'
 
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { DropdownMenuItem } from './dropdown-menu.tsx'
@@ -40,6 +42,23 @@ export const Basic = meta.story({
     user: USER,
     items: ITEMS,
     onSignOut: () => undefined,
+  },
+  // The photo opens the menu; Escape closes it and gives the focus back.
+  play: async ({ canvasElement }) => {
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Menu du compte, Camille Durand',
+    })
+    await userEvent.click(trigger)
+    const menu = await within(canvasElement.ownerDocument.body).findByRole(
+      'menu',
+    )
+    await waitFor(() =>
+      expect(
+        within(menu).getByRole('menuitem', { name: 'Se déconnecter' }),
+      ).toBeVisible(),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() => expect(trigger).toHaveFocus())
   },
 })
 

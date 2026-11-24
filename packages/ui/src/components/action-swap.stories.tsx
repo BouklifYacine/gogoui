@@ -5,6 +5,8 @@ import {
   StarIcon,
 } from '@phosphor-icons/react'
 
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { ActionSwap } from './action-swap.tsx'
@@ -29,7 +31,20 @@ const meta = preview.meta({
 /**
  * Follow a request: « Suivre » turns into a green « Suivi », and back.
  */
-export const Basic = meta.story({})
+export const Basic = meta.story({
+  // Each press moves to the next state, the last back to the first.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole('button', { name: 'Suivre' }))
+    await waitFor(() =>
+      expect(canvas.getByRole('button', { name: 'Suivi' })).toBeVisible(),
+    )
+    await userEvent.click(canvas.getByRole('button', { name: 'Suivi' }))
+    await waitFor(() =>
+      expect(canvas.getByRole('button', { name: 'Suivre' })).toBeVisible(),
+    )
+  },
+})
 
 /**
  * The white button.
