@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -43,6 +44,26 @@ export const Destructive = meta.story({
         />
       </>
     )
+  },
+  // Opens with the focus inside; Escape closes it and gives the focus back
+  // to the button that opened it.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Supprimer le devis',
+    })
+    await userEvent.click(trigger)
+    const dialog = await page.findByRole('alertdialog', {
+      name: 'Supprimer le devis n° 42 ?',
+    })
+    await waitFor(() =>
+      expect(dialog).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('alertdialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
   },
 })
 

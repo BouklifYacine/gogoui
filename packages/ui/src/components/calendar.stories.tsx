@@ -9,6 +9,9 @@ import { Calendar, CalendarDayButton } from './calendar.tsx'
 const meta = preview.meta({
   title: 'Formulaires/Dates et heures/Calendar',
   component: Calendar,
+  subcomponents: {
+    CalendarDayButton,
+  },
   args: { locale: fr, defaultMonth: new Date(2027, 5, 1) },
 })
 

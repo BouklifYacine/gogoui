@@ -1,0 +1,117 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Fondations/Langue" />
+
+# Langue
+
+GoGoUI écrit lui-même quelques mots : le nom d'un bouton de fermeture pour
+un lecteur d'écran (« Fermer »), « Chargement », « Annuler » et
+« Enregistrer » par défaut, « 1 à 25 sur 257 » sous un tableau, les noms des
+jours d'un calendrier… Tout le reste, ce sont vos props : vos titres, vos
+libellés, vos messages d'erreur.
+
+Ces mots sont en français tant qu'on ne dit rien. L'anglais est fourni. Le
+menu « Langue » de la barre d'outils de Storybook bascule chaque composant
+de l'un à l'autre.
+
+## Choisir la langue : `locale`
+
+```tsx
+import { GoGoUIProvider } from '@gogoui/ui/provider'
+
+export function App({ children }: { children: React.ReactNode }) {
+  return <GoGoUIProvider locale="en">{children}</GoGoUIProvider>
+}
+```
+
+`locale` vaut `'fr'` ou `'en'`. Sans `locale`, un provider reprend la
+langue du provider qui l'entoure, et le français tout en haut. La langue
+règle aussi les dates et les nombres (`intlLocale` : « 1 234,50 € » ou
+« €1,234.50 ») et l'ordre jour / mois des dates tapées (`dayOrder`).
+
+## Changer quelques mots : `messages`
+
+Les mots passés dans `messages` remplacent ceux de la langue, un par un ;
+les autres restent :
+
+```tsx
+<GoGoUIProvider messages={{ close: 'Retour', save: 'Valider' }}>
+  {children}
+</GoGoUIProvider>
+```
+
+Certains mots dépendent d'une valeur : ce sont des fonctions, à remplacer
+par une fonction.
+
+```tsx
+<GoGoUIProvider
+  messages={{
+    selectRow: (name) => `Choisir ${name}`,
+    rowsRange: (first, last, total) => `${first}-${last} / ${total}`,
+  }}
+>
+  {children}
+</GoGoUIProvider>
+```
+
+Le type `GoGoUIMessages` liste chaque mot, avec ce qu'il nomme. Les deux
+langues fournies sont publiées à part (`@gogoui/ui/locales/fr`,
+`@gogoui/ui/locales/en`) : une application qui reste en français ne charge
+jamais l'anglais.
+
+## Une autre langue
+
+Passer une langue entière à `messages`, chaque clé de `GoGoUIMessages`
+remplie, avec son propre `intlLocale`. Le plus simple : copier
+`@gogoui/ui/locales/en` et traduire.
+
+```tsx
+import type { GoGoUIMessages } from '@gogoui/ui/provider'
+
+const es: GoGoUIMessages = {
+  close: 'Cerrar',
+  loading: 'Cargando',
+  intlLocale: 'es-ES',
+  dayOrder: 'dmy',
+  // … chaque autre mot
+}
+
+<GoGoUIProvider messages={es}>{children}</GoGoUIProvider>
+```
+
+TypeScript signale le mot oublié.
+
+## Un seul composant : `labels`
+
+Chaque composant qui écrit des mots prend une prop `labels` : ses mots à
+lui seul, sans toucher au reste de l'application. Son type
+(`ExpandingSearchLabels`, `DialogContentLabels`…) liste exactement les mots
+qu'il écrit. Dans un composant en plusieurs pièces, `labels` va sur la pièce
+qui écrit (`<DialogContent labels={{ close: 'Retour' }}>`).
+
+```tsx
+<ExpandingSearch
+  id="search"
+  label="Rechercher un article"
+  value={query}
+  onValueChange={setQuery}
+  labels={{ searchPlaceholder: 'Titre, auteur…' }}
+/>
+```
+
+Du plus fort au plus faible : la prop `labels` du composant, puis
+`messages`, puis la langue (`locale`, ou celle du provider autour).
+
+## Lire les mots dans ses composants
+
+Un composant à soi peut écrire les mêmes mots que GoGoUI, dans la langue
+choisie :
+
+```tsx
+import { useGoGoUIMessages } from '@gogoui/ui/provider'
+
+function CancelLink() {
+  const { cancel } = useGoGoUIMessages()
+  return <a href="/">{cancel}</a>
+}
+```

@@ -13,6 +13,14 @@ import {
 const meta = preview.meta({
   title: 'Navigation/Pagination',
   component: Pagination,
+  subcomponents: {
+    PaginationContent,
+    PaginationItem,
+    PaginationButton,
+    PaginationPrevious,
+    PaginationNext,
+    PaginationEllipsis,
+  },
 })
 
 /**

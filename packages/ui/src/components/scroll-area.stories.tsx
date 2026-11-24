@@ -1,11 +1,14 @@
 import preview from '#.storybook/preview'
 
-import { ScrollArea } from './scroll-area.tsx'
+import { ScrollArea, ScrollBar } from './scroll-area.tsx'
 import { Separator } from './separator.tsx'
 
 const meta = preview.meta({
   title: 'Mise en page/ScrollArea',
   component: ScrollArea,
+  subcomponents: {
+    ScrollBar,
+  },
 })
 
 const days = Array.from({ length: 30 }, (_, index) => `${index + 1} juin 2027`)

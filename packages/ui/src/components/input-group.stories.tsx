@@ -5,13 +5,22 @@ import preview from '#.storybook/preview'
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   InputGroupText,
+  InputGroupTextarea,
 } from './input-group.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/Saisie/InputGroup',
   component: InputGroup,
+  subcomponents: {
+    InputGroupAddon,
+    InputGroupButton,
+    InputGroupText,
+    InputGroupInput,
+    InputGroupTextarea,
+  },
 })
 
 /**

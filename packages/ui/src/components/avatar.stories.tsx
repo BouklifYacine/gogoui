@@ -4,14 +4,23 @@ import { COLORS } from '../internal/colors.ts'
 
 import {
   Avatar,
+  AvatarBadge,
   AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
+  AvatarImage,
 } from './avatar.tsx'
 
 const meta = preview.meta({
   title: 'Affichage/Avatar',
   component: Avatar,
+  subcomponents: {
+    AvatarImage,
+    AvatarFallback,
+    AvatarBadge,
+    AvatarGroup,
+    AvatarGroupCount,
+  },
 })
 
 /**

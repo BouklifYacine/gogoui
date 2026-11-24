@@ -7,24 +7,46 @@ import {
   ShareIcon,
   TrashIcon,
 } from '@phosphor-icons/react'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './dropdown-menu.tsx'
 
 const meta = preview.meta({
   title: 'Menus/DropdownMenu',
   component: DropdownMenu,
+  subcomponents: {
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuLabel,
+    DropdownMenuItem,
+    DropdownMenuCheckboxItem,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubTrigger,
+    DropdownMenuSubContent,
+  },
 })
 
 /**
@@ -56,6 +78,30 @@ export const Basic = meta.story({
       </DropdownMenuContent>
     </DropdownMenu>
   ),
+  // Opens on a click with the focus in the menu; Escape closes it and gives
+  // the focus back to « … ».
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Actions',
+    })
+    await userEvent.click(trigger)
+    const menu = await page.findByRole('menu')
+    // The rows fade in one after another: wait for them.
+    await waitFor(() =>
+      expect(
+        within(menu).getByRole('menuitem', { name: 'Modifier' }),
+      ).toBeVisible(),
+    )
+    await waitFor(() =>
+      expect(menu).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('menu')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })
 
 /**

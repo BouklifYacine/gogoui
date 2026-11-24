@@ -4,10 +4,17 @@ import {
   Menubar,
   MenubarCheckboxItem,
   MenubarContent,
+  MenubarGroup,
   MenubarItem,
+  MenubarLabel,
   MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
   MenubarSeparator,
   MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
   MenubarTrigger,
 } from './menubar.tsx'
 
@@ -15,7 +22,22 @@ const meta = preview.meta({
   title: 'Menus/Menubar',
   tags: ['deprecated'],
   component: Menubar,
-  subcomponents: { MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem },
+  subcomponents: {
+    MenubarMenu,
+    MenubarTrigger,
+    MenubarContent,
+    MenubarItem,
+    MenubarCheckboxItem,
+    MenubarRadioGroup,
+    MenubarRadioItem,
+    MenubarLabel,
+    MenubarGroup,
+    MenubarSeparator,
+    MenubarShortcut,
+    MenubarSub,
+    MenubarSubTrigger,
+    MenubarSubContent,
+  },
 })
 
 /**

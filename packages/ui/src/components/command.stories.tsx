@@ -4,16 +4,29 @@ import preview from '#.storybook/preview'
 
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
+  CommandShortcut,
 } from './command.tsx'
 
 const meta = preview.meta({
   title: 'Menus/Command',
   component: Command,
+  subcomponents: {
+    CommandDialog,
+    CommandInput,
+    CommandList,
+    CommandEmpty,
+    CommandGroup,
+    CommandItem,
+    CommandShortcut,
+    CommandSeparator,
+  },
 })
 
 /**

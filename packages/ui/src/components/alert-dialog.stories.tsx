@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import {
@@ -8,6 +10,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './alert-dialog.tsx'
@@ -16,6 +19,17 @@ import { Button } from './button.tsx'
 const meta = preview.meta({
   title: 'Confirmations/AlertDialog',
   component: AlertDialog,
+  subcomponents: {
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogMedia,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogCancel,
+    AlertDialogAction,
+  },
 })
 
 /**
@@ -42,4 +56,24 @@ export const Basic = meta.story({
       </AlertDialogContent>
     </AlertDialog>
   ),
+  // Opens with the focus inside; Escape answers « Rester » and gives the
+  // focus back to the button.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Quitter la page',
+    })
+    await userEvent.click(trigger)
+    const dialog = await page.findByRole('alertdialog', {
+      name: 'Quitter sans enregistrer ?',
+    })
+    await waitFor(() =>
+      expect(dialog).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('alertdialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })

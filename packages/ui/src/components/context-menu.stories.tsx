@@ -4,22 +4,45 @@ import {
   PencilSimpleIcon,
   TrashIcon,
 } from '@phosphor-icons/react'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
 import {
   ContextMenu,
+  ContextMenuCheckboxItem,
   ContextMenuContent,
+  ContextMenuGroup,
   ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from './context-menu.tsx'
 
 const meta = preview.meta({
   title: 'Menus/ContextMenu',
   component: ContextMenu,
-  subcomponents: { ContextMenuTrigger, ContextMenuContent, ContextMenuItem },
+  subcomponents: {
+    ContextMenuTrigger,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuCheckboxItem,
+    ContextMenuRadioGroup,
+    ContextMenuRadioItem,
+    ContextMenuLabel,
+    ContextMenuGroup,
+    ContextMenuSeparator,
+    ContextMenuShortcut,
+    ContextMenuSub,
+    ContextMenuSubTrigger,
+    ContextMenuSubContent,
+  },
 })
 
 /**
@@ -54,4 +77,24 @@ export const Basic = meta.story({
       </ContextMenuContent>
     </ContextMenu>
   ),
+  // A right-click opens the menu with the focus in it; Escape closes it.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const card = within(canvasElement).getByText('Clic droit sur la carte')
+    await userEvent.pointer({ keys: '[MouseRight]', target: card })
+    const menu = await page.findByRole('menu')
+    // The rows fade in one after another: wait for them.
+    await waitFor(() =>
+      expect(
+        within(menu).getByRole('menuitem', { name: /Dupliquer/ }),
+      ).toBeVisible(),
+    )
+    await waitFor(() =>
+      expect(menu).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('menu')).not.toBeInTheDocument(),
+    )
+  },
 })

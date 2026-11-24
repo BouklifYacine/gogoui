@@ -15,6 +15,13 @@ import {
 const meta = preview.meta({
   title: 'Retours/Empty',
   component: Empty,
+  subcomponents: {
+    EmptyHeader,
+    EmptyMedia,
+    EmptyTitle,
+    EmptyDescription,
+    EmptyContent,
+  },
 })
 
 /**

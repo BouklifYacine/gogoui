@@ -1,3 +1,5 @@
+import { expect, userEvent, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs.tsx'
@@ -5,6 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs.tsx'
 const meta = preview.meta({
   title: 'Navigation/Tabs',
   component: Tabs,
+  subcomponents: {
+    TabsList,
+    TabsTrigger,
+    TabsContent,
+  },
 })
 
 /**
@@ -30,6 +37,19 @@ export const Basic = meta.story({
       </TabsContent>
     </Tabs>
   ),
+  // A click shows the tab's panel; the arrow moves to the next tab.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const payments = canvas.getByRole('tab', { name: 'Paiements' })
+    await userEvent.click(payments)
+    await expect(payments).toHaveAttribute('aria-selected', 'true')
+    // The panel that leaves stays a moment: find the new one by its tab.
+    await expect(
+      canvas.getByRole('tabpanel', { name: 'Paiements' }),
+    ).toHaveTextContent('Acompte reçu')
+    await userEvent.keyboard('{ArrowRight}')
+    await expect(canvas.getByRole('tab', { name: 'Échanges' })).toHaveFocus()
+  },
 })
 
 /**

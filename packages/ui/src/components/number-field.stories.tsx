@@ -8,6 +8,7 @@ import { NumberField, NumberFieldScrubArea } from './number-field.tsx'
 const meta = preview.meta({
   title: 'Formulaires/Champs prêts/NumberField',
   component: NumberField,
+  subcomponents: { NumberFieldScrubArea },
 })
 
 /**

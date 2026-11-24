@@ -1,0 +1,108 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks'
+
+<Meta title="Fondations/Typographie" />
+
+# Typographie
+
+## La police
+
+GoGoUI écrit en Inter (`--font-sans`, et `--font-heading` pour les titres),
+puis la police du système si Inter manque. Le paquet ne charge pas la
+police : c'est au projet de le faire, par exemple avec Fontsource.
+
+```bash
+bun add @fontsource-variable/inter
+```
+
+```ts
+import '@fontsource-variable/inter/opsz.css'
+```
+
+Une autre police : redéfinir `--font-sans` dans un bloc `@theme` après
+l'import de GoGoUI.
+
+## L'échelle
+
+Neuf tailles, chacune avec sa hauteur de ligne et son interlettrage. Les
+classes Tailwind habituelles les lisent : `text-xs` à `text-5xl`.
+
+<Unstyled>
+  <div className="my-6 flex flex-col gap-4 text-fg">
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-xs</code>
+      <span className="text-xs">
+        12 px · un détail : badge, en-tête de tableau, aide
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-sm</code>
+      <span className="text-sm">
+        13 px · le texte de l'interface, par défaut
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-base</code>
+      <span className="text-base">
+        15 px · le texte long, le titre d'une carte
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-lg</code>
+      <span className="text-lg">17 px · un libellé mis en avant</span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-xl</code>
+      <span className="text-xl font-medium tracking-heading">
+        18 px · le titre d'une section
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-2xl</code>
+      <span className="text-2xl font-medium tracking-title">
+        22 px · le titre d'une page
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-3xl</code>
+      <span className="text-3xl font-medium tracking-title">
+        28 px · un grand titre
+      </span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-4xl</code>
+      <span className="text-4xl font-medium tracking-title">36 px · héros</span>
+    </div>
+    <div className="flex items-baseline gap-6">
+      <code className="w-20 shrink-0 text-xs text-fg-muted">text-5xl</code>
+      <span className="text-5xl font-medium tracking-title">44 px · héros</span>
+    </div>
+  </div>
+</Unstyled>
+
+Sur un téléphone (sous 768 px), `text-sm` et `text-base` grandissent d'un
+cran (14 et 16 px) : on lit à bout de bras, souvent dehors. Les titres
+gardent leur taille. Les champs restent à 16 px sur téléphone : en dessous,
+iOS zoome au focus. Ces deux tailles passent par `--type-sm`, `--type-base`
+et `--type-base-leading` dans `tokens.css`.
+
+## Graisse et chiffres
+
+- Deux graisses suffisent : normale (400) et `font-medium` (500) pour les
+  titres, les libellés et les noms. `<strong>` et `<b>` pèsent 500 eux
+  aussi.
+- `tracking-title` (−0,02 em) resserre les grands titres,
+  `tracking-heading` (−0,015 em) les titres de section.
+- Les montants s'alignent en colonne avec la classe `amount` (ou
+  `tabular-nums`).
+
+## Les composants
+
+- `Heading` : un titre dont le niveau (`level`, de 1 à 4, pour le plan de la
+  page) et la taille (`size`, de `base` à `3xl`, pour l'œil) se choisissent
+  séparément. Un seul `level={1}` par page, jamais un niveau sauté pour
+  avoir plus petit.
+- `Text` : le texte courant, avec `size` (`xs` à `lg`), `tone` (`default`,
+  `muted`, `subtle`) et `weight`.
+- Les couleurs du texte : `text-fg`, `text-fg-muted` (le texte secondaire),
+  `text-fg-subtle` (les indications, les icônes), toutes lisibles à 4,5:1
+  au moins (voir **Fondations/Couleurs**).

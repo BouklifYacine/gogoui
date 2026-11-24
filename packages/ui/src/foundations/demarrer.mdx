@@ -1,0 +1,134 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Démarrer" />
+
+# Démarrer
+
+Une fois le paquet installé et `@gogoui/ui/styles.css` importé (voir
+**Introduction**), voici les deux écrans que presque toute application
+contient : un formulaire et une liste.
+
+## Un premier formulaire
+
+Chaque champ prêt (`TextField`, `MoneyField`, `DateField`…) prend un
+`label`, sa valeur (`value` + `onValueChange`, ou `defaultValue`) et son
+`error` en mots. Le libellé, l'aide et l'erreur sont reliés au champ pour
+un lecteur d'écran. `SubmitButton` tourne pendant l'envoi.
+
+```tsx
+import { useState } from 'react'
+import { SubmitButton } from '@gogoui/ui/submit-button'
+import { TextField } from '@gogoui/ui/text-field'
+
+export function Newsletter() {
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState<string>()
+  const [sending, setSending] = useState(false)
+
+  async function send(event: React.FormEvent) {
+    event.preventDefault()
+    if (!email.includes('@')) {
+      setError('Saisissez une adresse e-mail, par exemple nom@exemple.fr.')
+      return
+    }
+    setError(undefined)
+    setSending(true)
+    await fetch('/api/newsletter', { method: 'POST', body: email })
+    setSending(false)
+  }
+
+  return (
+    <form onSubmit={send} noValidate className="flex max-w-sm flex-col gap-4">
+      <TextField
+        name="email"
+        type="email"
+        label="E-mail"
+        autoComplete="email"
+        value={email}
+        onValueChange={setEmail}
+        error={error}
+      />
+      <SubmitButton submitting={sending} loadingText="Inscription…">
+        S'inscrire
+      </SubmitButton>
+    </form>
+  )
+}
+```
+
+Avec TanStack Form, les champs arrivent déjà branchés, erreurs comprises :
+
+```tsx
+import { useAppForm } from '@gogoui/ui/tanstack-form'
+
+export function Newsletter() {
+  const form = useAppForm({ defaultValues: { email: '' } })
+  return (
+    <form.AppForm>
+      <form.Form>
+        <form.AppField name="email">
+          {(field) => <field.TextField label="E-mail" type="email" />}
+        </form.AppField>
+        <form.SubmitButton loadingText="Inscription…">
+          S'inscrire
+        </form.SubmitButton>
+      </form.Form>
+    </form.AppForm>
+  )
+}
+```
+
+## Une première liste
+
+`@gogoui/ui/data-table` donne une liste complète : recherche, tri, colonnes
+à masquer, pages, et des lignes denses sur un téléphone. Il faut
+`@tanstack/react-table`. Chaque ligne a un `id` texte.
+
+```tsx
+import {
+  DataTable,
+  createDataColumns,
+  useDataTable,
+} from '@gogoui/ui/data-table'
+import { EmptyState } from '@gogoui/ui/empty-state'
+
+type Product = { id: string; name: string; stock: number }
+
+const column = createDataColumns<Product>()
+const columns = column.columns([
+  column.accessor('name', {
+    header: 'Produit',
+    sortFn: 'text',
+    meta: { title: true },
+  }),
+  column.accessor('stock', {
+    header: 'Stock',
+    sortFn: 'basic',
+    meta: { amount: true },
+  }),
+])
+
+export function Products({ products }: { products: Product[] }) {
+  const table = useDataTable({ data: products, columns })
+  return (
+    <DataTable
+      table={table}
+      caption="Produits"
+      filterLabel="Filtrer les produits"
+      emptyState={<EmptyState title="Aucun produit pour l'instant" />}
+      pagination={{ rowsLabel: (count) => `${count} produits` }}
+    />
+  )
+}
+```
+
+Pour une liste dont le serveur fait le tri et les pages, les pièces de
+**Listes et tableaux** (`Table`, `TableSortHead`, `TablePagination`,
+`TableToolbar`…) dessinent la même chose sans logique : votre code garde
+l'état.
+
+## Ensuite
+
+- Les **Fondations** pour la marque, la typographie et le mouvement.
+- **Formulaires/Champs prêts** pour chaque type de valeur.
+- **Fenêtres** et **Confirmations** pour les dialogues.

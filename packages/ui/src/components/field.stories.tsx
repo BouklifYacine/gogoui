@@ -2,16 +2,32 @@ import preview from '#.storybook/preview'
 
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
 } from './field.tsx'
 import { Input } from './input.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/Saisie/Field',
   component: Field,
+  subcomponents: {
+    FieldSet,
+    FieldLegend,
+    FieldGroup,
+    FieldLabel,
+    FieldTitle,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldSeparator,
+  },
 })
 
 /**

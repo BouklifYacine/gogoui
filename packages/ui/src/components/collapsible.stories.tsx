@@ -1,4 +1,5 @@
 import { CaretDownIcon } from '@phosphor-icons/react'
+import { expect, userEvent, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -12,6 +13,10 @@ import {
 const meta = preview.meta({
   title: 'Mise en page/Collapsible',
   component: Collapsible,
+  subcomponents: {
+    CollapsibleTrigger,
+    CollapsibleContent,
+  },
 })
 
 /**
@@ -29,4 +34,14 @@ export const Basic = meta.story({
       </CollapsibleContent>
     </Collapsible>
   ),
+  // A click shows the options, a second hides them.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const trigger = canvas.getByRole('button', { name: "Plus d'options" })
+    await userEvent.click(trigger)
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    await expect(canvas.getByText(/Acompte à 30 %/)).toBeVisible()
+    await userEvent.click(trigger)
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false')
+  },
 })

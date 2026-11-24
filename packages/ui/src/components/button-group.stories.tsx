@@ -14,7 +14,11 @@ import {
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
-import { ButtonGroup } from './button-group.tsx'
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from './button-group.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +30,10 @@ import {
 const meta = preview.meta({
   title: 'Actions/ButtonGroup',
   component: ButtonGroup,
+  subcomponents: {
+    ButtonGroupText,
+    ButtonGroupSeparator,
+  },
 })
 
 /**

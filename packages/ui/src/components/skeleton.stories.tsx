@@ -10,6 +10,11 @@ import {
 const meta = preview.meta({
   title: 'Retours/Skeleton',
   component: Skeleton,
+  subcomponents: {
+    SkeletonText,
+    SkeletonButton,
+    SkeletonBadge,
+  },
 })
 
 /**

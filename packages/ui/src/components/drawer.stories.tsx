@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
@@ -8,6 +10,7 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerSwipeHandle,
   DrawerTitle,
   DrawerTrigger,
 } from './drawer.tsx'
@@ -15,6 +18,16 @@ import {
 const meta = preview.meta({
   title: 'Fenêtres/Drawer',
   component: Drawer,
+  subcomponents: {
+    DrawerTrigger,
+    DrawerContent,
+    DrawerSwipeHandle,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerClose,
+  },
   globals: { viewport: { value: 'phone' } },
 })
 
@@ -42,4 +55,22 @@ export const Basic = meta.story({
       </DrawerContent>
     </Drawer>
   ),
+  // Opens with the focus inside; Escape closes it and gives the focus back
+  // to its button.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Actions',
+    })
+    await userEvent.click(trigger)
+    const drawer = await page.findByRole('dialog', { name: 'Samedi 12 juin' })
+    await waitFor(() =>
+      expect(drawer).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('dialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })

@@ -7,12 +7,14 @@ import {
   FileUploadDropzone,
   FileUploadList,
 } from './file-upload.tsx'
+import { FileUploadItem } from './file-upload-item.tsx'
 import type { FileUploadEntry, FileUploadHandler } from './file-upload.tsx'
 
 const meta = preview.meta({
   title: 'Formulaires/Fichiers/FileUpload',
   tags: ['beta'],
   component: FileUpload,
+  subcomponents: { FileUploadDropzone, FileUploadList, FileUploadItem },
   decorators: [
     (Story) => <div className="w-[30rem] max-w-full">{Story()}</div>,
   ],

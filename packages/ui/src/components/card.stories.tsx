@@ -14,6 +14,14 @@ import {
 const meta = preview.meta({
   title: 'Affichage/Card',
   component: Card,
+  subcomponents: {
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardAction,
+    CardContent,
+    CardFooter,
+  },
 })
 
 /**

@@ -8,6 +8,9 @@ import { RadioGroup, RadioGroupItem } from './radio-group.tsx'
 const meta = preview.meta({
   title: 'Formulaires/Saisie/RadioGroup',
   component: RadioGroup,
+  subcomponents: {
+    RadioGroupItem,
+  },
 })
 
 /**

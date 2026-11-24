@@ -1,0 +1,80 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Fondations/Mouvement" />
+
+# Mouvement
+
+Une interface bouge pour dire d'où vient une chose et où elle va, jamais
+pour décorer. Trois règles tiennent tout GoGoUI :
+
+- tout entre en moins de 300 ms ;
+- une sortie est plus rapide que son entrée ;
+- rien ne dépasse sa cible ni ne rebondit, donc rien ne tremble.
+
+## Les durées
+
+| Variable              | Durée  | Pour                                             |
+| --------------------- | ------ | ------------------------------------------------ |
+| `--motion-instant`    | 100 ms | Un retour immédiat : un survol, une case cochée. |
+| `--motion-fast`       | 150 ms | Un fondu, un petit changement d'état.            |
+| `--motion-exit`       | 140 ms | Ce qui s'en va.                                  |
+| `--motion-standard`   | 200 ms | Ce qui entre : un menu, une liste.               |
+| `--motion-considered` | 360 ms | Le rare dévoilement plus large.                  |
+| `--motion-spring`     | 440 ms | Un ressort en CSS, avec `--motion-ease-spring`.  |
+
+## Les courbes
+
+Les variables `--motion-ease-*`, lues par Tailwind sous des noms courts :
+
+| Classe          | Pour                                                  |
+| --------------- | ----------------------------------------------------- |
+| `ease-enter`    | Ce qui arrive : départ vif, arrivée douce.            |
+| `ease-exit`     | Ce qui part : départ doux, sortie vive.               |
+| `ease-standard` | Un changement d'état sur place.                       |
+| `ease-in-out`   | Ce qui se déplace en restant à l'écran.               |
+| `ease-spring`   | Un ressort amorti : départ rapide, aucun dépassement. |
+
+```tsx
+<div className="transition-opacity duration-150 ease-enter data-closed:opacity-0" />
+```
+
+## Les voir dans Storybook
+
+Les histoires `Animations` (marquées « animated ») montrent le mouvement de
+chaque composant : ouvrez-les, fermez-les, rouvrez-les au milieu de leur
+course. Les autres histoires montrent le composant au repos. Les tests de
+Storybook tournent avec le mouvement coupé, pour lire chaque histoire
+immobile.
+
+## Moins de mouvement
+
+GoGoUI suit le réglage du système : quand la personne demande moins de
+mouvement (`prefers-reduced-motion: reduce`), les transitions et les
+animations durent 0,01 ms et les composants animés en JavaScript restent
+immobiles. Rien à faire de son côté.
+
+Dans ses propres écrans, la variante Tailwind `motion-reduce:` fait de même
+pour une classe :
+
+```tsx
+<div className="animate-spin motion-reduce:animate-none" />
+```
+
+## Tout couper : `motion="off"`
+
+`GoGoUIProvider` coupe le mouvement pour tout le monde, quel que soit le
+système : pour une capture d'écran, un test, une page imprimée, ou une
+application qui le propose dans ses réglages.
+
+```tsx
+import { GoGoUIProvider } from '@gogoui/ui/provider'
+
+export function App({ children }: { children: React.ReactNode }) {
+  return <GoGoUIProvider motion="off">{children}</GoGoUIProvider>
+}
+```
+
+`motion="off"` vaut pour toute la page, fenêtres et menus compris (ils
+s'ouvrent dans un portail, hors de l'arbre de l'application). Par défaut,
+`motion="auto"` : tout s'anime, sauf pour qui a demandé moins de
+mouvement.

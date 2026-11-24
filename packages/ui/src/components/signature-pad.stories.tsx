@@ -14,6 +14,10 @@ const meta = preview.meta({
   title: 'Formulaires/Saisie/SignaturePad',
   tags: ['beta'],
   component: SignaturePad,
+  subcomponents: {
+    SignaturePadSurface,
+    SignaturePadAction,
+  },
   decorators: [
     (Story) => <div className="w-[34rem] max-w-full">{Story()}</div>,
   ],

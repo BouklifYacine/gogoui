@@ -1,4 +1,5 @@
 import { BellIcon } from '@phosphor-icons/react'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import preview from '#.storybook/preview'
 
@@ -13,6 +14,11 @@ import {
 const meta = preview.meta({
   title: 'Fenêtres/Tooltip',
   component: Tooltip,
+  subcomponents: {
+    TooltipProvider,
+    TooltipTrigger,
+    TooltipContent,
+  },
 })
 
 /**
@@ -34,4 +40,23 @@ export const Basic = meta.story({
       </Tooltip>
     </TooltipProvider>
   ),
+  // The keyboard focus shows the tooltip; Escape hides it and the focus
+  // stays on the button.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Notifications',
+    })
+    await userEvent.tab()
+    await expect(trigger).toHaveFocus()
+    // The button's name is an aria-label: the only « Notifications » text
+    // on the page is the tooltip's.
+    const tooltip = await page.findByText('Notifications')
+    await waitFor(() => expect(tooltip).toBeVisible())
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByText('Notifications')).not.toBeInTheDocument(),
+    )
+    await expect(trigger).toHaveFocus()
+  },
 })

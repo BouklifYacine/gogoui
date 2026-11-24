@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
@@ -13,6 +15,13 @@ import {
 const meta = preview.meta({
   title: 'Fenêtres/Popover',
   component: Popover,
+  subcomponents: {
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverTitle,
+    PopoverDescription,
+  },
 })
 
 /**
@@ -34,4 +43,21 @@ export const Basic = meta.story({
       </PopoverContent>
     </Popover>
   ),
+  // Opens on a click with its title; Escape closes it and gives the focus
+  // back to its button.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: "Conditions d'annulation",
+    })
+    await userEvent.click(trigger)
+    const popover = await page.findByRole('dialog', { name: 'Annulation' })
+    // It fades in, even with motion off: wait for it.
+    await waitFor(() => expect(popover).toBeVisible())
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('dialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })

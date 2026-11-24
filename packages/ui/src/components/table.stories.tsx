@@ -5,6 +5,7 @@ import {
   TableBody,
   TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -19,6 +20,15 @@ const invoices = [
 const meta = preview.meta({
   title: 'Listes et tableaux/Table',
   component: Table,
+  subcomponents: {
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableRow,
+    TableHead,
+    TableCell,
+    TableCaption,
+  },
 })
 
 /**

@@ -1,0 +1,100 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Introduction" />
+
+# GoGoUI
+
+GoGoUI est un design system React : les conventions de shadcn/ui posées sur
+[Base UI](https://base-ui.com), stylées avec Tailwind CSS 4, en clair et en
+sombre, pensés pour les WCAG 2.2 AA. Un seul paquet,
+`@gogoui/ui`, environ 190 composants, un import chacun.
+
+Deux familles de composants :
+
+- **Les briques**, à assembler comme dans shadcn/ui : `Dialog`,
+  `DialogTrigger`, `DialogContent`… Pour une mise en page sur mesure.
+- **Les composants prêts**, réglés par leurs props : `TextField`,
+  `ConfirmDialog`, `EmptyState`, `SimpleTooltip`… Le libellé, l'aide,
+  l'erreur et l'accessibilité sont déjà branchés. À préférer quand ils
+  suffisent.
+
+## Installer
+
+Il faut React 19 et Tailwind CSS 4.
+
+```bash
+bun add @gogoui/ui @phosphor-icons/react
+```
+
+Quelques composants demandent une bibliothèque en plus, à installer
+seulement si on s'en sert : `react-day-picker` (calendrier et dates),
+`sonner` (Toaster), `@tanstack/react-table` (`@gogoui/ui/data-table`),
+`@tanstack/react-form` (`@gogoui/ui/tanstack-form`), `react-dropzone`
+(dépôt de fichiers), `recharts` et `cmdk` (Chart, Command)…
+
+## Importer le CSS
+
+Dans le fichier CSS principal du projet :
+
+```css
+@import 'tailwindcss';
+@import '@gogoui/ui/styles.css';
+```
+
+`styles.css` apporte les variables (`tokens.css`), leur thème Tailwind
+(`theme.css`), les animations et les styles de base, et dit à Tailwind de
+lire les classes des composants. Pour n'utiliser que les variables, sans
+Tailwind : `@import '@gogoui/ui/tokens.css';`.
+
+Le mode sombre : la classe `dark` sur `<html>`. Une partie de page qui doit
+rester claire prend la classe `light`.
+
+## Importer un composant
+
+Chaque composant a son propre chemin :
+
+```tsx
+import { Button } from '@gogoui/ui/button'
+
+export function Save() {
+  return <Button>Enregistrer</Button>
+}
+```
+
+## GoGoUIProvider
+
+Facultatif. Sans lui, GoGoUI parle français, dessine les icônes Phosphor et
+anime ses composants. À poser une fois autour de l'application pour changer
+la langue, quelques mots, les icônes ou le mouvement :
+
+```tsx
+import { GoGoUIProvider } from '@gogoui/ui/provider'
+
+export function App({ children }: { children: React.ReactNode }) {
+  return (
+    <GoGoUIProvider locale="en" motion="auto">
+      {children}
+    </GoGoUIProvider>
+  )
+}
+```
+
+| Prop         | Pour                                                                |
+| ------------ | ------------------------------------------------------------------- |
+| `locale`     | `'fr'` ou `'en'` : les mots écrits par GoGoUI (français sans rien). |
+| `messages`   | Quelques mots à soi, par-dessus ceux de la langue.                  |
+| `icons`      | Ses propres icônes (Lucide…) à la place de celles de Phosphor.      |
+| `iconWeight` | L'épaisseur de toutes les icônes Phosphor.                          |
+| `motion`     | `'auto'` (par défaut) ou `'off'` : plus rien ne bouge.              |
+
+## Dans ce Storybook
+
+- **Démarrer** : un premier formulaire et une première liste.
+- **Fondations** : couleurs, typographie, espacements, ombres, mouvement,
+  langue.
+- Puis les composants par usage : actions, formulaires, fenêtres, menus,
+  listes et tableaux, graphiques…
+
+Chaque composant a sa page de docs (ses props, ses exemples) et ses
+histoires. La barre d'outils change le thème (clair ou sombre), la palette
+de la marque et la langue.

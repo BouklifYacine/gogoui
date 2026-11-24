@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import {
@@ -5,11 +7,16 @@ import {
   ComboboxChip,
   ComboboxChips,
   ComboboxChipsInput,
+  ComboboxCollection,
   ComboboxContent,
   ComboboxEmpty,
+  ComboboxGroup,
   ComboboxInput,
   ComboboxItem,
+  ComboboxLabel,
   ComboboxList,
+  ComboboxSeparator,
+  ComboboxTrigger,
   ComboboxValue,
   useComboboxAnchor,
 } from './combobox.tsx'
@@ -33,6 +40,22 @@ const cities = [
 const meta = preview.meta({
   title: 'Formulaires/Saisie/Combobox',
   component: Combobox,
+  subcomponents: {
+    ComboboxInput,
+    ComboboxTrigger,
+    ComboboxValue,
+    ComboboxContent,
+    ComboboxList,
+    ComboboxItem,
+    ComboboxGroup,
+    ComboboxLabel,
+    ComboboxCollection,
+    ComboboxEmpty,
+    ComboboxSeparator,
+    ComboboxChips,
+    ComboboxChip,
+    ComboboxChipsInput,
+  },
 })
 
 /**
@@ -54,6 +77,26 @@ export const Basic = meta.story({
       </ComboboxContent>
     </Combobox>
   ),
+  // Typing filters the list; Escape closes it and the focus stays in the
+  // field.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const input = within(canvasElement).getByRole('combobox', { name: 'Ville' })
+    await userEvent.type(input, 'Ly')
+    const list = await page.findByRole('listbox')
+    // The rows fade in one after another: wait for them.
+    await waitFor(() =>
+      expect(within(list).getByRole('option', { name: 'Lyon' })).toBeVisible(),
+    )
+    await expect(
+      within(list).queryByRole('option', { name: 'Paris' }),
+    ).not.toBeInTheDocument()
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('listbox')).not.toBeInTheDocument(),
+    )
+    await expect(input).toHaveFocus()
+  },
 })
 
 /**

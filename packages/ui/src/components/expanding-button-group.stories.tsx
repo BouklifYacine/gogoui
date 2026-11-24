@@ -17,6 +17,9 @@ const meta = preview.meta({
   title: 'Actions/ExpandingButtonGroup',
   tags: ['beta', 'deprecated'],
   component: ExpandingButtonGroup,
+  subcomponents: {
+    ExpandingButtonGroupItem,
+  },
   args: {
     'aria-label': 'Actions de la demande',
     children: (

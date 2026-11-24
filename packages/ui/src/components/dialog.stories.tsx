@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import { Button } from './button.tsx'
@@ -16,6 +18,15 @@ import {
 const meta = preview.meta({
   title: 'Fenêtres/Dialog',
   component: Dialog,
+  subcomponents: {
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter,
+    DialogClose,
+  },
 })
 
 /**
@@ -48,6 +59,26 @@ export const Basic = meta.story({
       </DialogContent>
     </Dialog>
   ),
+  // Opens on a click with the focus inside; Escape closes it and gives the
+  // focus back to its button.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('button', {
+      name: 'Renommer la salle',
+    })
+    await userEvent.click(trigger)
+    const dialog = await page.findByRole('dialog', {
+      name: 'Renommer la salle',
+    })
+    await waitFor(() =>
+      expect(dialog).toContainElement(document.activeElement as HTMLElement),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('dialog')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })
 
 /**

@@ -13,6 +13,14 @@ import {
 const meta = preview.meta({
   title: 'Navigation/Breadcrumb',
   component: Breadcrumb,
+  subcomponents: {
+    BreadcrumbList,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+    BreadcrumbEllipsis,
+  },
 })
 
 /**

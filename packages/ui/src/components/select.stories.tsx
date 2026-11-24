@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import {
@@ -24,6 +26,16 @@ const eventTypes = [
 const meta = preview.meta({
   title: 'Formulaires/Saisie/Select',
   component: Select,
+  subcomponents: {
+    SelectTrigger,
+    SelectValue,
+    SelectChips,
+    SelectContent,
+    SelectGroup,
+    SelectLabel,
+    SelectItem,
+    SelectSeparator,
+  },
 })
 
 /**
@@ -50,6 +62,27 @@ export const Basic = meta.story({
       </Select>
     </div>
   ),
+  // Opens the list on a click; Escape closes it and gives the focus back to
+  // the trigger.
+  play: async ({ canvasElement }) => {
+    const page = within(canvasElement.ownerDocument.body)
+    const trigger = within(canvasElement).getByRole('combobox', {
+      name: "Type d'événement",
+    })
+    await userEvent.click(trigger)
+    const list = await page.findByRole('listbox')
+    // The rows fade in one after another: wait for them.
+    await waitFor(() =>
+      expect(
+        within(list).getByRole('option', { name: 'Séminaire' }),
+      ).toBeVisible(),
+    )
+    await userEvent.keyboard('{Escape}')
+    await waitFor(() =>
+      expect(page.queryByRole('listbox')).not.toBeInTheDocument(),
+    )
+    await waitFor(() => expect(trigger).toHaveFocus())
+  },
 })
 
 /**

@@ -16,6 +16,9 @@ const meta = preview.meta({
   title: 'Listes et tableaux/SwipeActions',
   tags: ['beta'],
   component: SwipeActions,
+  subcomponents: {
+    SwipeActionsRow,
+  },
   decorators: [(Story) => <div className="w-full max-w-sm">{Story()}</div>],
 })
 

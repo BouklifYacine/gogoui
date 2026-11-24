@@ -1,0 +1,75 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks'
+
+<Meta title="Fondations/Ombres" />
+
+# Ombres
+
+Une seule ombre, petite et nette, déclinée en échelle. Le jour, elle
+détache une carte blanche du fond gris clair (`--canvas`). La nuit, une
+ombre ne se voit plus sur le noir : chaque ombre devient un trait fin autour
+de la forme, plus une ombre noire dessous.
+
+## L'échelle
+
+<Unstyled>
+  <div className="my-6 grid grid-cols-[repeat(auto-fill,minmax(9rem,1fr))] gap-6 rounded-2xl bg-canvas p-6 text-fg">
+    <div className="flex flex-col gap-2">
+      <div className="h-16 rounded-xl bg-surface shadow-xs" />
+      <code className="text-xs text-fg-muted">shadow-xs</code>
+    </div>
+    <div className="flex flex-col gap-2">
+      <div className="h-16 rounded-xl bg-surface shadow-sm" />
+      <code className="text-xs text-fg-muted">shadow-sm</code>
+    </div>
+    <div className="flex flex-col gap-2">
+      <div className="h-16 rounded-xl bg-surface shadow-md" />
+      <code className="text-xs text-fg-muted">shadow-md</code>
+    </div>
+    <div className="flex flex-col gap-2">
+      <div className="h-16 rounded-xl bg-surface shadow-lg" />
+      <code className="text-xs text-fg-muted">shadow-lg</code>
+    </div>
+    <div className="flex flex-col gap-2">
+      <div className="h-16 rounded-menu bg-floating shadow-menu" />
+      <code className="text-xs text-fg-muted">shadow-menu</code>
+    </div>
+  </div>
+</Unstyled>
+
+| Classe        | Pour                                              |
+| ------------- | ------------------------------------------------- |
+| `shadow-xs`   | Une case, un bouton radio, la carte des réglages. |
+| `shadow-sm`   | Une carte (`Card`), un interrupteur.              |
+| `shadow-md`   | Une bulle d'aide, un popover.                     |
+| `shadow-lg`   | Une fenêtre, un panneau latéral.                  |
+| `shadow-menu` | Un menu, une liste déroulante, un toast.          |
+
+## Les ombres des contrôles
+
+Elles servent aux composants eux-mêmes ; on les reprend pour un contrôle
+fait maison qui doit leur ressembler.
+
+- `shadow-field` : le bord d'un champ (rien la nuit, le trait suffit).
+- `shadow-control` : un petit contrôle posé dans un champ.
+- `shadow-button` : un bouton contour ou discret.
+- `shadow-primary`, `shadow-inverse`, `shadow-danger` : un bouton plein,
+  avec un reflet en haut et un trait de sa propre couleur.
+- `shadow-badge` : un badge, teinté par la couleur de son texte.
+
+## Les changer
+
+Chaque classe lit une variable de `tokens.css` (`--ds-shadow-xs`…
+`--ds-shadow-menu`), redéfinie sous `.dark`. Un projet la remplace après
+l'import de GoGoUI, dans les deux thèmes :
+
+```css
+:root {
+  --ds-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.12);
+}
+.dark {
+  --ds-shadow-sm: 0 0 0 1px #1f1f1f, 0 1px 3px 0 rgb(0 0 0 / 0.6);
+}
+```
+
+L'élévation ne doit jamais être la seule façon de distinguer deux zones :
+un trait (`border-line`) ou un fond (`bg-subtle`) le dit aussi.

@@ -1,0 +1,91 @@
+import { Meta, Unstyled } from '@storybook/addon-docs/blocks'
+
+<Meta title="Fondations/Espacements et rayons" />
+
+# Espacements et rayons
+
+## Les espacements
+
+GoGoUI garde l'échelle de Tailwind : un pas de 4 px (`--spacing`), donc
+`gap-2` vaut 8 px, `p-4` 16 px, `gap-6` 24 px. Pas de variable à soi : un
+projet qui change `--spacing` change tout d'un coup.
+
+Les habitudes des composants, à reprendre dans ses écrans :
+
+| Où                               | Espace            |
+| -------------------------------- | ----------------- |
+| Entre une icône et son texte     | `gap-2` (8 px)    |
+| Entre les champs d'un formulaire | `gap-4` (16 px)   |
+| Dans une carte                   | `p-4`, `sm:p-6`   |
+| Entre les parties d'une page     | `gap-6` à `gap-8` |
+
+## Les cibles tactiles
+
+Sur un téléphone, tout ce qui se touche fait au moins 44 px de haut : les
+boutons, les champs et les lignes de menu passent de 32 ou 36 px à 44 px
+sous 768 px. Un lien seul sur sa ligne prend la classe `tap-area` : ses mots
+restent petits, une zone invisible agrandit la cible sans déplacer la mise
+en page.
+
+## Les rayons
+
+Un seul rayon de base, `--radius` (10 px), décliné en échelle :
+
+<Unstyled>
+  <div className="my-6 flex flex-wrap gap-4 text-fg">
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-xs border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">xs · 4</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-sm border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">sm · 6</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-md border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">md · 8</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-lg border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">lg · 10</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-xl border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">xl · 12</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-2xl border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">2xl · 16</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-3xl border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">3xl · 24</code>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="size-16 rounded-4xl border border-line-strong bg-surface" />
+      <code className="text-xs text-fg-muted">4xl · 32</code>
+    </div>
+  </div>
+</Unstyled>
+
+- `rounded-lg` suit `--radius` : changer cette variable arrondit ou
+  redresse toute l'interface.
+- `rounded-button` (le rayon de base) et `rounded-button-sm` (8 px) pour les
+  boutons, `rounded-menu` (20 px) pour le panneau d'un menu.
+- Les champs prennent `rounded-lg`, les cartes `rounded-xl` ou
+  `rounded-2xl`, les badges et les pastilles `rounded-full`.
+
+## Les rayons concentriques
+
+Une forme posée dans une autre paraît juste quand son rayon vaut celui du
+parent moins l'espace entre les deux. Deux utilitaires le calculent :
+
+```tsx
+<div className="rounded-parent-2xl p-2">
+  <img className="rounded-concentric-2" src="photo.jpg" alt="" />
+</div>
+```
+
+`rounded-parent-{taille}` donne son rayon au parent et le transmet ;
+`rounded-concentric-{n}` le reprend moins `n` pas d'espacement (ici `p-2`,
+donc 2). Le résultat ne descend jamais sous 0.

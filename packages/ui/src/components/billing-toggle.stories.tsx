@@ -9,6 +9,9 @@ const meta = preview.meta({
   title: 'Blocs marketing/BillingToggle',
   tags: ['beta'],
   component: BillingToggle,
+  subcomponents: {
+    BillingToggleItem,
+  },
   args: {
     value: 'monthly',
     onValueChange: () => {},

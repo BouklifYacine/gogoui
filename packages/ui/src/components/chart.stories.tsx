@@ -2,7 +2,13 @@ import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 
 import preview from '#.storybook/preview'
 
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from './chart.tsx'
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from './chart.tsx'
 import type { ChartConfig } from './chart.tsx'
 
 const data = [
@@ -21,6 +27,12 @@ const config = {
 const meta = preview.meta({
   title: 'Graphiques/Chart',
   component: ChartContainer,
+  subcomponents: {
+    ChartTooltip,
+    ChartTooltipContent,
+    ChartLegend,
+    ChartLegendContent,
+  },
 })
 
 /**

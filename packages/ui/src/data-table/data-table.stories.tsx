@@ -8,6 +8,7 @@ import { Button } from '../components/button.tsx'
 import { EmptyState } from '../components/empty-state.tsx'
 import { RowActionsMenu } from '../components/row-actions-menu.tsx'
 import { DataTable } from './data-table.tsx'
+import { DataTableColumnsMenu } from './data-table-columns-menu.tsx'
 import { DataTableSkeleton } from './data-table-skeleton.tsx'
 import { createDataColumns, useDataTable } from './table-hook.ts'
 import { useRowSelection } from './use-row-selection.ts'
@@ -106,7 +107,9 @@ const columns = column.columns([
 ])
 
 const meta = preview.meta({
-  title: 'Listes/DataTable',
+  title: 'Listes et tableaux/DataTable',
+  component: DataTable,
+  subcomponents: { DataTableColumnsMenu, DataTableSkeleton },
   parameters: { layout: 'padded' },
 })
 

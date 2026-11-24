@@ -1,3 +1,5 @@
+import { expect, userEvent, waitFor, within } from 'storybook/test'
+
 import preview from '#.storybook/preview'
 
 import {
@@ -43,6 +45,21 @@ export const Basic = meta.story({
       ))}
     </Accordion>
   ),
+  // Opening a question shows its answer and folds the one open before.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const first = canvas.getByRole('button', {
+      name: 'Puis-je annuler à tout moment ?',
+    })
+    const second = canvas.getByRole('button', {
+      name: 'Mes données sont-elles exportables ?',
+    })
+    await expect(first).toHaveAttribute('aria-expanded', 'true')
+    await userEvent.click(second)
+    await expect(second).toHaveAttribute('aria-expanded', 'true')
+    await expect(canvas.getByText(/s’exportent en CSV/)).toBeVisible()
+    await waitFor(() => expect(first).toHaveAttribute('aria-expanded', 'false'))
+  },
 })
 
 /**

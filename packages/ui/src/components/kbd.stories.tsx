@@ -5,6 +5,9 @@ import { Kbd, KbdGroup } from './kbd.tsx'
 const meta = preview.meta({
   title: 'Affichage/Kbd',
   component: Kbd,
+  subcomponents: {
+    KbdGroup,
+  },
 })
 
 /**

@@ -1,10 +1,22 @@
 import preview from '#.storybook/preview'
 
-import { Progress, ProgressLabel, ProgressValue } from './progress.tsx'
+import {
+  Progress,
+  ProgressIndicator,
+  ProgressLabel,
+  ProgressTrack,
+  ProgressValue,
+} from './progress.tsx'
 
 const meta = preview.meta({
   title: 'Retours/Progress',
   component: Progress,
+  subcomponents: {
+    ProgressLabel,
+    ProgressValue,
+    ProgressTrack,
+    ProgressIndicator,
+  },
   args: { value: 60, color: 'primary' },
 })
 
