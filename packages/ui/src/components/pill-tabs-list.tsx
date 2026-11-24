@@ -17,6 +17,23 @@ type PillTab<TValue extends string> = {
   countLabel?: string
   /** The count's pill in green: things connected, things done. */
   countTone?: 'success'
+  /**
+   * A word or two after the name when something waits behind the tab
+   * (« 1 en retard », « À signer »), in the danger or info colour.
+   */
+  note?: { label: string; tone: 'danger' | 'info' }
+}
+
+// On the grey tray, the badges' own pale background and dark text.
+const noteTones = {
+  danger: 'bg-danger-subtle text-danger-fg',
+  info: 'bg-info-subtle text-info-fg',
+}
+// On the chosen tab's pill, dark in light mode and light in dark mode:
+// the surface's colour under the state's text reads on both.
+const chosenNoteTones = {
+  danger: 'bg-surface text-danger-fg',
+  info: 'bg-surface text-info-fg',
 }
 
 type PillTabsListProps<TValue extends string> = {
@@ -44,7 +61,8 @@ const trail = { type: 'spring', stiffness: 170, damping: 19 } as const
  * **Use it for** a light set of tabs, counts included; `ListTabs` builds
  * on it.
  *
- * **Key props**: `label`, `tabs`, `value`, `color`, `slides` (the pill
+ * **Key props**: `label`, `tabs` (`value`, `label`, `count`, `note`),
+ * `value`, `color`, `slides` (the pill
  * moves, off with reduced motion).
  *
  * @summary Tabs on a tray with a sliding pill.
@@ -174,6 +192,18 @@ function PillTabsList<TValue extends string>({
                   {tab.countLabel && (
                     <span className="sr-only">{` ${tab.countLabel}`}</span>
                   )}
+                </span>
+              )}
+              {tab.note && (
+                <span
+                  className={cn(
+                    'rounded-full px-2 text-xs leading-5 font-medium whitespace-nowrap transition-colors duration-250',
+                    active
+                      ? chosenNoteTones[tab.note.tone]
+                      : noteTones[tab.note.tone],
+                  )}
+                >
+                  {tab.note.label}
                 </span>
               )}
             </span>

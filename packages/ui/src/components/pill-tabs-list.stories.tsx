@@ -38,6 +38,37 @@ export const Basic = meta.story({
 })
 
 /**
+ * `note`: a word or two after a tab's name when something waits behind it.
+ */
+export const WithNotes = meta.story({
+  args: {
+    label: 'Parties de l’événement',
+    value: 'summary',
+    tabs: [
+      { value: 'summary', label: 'Résumé' },
+      {
+        value: 'money',
+        label: 'Argent',
+        note: { label: '1 en retard', tone: 'danger' },
+      },
+      {
+        value: 'documents',
+        label: 'Documents',
+        note: { label: 'À signer', tone: 'info' },
+      },
+    ],
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState(args.value)
+    return (
+      <Tabs value={value} onValueChange={(next) => setValue(String(next))}>
+        <PillTabsList {...args} value={value} />
+      </Tabs>
+    )
+  },
+})
+
+/**
  * The same tabs while the page loads.
  */
 export const Loading = meta.story({

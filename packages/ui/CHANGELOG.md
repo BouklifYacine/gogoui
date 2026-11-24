@@ -1,5 +1,11 @@
 # @gogoui/ui
 
+## 0.2.3
+
+### Patch Changes
+
+- PillTabsList tabs take a `note` (« 1 en retard », « À signer »). PageHeader takes a `guide` target and `descriptionOnPhone`, and keeps its buttons beside the title on a phone when they fit.
+
 ## 0.2.2
 
 ### Patch Changes

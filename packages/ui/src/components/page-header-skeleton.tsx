@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { cn } from '../lib/cn.ts'
 import { SkeletonText } from './skeleton.tsx'
 
 type PageHeaderSkeletonProps = {
@@ -8,6 +9,8 @@ type PageHeaderSkeletonProps = {
   description?: string
   /** The buttons' skeletons. */
   actions?: ReactNode
+  /** As on PageHeader: false leaves the sentence out under 768px. */
+  descriptionOnPhone?: boolean
 }
 
 /**
@@ -19,15 +22,16 @@ function PageHeaderSkeleton({
   title,
   description,
   actions,
+  descriptionOnPhone = true,
 }: PageHeaderSkeletonProps) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="flex gap-4 max-sm:flex-wrap max-sm:items-center max-sm:justify-between sm:items-start sm:justify-between">
       <div className="flex flex-col items-start gap-2">
         <SkeletonText className="text-2xl font-medium tracking-title sm:text-3xl">
           {title}
         </SkeletonText>
         {description && (
-          <p>
+          <p className={cn(!descriptionOnPhone && 'max-md:hidden')}>
             <SkeletonText>{description}</SkeletonText>
           </p>
         )}
